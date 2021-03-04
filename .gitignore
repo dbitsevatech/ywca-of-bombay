@@ -32,7 +32,7 @@
 /build/
 
 # Firebase related
-/app/src/build.gradle
+/android/app/build.gradle
 
 # Web related
 lib/generated_plugin_registrant.dart
