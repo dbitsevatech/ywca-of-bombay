@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "64469132741",
+    "project_id": "ywca-b8ba1",
+    "storage_bucket": "ywca-b8ba1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64469132741:android:0dc7e2053341f0baa317ac",
+        "android_client_info": {
+          "package_name": "com.example.ywca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64469132741-4fomoogr0moo4tl5016vb9chp4adbqa9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKwiWFxSoVbhoAoQmjp5YAiFcDx1uhvts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64469132741-4fomoogr0moo4tl5016vb9chp4adbqa9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
