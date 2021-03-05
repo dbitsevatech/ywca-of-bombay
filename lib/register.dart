@@ -1,7 +1,14 @@
-import 'package:auth/login.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+// TODO: Circle design
+// SvgPicture.network(
+//                   // '../assets/image/circles.svg',
+//                   placeholderBuilder: (context) => CircularProgressIndicator(),
+//                   height: 128.0,
+//                 ),
+
+import 'package:auth/login.dart';
 import 'package:auth/otp.dart';
-// import 'package:form_validator/form_validator.dart';
 
 enum GenderChoices { female, male, decline }
 
@@ -255,7 +262,7 @@ class _SignUpState extends State<SignUp> {
                 Text(
                   'Gender',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 18,
                     color: Color(0xff49DEE8),
                     fontWeight: FontWeight.w600,
                     fontFamily: 'RacingSansOne',

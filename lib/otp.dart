@@ -507,7 +507,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
             _fifthDigit.toString() +
             _sixthDigit.toString();
 
-        // TODO:  Verify your otp by here. API call
+        // TODO:  Verify your otp here. API call
       }
     });
   }
