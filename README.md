@@ -9,7 +9,7 @@ Official app of YWCA, Mumbai created in Flutter
 Download or clone this repo by using the command given below:
 
 ```
-git clone https://github.com/zubairehman/flutter-boilerplate-project.git
+git clone https://github.com/dbitywca2021/ywca-of-bombay.git
 ```
 
 **Step 2:**
