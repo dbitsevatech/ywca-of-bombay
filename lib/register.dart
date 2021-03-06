@@ -21,7 +21,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   String name;
   String email;
-  DateTime dob;
+  DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
   String pow;
   String gender = "Female";
   // var _value;
@@ -35,6 +35,7 @@ class _SignUpState extends State<SignUp> {
 
   GenderChoices selectedGender = GenderChoices.female;
   Future _selectDate() async {
+    // TODO: DatePicker not disappearing unless OK is pressed
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now().subtract(Duration(days: 4380)),
@@ -50,9 +51,8 @@ class _SignUpState extends State<SignUp> {
         );
       },
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != dob)
       setState(() {
-        selectedDate = picked;
         dob = picked;
       });
   }
@@ -139,7 +139,8 @@ class _SignUpState extends State<SignUp> {
                       // keyboardType: TextInputType.datetime,
                       onChanged: (value) {
                         setState(() {
-                          dob = DateTime.parse(value);
+                          // dob = DateTime.parse(value);
+                          // dob = value;
                         });
                       },
                       controller: dateController,
@@ -697,17 +698,16 @@ class _SignUp2State extends State<SignUp2> {
                       _formKey.currentState.save();
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => Otp(
-                              name: name,
-                              email: email,
-                              pow: pow,
-                              gender: gender,
-                              dob: dob,
-                              phone: phone,
-                              prof: prof,
-                              center: center,
-                              interest: interest),
-                        ),
+                            builder: (context) => Otp(
+                                name: name,
+                                email: email,
+                                pow: pow,
+                                gender: gender,
+                                dob: dob,
+                                phone: phone,
+                                prof: prof,
+                                center: center,
+                                interest: interest)),
                       );
                     },
                     child: Center(
