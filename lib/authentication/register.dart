@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 //                   height: 128.0,
 //                 ),
 
-import 'package:auth/login.dart';
-import 'package:auth/otp.dart';
+import 'package:auth/authentication/login.dart';
+import 'package:auth/authentication/otp.dart';
 
 enum GenderChoices { female, male, decline }
 
@@ -66,8 +66,35 @@ class _SignUpState extends State<SignUp> {
     super.initState();
   }
 
+  final int height = 1;
   @override
   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.white,
+//       body: Stack(
+//         children: [
+//           Positioned(
+//             child: Image.asset("assets/images/circle-design.png"),
+//             height: height * 0.238,
+//           ),
+//           Positioned(
+//             child: Image.asset("assets/images/ywca-logo.png"),
+//             bottom: 0,
+//             left: 0,
+//             right: 0,
+//             top: height * 0.23,
+//           ),
+//           Center(
+//             child: Text(
+//               "Empowering Women",
+//               style: TextStyle(fontSize: 20),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -77,19 +104,26 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 70,
-                ),
-                Center(
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Color(0xff49DEE8),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'RacingSansOne',
+                // circle design
+                Stack(
+                  children: <Widget>[
+                    Positioned(
+                      child: Image.asset("assets/images/circle-design.png"),
                     ),
-                  ),
+                    Positioned(
+                      child: Center(
+                        child: Text(
+                          'SIGN UP',
+                          style: TextStyle(
+                            fontSize: 35,
+                            color: Color(0xff49DEE8),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RacingSansOne',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 30,

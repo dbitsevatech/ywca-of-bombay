@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'package:auth/register.dart';
+import 'package:auth/authentication/register.dart';
 
 void main() => runApp(LoginScreen());
 
