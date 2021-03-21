@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:auth/home.dart';
+// import 'package:auth/pages/home.dart';
+import 'package:auth/drawer.dart';
 
 class Otp extends StatefulWidget {
   final color = const Color(0xff49DEE8);
@@ -206,7 +207,8 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                 if (value.user != null) {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => Home()),
+                      // MaterialPageRoute(builder: (context) => Home()),
+                      MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
                 }
               });
@@ -241,7 +243,8 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
               if (value.user != null) {
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    // MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => MainWidget()),
                     (route) => false);
               }
             },
@@ -546,6 +549,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   }
 }
 
+// ignore: must_be_immutable
 class OtpTimer extends StatelessWidget {
   final AnimationController controller;
   double fontSize;
