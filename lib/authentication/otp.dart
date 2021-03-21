@@ -90,11 +90,14 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
-    return new Text(
-      "Verification Code",
-      textAlign: TextAlign.center,
-      style: new TextStyle(
-          fontSize: 26.0, color: Colors.black, fontWeight: FontWeight.bold),
+    return new Padding(
+      padding: EdgeInsets.only(top: 100),
+      child: Text(
+        "Verification Code",
+        textAlign: TextAlign.center,
+        style: new TextStyle(
+            fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
+      ),
     );
   }
 
@@ -129,7 +132,20 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _getVerificationCodeLabel,
+        // circle design
+                Stack(
+                  children: <Widget>[
+                    Positioned(
+                      child: Image.asset("assets/images/circle-design.png"),
+                    ),
+                    Positioned(
+                      child: Center(
+                        child: _getVerificationCodeLabel,
+                      ),
+                    ),
+                  ],
+                ),
+        // _getVerificationCodeLabel,
         _getPleaseEnterLabel,
         _getInputField,
         _hideResendButton ? _getTimerText : _getResendButton,
@@ -422,7 +438,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     _screenSize = MediaQuery.of(context).size;
     return new Scaffold(
-      appBar: _getAppbar,
+      // appBar: _getAppbar,
       backgroundColor: Colors.white,
       body: new Container(
         width: _screenSize.width,

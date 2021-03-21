@@ -19,30 +19,64 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Row(
+              Stack(
+                // circle design
                 children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    child: Material(
-                      shadowColor: Colors.transparent,
-                      color: Colors.transparent,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
+                  Positioned(
+                    child: Image.asset("assets/images/circle-design.png"),
+                  ),
+                  Positioned(
+                    child: Row(
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                          child: Material(
+                            shadowColor: Colors.transparent,
+                            color: Colors.transparent,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.menu,
+                                color: Colors.black,
+                              ),
+                              onPressed: widget.onMenuPressed,
+                            ),
+                          ),
                         ),
-                        onPressed: widget.onMenuPressed,
-                      ),
+                        Spacer(),
+                        Container(
+                          height: 40,
+                          width: 40,
+                        ),
+                        SizedBox(width: 15)
+                      ],
                     ),
                   ),
-                  Spacer(),
-                  Container(
-                    height: 40,
-                    width: 40,
-                  ),
-                  SizedBox(width: 15)
                 ],
               ),
+              // Row(
+              //   children: <Widget>[
+              //     ClipRRect(
+              //       borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              //       child: Material(
+              //         shadowColor: Colors.transparent,
+              //         color: Colors.transparent,
+              //         child: IconButton(
+              //           icon: Icon(
+              //             Icons.menu,
+              //             color: Colors.black,
+              //           ),
+              //           onPressed: widget.onMenuPressed,
+              //         ),
+              //       ),
+              //     ),
+              //     Spacer(),
+              //     Container(
+              //       height: 40,
+              //       width: 40,
+              //     ),
+              //     SizedBox(width: 15)
+              //   ],
+              // ),
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Column(

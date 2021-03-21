@@ -98,8 +98,8 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // circle design
                 Stack(
+                  // circle design
                   children: <Widget>[
                     Positioned(
                       child: Image.asset("assets/images/circle-design.png"),
@@ -487,25 +487,35 @@ class _SignUp2State extends State<SignUp2> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(16),
+          // margin: EdgeInsets.all(16),
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(
-                  height: 70,
-                ),
-                Center(
-                  child: Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Color(0xff49DEE8),
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'RacingSansOne',
+                Stack(
+                  // circle design
+                  children: <Widget>[
+                    Positioned(
+                      child: Image.asset("assets/images/circle-design.png"),
                     ),
-                  ),
+                    Positioned(
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 100),
+                          child:Text(
+                            'SIGN UP',
+                            style: TextStyle(
+                              fontSize: 35,
+                              color: Color(0xff49DEE8),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RacingSansOne',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 30,
@@ -702,63 +712,66 @@ class _SignUp2State extends State<SignUp2> {
                 SizedBox(
                   height: 25,
                 ),
-                Container(
-                  decoration: new BoxDecoration(
-                      gradient: new LinearGradient(
-                        colors: [
-                          Color(0xff00BBE4),
-                          Color(0xff00BBE4),
-                          Color(0xff005BE4)
-                        ],
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: FlatButton(
-                    onPressed: () {
-                      print(name);
-                      print(email);
-                      print(pow);
-                      print(dob);
-                      print(gender);
-                      print(phone);
-                      print(prof);
-                      print(center);
-                      print(interest);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => Otp(name : name, email: email, pow : pow, gender : gender, dob: dob, phone: phone, prof: prof, center: center, interest: interest)),
-                      // );
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      }
-                      _formKey.currentState.save();
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => Otp(
-                                name: name,
-                                email: email,
-                                pow: pow,
-                                gender: gender,
-                                dob: dob,
-                                phone: phone,
-                                prof: prof,
-                                center: center,
-                                interest: interest)),
-                      );
-                    },
-                    child: Center(
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    decoration: new BoxDecoration(
+                        gradient: new LinearGradient(
+                          colors: [
+                            Color(0xff00BBE4),
+                            Color(0xff00BBE4),
+                            Color(0xff005BE4)
+                          ],
+                          begin: FractionalOffset.centerLeft,
+                          end: FractionalOffset.centerRight,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: FlatButton(
+                      onPressed: () {
+                        print(name);
+                        print(email);
+                        print(pow);
+                        print(dob);
+                        print(gender);
+                        print(phone);
+                        print(prof);
+                        print(center);
+                        print(interest);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => Otp(name : name, email: email, pow : pow, gender : gender, dob: dob, phone: phone, prof: prof, center: center, interest: interest)),
+                        // );
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => Otp(
+                                  name: name,
+                                  email: email,
+                                  pow: pow,
+                                  gender: gender,
+                                  dob: dob,
+                                  phone: phone,
+                                  prof: prof,
+                                  center: center,
+                                  interest: interest)),
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    padding:
+                      padding:
                         EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -793,6 +806,9 @@ class _SignUp2State extends State<SignUp2> {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                   ],
                 ),

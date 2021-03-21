@@ -23,24 +23,35 @@ class _LoginScreenState extends State<LoginScreen> {
       home: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.all(16),
+            // margin: EdgeInsets.all(16),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Text(
-                    'SIGN IN',
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Color(0xff49DEE8),
-                      // foreground: Paint()..color = Colors.lightBlue,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'RacingSansOne',
-                    ),
+                  Stack(
+                    // circle design
+                    children: <Widget>[
+                      Positioned(
+                        child: Image.asset("assets/images/circle-design.png"),
+                      ),
+                      Positioned(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 100),
+                            child:Text(
+                              'SIGN IN',
+                              style: TextStyle(
+                                fontSize: 35,
+                                color: Color(0xff49DEE8),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RacingSansOne',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 70,
@@ -102,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 80,
                   ),
-                  Container(
+                  Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
                     decoration: new BoxDecoration(
                         gradient: new LinearGradient(
                           colors: [
@@ -137,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           horizontal: 130.0, vertical: 25.0),
                     ),
                   ),
+                  ),
                   SizedBox(
                     height: 15,
                   ),
@@ -169,7 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                 ],
               ),
             ),
