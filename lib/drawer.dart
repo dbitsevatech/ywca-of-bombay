@@ -5,7 +5,9 @@ import 'package:auth/pages/about_us.dart';
 import 'package:auth/pages/events.dart';
 import 'package:auth/pages/initiatives.dart';
 import 'package:auth/pages/success_stories.dart';
+import 'package:auth/authentication/register.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kf_drawer/kf_drawer.dart';
@@ -151,6 +153,14 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             color: Colors.black,
             size: 22,
           ),
+          onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUp()),
+                            (route) => false);
+                  },
+        
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(

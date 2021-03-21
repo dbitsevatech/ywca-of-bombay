@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
-// TODO: Circle design
-// SvgPicture.network(
-//                   // '../assets/image/circles.svg',
-//                   placeholderBuilder: (context) => CircularProgressIndicator(),
-//                   height: 128.0,
-//                 ),
 
 import 'package:auth/authentication/login.dart';
 import 'package:auth/authentication/otp.dart';
@@ -36,6 +29,7 @@ class _SignUpState extends State<SignUp> {
   GenderChoices selectedGender = GenderChoices.female;
   Future _selectDate() async {
     // TODO: DatePicker not disappearing unless OK is pressed
+    // TODO: Date TextField always showing today's date
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now().subtract(Duration(days: 4380)),
@@ -98,7 +92,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(16),
+          // margin: EdgeInsets.all(16),
           child: Form(
             key: _formKey,
             child: Column(
@@ -112,13 +106,16 @@ class _SignUpState extends State<SignUp> {
                     ),
                     Positioned(
                       child: Center(
-                        child: Text(
-                          'SIGN UP',
-                          style: TextStyle(
-                            fontSize: 35,
-                            color: Color(0xff49DEE8),
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'RacingSansOne',
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 100),
+                          child:Text(
+                            'SIGN UP',
+                            style: TextStyle(
+                              fontSize: 35,
+                              color: Color(0xff49DEE8),
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RacingSansOne',
+                            ),
                           ),
                         ),
                       ),
@@ -207,7 +204,6 @@ class _SignUpState extends State<SignUp> {
                   width: 360,
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    // validator: ValidationBuilder().email().maxLength(50).build(),
                     onChanged: (value) {
                       setState(() {
                         email = value;
@@ -282,10 +278,11 @@ class _SignUpState extends State<SignUp> {
                     children: [
                       Container(
                         child: Text('(Leave blank if retired)',
-                            style: TextStyle(
-                              color: Color(0xff49DEE8),
-                              fontSize: 15,
-                            )),
+                          style: TextStyle(
+                            color: Color(0xff49DEE8),
+                            fontSize: 15,
+                          ),
+                        ),
                         padding: EdgeInsets.all(10),
                       )
                     ],
@@ -349,7 +346,9 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 25,
                 ),
-                Container(
+                Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Container(
                   decoration: new BoxDecoration(
                       gradient: new LinearGradient(
                         colors: [
@@ -362,35 +361,36 @@ class _SignUpState extends State<SignUp> {
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: FlatButton(
-                    onPressed: () {
-                      print(dob);
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      }
-                      _formKey.currentState.save();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SignUp2(
-                                name: name,
-                                email: email,
-                                pow: pow,
-                                gender: gender,
-                                dob: dob)),
-                      );
-                    },
-                    child: Center(
-                      child: Text(
-                        'Next',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
+                      onPressed: () {
+                        print(dob);
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUp2(
+                                  name: name,
+                                  email: email,
+                                  pow: pow,
+                                  gender: gender,
+                                  dob: dob)),
+                        );
+                      },
+                      child: Center(
+                        child: Text(
+                          'Next',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                          ),
                         ),
                       ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
                     ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
                   ),
                 ),
                 SizedBox(
@@ -427,6 +427,9 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
