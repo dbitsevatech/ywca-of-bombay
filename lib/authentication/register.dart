@@ -108,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: 100),
-                          child:Text(
+                          child: Text(
                             'SIGN UP',
                             style: TextStyle(
                               fontSize: 35,
@@ -277,7 +277,8 @@ class _SignUpState extends State<SignUp> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        child: Text('(Leave blank if retired)',
+                        child: Text(
+                          '(Leave blank if retired)',
                           style: TextStyle(
                             color: Color(0xff49DEE8),
                             fontSize: 15,
@@ -347,20 +348,20 @@ class _SignUpState extends State<SignUp> {
                   height: 25,
                 ),
                 Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Container(
-                  decoration: new BoxDecoration(
-                      gradient: new LinearGradient(
-                        colors: [
-                          Color(0xff00BBE4),
-                          Color(0xff00BBE4),
-                          Color(0xff005BE4)
-                        ],
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: FlatButton(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Container(
+                    decoration: new BoxDecoration(
+                        gradient: new LinearGradient(
+                          colors: [
+                            Color(0xff00BBE4),
+                            Color(0xff00BBE4),
+                            Color(0xff005BE4)
+                          ],
+                          begin: FractionalOffset.centerLeft,
+                          end: FractionalOffset.centerRight,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: FlatButton(
                       onPressed: () {
                         print(dob);
                         if (!_formKey.currentState.validate()) {
@@ -388,8 +389,8 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 130.0, vertical: 25.0),
                     ),
                   ),
                 ),
@@ -503,7 +504,7 @@ class _SignUp2State extends State<SignUp2> {
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: 100),
-                          child:Text(
+                          child: Text(
                             'SIGN UP',
                             style: TextStyle(
                               fontSize: 35,
@@ -769,8 +770,8 @@ class _SignUp2State extends State<SignUp2> {
                           ),
                         ),
                       ),
-                      padding:
-                        EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 130.0, vertical: 25.0),
                     ),
                   ),
                 ),

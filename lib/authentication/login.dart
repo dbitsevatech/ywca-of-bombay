@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Center(
                           child: Padding(
                             padding: EdgeInsets.only(top: 100),
-                            child:Text(
+                            child: Text(
                               'SIGN IN',
                               style: TextStyle(
                                 fontSize: 35,
@@ -115,42 +115,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 80,
                   ),
                   Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    decoration: new BoxDecoration(
-                        gradient: new LinearGradient(
-                          colors: [
-                            Color(0xff00BBE4),
-                            Color(0xff00BBE4),
-                            Color(0xff005BE4)
-                          ],
-                          begin: FractionalOffset.centerLeft,
-                          end: FractionalOffset.centerRight,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: FlatButton(
-                      onPressed: () {
-                        print(_controller.text);
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => OTPScreen(_controller.text)));
-                      },
-                      child: Center(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white,
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Container(
+                      decoration: new BoxDecoration(
+                          gradient: new LinearGradient(
+                            colors: [
+                              Color(0xff00BBE4),
+                              Color(0xff00BBE4),
+                              Color(0xff005BE4)
+                            ],
+                            begin: FractionalOffset.centerLeft,
+                            end: FractionalOffset.centerRight,
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: FlatButton(
+                        onPressed: () {
+                          print(_controller.text);
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => OTPScreen(_controller.text)));
+                        },
+                        child: Center(
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              color: Colors.white,
+                            ),
                           ),
                         ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 130.0, vertical: 25.0),
                       ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 130.0, vertical: 25.0),
                     ),
-                  ),
                   ),
                   SizedBox(
                     height: 15,

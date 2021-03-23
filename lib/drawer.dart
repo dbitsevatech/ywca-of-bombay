@@ -154,13 +154,12 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             size: 22,
           ),
           onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignUp()),
-                            (route) => false);
-                  },
-        
+            await FirebaseAuth.instance.signOut();
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => SignUp()),
+                (route) => false);
+          },
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
