@@ -88,6 +88,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           ),
           page: ContactUs(),
         )
+        // TODO: Show analytics and admin approval option, IF USER IS ADMIN
       ],
     );
   }
@@ -130,10 +131,23 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                             color: Colors.black,
                             fontWeight: FontWeight.bold)),
                     new SizedBox(height: 10),
-
-                    /*to do
-                    image has to be added 
-                    Image(image: null) */
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(
+                        // TODO: Add user image
+                        "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
+                      ),
+                    ),
+                    new SizedBox(height: 15),
+                    new Text(
+                      // TODO: Add user name
+                      'Welcome, user',
+                      style: new TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    new SizedBox(height: 10),
                   ],
                 )
               ],

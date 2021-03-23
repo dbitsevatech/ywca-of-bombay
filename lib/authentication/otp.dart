@@ -133,18 +133,18 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         // circle design
-                Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: Image.asset("assets/images/circle-design.png"),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: _getVerificationCodeLabel,
-                      ),
-                    ),
-                  ],
-                ),
+        Stack(
+          children: <Widget>[
+            Positioned(
+              child: Image.asset("assets/images/circle-design.png"),
+            ),
+            Positioned(
+              child: Center(
+                child: _getVerificationCodeLabel,
+              ),
+            ),
+          ],
+        ),
         // _getVerificationCodeLabel,
         _getPleaseEnterLabel,
         _getInputField,
@@ -252,7 +252,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
 
   _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91${phone}',
+        phoneNumber: '+91$phone',
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance.signInWithCredential(credential).then(
             (value) async {
