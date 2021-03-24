@@ -8,5 +8,10 @@
         <bitmap
             android:gravity="center"
             android:src="@mipmap/ywca" />
-    </item> 
+    </item>
+    <item  android:top="500dp">
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/ywcaofbombay" />
+    </item>
 </layer-list>
