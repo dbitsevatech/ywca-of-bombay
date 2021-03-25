@@ -28,14 +28,12 @@ class _SignUpState extends State<SignUp> {
 
   GenderChoices selectedGender = GenderChoices.female;
   Future _selectDate() async {
-    // TODO: DatePicker not disappearing unless OK is pressed
-    // TODO: Date TextField always showing today's date
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: new DateTime.now().subtract(Duration(days: 4380)),
+      initialDate: dob,
       firstDate: new DateTime(1940),
       lastDate: new DateTime.now().subtract(Duration(days: 4380)),
-      initialDatePickerMode: DatePickerMode.year,
+      // initialDatePickerMode: DatePickerMode.year,
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
@@ -48,6 +46,8 @@ class _SignUpState extends State<SignUp> {
     if (picked != null && picked != dob)
       setState(() {
         dob = picked;
+        // print(picked);
+        print(dob);
       });
   }
 
@@ -191,8 +191,7 @@ class _SignUpState extends State<SignUp> {
                       onTap: () {
                         FocusScope.of(context).requestFocus(new FocusNode());
                         _selectDate();
-                        dateController.text =
-                            "${selectedDate.toLocal()}".split(' ')[0];
+                        dateController.text = "${dob.toLocal()}".split(' ')[0];
                       },
                     ),
                   ),
