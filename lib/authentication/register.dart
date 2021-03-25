@@ -463,10 +463,9 @@ class _SignUp2State extends State<SignUp2> {
 
   String phone;
   String prof;
-  String center;
+  String center = 'Chembur';
   String interest = "Yes";
   _SignUp2State(this.name, this.email, this.pow, this.gender, this.dob);
-  String nearestCentre = 'Chembur';
   final color = const Color(0xff49DEE8);
   MemberChoices _selectedMemberChoice = MemberChoices.yes;
 
@@ -629,14 +628,14 @@ class _SignUp2State extends State<SignUp2> {
                       // border: Border.all(),
                     ),
                     child: DropdownButton<String>(
-                      value: nearestCentre,
+                      value: center,
                       underline: Container(),
                       onChanged: (String value) {
                         setState(() {
                           center = value;
                           print(center);
                         });
-                      }, // TODO: Selected center gets saved in 'center' variable but doesnt show up on the screen
+                      },
                       items: <String>[
                         'Andheri',
                         'Bandra',
