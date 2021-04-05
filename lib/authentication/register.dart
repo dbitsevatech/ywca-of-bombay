@@ -6,12 +6,12 @@ import 'package:auth/authentication/otp.dart';
 enum GenderChoices { female, male, decline }
 
 // ignore: must_be_immutable
-class SignUp extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _RegisterScreenState extends State<RegisterScreen> {
   String name;
   String email;
   DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
@@ -109,7 +109,7 @@ class _SignUpState extends State<SignUp> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 100),
                           child: Text(
-                            'SIGN UP',
+                            'REGISTER',
                             style: TextStyle(
                               fontSize: 35,
                               color: Color(0xff49DEE8),
@@ -370,7 +370,7 @@ class _SignUpState extends State<SignUp> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUp2(
+                              builder: (context) => RegisterScreen2(
                                   name: name,
                                   email: email,
                                   pow: pow,
@@ -417,7 +417,7 @@ class _SignUpState extends State<SignUp> {
                                   builder: (context) => LoginScreen()));
                         },
                         child: Text(
-                          'Sign In',
+                          'Log In',
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
@@ -443,18 +443,19 @@ class _SignUpState extends State<SignUp> {
 enum MemberChoices { yes, no, maybe }
 
 // ignore: must_be_immutable
-class SignUp2 extends StatefulWidget {
+class RegisterScreen2 extends StatefulWidget {
   final String name;
   final String email;
   final String pow;
   final String gender;
   final DateTime dob;
-  SignUp2({this.name, this.email, this.pow, this.gender, this.dob});
+  RegisterScreen2({this.name, this.email, this.pow, this.gender, this.dob});
   @override
-  _SignUp2State createState() => _SignUp2State(name, email, pow, gender, dob);
+  _RegisterScreen2State createState() =>
+      _RegisterScreen2State(name, email, pow, gender, dob);
 }
 
-class _SignUp2State extends State<SignUp2> {
+class _RegisterScreen2State extends State<RegisterScreen2> {
   final String name;
   final String email;
   final String pow;
@@ -465,7 +466,7 @@ class _SignUp2State extends State<SignUp2> {
   String prof;
   String center = 'Chembur';
   String interest = "Yes";
-  _SignUp2State(this.name, this.email, this.pow, this.gender, this.dob);
+  _RegisterScreen2State(this.name, this.email, this.pow, this.gender, this.dob);
   final color = const Color(0xff49DEE8);
   MemberChoices _selectedMemberChoice = MemberChoices.yes;
 
@@ -503,7 +504,7 @@ class _SignUp2State extends State<SignUp2> {
                         child: Padding(
                           padding: EdgeInsets.only(top: 100),
                           child: Text(
-                            'SIGN UP',
+                            'REGISTER',
                             style: TextStyle(
                               fontSize: 35,
                               color: Color(0xff49DEE8),
@@ -760,7 +761,7 @@ class _SignUp2State extends State<SignUp2> {
                       },
                       child: Center(
                         child: Text(
-                          'Sign Up',
+                          'Register',
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: 'Montserrat',
@@ -797,7 +798,7 @@ class _SignUp2State extends State<SignUp2> {
                                   builder: (context) => LoginScreen()));
                         },
                         child: Text(
-                          'Sign In',
+                          'Log In',
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',

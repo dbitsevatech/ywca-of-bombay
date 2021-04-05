@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:auth/authentication/register.dart';
+import 'package:auth/authentication/loginotp.dart';
 
 void main() => runApp(LoginScreen());
 
@@ -12,14 +14,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _controller = TextEditingController();
+  // TextEditingController _controller = TextEditingController();
+  String phone;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Sign In',
+      title: 'Log In',
       theme: ThemeData(fontFamily: 'Montserrat'),
       home: Scaffold(
         body: SingleChildScrollView(
@@ -41,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 100),
                             child: Text(
-                              'SIGN IN',
+                              'LOG IN',
                               style: TextStyle(
                                 fontSize: 35,
                                 color: Color(0xff49DEE8),
@@ -90,7 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextFormField(
                       keyboardType: TextInputType.phone,
                       maxLength: 10,
-                      controller: _controller,
+                      // controller: _controller,
+                      onChanged: (value) {
+                        setState(() {
+                          phone = value;
+                        });
+                      },
                       validator: (String value) {
                         if (value.isEmpty)
                           return 'Mobile number is required';
@@ -112,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 80,
+                    height: 70,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
@@ -129,17 +137,33 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: FlatButton(
-                        onPressed: () {
-                          print(_controller.text);
-                          if (!_formKey.currentState.validate()) {
-                            return;
+                        // onPressed: () {
+                        //   print(_controller.text);
+                        //   if (!_formKey.currentState.validate()) {
+                        //     return;
+                        //   }
+                        //   // Navigator.of(context).push(MaterialPageRoute(
+                        //   //     builder: (context) => OTPScreen(_controller.text)));
+                        // },
+                        onPressed: () async {
+                          var checkuser = await FirebaseFirestore.instance
+                              .collection('users')
+                              .where("phone", isEqualTo: phone)
+                              .get();
+                          if (checkuser.docs.length == 1) {
+                            print("User found");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginOtp(phone: phone)));
+                          } else {
+                            print("No user found");
                           }
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => OTPScreen(_controller.text)));
                         },
                         child: Center(
                           child: Text(
-                            'Sign In',
+                            'Log In',
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'Montserrat',
@@ -171,10 +195,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUp()));
+                                    builder: (context) => RegisterScreen()));
                           },
                           child: Text(
-                            'Sign Up',
+                            'Register',
                             style: TextStyle(
                               fontSize: 18,
                               fontFamily: 'Montserrat',
@@ -197,69 +221,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:ywca/otp.dart';
-
-// class LoginScreen extends StatefulWidget {
-//   @override
-//   _LoginScreenState createState() => _LoginScreenState();
-// }
-
-// class _LoginScreenState extends State<LoginScreen> {
-//  TextEditingController _controller = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Phone Auth'),
-//       ),
-//       body: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Column(children: [
-//             Container(
-//               margin: EdgeInsets.only(top: 60),
-//               child: Center(
-//                 child: Text(
-//                   'Phone Authentication',
-//                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-//                 ),
-//               ),
-//             ),
-//             Container(
-//               margin: EdgeInsets.only(top: 40, right: 10, left: 10),
-//               child: TextField(
-//                 decoration: InputDecoration(
-//                   hintText: 'Phone Number',
-//                   prefix: Padding(
-//                     padding: EdgeInsets.all(4),
-//                     child: Text('+1'),
-//                   ),
-//                 ),
-//                 maxLength: 10,
-//                 keyboardType: TextInputType.number,
-//                 controller: _controller,
-//               ),
-//             )
-//           ]),
-//           Container(
-//             margin: EdgeInsets.all(10),
-//             width: double.infinity,
-//             child: FlatButton(
-//               color: Colors.blue,
-//               onPressed: () {
-//                 // Navigator.of(context).push(MaterialPageRoute(
-//                 //     builder: (context) => OTPScreen(_controller.text)));
-//               },
-//               child: Text(
-//                 'Next',
-//                 style: TextStyle(color: Colors.white),
-//               ),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }

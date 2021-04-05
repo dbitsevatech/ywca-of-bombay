@@ -24,16 +24,18 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.0
+
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.0+1
+  # cloud_firestore: ^1.0.3
+  cloud_firestore:
   pinput: ^0.2.6
   flutter_svg: ^0.9.0
   kf_drawer: ^1.1.1
   carousel_slider: ^3.0.0
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +57,15 @@ flutter:
     - assets/images/circles-encoded.svg
     - assets/images/circle-design.png
     - assets/images/ywca-logo.png
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Black.ttf
+        - asset: assets/fonts/Montserrat-Light.ttf
+    - family: RacingSansOne
+      fonts:
+        - asset: assets/fonts/RacingSansOne-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

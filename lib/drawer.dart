@@ -171,7 +171,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             await FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => SignUp()),
+                MaterialPageRoute(builder: (context) => RegisterScreen()),
                 (route) => false);
           },
         ),

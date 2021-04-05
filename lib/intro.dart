@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:auth/authentication/register.dart';
+import 'package:auth/authentication/login.dart';
 
 class Intro extends StatefulWidget {
   @override
@@ -119,8 +119,8 @@ class _IntroState extends State<Intro> {
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => SignUp()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
                     },
                     child: Center(
                       child: Text(

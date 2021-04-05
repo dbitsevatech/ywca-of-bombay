@@ -1,54 +1,29 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:auth/pages/home.dart';
 import 'package:auth/drawer.dart';
 
-class Otp extends StatefulWidget {
+class LoginOtp extends StatefulWidget {
   final color = const Color(0xff49DEE8);
-  final String name;
-  final String email;
-  final String pow;
-  final String gender;
-  final DateTime dob;
-  final String phone;
-  final String prof;
-  final String center;
-  final String interest;
 
-  const Otp(
-      {this.name,
-      this.email,
-      this.pow,
-      this.gender,
-      this.dob,
-      this.phone,
-      this.prof,
-      this.center,
-      this.interest});
+  final String phone;
+
+  const LoginOtp({this.phone});
 
   @override
-  _OtpState createState() => new _OtpState(
-      name, email, pow, gender, dob, phone, prof, center, interest);
+  _LoginOtpState createState() => new _LoginOtpState(phone);
 }
 
-class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
+class _LoginOtpState extends State<LoginOtp>
+    with SingleTickerProviderStateMixin {
   // Constants
   final int time = 59;
-  final String name;
-  final String email;
-  final String pow;
-  final String gender;
-  final DateTime dob;
+
   final String phone;
-  final String prof;
-  final String center;
-  final String interest;
+
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
-  _OtpState(this.name, this.email, this.pow, this.gender, this.dob, this.phone,
-      this.prof, this.center, this.interest);
+  _LoginOtpState(this.phone);
   AnimationController _controller;
   var otp;
   // Variables
@@ -149,7 +124,7 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
         _getPleaseEnterLabel,
         _getInputField,
         _hideResendButton ? _getTimerText : _getResendButton,
-        _registerButton,
+        _logInButton,
         _getOtpKeyboard
       ],
     );
@@ -199,8 +174,8 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
     );
   }
 
-  // Register button
-  get _registerButton {
+  // Log In button
+  get _logInButton {
     return new Container(
       decoration: new BoxDecoration(
         gradient: new LinearGradient(
@@ -223,7 +198,6 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
                 if (value.user != null) {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      // MaterialPageRoute(builder: (context) => Home()),
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
                 }
@@ -231,18 +205,17 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
             } catch (e) {
               FocusScope.of(context).unfocus();
               _scaffoldkey.currentState
+                  // ignore: deprecated_member_use
                   .showSnackBar(SnackBar(content: Text('invalid OTP')));
             }
           },
           child: Center(
-            child: Text(
-              'Register',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
+            child: Text('Log In',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Montserrat',
+                  color: Colors.white,
+                )),
           ),
           padding: EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
         ),
@@ -284,126 +257,114 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
     return new Container(
-      height: _screenSize.width - 180,
-      child: new Column(
-        children: <Widget>[
-          new Expanded(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _otpKeyboardInputButton(
-                  label: "1",
-                  onPressed: () {
-                    _setCurrentDigit(1);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "2",
-                  onPressed: () {
-                    _setCurrentDigit(2);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "3",
-                  onPressed: () {
-                    _setCurrentDigit(3);
-                  },
-                ),
-              ],
+        height: _screenSize.width - 180,
+        child: new Column(
+          children: <Widget>[
+            new Expanded(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _otpKeyboardInputButton(
+                      label: "1",
+                      onPressed: () {
+                        _setCurrentDigit(1);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "2",
+                      onPressed: () {
+                        _setCurrentDigit(2);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "3",
+                      onPressed: () {
+                        _setCurrentDigit(3);
+                      }),
+                ],
+              ),
             ),
-          ),
-          new Expanded(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _otpKeyboardInputButton(
-                  label: "4",
-                  onPressed: () {
-                    _setCurrentDigit(4);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "5",
-                  onPressed: () {
-                    _setCurrentDigit(5);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "6",
-                  onPressed: () {
-                    _setCurrentDigit(6);
-                  },
-                ),
-              ],
+            new Expanded(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _otpKeyboardInputButton(
+                      label: "4",
+                      onPressed: () {
+                        _setCurrentDigit(4);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "5",
+                      onPressed: () {
+                        _setCurrentDigit(5);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "6",
+                      onPressed: () {
+                        _setCurrentDigit(6);
+                      }),
+                ],
+              ),
             ),
-          ),
-          new Expanded(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _otpKeyboardInputButton(
-                  label: "7",
-                  onPressed: () {
-                    _setCurrentDigit(7);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "8",
-                  onPressed: () {
-                    _setCurrentDigit(8);
-                  },
-                ),
-                _otpKeyboardInputButton(
-                  label: "9",
-                  onPressed: () {
-                    _setCurrentDigit(9);
-                  },
-                ),
-              ],
+            new Expanded(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _otpKeyboardInputButton(
+                      label: "7",
+                      onPressed: () {
+                        _setCurrentDigit(7);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "8",
+                      onPressed: () {
+                        _setCurrentDigit(8);
+                      }),
+                  _otpKeyboardInputButton(
+                      label: "9",
+                      onPressed: () {
+                        _setCurrentDigit(9);
+                      }),
+                ],
+              ),
             ),
-          ),
-          new Expanded(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                new SizedBox(
-                  width: 80.0,
-                ),
-                _otpKeyboardInputButton(
-                  label: "0",
-                  onPressed: () {
-                    _setCurrentDigit(0);
-                  },
-                ),
-                _otpKeyboardActionButton(
-                  label: new Icon(
-                    Icons.backspace,
-                    color: Colors.black,
+            new Expanded(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  new SizedBox(
+                    width: 80.0,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      if (_sixthDigit != null) {
-                        _sixthDigit = null;
-                      } else if (_fifthDigit != null) {
-                        _fifthDigit = null;
-                      } else if (_fourthDigit != null) {
-                        _fourthDigit = null;
-                      } else if (_thirdDigit != null) {
-                        _thirdDigit = null;
-                      } else if (_secondDigit != null) {
-                        _secondDigit = null;
-                      } else if (_firstDigit != null) {
-                        _firstDigit = null;
-                      }
-                    });
-                  },
-                ),
-              ],
+                  _otpKeyboardInputButton(
+                      label: "0",
+                      onPressed: () {
+                        _setCurrentDigit(0);
+                      }),
+                  _otpKeyboardActionButton(
+                      label: new Icon(
+                        Icons.backspace,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (_sixthDigit != null) {
+                            _sixthDigit = null;
+                          } else if (_fifthDigit != null) {
+                            _fifthDigit = null;
+                          } else if (_fourthDigit != null) {
+                            _fourthDigit = null;
+                          } else if (_thirdDigit != null) {
+                            _thirdDigit = null;
+                          } else if (_secondDigit != null) {
+                            _secondDigit = null;
+                          } else if (_firstDigit != null) {
+                            _firstDigit = null;
+                          }
+                        });
+                      }),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ));
   }
 
   // Overridden methods
@@ -588,16 +549,15 @@ class OtpTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: controller,
-      builder: (BuildContext context, Widget child) {
-        return new Text(
-          timerString,
-          style: new TextStyle(
-              fontSize: fontSize,
-              color: timeColor,
-              fontWeight: FontWeight.w600),
-        );
-      },
-    );
+        animation: controller,
+        builder: (BuildContext context, Widget child) {
+          return new Text(
+            timerString,
+            style: new TextStyle(
+                fontSize: fontSize,
+                color: timeColor,
+                fontWeight: FontWeight.w600),
+          );
+        });
   }
 }
