@@ -1,6 +1,5 @@
 import 'package:auth/pages/class_builder.dart';
 import 'package:auth/intro.dart';
-// import 'package:auth/authentication/register.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,5 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Intro();
-    // return SignUp();
   }
 }

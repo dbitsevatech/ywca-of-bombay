@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:auth/authentication/login.dart';
-import 'package:auth/authentication/otp.dart';
+import 'package:auth/authentication/register_otp.dart';
 
 enum GenderChoices { female, male, decline }
 
@@ -63,32 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final int height = 1;
   @override
   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: Stack(
-//         children: [
-//           Positioned(
-//             child: Image.asset("assets/images/circle-design.png"),
-//             height: height * 0.238,
-//           ),
-//           Positioned(
-//             child: Image.asset("assets/images/ywca-logo.png"),
-//             bottom: 0,
-//             left: 0,
-//             right: 0,
-//             top: height * 0.23,
-//           ),
-//           Center(
-//             child: Text(
-//               "Empowering Women",
-//               style: TextStyle(fontSize: 20),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -747,7 +721,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         _formKey.currentState.save();
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => Otp(
+                              builder: (context) => RegisterOtp(
                                   name: name,
                                   email: email,
                                   pow: pow,
@@ -815,25 +789,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
         ),
       ),
     );

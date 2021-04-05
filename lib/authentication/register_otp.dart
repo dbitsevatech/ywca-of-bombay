@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:auth/pages/home.dart';
 import 'package:auth/drawer.dart';
 
-class Otp extends StatefulWidget {
+class RegisterOtp extends StatefulWidget {
   final color = const Color(0xff49DEE8);
   final String name;
   final String email;
@@ -17,7 +17,7 @@ class Otp extends StatefulWidget {
   final String center;
   final String interest;
 
-  const Otp(
+  const RegisterOtp(
       {this.name,
       this.email,
       this.pow,
@@ -29,11 +29,12 @@ class Otp extends StatefulWidget {
       this.interest});
 
   @override
-  _OtpState createState() => new _OtpState(
+  _RegisterOtpState createState() => new _RegisterOtpState(
       name, email, pow, gender, dob, phone, prof, center, interest);
 }
 
-class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
+class _RegisterOtpState extends State<RegisterOtp>
+    with SingleTickerProviderStateMixin {
   // Constants
   final int time = 59;
   final String name;
@@ -47,8 +48,8 @@ class _OtpState extends State<Otp> with SingleTickerProviderStateMixin {
   final String interest;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
-  _OtpState(this.name, this.email, this.pow, this.gender, this.dob, this.phone,
-      this.prof, this.center, this.interest);
+  _RegisterOtpState(this.name, this.email, this.pow, this.gender, this.dob,
+      this.phone, this.prof, this.center, this.interest);
   AnimationController _controller;
   var otp;
   // Variables
