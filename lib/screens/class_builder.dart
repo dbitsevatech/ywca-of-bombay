@@ -1,4 +1,4 @@
-import 'package:auth/pages/home.dart';
+import 'package:auth/screens/home.dart';
 
 typedef T Constructor<T>();
 

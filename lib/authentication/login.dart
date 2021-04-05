@@ -133,14 +133,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: FlatButton(
-                      // onPressed: () {
-                      //   print(_controller.text);
-                      //   if (!_formKey.currentState.validate()) {
-                      //     return;
-                      //   }
-                      //   // Navigator.of(context).push(MaterialPageRoute(
-                      //   //     builder: (context) => OTPScreen(_controller.text)));
-                      // },
                       onPressed: () async {
                         var checkuser = await FirebaseFirestore.instance
                             .collection('users')

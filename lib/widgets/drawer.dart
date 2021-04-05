@@ -1,35 +1,16 @@
-import 'package:auth/pages/class_builder.dart';
-import 'package:auth/pages/contact_us.dart';
-import 'package:auth/pages/home.dart';
-import 'package:auth/pages/about_us.dart';
-import 'package:auth/pages/events.dart';
-import 'package:auth/pages/initiatives.dart';
-import 'package:auth/pages/success_stories.dart';
+import 'package:auth/screens/class_builder.dart';
+import 'package:auth/screens/contact_us/contact_us.dart';
+import 'package:auth/screens/home.dart';
+import 'package:auth/screens/about_us.dart';
+import 'package:auth/screens/events/events.dart';
+import 'package:auth/screens/initiatives/initiatives.dart';
+import 'package:auth/screens/success_stories.dart';
 import 'package:auth/authentication/register.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-
-// void main() {
-//   ClassBuilder.registerClasses();
-//   runApp(MyApp2());
-// }
-
-// class MyApp2 extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       debugShowCheckedModeBanner: false,
-//       home: MainWidget(),
-//     );
-//   }
-// }
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);

@@ -711,10 +711,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         print(prof);
                         print(center);
                         print(interest);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => Otp(name : name, email: email, pow : pow, gender : gender, dob: dob, phone: phone, prof: prof, center: center, interest: interest)),
-                        // );
                         if (!_formKey.currentState.validate()) {
                           return;
                         }

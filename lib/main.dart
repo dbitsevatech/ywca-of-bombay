@@ -1,5 +1,6 @@
-import 'package:auth/pages/class_builder.dart';
-import 'package:auth/intro.dart';
+import 'package:auth/screens/class_builder.dart';
+import 'package:auth/screens/intro.dart';
+import 'package:auth/screens/initiatives/initiatives.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Intro();
+    // return Intro();
+    return Initiatives();
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:auth/drawer.dart';
+import 'package:auth/widgets/drawer.dart';
 
 class LoginOtp extends StatefulWidget {
   final color = const Color(0xff49DEE8);
