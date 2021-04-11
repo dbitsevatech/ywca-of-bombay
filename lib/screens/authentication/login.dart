@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:auth/authentication/register.dart';
-import 'package:auth/authentication/login_otp.dart';
+import 'package:auth/screens/authentication/register.dart';
+import 'package:auth/screens/authentication/login_otp.dart';
 
 void main() => runApp(LoginScreen());
 

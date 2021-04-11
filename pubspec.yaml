@@ -37,6 +37,7 @@ dependencies:
   kf_drawer: ^1.1.1
   carousel_slider: ^3.0.0
   flutter_swiper: ^1.1.6
+  search_widget: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +59,7 @@ flutter:
     - assets/images/circles-encoded.svg
     - assets/images/circle-design.png
     - assets/images/ywca-logo.png
+    - assets/images/events/christmas.jpg
     - assets/images/initiatives/img1.jpg
     - assets/images/initiatives/img2.jpg
     - assets/images/initiatives/img3.jpg
@@ -68,9 +70,13 @@ flutter:
       fonts:
         - asset: assets/fonts/Montserrat-Black.ttf
         - asset: assets/fonts/Montserrat-Light.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf
     - family: RacingSansOne
       fonts:
         - asset: assets/fonts/RacingSansOne-Regular.ttf
+    - family: LilyScriptOne
+      fonts:
+        - asset: assets/fonts/LilyScriptOne-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -70,23 +70,23 @@ class _RegisterOtpState extends State<RegisterOtp>
   int unReadNotificationsCount = 0;
 
   // Returns "Appbar"
-  get _getAppbar {
-    return new AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
-      leading: new InkWell(
-        borderRadius: BorderRadius.circular(30.0),
-        child: new Icon(
-          Icons.arrow_back,
-          color: Colors.black54,
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
-      centerTitle: true,
-    );
-  }
+  // get _getAppbar {
+  //   return new AppBar(
+  //     backgroundColor: Colors.transparent,
+  //     elevation: 0.0,
+  //     leading: new InkWell(
+  //       borderRadius: BorderRadius.circular(30.0),
+  //       child: new Icon(
+  //         Icons.arrow_back,
+  //         color: Colors.black54,
+  //       ),
+  //       onTap: () {
+  //         Navigator.pop(context);
+  //       },
+  //     ),
+  //     centerTitle: true,
+  //   );
+  // }
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
@@ -539,7 +539,7 @@ class _RegisterOtpState extends State<RegisterOtp>
             _fifthDigit.toString() +
             _sixthDigit.toString();
 
-        // TODO:  Verify your otp by here. API call
+        // Verify your otp by here. API call
       }
     });
   }

@@ -5,7 +5,7 @@ import 'package:auth/screens/about_us.dart';
 import 'package:auth/screens/events/events.dart';
 import 'package:auth/screens/initiatives/initiatives.dart';
 import 'package:auth/screens/success_stories.dart';
-import 'package:auth/authentication/register.dart';
+import 'package:auth/screens/authentication/register.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
