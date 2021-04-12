@@ -1,3 +1,4 @@
+import 'package:ywcaofbombay/screens/authentication/login.dart';
 import 'package:ywcaofbombay/screens/class_builder.dart';
 import 'package:ywcaofbombay/screens/contact_us/contact_us.dart';
 import 'package:ywcaofbombay/screens/home.dart';
@@ -5,7 +6,6 @@ import 'package:ywcaofbombay/screens/about_us.dart';
 import 'package:ywcaofbombay/screens/events/events.dart';
 import 'package:ywcaofbombay/screens/initiatives/initiatives.dart';
 import 'package:ywcaofbombay/screens/success_stories.dart';
-import 'package:ywcaofbombay/screens/authentication/register.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +152,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             await FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => RegisterScreen()),
+                MaterialPageRoute(builder: (context) => LoginScreen()),
                 (route) => false);
           },
         ),

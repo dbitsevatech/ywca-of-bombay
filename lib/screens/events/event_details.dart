@@ -25,6 +25,7 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          // TODO: Make the back-button black color
           backgroundColor: Colors.transparent,
           elevation: 0,
           actions: <Widget>[

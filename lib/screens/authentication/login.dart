@@ -134,6 +134,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: FlatButton(
                       onPressed: () async {
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        // TODO: Login user not found
                         var checkuser = await FirebaseFirestore.instance
                             .collection('users')
                             .where("phone", isEqualTo: phone)
