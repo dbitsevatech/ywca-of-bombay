@@ -1,10 +1,10 @@
+import 'package:ywcaofbombay/screens/authentication/login.dart';
+
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
-import 'package:auth/screens/authentication/login.dart';
 
 class Intro extends StatefulWidget {
   @override

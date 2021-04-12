@@ -1,5 +1,6 @@
+import 'package:ywcaofbombay/widgets/carousel.dart';
+
 import 'package:flutter/material.dart';
-import '../../widgets/carousel.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 

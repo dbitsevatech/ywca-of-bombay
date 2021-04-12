@@ -1,4 +1,4 @@
-package com.example.auth
+package com.dbitsevatech.ywcaofbombay
 
 import io.flutter.embedding.android.FlutterActivity
 

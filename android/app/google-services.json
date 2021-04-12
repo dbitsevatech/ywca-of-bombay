@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "64469132741",
-    "project_id": "ywca-b8ba1",
-    "storage_bucket": "ywca-b8ba1.appspot.com"
+    "project_number": "9370448097",
+    "firebase_url": "https://auth-a1b86-default-rtdb.firebaseio.com",
+    "project_id": "auth-a1b86",
+    "storage_bucket": "auth-a1b86.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64469132741:android:0dc7e2053341f0baa317ac",
+        "mobilesdk_app_id": "1:9370448097:android:6d7dc630bbe4a5847bc7a0",
         "android_client_info": {
-          "package_name": "com.example.ywca"
+          "package_name": "com.dbitsevatech.ywcaofbombay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "64469132741-4fomoogr0moo4tl5016vb9chp4adbqa9.apps.googleusercontent.com",
+          "client_id": "9370448097-50fptkve16qhgsq883cchv86c4441nna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dbitsevatech.ywcaofbombay",
+            "certificate_hash": "8803913870c9c35bf6bcc28dcbcecf8a43457ff9"
+          }
+        },
+        {
+          "client_id": "9370448097-j64767f24h0ke6nhqu9b6nqpeh55bcul.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBKwiWFxSoVbhoAoQmjp5YAiFcDx1uhvts"
+          "current_key": "AIzaSyBJvtX8cfN0QYA0pBIE00y3E2QTtR9cg4Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "64469132741-4fomoogr0moo4tl5016vb9chp4adbqa9.apps.googleusercontent.com",
+              "client_id": "9370448097-j64767f24h0ke6nhqu9b6nqpeh55bcul.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

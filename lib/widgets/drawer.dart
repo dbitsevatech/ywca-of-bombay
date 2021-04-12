@@ -1,11 +1,11 @@
-import 'package:auth/screens/class_builder.dart';
-import 'package:auth/screens/contact_us/contact_us.dart';
-import 'package:auth/screens/home.dart';
-import 'package:auth/screens/about_us.dart';
-import 'package:auth/screens/events/events.dart';
-import 'package:auth/screens/initiatives/initiatives.dart';
-import 'package:auth/screens/success_stories.dart';
-import 'package:auth/screens/authentication/register.dart';
+import 'package:ywcaofbombay/screens/class_builder.dart';
+import 'package:ywcaofbombay/screens/contact_us/contact_us.dart';
+import 'package:ywcaofbombay/screens/home.dart';
+import 'package:ywcaofbombay/screens/about_us.dart';
+import 'package:ywcaofbombay/screens/events/events.dart';
+import 'package:ywcaofbombay/screens/initiatives/initiatives.dart';
+import 'package:ywcaofbombay/screens/success_stories.dart';
+import 'package:ywcaofbombay/screens/authentication/register.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

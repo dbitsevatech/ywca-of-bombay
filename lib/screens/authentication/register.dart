@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/screens/authentication/login.dart';
+import 'package:ywcaofbombay/screens/authentication/register_otp.dart';
 
-import 'package:auth/screens/authentication/login.dart';
-import 'package:auth/screens/authentication/register_otp.dart';
+import 'package:flutter/material.dart';
 
 enum GenderChoices { female, male, decline }
 

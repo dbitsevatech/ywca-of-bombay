@@ -1,8 +1,8 @@
-import 'dart:async';
+import 'package:ywcaofbombay/widgets/drawer.dart';
 
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:auth/widgets/drawer.dart';
 
 class RegisterOtp extends StatefulWidget {
   final color = const Color(0xff49DEE8);

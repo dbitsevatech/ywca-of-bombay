@@ -1,5 +1,5 @@
-import './event_details.dart';
-import '../../models/Event.dart';
+import 'package:ywcaofbombay/screens/events/event_details.dart';
+import 'package:ywcaofbombay/models/Event.dart';
 
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';

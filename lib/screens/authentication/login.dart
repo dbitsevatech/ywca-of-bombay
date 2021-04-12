@@ -1,10 +1,10 @@
+import 'package:ywcaofbombay/screens/authentication/register.dart';
+import 'package:ywcaofbombay/screens/authentication/login_otp.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'package:auth/screens/authentication/register.dart';
-import 'package:auth/screens/authentication/login_otp.dart';
 
 void main() => runApp(LoginScreen());
 

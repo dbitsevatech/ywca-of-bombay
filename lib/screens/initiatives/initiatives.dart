@@ -1,8 +1,8 @@
-import 'package:auth/screens/initiatives/piya.dart';
+import 'package:ywcaofbombay/screens/initiatives/piya.dart';
+import 'package:ywcaofbombay/screens/initiatives/customclip_path.dart';
+
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-
-import 'package:auth/screens/initiatives/customclip_path.dart';
 
 // ignore: must_be_immutable
 class Initiatives extends KFDrawerContent {
