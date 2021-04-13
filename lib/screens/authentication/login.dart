@@ -137,7 +137,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
-                        // TODO: Login user not found
                         var checkuser = await FirebaseFirestore.instance
                             .collection('users')
                             .where("phone", isEqualTo: phone)

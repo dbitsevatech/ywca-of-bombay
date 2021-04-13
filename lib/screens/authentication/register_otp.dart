@@ -1,4 +1,5 @@
 import 'package:ywcaofbombay/widgets/drawer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -220,17 +221,38 @@ class _RegisterOtpState extends State<RegisterOtp>
                   .signInWithCredential(PhoneAuthProvider.credential(
                       verificationId: _verificationCode, smsCode: otp))
                   .then((value) async {
+                // var checkuser =  await FirebaseFirestore.instance.collection('users').where("phone", isEqualTo: "1111111111").get();
+                // if(checkuser == null) {
                 if (value.user != null) {
+                  // print(value.user);
+                  Map<String, dynamic> data = {
+                    "name": name,
+                    "phone": phone,
+                    "email": email,
+                    "pow": pow,
+                    "gender": gender,
+                    "prof": prof,
+                    "center": center,
+                    "interest": interest,
+                    "dob": dob
+                  };
+                  CollectionReference users =
+                      FirebaseFirestore.instance.collection('users');
+                  users.doc(value.user.uid).set(data);
                   Navigator.pushAndRemoveUntil(
                       context,
-                      // MaterialPageRoute(builder: (context) => Home()),
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
                 }
+                // }
+                // else{
+                //   print("user already registered with this number");
+                // }
               });
             } catch (e) {
               FocusScope.of(context).unfocus();
               _scaffoldkey.currentState
+                  // ignore: deprecated_member_use
                   .showSnackBar(SnackBar(content: Text('invalid OTP')));
             }
           },

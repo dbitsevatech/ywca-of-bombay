@@ -158,10 +158,11 @@ class _LoginOtpState extends State<LoginOtp>
         height: 32,
         width: 120,
         decoration: BoxDecoration(
-            // color: Colors.black,
-            color: Color(0xff00BBE4),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(32)),
+          // color: Colors.black,
+          color: Color(0xff00BBE4),
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(32),
+        ),
         alignment: Alignment.center,
         child: new Text(
           "Resend OTP",
@@ -195,14 +196,16 @@ class _LoginOtpState extends State<LoginOtp>
               await FirebaseAuth.instance
                   .signInWithCredential(PhoneAuthProvider.credential(
                       verificationId: _verificationCode, smsCode: otp))
-                  .then((value) async {
-                if (value.user != null) {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
-                }
-              });
+                  .then(
+                (value) async {
+                  if (value.user != null) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainWidget()),
+                        (route) => false);
+                  }
+                },
+              );
             } catch (e) {
               FocusScope.of(context).unfocus();
               _scaffoldkey.currentState
@@ -211,12 +214,14 @@ class _LoginOtpState extends State<LoginOtp>
             }
           },
           child: Center(
-            child: Text('Log In',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'Montserrat',
-                  color: Colors.white,
-                )),
+            child: Text(
+              'Log In',
+              style: TextStyle(
+                fontSize: 20,
+                fontFamily: 'Montserrat',
+                color: Colors.white,
+              ),
+            ),
           ),
           padding: EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
         ),
