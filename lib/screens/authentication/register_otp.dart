@@ -70,6 +70,21 @@ class _RegisterOtpState extends State<RegisterOtp>
   bool didReadNotifications = false;
   int unReadNotificationsCount = 0;
 
+  _showInvalidOTPSnackBar() {
+    final snackBar = SnackBar(
+      content: Text('Invalid OTP. Try again'),
+      backgroundColor: Colors.red,
+      // TODO: Add action to snackbar
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
+    _scaffoldkey.currentState.showSnackBar(snackBar);
+  }
   // Returns "Appbar"
   // get _getAppbar {
   //   return new AppBar(
@@ -244,6 +259,7 @@ class _RegisterOtpState extends State<RegisterOtp>
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
                 }
+                // TODO: Phone Number already registered snackbar
                 // }
                 // else{
                 //   print("user already registered with this number");
@@ -251,9 +267,10 @@ class _RegisterOtpState extends State<RegisterOtp>
               });
             } catch (e) {
               FocusScope.of(context).unfocus();
-              _scaffoldkey.currentState
-                  // ignore: deprecated_member_use
-                  .showSnackBar(SnackBar(content: Text('invalid OTP')));
+              print(e);
+              print("Invalid OTP");
+
+              _showInvalidOTPSnackBar();
             }
           },
           child: Center(
@@ -460,6 +477,7 @@ class _RegisterOtpState extends State<RegisterOtp>
     _screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       // appBar: _getAppbar,
+      key: _scaffoldkey,
       backgroundColor: Colors.white,
       body: new Container(
         width: _screenSize.width,

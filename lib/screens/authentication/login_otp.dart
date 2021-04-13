@@ -20,9 +20,9 @@ class _LoginOtpState extends State<LoginOtp>
   // Constants
   final int time = 59;
 
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final String phone;
 
-  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
   _LoginOtpState(this.phone);
   AnimationController _controller;
@@ -45,6 +45,22 @@ class _LoginOtpState extends State<LoginOtp>
   bool didReadNotifications = false;
   int unReadNotificationsCount = 0;
 
+  _showInvalidOTPSnackBar() {
+    final snackBar = SnackBar(
+      content: Text('Invalid OTP. Try again'),
+      backgroundColor: Colors.red,
+      // TODO: Add action to snackbar
+      action: SnackBarAction(
+        label: 'OK',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+    // _scaffoldkey.currentState
+    // ignore: deprecated_member_use
+    _scaffoldkey.currentState.showSnackBar(snackBar);
+  }
   // Returns "Appbar"
   // get _getAppbar {
   //   return new AppBar(
@@ -208,10 +224,15 @@ class _LoginOtpState extends State<LoginOtp>
               );
             } catch (e) {
               FocusScope.of(context).unfocus();
-              _scaffoldkey.currentState
-                  // ignore: deprecated_member_use
-                  .showSnackBar(SnackBar(content: Text('invalid OTP')));
+              print(e);
+              print("Invalid OTP");
+
+              _showInvalidOTPSnackBar();
             }
+            // } on FirebaseAuthException catch (e) {
+            //   print('Failed with error code: ${e.code}');
+            //   print(e.message);
+            // }
           },
           child: Center(
             child: Text(
@@ -405,6 +426,7 @@ class _LoginOtpState extends State<LoginOtp>
     _screenSize = MediaQuery.of(context).size;
     return new Scaffold(
       // appBar: _getAppbar,
+      key: _scaffoldkey,
       backgroundColor: Colors.white,
       body: new Container(
         width: _screenSize.width,

@@ -18,9 +18,30 @@ class _LoginScreenState extends State<LoginScreen> {
   String phone;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
+
+  final GlobalKey<ScaffoldState> _scaffoldkey =
+      GlobalKey<ScaffoldState>(); // scaffold key for snackbar
+
+  _showNumberNotRegisteredSnackBar() {
+    final registerSnackBar = SnackBar(
+      content: Text('Phone number not registered!'),
+      backgroundColor: Colors.red,
+      // TODO: Add action to snackbar
+      action: SnackBarAction(
+        label: 'Register',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
+    _scaffoldkey.currentState.showSnackBar(registerSnackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       body: SingleChildScrollView(
         child: Container(
           // margin: EdgeInsets.all(16),
@@ -149,7 +170,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) =>
                                       LoginOtp(phone: phone)));
                         } else {
+                          FocusScope.of(context).unfocus();
                           print("No user found");
+                          _showNumberNotRegisteredSnackBar();
                         }
                       },
                       child: Center(
