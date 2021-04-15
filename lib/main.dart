@@ -1,16 +1,19 @@
+import 'package:ywcaofbombay/screens/authentication/register.dart';
 import 'package:ywcaofbombay/screens/class_builder.dart';
 import 'package:ywcaofbombay/screens/intro.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:ywcaofbombay/widgets/drawer.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
   runApp(MaterialApp(
-    home: MyApp(),
     debugShowCheckedModeBanner: false,
+    home: MyApp(),
   ));
 }
 
@@ -18,6 +21,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Intro();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xff49DEE8),
+      // statusBarColor: Color(0xff00BBE4),
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
+    // return Intro();
+    return MainWidget();
+    // return RegisterScreen2();
   }
 }

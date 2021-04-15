@@ -236,10 +236,14 @@ class _RegisterOtpState extends State<RegisterOtp>
                   .signInWithCredential(PhoneAuthProvider.credential(
                       verificationId: _verificationCode, smsCode: otp))
                   .then((value) async {
-                // var checkuser =  await FirebaseFirestore.instance.collection('users').where("phone", isEqualTo: "1111111111").get();
-                // if(checkuser == null) {
-                if (value.user != null) {
-                  // print(value.user);
+                final snapShot = await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(value.user.uid)
+                    .get();
+
+                if (snapShot == null || !snapShot.exists) {
+                  print(value.user);
+                  print(value.user.uid);
                   Map<String, dynamic> data = {
                     "name": name,
                     "phone": phone,
@@ -254,16 +258,32 @@ class _RegisterOtpState extends State<RegisterOtp>
                   CollectionReference users =
                       FirebaseFirestore.instance.collection('users');
                   users.doc(value.user.uid).set(data);
+                  print(value.user);
+                  print(value.user.uid);
+
+                  FirebaseFirestore.instance.collection("users").get().then(
+                    (querySnapshot) {
+                      querySnapshot.docs.forEach((result) {
+                        print(result.id);
+                      });
+                    },
+                  );
+                  // FirebaseFirestore.instance.collection("users").get().then(
+                  //   (querySnapshot) {
+                  //     querySnapshot.docs.forEach((result) {
+                  //       print(result.data());
+                  //     });
+                  //   },
+                  // );
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
                 }
                 // TODO: Phone Number already registered snackbar
-                // }
-                // else{
-                //   print("user already registered with this number");
-                // }
+                else {
+                  print("user already registered with this number");
+                }
               });
             } catch (e) {
               FocusScope.of(context).unfocus();

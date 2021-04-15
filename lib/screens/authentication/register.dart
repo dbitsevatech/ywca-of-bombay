@@ -2,6 +2,7 @@ import 'package:ywcaofbombay/screens/authentication/login.dart';
 import 'package:ywcaofbombay/screens/authentication/register_otp.dart';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum GenderChoices { female, male, decline }
 
@@ -17,7 +18,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
   String pow;
   String gender = "Female";
-  // var _value;
   final color = const Color(0xff49DEE8);
 
   final GlobalKey<FormState> _formKey =
@@ -34,11 +34,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
       firstDate: new DateTime(1940),
       lastDate: new DateTime.now().subtract(Duration(days: 4380)),
       // initialDatePickerMode: DatePickerMode.year,
+      // TODO: Check if above line UX issue is solved
+      // https://github.com/flutter/flutter/issues/67909
+      // https://github.com/flutter/flutter/pull/67926
+      //
+      // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.light(),
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Color(0xff49DEE8), // highlighed date color
+              onPrimary: Colors.black, // highlighted date text color
+              surface: Color(0xff49DEE8), // header color
+              onSurface: Colors.grey[800], // header text & calendar text color
+            ),
+            dialogBackgroundColor: Colors.white, // calendar bg color
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Color(0xff00BBE4), // button text color
+              ),
+            ),
+          ),
           child: child,
         );
       },
@@ -67,6 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         child: Container(
           // margin: EdgeInsets.all(16),
+          // height: MediaQuery.of(context).size.height, // giving render issue
           child: Form(
             key: _formKey,
             child: Column(
@@ -701,7 +720,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: FlatButton(
-                      onPressed: () {
+                      onPressed: () async {
                         print(name);
                         print(email);
                         print(pow);
@@ -714,6 +733,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
+                        // TODO: Phone Number already registered snackbar
+                        // CollectionReference users =
+                        //     FirebaseFirestore.instance.collection('users');
+                        // users.doc(documentId).get();
                         _formKey.currentState.save();
                         Navigator.of(context).push(
                           MaterialPageRoute(
@@ -790,3 +813,33 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     );
   }
 }
+
+// class GetUserName extends StatelessWidget {
+//   final String documentId;
+
+//   GetUserName(this.documentId);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+//     return FutureBuilder<DocumentSnapshot>(
+//       future: users.doc(documentId).get(),
+//       builder:
+//           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+//         if (snapshot.hasError) {
+//           print("Something went wrong");
+//           return Text("Something went wrong");
+//         }
+
+//         if (snapshot.connectionState == ConnectionState.done) {
+//           Map<String, dynamic> data = snapshot.data.data();
+//           print("Full Name: ${data['full_name']} ${data['last_name']}");
+//           return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+//         }
+
+//         return Text("loading");
+//       },
+//     );
+//   }
+// }

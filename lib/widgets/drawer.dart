@@ -98,7 +98,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                 ),
                 Column(
                   children: <Widget>[
-                    new Text('YMCA OF BOMBAY',
+                    new Text('YWCA OF BOMBAY',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                             fontSize: 22,
@@ -164,8 +164,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             colors: [
               Colors.white,
               Colors.white,
-              Colors.blue[100],
-              Colors.blue[200],
+              // Colors.blue[100],
+              Color(0xff49DEE8),
+              // Colors.blue[200],
+              Color(0xff49DEE8),
             ],
           ),
         ),
