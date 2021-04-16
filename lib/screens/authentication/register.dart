@@ -23,6 +23,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
+  final GlobalKey<ScaffoldState> _scaffoldkey =
+      GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
@@ -70,6 +73,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  _showAlreadyRegisteredSnackBar() {
+    final snackBar = SnackBar(
+      content: Text(
+          'Your phone number is already registered!. Proceed to Log In :)'),
+      backgroundColor: Colors.red,
+      // TODO: Add action to snackbar
+      action: SnackBarAction(
+        label: 'Log In',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
+    _scaffoldkey.currentState.showSnackBar(snackBar);
+  }
+
   Future<bool> _phoneNumberIsAlreadyRegistered(value) async {
     List<String> _listOfPhoneNumbers = [];
 
@@ -102,6 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       body: SingleChildScrollView(
         child: Container(
           // margin: EdgeInsets.all(16),
@@ -263,9 +284,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         else
                           return null;
                       },
-                      onSaved: (String value) async {
+                      // onChanged: (String value) {
+                      //   setState(() {
+                      //     phone = value;
+                      //   });
+                      // },
+                      onSaved: (String value) {
+                        setState(() {
+                          phone = value;
+                        });
+                        //   print("onSaved!: " + value);
                         // List<String> _listOfPhoneNumbers = ['0'];
-                        // print("onSaved!: " + value);
                         // await FirebaseFirestore.instance
                         //     .collection("users")
                         //     .get()
@@ -276,18 +305,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //   });
                         // });
                         // print(_listOfPhoneNumbers);
-                        // if (_listOfPhoneNumbers.contains(value))
+                        // if (!_listOfPhoneNumbers.contains(value)) {
+                        //   // TODO: Try removing await in below condition
+                        //   // if (!await _phoneNumberIsAlreadyRegistered(value)) {
+                        // } else {
+                        //   FocusScope.of(context).unfocus();
                         //   print(
-                        //       "You are already registered! Proceed to Log In :)");
-                        // TODO: Try removing await in below condition
-                        if (!(await _phoneNumberIsAlreadyRegistered(value))) {
-                          setState(() {
-                            phone = value;
-                          });
-                        } else {
-                          print(
-                              "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-                        }
+                        //       "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+                        //   _showAlreadyRegisteredSnackBar();
+                        // }
                       },
                       decoration: InputDecoration(
                         prefixIcon: Icon(
@@ -306,51 +332,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                // Container(
-                //   width: 360,
-                //   child: TextFormField(
-                //     keyboardType: TextInputType.text,
-                //     onSaved: (value) {
-                //       setState(() {
-                //         if (value == '') {
-                //           pow = 'Retired';
-                //         } else {
-                //           pow = value;
-                //         }
-                //       });
-                //     },
-                //     decoration: InputDecoration(
-                //       prefixIcon: Icon(
-                //         Icons.location_city,
-                //         color: Color(0xff00BBE4),
-                //       ),
-                //       labelText: 'Place of work/school/college',
-                //       filled: true,
-                //       fillColor: Color(0xffF3F4F6),
-                //       disabledBorder: InputBorder.none,
-                //       focusedBorder: InputBorder.none,
-                //       enabledBorder: InputBorder.none,
-                //       errorBorder: InputBorder.none,
-                //     ),
-                //   ),
-                // ),
-                // Center(
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.end,
-                //     children: [
-                //       Container(
-                //         child: Text(
-                //           '(Leave blank if retired)',
-                //           style: TextStyle(
-                //             color: Color(0xff49DEE8),
-                //             fontSize: 15,
-                //           ),
-                //         ),
-                //         padding: EdgeInsets.all(10),
-                //       )
-                //     ],
-                //   ),
-                // ),
                 SizedBox(
                   height: 8,
                 ),
@@ -424,22 +405,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: FlatButton(
-                      onPressed: () {
-                        print(dob);
+                      onPressed: () async {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         _formKey.currentState.save();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
+                        if (!await _phoneNumberIsAlreadyRegistered(phone)) {
+                          print("user does not exist");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
                               builder: (context) => RegisterScreen2(
                                   name: name,
                                   email: email,
                                   phone: phone,
                                   gender: gender,
-                                  dob: dob)),
-                        );
+                                  dob: dob),
+                            ),
+                          );
+                        } else {
+                          FocusScope.of(context).unfocus();
+                          print(
+                              "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+                          _showAlreadyRegisteredSnackBar();
+                        }
                       },
                       child: Center(
                         child: Text(
