@@ -16,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String name;
   String email;
   DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
-  String pow;
+  String phone;
   String gender = "Female";
   final color = const Color(0xff49DEE8);
 
@@ -61,12 +61,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     );
-    if (picked != null && picked != dob)
+    if (picked != null && picked != dob) {
       setState(() {
         dob = picked;
         // print(picked);
         print(dob);
       });
+    }
+  }
+
+  Future<bool> _phoneNumberIsAlreadyRegistered(value) async {
+    List<String> _listOfPhoneNumbers = [];
+
+    await FirebaseFirestore.instance
+        .collection("users")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        print(result.data()["phone"]);
+        _listOfPhoneNumbers.add(result.data()["phone"]);
+      });
+    });
+
+    print("List of numbers: " + _listOfPhoneNumbers.toString());
+    print("Phone Number already registered: " +
+        _listOfPhoneNumbers.contains(value).toString());
+    return _listOfPhoneNumbers.contains(value);
   }
 
   @override
@@ -123,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: 360,
                     child: TextFormField(
                       keyboardType: TextInputType.text,
-                      onChanged: (value) {
+                      onSaved: (value) {
                         setState(() {
                           name = value;
                         });
@@ -134,9 +154,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         else
                           return null;
                       },
-                      // onSaved: (String value) {
-                      //   name = value;
-                      // },
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.account_circle,
@@ -181,9 +198,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                       ),
-                      onTap: () {
+                      onTap: () async {
                         FocusScope.of(context).requestFocus(new FocusNode());
-                        _selectDate();
+                        // TODO: BUG: text cursor showing over the date picker bcoz of async-await
+                        await _selectDate();
                         dateController.text = "${dob.toLocal()}".split(' ')[0];
                       },
                     ),
@@ -196,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: 360,
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
-                    onChanged: (value) {
+                    onSaved: (value) {
                       setState(() {
                         email = value;
                       });
@@ -205,19 +223,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (value.isEmpty) {
                         return 'Email is required';
                       }
-
                       if (!RegExp(
                               "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
                           .hasMatch(value)) {
                         return 'Enter a valid email address';
                       }
-
-                      // validator has to return something :)
+                      // return null coz validator has to return something
                       return null;
                     },
-                    // onSaved: (String value) {
-                    //   email = value;
-                    // },
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.email,
@@ -236,51 +249,108 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: 25,
                 ),
-                Container(
-                  width: 360,
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      setState(() {
-                        if (value == '') {
-                          pow = 'Retired';
+                Center(
+                  child: Container(
+                    width: 360,
+                    child: TextFormField(
+                      keyboardType: TextInputType.phone,
+                      maxLength: 10,
+                      validator: (String value) {
+                        if (value.isEmpty)
+                          return 'Mobile number is required';
+                        else if (!RegExp(r"^\d{10}$").hasMatch(value))
+                          return 'Please enter a valid mobile number';
+                        else
+                          return null;
+                      },
+                      onSaved: (String value) async {
+                        // List<String> _listOfPhoneNumbers = ['0'];
+                        // print("onSaved!: " + value);
+                        // await FirebaseFirestore.instance
+                        //     .collection("users")
+                        //     .get()
+                        //     .then((querySnapshot) {
+                        //   querySnapshot.docs.forEach((result) {
+                        //     print(result.data()["phone"]);
+                        //     _listOfPhoneNumbers.add(result.data()["phone"]);
+                        //   });
+                        // });
+                        // print(_listOfPhoneNumbers);
+                        // if (_listOfPhoneNumbers.contains(value))
+                        //   print(
+                        //       "You are already registered! Proceed to Log In :)");
+                        // TODO: Try removing await in below condition
+                        if (!(await _phoneNumberIsAlreadyRegistered(value))) {
+                          setState(() {
+                            phone = value;
+                          });
                         } else {
-                          pow = value;
+                          print(
+                              "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
                         }
-                      });
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.location_city,
-                        color: Color(0xff00BBE4),
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.account_circle,
+                          color: Color(0xff00BBE4),
+                        ),
+                        prefixText: '+91 | ',
+                        labelText: 'Mobile Number',
+                        filled: true,
+                        fillColor: Color(0xffF3F4F6),
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
                       ),
-                      labelText: 'Place of work/school/college',
-                      filled: true,
-                      fillColor: Color(0xffF3F4F6),
-                      disabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
                     ),
                   ),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        child: Text(
-                          '(Leave blank if retired)',
-                          style: TextStyle(
-                            color: Color(0xff49DEE8),
-                            fontSize: 15,
-                          ),
-                        ),
-                        padding: EdgeInsets.all(10),
-                      )
-                    ],
-                  ),
-                ),
+                // Container(
+                //   width: 360,
+                //   child: TextFormField(
+                //     keyboardType: TextInputType.text,
+                //     onSaved: (value) {
+                //       setState(() {
+                //         if (value == '') {
+                //           pow = 'Retired';
+                //         } else {
+                //           pow = value;
+                //         }
+                //       });
+                //     },
+                //     decoration: InputDecoration(
+                //       prefixIcon: Icon(
+                //         Icons.location_city,
+                //         color: Color(0xff00BBE4),
+                //       ),
+                //       labelText: 'Place of work/school/college',
+                //       filled: true,
+                //       fillColor: Color(0xffF3F4F6),
+                //       disabledBorder: InputBorder.none,
+                //       focusedBorder: InputBorder.none,
+                //       enabledBorder: InputBorder.none,
+                //       errorBorder: InputBorder.none,
+                //     ),
+                //   ),
+                // ),
+                // Center(
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       Container(
+                //         child: Text(
+                //           '(Leave blank if retired)',
+                //           style: TextStyle(
+                //             color: Color(0xff49DEE8),
+                //             fontSize: 15,
+                //           ),
+                //         ),
+                //         padding: EdgeInsets.all(10),
+                //       )
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 8,
                 ),
@@ -366,7 +436,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               builder: (context) => RegisterScreen2(
                                   name: name,
                                   email: email,
-                                  pow: pow,
+                                  phone: phone,
                                   gender: gender,
                                   dob: dob)),
                         );
@@ -439,27 +509,28 @@ enum MemberChoices { yes, no, maybe }
 class RegisterScreen2 extends StatefulWidget {
   final String name;
   final String email;
-  final String pow;
+  final String phone;
   final String gender;
   final DateTime dob;
-  RegisterScreen2({this.name, this.email, this.pow, this.gender, this.dob});
+  RegisterScreen2({this.name, this.email, this.phone, this.gender, this.dob});
   @override
   _RegisterScreen2State createState() =>
-      _RegisterScreen2State(name, email, pow, gender, dob);
+      _RegisterScreen2State(name, email, phone, gender, dob);
 }
 
 class _RegisterScreen2State extends State<RegisterScreen2> {
   final String name;
   final String email;
-  final String pow;
+  final String phone;
   final String gender;
   final DateTime dob;
 
-  String phone;
   String prof;
+  String pow;
   String center = 'Chembur';
   String interest = "Yes";
-  _RegisterScreen2State(this.name, this.email, this.pow, this.gender, this.dob);
+  _RegisterScreen2State(
+      this.name, this.email, this.phone, this.gender, this.dob);
   final color = const Color(0xff49DEE8);
   MemberChoices _selectedMemberChoice = MemberChoices.yes;
 
@@ -511,56 +582,14 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                   ],
                 ),
                 SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      maxLength: 10,
-                      onChanged: (value) {
-                        setState(() {
-                          phone = value;
-                        });
-                      },
-                      validator: (String value) {
-                        if (value.isEmpty)
-                          return 'Mobile number is required';
-                        else if (!RegExp(r"^\d{10}$").hasMatch(value))
-                          return 'Please enter a valid mobile number';
-                        else
-                          return null;
-                      },
-                      // onSaved: (String value) {
-                      //   phone = value;
-                      // },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.account_circle,
-                          color: Color(0xff00BBE4),
-                        ),
-                        prefixText: '+91 | ',
-                        labelText: 'Mobile Number',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
+                  height: 20,
                 ),
                 Center(
                   child: Container(
                     width: 360,
                     child: TextFormField(
                       keyboardType: TextInputType.text,
-                      onChanged: (value) {
+                      onSaved: (String value) {
                         setState(() {
                           prof = value;
                         });
@@ -590,17 +619,70 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           '(Leave blank if retired)',
                           style: TextStyle(
                             color: Color(0xff49DEE8),
-                            fontSize: 13,
+                            fontSize: 15,
                           ),
                         ),
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          right: 25,
+                        ),
                       )
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   height: 8,
-                // ),
+                Container(
+                  width: 360,
+                  child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    onSaved: (value) {
+                      setState(() {
+                        if (value == '') {
+                          pow = 'Retired';
+                        } else {
+                          pow = value;
+                        }
+                      });
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.location_city,
+                        color: Color(0xff00BBE4),
+                      ),
+                      labelText: 'Place of work/school/college',
+                      filled: true,
+                      fillColor: Color(0xffF3F4F6),
+                      disabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        child: Text(
+                          '(Leave blank if retired)',
+                          style: TextStyle(
+                            color: Color(0xff49DEE8),
+                            fontSize: 15,
+                          ),
+                        ),
+                        padding: EdgeInsets.only(
+                          top: 5,
+                          bottom: 5,
+                          right: 25,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                // TODO: BUG: Focus goes to previous textfield after selecting center
+                // https://flutter.dev/docs/cookbook/forms/focus
+                // https://stackoverflow.com/questions/49592099/slide-focus-to-textfield-in-flutter
                 Text(
                   'Nearest YWCA Center',
                   style: TextStyle(
@@ -648,7 +730,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 10,
                 ),
                 Text(
                   'Interested in being a member?',
@@ -660,6 +742,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                   ),
                 ),
                 Column(
+                  // TODO: Ability to select radio button when text is tapped
                   children: <Widget>[
                     ListTile(
                       title: const Text('Yes'),
@@ -703,7 +786,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                   ],
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 5,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20),
@@ -721,18 +804,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: FlatButton(
                       onPressed: () async {
-                        print(name);
-                        print(email);
-                        print(pow);
-                        print(dob);
-                        print(gender);
-                        print(phone);
-                        print(prof);
-                        print(center);
-                        print(interest);
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
+                        print(name);
+                        print(dob);
+                        print(phone);
+                        print(email);
+                        print(gender);
+                        print(prof);
+                        print(pow);
+                        print(center);
+                        print(interest);
                         // TODO: Phone Number already registered snackbar
                         // CollectionReference users =
                         //     FirebaseFirestore.instance.collection('users');
@@ -740,16 +823,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         _formKey.currentState.save();
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => RegisterOtp(
-                                  name: name,
-                                  email: email,
-                                  pow: pow,
-                                  gender: gender,
-                                  dob: dob,
-                                  phone: phone,
-                                  prof: prof,
-                                  center: center,
-                                  interest: interest)),
+                            builder: (context) => RegisterOtp(
+                              name: name,
+                              email: email,
+                              pow: pow,
+                              gender: gender,
+                              dob: dob,
+                              phone: phone,
+                              prof: prof,
+                              center: center,
+                              interest: interest,
+                            ),
+                          ),
                         );
                       },
                       child: Center(
