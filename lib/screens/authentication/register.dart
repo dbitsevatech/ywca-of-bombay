@@ -1,10 +1,11 @@
-import 'package:ywcaofbombay/screens/authentication/login.dart';
-import 'package:ywcaofbombay/screens/authentication/register_otp.dart';
-
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-enum GenderChoices { female, male, decline }
+import 'login.dart';
+import 'register_otp.dart';
+import '../../models/user.dart';
+
+enum GenderChoices { female, male, declineToState }
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
@@ -13,13 +14,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String name;
+  String firstName;
+  String lastName;
   String email;
-  DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
-  String phone;
+  String phoneNumber;
   String gender = "Female";
   final color = const Color(0xff49DEE8);
 
+  final _user = User();
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
@@ -33,9 +35,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future _selectDate() async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dob,
-      firstDate: new DateTime(1940),
-      lastDate: new DateTime.now().subtract(Duration(days: 4380)),
+      initialDate: _user.dateOfBirth,
+      firstDate: DateTime(1940),
+      lastDate: DateTime.now().subtract(Duration(days: 4380)),
       // initialDatePickerMode: DatePickerMode.year,
       // TODO: Check if above line UX issue is solved
       // https://github.com/flutter/flutter/issues/67909
@@ -64,11 +66,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     );
-    if (picked != null && picked != dob) {
+    if (picked != null && picked != _user.dateOfBirth) {
       setState(() {
-        dob = picked;
+        _user.dateOfBirth = picked;
         // print(picked);
-        print(dob);
+        print(_user.dateOfBirth);
       });
     }
   }
@@ -98,8 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .get()
         .then((querySnapshot) {
       querySnapshot.docs.forEach((result) {
-        print(result.data()["phone"]);
-        _listOfPhoneNumbers.add(result.data()["phone"]);
+        print(result.data()["phoneNumber"]);
+        _listOfPhoneNumbers.add(result.data()["phoneNumber"]);
       });
     });
 
@@ -156,8 +158,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        'Already have an account? ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
+                        child: Text(
+                          'Log In',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff49DEE8),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 Center(
                   child: Container(
@@ -166,12 +201,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.text,
                       onSaved: (value) {
                         setState(() {
-                          name = value;
+                          firstName = value;
                         });
                       },
                       validator: (String value) {
                         if (value.isEmpty)
-                          return 'Name is required.';
+                          return 'First name is required.';
                         else
                           return null;
                       },
@@ -180,7 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Icons.account_circle,
                           color: Color(0xff00BBE4),
                         ),
-                        labelText: 'Full Name',
+                        labelText: 'First Name',
                         filled: true,
                         fillColor: Color(0xffF3F4F6),
                         disabledBorder: InputBorder.none,
@@ -192,7 +227,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 10,
+                ),
+                Center(
+                  child: Container(
+                    width: 360,
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      onSaved: (value) {
+                        setState(() {
+                          lastName = value;
+                        });
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty)
+                          return 'Last name is required.';
+                        else
+                          return null;
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.account_circle,
+                          color: Color(0xff00BBE4),
+                        ),
+                        labelText: 'Last Name',
+                        filled: true,
+                        fillColor: Color(0xffF3F4F6),
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Center(
                   child: Container(
@@ -201,8 +271,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // keyboardType: TextInputType.datetime,
                       onChanged: (value) {
                         setState(() {
-                          // dob = DateTime.parse(value);
-                          // dob = value;
+                          // dateOfBirth = DateTime.parse(value);
+                          // dateOfBirth\ = value;
                         });
                       },
                       controller: dateController,
@@ -220,16 +290,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         errorBorder: InputBorder.none,
                       ),
                       onTap: () async {
-                        FocusScope.of(context).requestFocus(new FocusNode());
+                        FocusScope.of(context).requestFocus(FocusNode());
                         // TODO: BUG: text cursor showing over the date picker bcoz of async-await
                         await _selectDate();
-                        dateController.text = "${dob.toLocal()}".split(' ')[0];
+                        dateController.text =
+                            "${_user.dateOfBirth.toLocal()}".split(' ')[0];
                       },
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 10,
                 ),
                 Container(
                   width: 360,
@@ -268,7 +339,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 10,
                 ),
                 Center(
                   child: Container(
@@ -286,12 +357,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       // onChanged: (String value) {
                       //   setState(() {
-                      //     phone = value;
+                      //     phoneNumber = value;
                       //   });
                       // },
                       onSaved: (String value) {
                         setState(() {
-                          phone = value;
+                          phoneNumber = value;
                         });
                         //   print("onSaved!: " + value);
                         // List<String> _listOfPhoneNumbers = ['0'];
@@ -306,7 +377,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         // });
                         // print(_listOfPhoneNumbers);
                         // if (!_listOfPhoneNumbers.contains(value)) {
-                        //   // TODO: Try removing await in below condition
                         //   // if (!await _phoneNumberIsAlreadyRegistered(value)) {
                         // } else {
                         //   FocusScope.of(context).unfocus();
@@ -340,8 +410,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     color: Color(0xff49DEE8),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'RacingSansOne',
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Montserrat',
                   ),
                 ),
                 Column(
@@ -375,7 +445,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ListTile(
                       title: const Text('Decline to state'),
                       leading: Radio(
-                        value: GenderChoices.decline,
+                        value: GenderChoices.declineToState,
                         groupValue: selectedGender,
                         onChanged: (GenderChoices value) {
                           setState(() {
@@ -388,13 +458,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 10,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    decoration: new BoxDecoration(
-                        gradient: new LinearGradient(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
                           colors: [
                             Color(0xff00BBE4),
                             Color(0xff00BBE4),
@@ -410,17 +480,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return;
                         }
                         _formKey.currentState.save();
-                        if (!await _phoneNumberIsAlreadyRegistered(phone)) {
+                        if (!await _phoneNumberIsAlreadyRegistered(
+                            phoneNumber)) {
                           print("user does not exist");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => RegisterScreen2(
-                                  name: name,
-                                  email: email,
-                                  phone: phone,
-                                  gender: gender,
-                                  dob: dob),
+                                // userData: _user,
+                                firstName: firstName,
+                                lastName: lastName,
+                                emailId: email,
+                                phoneNumber: phoneNumber,
+                                gender: gender,
+                                dateOfBirth: _user.dateOfBirth,
+                              ),
                             ),
                           );
                         } else {
@@ -473,6 +547,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
                             color: Color(0xff49DEE8),
                           ),
                         ),
@@ -496,32 +571,60 @@ enum MemberChoices { yes, no, maybe }
 
 // ignore: must_be_immutable
 class RegisterScreen2 extends StatefulWidget {
-  final String name;
-  final String email;
-  final String phone;
+  // final User userData;
+  // var userData = User();
+  final String firstName;
+  final String lastName;
+  final String emailId;
+  final String phoneNumber;
   final String gender;
-  final DateTime dob;
-  RegisterScreen2({this.name, this.email, this.phone, this.gender, this.dob});
+  final DateTime dateOfBirth;
+  RegisterScreen2({
+    // this.userData,
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.dateOfBirth,
+  });
   @override
-  _RegisterScreen2State createState() =>
-      _RegisterScreen2State(name, email, phone, gender, dob);
+  _RegisterScreen2State createState() => _RegisterScreen2State(
+        // userData,
+        firstName,
+        lastName,
+        emailId,
+        phoneNumber,
+        gender,
+        dateOfBirth,
+      );
 }
 
 class _RegisterScreen2State extends State<RegisterScreen2> {
-  final String name;
-  final String email;
-  final String phone;
+  // final User userData;
+  // var userData = User();
+  final String firstName;
+  final String lastName;
+  final String emailId;
+  final String phoneNumber;
   final String gender;
-  final DateTime dob;
+  final DateTime dateOfBirth;
 
-  String prof;
-  String pow;
-  String center = 'Chembur';
-  String interest = "Yes";
+  String profession;
+  String placeOfWork;
+  String nearestCenter = 'Chembur';
+  String interestInMembership = "Yes";
   _RegisterScreen2State(
-      this.name, this.email, this.phone, this.gender, this.dob);
+    // this.userData,
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.dateOfBirth,
+  );
   final color = const Color(0xff49DEE8);
-  MemberChoices _selectedMemberChoice = MemberChoices.yes;
+  MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -529,8 +632,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   @override
   void initState() {
     setState(() {
-      _selectedMemberChoice = MemberChoices.yes;
-      interest = "Yes";
+      _selectedMembershipInterest = MemberChoices.yes;
+      interestInMembership = "Yes";
     });
     super.initState();
   }
@@ -580,7 +683,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                       keyboardType: TextInputType.text,
                       onSaved: (String value) {
                         setState(() {
-                          prof = value;
+                          profession = value;
                         });
                       },
                       decoration: InputDecoration(
@@ -627,9 +730,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     onSaved: (value) {
                       setState(() {
                         if (value == '') {
-                          pow = 'Retired';
+                          placeOfWork = 'Retired';
                         } else {
-                          pow = value;
+                          placeOfWork = value;
                         }
                       });
                     },
@@ -693,12 +796,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                       // border: Border.all(),
                     ),
                     child: DropdownButton<String>(
-                      value: center,
+                      value: nearestCenter,
                       underline: Container(),
                       onChanged: (String value) {
                         setState(() {
-                          center = value;
-                          print(center);
+                          nearestCenter = value;
+                          print(nearestCenter);
                         });
                       },
                       items: <String>[
@@ -726,8 +829,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                   style: TextStyle(
                     fontSize: 16,
                     color: Color(0xff49DEE8),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'RacingSansOne',
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Montserrat',
                   ),
                 ),
                 Column(
@@ -737,11 +840,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                       title: const Text('Yes'),
                       leading: Radio(
                         value: MemberChoices.yes,
-                        groupValue: _selectedMemberChoice,
+                        groupValue: _selectedMembershipInterest,
                         onChanged: (MemberChoices value) {
                           setState(() {
-                            _selectedMemberChoice = value;
-                            interest = "Yes";
+                            _selectedMembershipInterest = value;
+                            interestInMembership = "Yes";
                           });
                         },
                       ),
@@ -750,11 +853,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                       title: const Text('No'),
                       leading: Radio(
                         value: MemberChoices.no,
-                        groupValue: _selectedMemberChoice,
+                        groupValue: _selectedMembershipInterest,
                         onChanged: (MemberChoices value) {
                           setState(() {
-                            _selectedMemberChoice = value;
-                            interest = "No";
+                            _selectedMembershipInterest = value;
+                            interestInMembership = "No";
                           });
                         },
                       ),
@@ -763,11 +866,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                       title: const Text('Maybe'),
                       leading: Radio(
                         value: MemberChoices.maybe,
-                        groupValue: _selectedMemberChoice,
+                        groupValue: _selectedMembershipInterest,
                         onChanged: (MemberChoices value) {
                           setState(() {
-                            _selectedMemberChoice = value;
-                            interest = "Maybe";
+                            _selectedMembershipInterest = value;
+                            interestInMembership = "Maybe";
                           });
                         },
                       ),
@@ -780,8 +883,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    decoration: new BoxDecoration(
-                        gradient: new LinearGradient(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
                           colors: [
                             Color(0xff00BBE4),
                             Color(0xff00BBE4),
@@ -796,16 +899,16 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
-                        print(name);
-                        print(dob);
-                        print(phone);
-                        print(email);
+                        print(firstName);
+                        print(lastName);
+                        print(dateOfBirth);
+                        print(phoneNumber);
+                        print(emailId);
                         print(gender);
-                        print(prof);
-                        print(pow);
-                        print(center);
-                        print(interest);
-                        // TODO: Phone Number already registered snackbar
+                        print(profession);
+                        print(placeOfWork);
+                        print(nearestCenter);
+                        print(interestInMembership);
                         // CollectionReference users =
                         //     FirebaseFirestore.instance.collection('users');
                         // users.doc(documentId).get();
@@ -813,15 +916,16 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => RegisterOtp(
-                              name: name,
-                              email: email,
-                              pow: pow,
+                              firstName: firstName,
+                              lastName: lastName,
+                              emailId: emailId,
+                              placeOfWork: placeOfWork,
                               gender: gender,
-                              dob: dob,
-                              phone: phone,
-                              prof: prof,
-                              center: center,
-                              interest: interest,
+                              dateOfBirth: dateOfBirth,
+                              phoneNumber: phoneNumber,
+                              profession: profession,
+                              nearestCenter: nearestCenter,
+                              interestInMembership: interestInMembership,
                             ),
                           ),
                         );
@@ -869,6 +973,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
                             color: Color(0xff49DEE8),
                           ),
                         ),
@@ -887,33 +992,3 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     );
   }
 }
-
-// class GetUserName extends StatelessWidget {
-//   final String documentId;
-
-//   GetUserName(this.documentId);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     CollectionReference users = FirebaseFirestore.instance.collection('users');
-
-//     return FutureBuilder<DocumentSnapshot>(
-//       future: users.doc(documentId).get(),
-//       builder:
-//           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//         if (snapshot.hasError) {
-//           print("Something went wrong");
-//           return Text("Something went wrong");
-//         }
-
-//         if (snapshot.connectionState == ConnectionState.done) {
-//           Map<String, dynamic> data = snapshot.data.data();
-//           print("Full Name: ${data['full_name']} ${data['last_name']}");
-//           return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-//         }
-
-//         return Text("loading");
-//       },
-//     );
-//   }
-// }

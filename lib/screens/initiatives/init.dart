@@ -53,25 +53,25 @@
 //                           ),
 //                         ),
 //                         // color: Colors.yellow,
-//                         decoration: new BoxDecoration(
+//                         decoration:  BoxDecoration(
 //                           gradient: LinearGradient(
 //                               stops: [0.2, 1],
 //                               colors: [Colors.blue[600], Colors.lightBlue[50]]),
-//                           borderRadius: new BorderRadius.only(
-//                             topLeft: new Radius.circular(20.0),
-//                             bottomLeft: new Radius.circular(20.0),
+//                           borderRadius:  BorderRadius.only(
+//                             topLeft:  Radius.circular(20.0),
+//                             bottomLeft:  Radius.circular(20.0),
 //                           ),
 //                         )),
 //                     clipper: CustomClipPath(),
 //                   ),
 //                   //
-//                   decoration: new BoxDecoration(
-//                     image: new DecorationImage(
-//                       image: new AssetImage('assets/images/img1.jpg'),
+//                   decoration:  BoxDecoration(
+//                     image:  DecorationImage(
+//                       image:  AssetImage('assets/images/img1.jpg'),
 //                       fit: BoxFit.cover,
 //                     ),
 //                     borderRadius:
-//                         new BorderRadius.all(new Radius.circular(20.0)),
+//                          BorderRadius.all( Radius.circular(20.0)),
 //                     boxShadow: [
 //                       BoxShadow(
 //                         color: Colors.grey.withOpacity(0.5),
@@ -122,27 +122,27 @@
 //                         ),
 //                       ),
 //                       // color: Colors.yellow,
-//                       decoration: new BoxDecoration(
+//                       decoration:  BoxDecoration(
 //                         gradient: LinearGradient(
 //                             stops: [0.2, 1],
 //                             colors: [Colors.amber[400], Colors.amber[50]]),
-//                         borderRadius: new BorderRadius.only(
-//                           topLeft: new Radius.circular(20.0),
-//                           bottomLeft: new Radius.circular(20.0),
+//                         borderRadius:  BorderRadius.only(
+//                           topLeft:  Radius.circular(20.0),
+//                           bottomLeft:  Radius.circular(20.0),
 //                         ),
 //                       )),
 //                   clipper: CustomClipPath(),
 //                 ),
 //                 //]
 //                 //
-//                 decoration: new BoxDecoration(
+//                 decoration:  BoxDecoration(
 //                   //color: const Color(0xFFD81B60),
-//                   image: new DecorationImage(
-//                     image: new AssetImage('assets/images/img2.jpg'),
+//                   image:  DecorationImage(
+//                     image:  AssetImage('assets/images/img2.jpg'),
 //                     fit: BoxFit.cover,
 //                   ),
 
-//                   borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+//                   borderRadius:  BorderRadius.all( Radius.circular(20.0)),
 //                   boxShadow: [
 //                     BoxShadow(
 //                       color: Colors.grey.withOpacity(0.5),
@@ -184,13 +184,13 @@
 //                       ),
 //                     ),
 //                     // color: Colors.yellow,
-//                     decoration: new BoxDecoration(
+//                     decoration:  BoxDecoration(
 //                       gradient: LinearGradient(
 //                           stops: [0.2, 1],
 //                           colors: [Colors.pink[300], Colors.orange[300]]),
-//                       borderRadius: new BorderRadius.only(
-//                         topLeft: new Radius.circular(20.0),
-//                         bottomLeft: new Radius.circular(20.0),
+//                       borderRadius:  BorderRadius.only(
+//                         topLeft:  Radius.circular(20.0),
+//                         bottomLeft:  Radius.circular(20.0),
 //                       ),
 //                     ),
 //                   ),
@@ -210,21 +210,21 @@
 //                 //     ),
 //                 //   ),
 //                 //   // color: Colors.purple,
-//                 //   decoration: new BoxDecoration(
+//                 //   decoration:  BoxDecoration(
 //                 //     color: Colors.purple,
-//                 //     borderRadius: new BorderRadius.only(
-//                 //       topLeft: new Radius.circular(20.0),
-//                 //       bottomLeft: new Radius.circular(20.0),
+//                 //     borderRadius:  BorderRadius.only(
+//                 //       topLeft:  Radius.circular(20.0),
+//                 //       bottomLeft:  Radius.circular(20.0),
 //                 //     ),
 //                 //   ),
 //                 // ),
-//                 decoration: new BoxDecoration(
+//                 decoration:  BoxDecoration(
 //                   //color: const Color(0xFFD81B60),
-//                   image: new DecorationImage(
-//                     image: new AssetImage('assets/images/img3.jpg'),
+//                   image:  DecorationImage(
+//                     image:  AssetImage('assets/images/img3.jpg'),
 //                     fit: BoxFit.cover,
 //                   ),
-//                   borderRadius: new BorderRadius.all(new Radius.circular(20.0)),
+//                   borderRadius:  BorderRadius.all( Radius.circular(20.0)),
 //                   boxShadow: [
 //                     BoxShadow(
 //                       color: Colors.grey.withOpacity(0.5),

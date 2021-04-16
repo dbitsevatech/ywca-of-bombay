@@ -1,4 +1,4 @@
-import 'package:ywcaofbombay/screens/home.dart';
+import 'home.dart';
 
 typedef T Constructor<T>();
 

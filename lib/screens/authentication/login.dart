@@ -1,10 +1,10 @@
-import 'package:ywcaofbombay/screens/authentication/register.dart';
-import 'package:ywcaofbombay/screens/authentication/login_otp.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'register.dart';
+import 'login_otp.dart';
 
 void main() => runApp(LoginScreen());
 
@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // TextEditingController _controller = TextEditingController();
-  String phone;
+  String phoneNumber;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // controller: _controller,
                     onChanged: (value) {
                       setState(() {
-                        phone = value;
+                        phoneNumber = value;
                       });
                     },
                     validator: (String value) {
@@ -143,8 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 20, right: 20),
                   child: Container(
-                    decoration: new BoxDecoration(
-                        gradient: new LinearGradient(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
                           colors: [
                             Color(0xff00BBE4),
                             Color(0xff00BBE4),
@@ -161,15 +161,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                         var checkuser = await FirebaseFirestore.instance
                             .collection('users')
-                            .where("phone", isEqualTo: phone)
+                            .where("phoneNumber", isEqualTo: phoneNumber)
                             .get();
                         if (checkuser.docs.length == 1) {
                           print("User found");
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginOtp(phone: phone)));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  LoginOtp(phoneNumber: phoneNumber),
+                            ),
+                          );
                         } else {
                           FocusScope.of(context).unfocus();
                           print("No user found");
@@ -217,6 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
                             color: Color(0xff49DEE8),
                           ),
                         ),

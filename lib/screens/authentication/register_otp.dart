@@ -1,55 +1,79 @@
-import 'package:ywcaofbombay/widgets/drawer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/drawer.dart';
+
 class RegisterOtp extends StatefulWidget {
   final color = const Color(0xff49DEE8);
-  final String name;
-  final String email;
-  final String pow;
+  final String firstName;
+  final String lastName;
+  final String emailId;
+  final String placeOfWork;
   final String gender;
-  final DateTime dob;
-  final String phone;
-  final String prof;
-  final String center;
-  final String interest;
+  final DateTime dateOfBirth;
+  final String phoneNumber;
+  final String profession;
+  final String nearestCenter;
+  final String interestInMembership;
 
-  const RegisterOtp(
-      {this.name,
-      this.email,
-      this.pow,
-      this.gender,
-      this.dob,
-      this.phone,
-      this.prof,
-      this.center,
-      this.interest});
+  const RegisterOtp({
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.placeOfWork,
+    this.gender,
+    this.dateOfBirth,
+    this.phoneNumber,
+    this.profession,
+    this.nearestCenter,
+    this.interestInMembership,
+  });
 
   @override
-  _RegisterOtpState createState() => new _RegisterOtpState(
-      name, email, pow, gender, dob, phone, prof, center, interest);
+  _RegisterOtpState createState() => _RegisterOtpState(
+        firstName,
+        lastName,
+        emailId,
+        placeOfWork,
+        gender,
+        dateOfBirth,
+        phoneNumber,
+        profession,
+        nearestCenter,
+        interestInMembership,
+      );
 }
 
 class _RegisterOtpState extends State<RegisterOtp>
     with SingleTickerProviderStateMixin {
   // Constants
   final int time = 59;
-  final String name;
-  final String email;
-  final String pow;
+  final String firstName;
+  final String lastName;
+  final String emailId;
+  final String placeOfWork;
   final String gender;
-  final DateTime dob;
-  final String phone;
-  final String prof;
-  final String center;
-  final String interest;
+  final DateTime dateOfBirth;
+  final String phoneNumber;
+  final String profession;
+  final String nearestCenter;
+  final String interestInMembership;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
-  _RegisterOtpState(this.name, this.email, this.pow, this.gender, this.dob,
-      this.phone, this.prof, this.center, this.interest);
+  _RegisterOtpState(
+      this.firstName,
+      this.lastName,
+      this.emailId,
+      this.placeOfWork,
+      this.gender,
+      this.dateOfBirth,
+      this.phoneNumber,
+      this.profession,
+      this.nearestCenter,
+      this.interestInMembership);
   AnimationController _controller;
   var otp;
   // Variables
@@ -87,12 +111,12 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
   // Returns "Appbar"
   // get _getAppbar {
-  //   return new AppBar(
+  //   return  AppBar(
   //     backgroundColor: Colors.transparent,
   //     elevation: 0.0,
-  //     leading: new InkWell(
+  //     leading:  InkWell(
   //       borderRadius: BorderRadius.circular(30.0),
-  //       child: new Icon(
+  //       child:  Icon(
   //         Icons.arrow_back,
   //         color: Colors.black54,
   //       ),
@@ -106,30 +130,30 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
-    return new Padding(
+    return Padding(
       padding: EdgeInsets.only(top: 100),
       child: Text(
         "Verification Code",
         textAlign: TextAlign.center,
-        style: new TextStyle(
+        style: TextStyle(
             fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
       ),
     );
   }
 
-  // Return "Email" label
+  // Return "emailId" label
   get _getPleaseEnterLabel {
-    return new Text(
+    return Text(
       "Please enter the 6-digit OTP code sent\nto your registered mobile number.",
       textAlign: TextAlign.center,
-      style: new TextStyle(
+      style: TextStyle(
           fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
     );
   }
 
   // Return "OTP" input field
   get _getInputField {
-    return new Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _otpTextField(_firstDigit),
@@ -144,7 +168,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "OTP" input part
   get _getInputPart {
-    return new Column(
+    return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -175,13 +199,13 @@ class _RegisterOtpState extends State<RegisterOtp>
   get _getTimerText {
     return Container(
       height: 32,
-      child: new Offstage(
+      child: Offstage(
         offstage: !_hideResendButton,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Icon(Icons.access_time),
-            new SizedBox(
+            Icon(Icons.access_time),
+            SizedBox(
               width: 5.0,
             ),
             OtpTimer(_controller, 15.0, Colors.black)
@@ -193,8 +217,8 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "Resend" button
   get _getResendButton {
-    return new InkWell(
-      child: new Container(
+    return InkWell(
+      child: Container(
         height: 32,
         width: 120,
         decoration: BoxDecoration(
@@ -203,10 +227,9 @@ class _RegisterOtpState extends State<RegisterOtp>
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(32)),
         alignment: Alignment.center,
-        child: new Text(
+        child: Text(
           "Resend OTP",
-          style:
-              new TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       onTap: () {
@@ -217,9 +240,9 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Register button
   get _registerButton {
-    return new Container(
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
           colors: [Color(0xff00BBE4), Color(0xff00BBE4), Color(0xff005BE4)],
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
@@ -245,15 +268,16 @@ class _RegisterOtpState extends State<RegisterOtp>
                   print(value.user);
                   print(value.user.uid);
                   Map<String, dynamic> data = {
-                    "name": name,
-                    "phone": phone,
-                    "email": email,
-                    "pow": pow,
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "phoneNumber": phoneNumber,
+                    "emailId": emailId,
+                    "placeOfWork": placeOfWork,
                     "gender": gender,
-                    "prof": prof,
-                    "center": center,
-                    "interest": interest,
-                    "dob": dob
+                    "profession": profession,
+                    "nearestCenter": nearestCenter,
+                    "interestInMembership": interestInMembership,
+                    "dateOfBirth": dateOfBirth
                   };
                   CollectionReference users =
                       FirebaseFirestore.instance.collection('users');
@@ -309,9 +333,10 @@ class _RegisterOtpState extends State<RegisterOtp>
     );
   }
 
-  _verifyPhone() async {
+  _verifyPhoneNumber() async {
+    print(phoneNumber);
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91$phone',
+        phoneNumber: '+91$phoneNumber',
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
@@ -342,12 +367,12 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
-    return new Container(
+    return Container(
       height: _screenSize.width - 180,
-      child: new Column(
+      child: Column(
         children: <Widget>[
-          new Expanded(
-            child: new Row(
+          Expanded(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _otpKeyboardInputButton(
@@ -371,8 +396,8 @@ class _RegisterOtpState extends State<RegisterOtp>
               ],
             ),
           ),
-          new Expanded(
-            child: new Row(
+          Expanded(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _otpKeyboardInputButton(
@@ -396,8 +421,8 @@ class _RegisterOtpState extends State<RegisterOtp>
               ],
             ),
           ),
-          new Expanded(
-            child: new Row(
+          Expanded(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _otpKeyboardInputButton(
@@ -421,11 +446,11 @@ class _RegisterOtpState extends State<RegisterOtp>
               ],
             ),
           ),
-          new Expanded(
-            child: new Row(
+          Expanded(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                new SizedBox(
+                SizedBox(
                   width: 80.0,
                 ),
                 _otpKeyboardInputButton(
@@ -435,7 +460,7 @@ class _RegisterOtpState extends State<RegisterOtp>
                   },
                 ),
                 _otpKeyboardActionButton(
-                  label: new Icon(
+                  label: Icon(
                     Icons.backspace,
                     color: Colors.black,
                   ),
@@ -469,7 +494,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   @override
   void initState() {
     super.initState();
-    _verifyPhone();
+    _verifyPhoneNumber();
     totalTimeInSeconds = time;
     super.initState();
     _controller =
@@ -495,13 +520,13 @@ class _RegisterOtpState extends State<RegisterOtp>
   @override
   Widget build(BuildContext context) {
     _screenSize = MediaQuery.of(context).size;
-    return new Scaffold(
+    return Scaffold(
       // appBar: _getAppbar,
       key: _scaffoldkey,
       backgroundColor: Colors.white,
-      body: new Container(
+      body: Container(
         width: _screenSize.width,
-//        padding: new EdgeInsets.only(bottom: 16.0),
+//        padding:  EdgeInsets.only(bottom: 16.0),
         child: _getInputPart,
       ),
     );
@@ -509,13 +534,13 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "Otp custom text field"
   Widget _otpTextField(int digit) {
-    return new Container(
+    return Container(
       width: 35.0,
       height: 45.0,
       alignment: Alignment.center,
-      child: new Text(
+      child: Text(
         digit != null ? digit.toString() : "",
-        style: new TextStyle(
+        style: TextStyle(
           fontSize: 30.0,
           color: Colors.black,
         ),
@@ -532,21 +557,21 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "Otp keyboard input Button"
   Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
-    return new Material(
+    return Material(
       color: Colors.transparent,
-      child: new InkWell(
+      child: InkWell(
         onTap: onPressed,
-        borderRadius: new BorderRadius.circular(40.0),
-        child: new Container(
+        borderRadius: BorderRadius.circular(40.0),
+        child: Container(
           height: 80.0,
           width: 80.0,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
           ),
-          child: new Center(
-            child: new Text(
+          child: Center(
+            child: Text(
               label,
-              style: new TextStyle(
+              style: TextStyle(
                 fontSize: 30.0,
                 color: Colors.black,
               ),
@@ -559,16 +584,16 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Returns "Otp keyboard action Button"
   _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
-    return new InkWell(
+    return InkWell(
       onTap: onPressed,
-      borderRadius: new BorderRadius.circular(40.0),
-      child: new Container(
+      borderRadius: BorderRadius.circular(40.0),
+      child: Container(
         height: 80.0,
         width: 80.0,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
         ),
-        child: new Center(
+        child: Center(
           child: label,
         ),
       ),
@@ -650,9 +675,9 @@ class OtpTimer extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext context, Widget child) {
-        return new Text(
+        return Text(
           timerString,
-          style: new TextStyle(
+          style: TextStyle(
               fontSize: fontSize,
               color: timeColor,
               fontWeight: FontWeight.w600),

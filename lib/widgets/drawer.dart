@@ -1,16 +1,16 @@
-import 'package:ywcaofbombay/screens/authentication/login.dart';
-import 'package:ywcaofbombay/screens/class_builder.dart';
-import 'package:ywcaofbombay/screens/contact_us/contact_us.dart';
-import 'package:ywcaofbombay/screens/home.dart';
-import 'package:ywcaofbombay/screens/about_us.dart';
-import 'package:ywcaofbombay/screens/events/events.dart';
-import 'package:ywcaofbombay/screens/initiatives/initiatives.dart';
-import 'package:ywcaofbombay/screens/success_stories.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+
+import '../screens/about_us.dart';
+import '../screens/authentication/login.dart';
+import '../screens/class_builder.dart';
+import '../screens/contact_us/contact_us.dart';
+import '../screens/events/events.dart';
+import '../screens/initiatives/initiatives.dart';
+import '../screens/home.dart';
+import '../screens/success_stories.dart';
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
@@ -98,20 +98,20 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                 ),
                 Column(
                   children: <Widget>[
-                    new Text('YWCA OF BOMBAY',
+                    Text('YWCA OF BOMBAY',
                         textAlign: TextAlign.left,
-                        style: new TextStyle(
+                        style: TextStyle(
                             fontSize: 22,
                             color: Colors.black,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold)),
-                    new SizedBox(height: 15),
-                    new Text('MENU',
-                        style: new TextStyle(
+                    SizedBox(height: 15),
+                    Text('MENU',
+                        style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold)),
-                    new SizedBox(height: 10),
+                    SizedBox(height: 10),
                     CircleAvatar(
                       radius: 50.0,
                       backgroundImage: NetworkImage(
@@ -119,16 +119,16 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                         "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
                       ),
                     ),
-                    new SizedBox(height: 15),
-                    new Text(
+                    SizedBox(height: 15),
+                    Text(
                       // TODO: Add user name
                       'Welcome, user',
-                      style: new TextStyle(
+                      style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                    new SizedBox(height: 10),
+                    SizedBox(height: 10),
                   ],
                 )
               ],

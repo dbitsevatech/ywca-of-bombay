@@ -1,10 +1,11 @@
-import 'package:ywcaofbombay/screens/authentication/login.dart';
-
 import 'dart:ui';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
+import 'authentication/login.dart';
 
 class Intro extends StatefulWidget {
   @override
@@ -106,8 +107,8 @@ class _IntroState extends State<Intro> {
               ),
               Center(
                 child: Container(
-                  decoration: new BoxDecoration(
-                      gradient: new LinearGradient(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
                         colors: [
                           Color(0xff00BBE4),
                           Color(0xff00BBE4),

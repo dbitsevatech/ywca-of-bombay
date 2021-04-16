@@ -1,8 +1,8 @@
-import 'package:ywcaofbombay/screens/events/event_details.dart';
-import 'package:ywcaofbombay/models/Event.dart';
-
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+
+import 'event_details.dart';
+import '../../models/Event.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {
@@ -35,7 +35,7 @@ class _EventsState extends State<Events> {
               child: AppBar(
                 centerTitle: true,
                 title: Text("YWCA Of Bombay",
-                    style: new TextStyle(
+                    style: TextStyle(
                         fontFamily: 'LilyScriptOne',
                         fontSize: 18.0,
                         color: Colors.black87)),
@@ -53,7 +53,7 @@ class _EventsState extends State<Events> {
             // Events & Search bar Starts
             PreferredSize(
               preferredSize: Size.fromHeight(80),
-              child: new Column(
+              child: Column(
                 children: <Widget>[
                   // Distance from ywca
                   // or else it will overlap
@@ -64,7 +64,7 @@ class _EventsState extends State<Events> {
                       children: [
                         TextSpan(
                             text: 'Events ',
-                            style: new TextStyle(
+                            style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold)),
@@ -79,7 +79,7 @@ class _EventsState extends State<Events> {
                     ),
                   ),
                   SizedBox(height: 5),
-                  new TextField(
+                  TextField(
                     decoration: InputDecoration(
                         hintText: "Search by venue",
                         prefixIcon: Icon(
@@ -101,7 +101,7 @@ class _EventsState extends State<Events> {
               ),
             ),
             // card view for the events
-            new Padding(
+            Padding(
                 padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
                 child: getHomePageBody(context))
           ],
@@ -120,47 +120,46 @@ class _EventsState extends State<Events> {
 
   // Card view
   Widget _getItemUI(BuildContext context, int index) {
-    return new Card(
+    return Card(
       elevation: 0,
-      child: new Column(
+      child: Column(
         children: <Widget>[
-          new ListTile(
+          ListTile(
             // Image
-            leading: new Image.asset(
+            leading: Image.asset(
               "assets/images/events/" + _allEvents[index].image,
               fit: BoxFit.cover,
               width: 120.0,
             ),
             // Date & Time
-            title: new Text(
+            title: Text(
               _allEvents[index].dateTime,
-              style: new TextStyle(
+              style: TextStyle(
                   color: Color(0xFF49DEE8),
                   fontSize: 14.0,
                   fontWeight: FontWeight.normal),
             ),
-            subtitle: new Column(
+            subtitle: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 5),
-                  new Text(_allEvents[index].name,
-                      style: new TextStyle(
+                  Text(_allEvents[index].name,
+                      style: TextStyle(
                           color: Colors.black,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold)),
                   SizedBox(height: 5),
-                  new Text(
-                      'Resource Person: ${_allEvents[index].resourcePerson}',
-                      style: new TextStyle(
+                  Text('Resource Person: ${_allEvents[index].resourcePerson}',
+                      style: TextStyle(
                           fontSize: 11.0, fontWeight: FontWeight.normal)),
                   SizedBox(height: 5),
-                  new Text('Venue: ${_allEvents[index].venue}',
-                      style: new TextStyle(
+                  Text('Venue: ${_allEvents[index].venue}',
+                      style: TextStyle(
                           fontSize: 11.0, fontWeight: FontWeight.normal)),
                   SizedBox(height: 5),
-                  new Text('Amount: ${_allEvents[index].cost}',
-                      style: new TextStyle(
+                  Text('Amount: ${_allEvents[index].cost}',
+                      style: TextStyle(
                           fontSize: 11.0, fontWeight: FontWeight.normal)),
                 ]),
             //trailing: ,

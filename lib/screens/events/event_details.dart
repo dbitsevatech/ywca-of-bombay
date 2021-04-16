@@ -1,8 +1,8 @@
-import 'package:ywcaofbombay/widgets/carousel.dart';
-
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+
+import '../../widgets/carousel.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -67,7 +67,7 @@ class DetailPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)),
                 child: Text(
                   "Member",
-                  style: new TextStyle(fontSize: 18.0, color: Colors.white),
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
               ),
             ),
@@ -121,7 +121,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Christmas Decor Workshop",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 22.0,
                       color: Colors.black87,
                       shadows: [
@@ -144,7 +144,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Christmas Decorations don't have to be complicated to be elegant. We're sharing our favorite easy DIY Christmas decor ideas and tricks.",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),
@@ -159,7 +159,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Resource Person: Sharon Pires",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),
@@ -174,7 +174,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Venue: Online",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),
@@ -189,7 +189,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Amount : Free",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),
@@ -204,7 +204,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Date : 19/12/2020",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),
@@ -219,7 +219,7 @@ class DetailPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 child: Text(
                   "Time : 11:00 AM",
-                  style: new TextStyle(
+                  style: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black87,
                       fontWeight: FontWeight.normal),

@@ -1,8 +1,8 @@
-import 'package:ywcaofbombay/screens/initiatives/piya.dart';
-import 'package:ywcaofbombay/screens/initiatives/customclip_path.dart';
-
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+
+import 'piya.dart';
+import 'customclip_path.dart';
 
 // ignore: must_be_immutable
 class Initiatives extends KFDrawerContent {
@@ -108,7 +108,7 @@ class _InitiativesState extends State<Initiatives> {
                                     ),
                                   ),
                                   // color: Colors.yellow,
-                                  decoration: new BoxDecoration(
+                                  decoration: BoxDecoration(
                                     gradient: LinearGradient(stops: [
                                       0.2,
                                       1
@@ -116,22 +116,22 @@ class _InitiativesState extends State<Initiatives> {
                                       Colors.blue[600],
                                       Colors.lightBlue[50]
                                     ]),
-                                    borderRadius: new BorderRadius.only(
-                                      topLeft: new Radius.circular(20.0),
-                                      bottomLeft: new Radius.circular(20.0),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      bottomLeft: Radius.circular(20.0),
                                     ),
                                   )),
                               clipper: CustomClipPath(),
                             ),
                             //
-                            decoration: new BoxDecoration(
-                              image: new DecorationImage(
-                                image: new AssetImage(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
                                     'assets/images/initiatives/img1.jpg'),
                                 fit: BoxFit.cover,
                               ),
-                              borderRadius: new BorderRadius.all(
-                                  new Radius.circular(20.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
@@ -183,7 +183,7 @@ class _InitiativesState extends State<Initiatives> {
                                   ),
                                 ),
                                 // color: Colors.yellow,
-                                decoration: new BoxDecoration(
+                                decoration: BoxDecoration(
                                   gradient: LinearGradient(stops: [
                                     0.2,
                                     1
@@ -191,25 +191,25 @@ class _InitiativesState extends State<Initiatives> {
                                     Colors.amber[400],
                                     Colors.amber[50]
                                   ]),
-                                  borderRadius: new BorderRadius.only(
-                                    topLeft: new Radius.circular(20.0),
-                                    bottomLeft: new Radius.circular(20.0),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20.0),
+                                    bottomLeft: Radius.circular(20.0),
                                   ),
                                 )),
                             clipper: CustomClipPath(),
                           ),
                           //]
                           //
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             //color: const Color(0xFFD81B60),
-                            image: new DecorationImage(
-                              image: new AssetImage(
+                            image: DecorationImage(
+                              image: AssetImage(
                                   'assets/images/initiatives/img2.jpg'),
                               fit: BoxFit.cover,
                             ),
 
                             borderRadius:
-                                new BorderRadius.all(new Radius.circular(20.0)),
+                                BorderRadius.all(Radius.circular(20.0)),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
@@ -252,7 +252,7 @@ class _InitiativesState extends State<Initiatives> {
                                 ),
                               ),
                               // color: Colors.yellow,
-                              decoration: new BoxDecoration(
+                              decoration: BoxDecoration(
                                 gradient: LinearGradient(stops: [
                                   0.2,
                                   1
@@ -260,9 +260,9 @@ class _InitiativesState extends State<Initiatives> {
                                   Colors.pink[300],
                                   Colors.orange[300]
                                 ]),
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: new Radius.circular(20.0),
-                                  bottomLeft: new Radius.circular(20.0),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(20.0),
                                 ),
                               ),
                             ),
@@ -282,23 +282,23 @@ class _InitiativesState extends State<Initiatives> {
                           //     ),
                           //   ),
                           //   // color: Colors.purple,
-                          //   decoration: new BoxDecoration(
+                          //   decoration:  BoxDecoration(
                           //     color: Colors.purple,
-                          //     borderRadius: new BorderRadius.only(
-                          //       topLeft: new Radius.circular(20.0),
-                          //       bottomLeft: new Radius.circular(20.0),
+                          //     borderRadius:  BorderRadius.only(
+                          //       topLeft:  Radius.circular(20.0),
+                          //       bottomLeft:  Radius.circular(20.0),
                           //     ),
                           //   ),
                           // ),
-                          decoration: new BoxDecoration(
+                          decoration: BoxDecoration(
                             //color: const Color(0xFFD81B60),
-                            image: new DecorationImage(
-                              image: new AssetImage(
+                            image: DecorationImage(
+                              image: AssetImage(
                                   'assets/images/initiatives/img3.jpg'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius:
-                                new BorderRadius.all(new Radius.circular(20.0)),
+                                BorderRadius.all(Radius.circular(20.0)),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),

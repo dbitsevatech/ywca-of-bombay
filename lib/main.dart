@@ -1,9 +1,9 @@
-import 'package:ywcaofbombay/screens/authentication/register.dart';
-import 'package:ywcaofbombay/screens/class_builder.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'screens/class_builder.dart';
+import 'screens/intro.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -30,8 +30,6 @@ class MyApp extends StatelessWidget {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    // return Intro();
-    // return MainWidget();
-    return RegisterScreen();
+    return Intro();
   }
 }
