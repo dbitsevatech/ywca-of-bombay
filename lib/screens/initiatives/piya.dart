@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-class Piya extends StatefulWidget {
-  @override
-  _PiyaState createState() => _PiyaState();
-}
+import '../../widgets/open_painter.dart';
 
-class _PiyaState extends State<Piya> {
+class Piya extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
@@ -18,9 +15,37 @@ class _PiyaState extends State<Piya> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        // TODO: Make the back-button black color
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              //do something
+              // gotoSecondActivity(context);
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Row(
+              children: [
+                Container(
+                  color: Colors.orange,
+                  // margin: EdgeInsets.all(0.0),
+                  child: CustomPaint(
+                    painter: OpenPainter(),
+                  ),
+                ),
+              ],
+            ),
             Padding(padding: const EdgeInsets.only(top: 10)),
             Container(
               height: 300,

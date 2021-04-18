@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'carousel.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/open_painter.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -250,18 +251,3 @@ goBackToPreviousScreen(BuildContext context) {
 //     MaterialPageRoute(builder: (context) => CarouselDemo()),
 //   );
 // }
-
-class OpenPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()
-      ..color = primaryColor.withOpacity(0.5)
-      ..style = PaintingStyle.fill;
-    //a circle
-    canvas.drawCircle(Offset(-40, -20), 100, paint1);
-    canvas.drawCircle(Offset(60, -100), 100, paint1);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}

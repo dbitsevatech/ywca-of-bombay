@@ -11,6 +11,7 @@ import '../screens/events/events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/home.dart';
 import '../screens/success_stories.dart';
+import '../widgets/constants.dart';
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
@@ -84,6 +85,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           child: Container(
             padding: EdgeInsets.fromLTRB(0, 10, 80, 0),
             width: MediaQuery.of(context).size.width * 0.8,
+            // Bug: on Redmi 8
+            // A RenderFlex overflowed by 2.0 pixels on the right.
+            // The relevant error-causing widget was
+            // Row
+            // lib\widgets\drawer.dart:88
             child: Row(
               children: <Widget>[
                 Container(
@@ -164,10 +170,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             colors: [
               Colors.white,
               Colors.white,
-              // Colors.blue[100],
-              Color(0xff49DEE8),
-              // Colors.blue[200],
-              Color(0xff49DEE8),
+              primaryColor,
+              secondaryColor,
             ],
           ),
         ),

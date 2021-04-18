@@ -25,29 +25,51 @@ class _InitiativesState extends State<Initiatives> {
                   child: Image.asset("assets/images/circle-design.png"),
                 ),
                 Positioned(
-                  child: Row(
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                        child: Material(
-                          shadowColor: Colors.transparent,
-                          color: Colors.transparent,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.menu,
-                              color: Colors.black,
-                            ),
-                            onPressed: widget.onMenuPressed,
+                  child: AppBar(
+                    centerTitle: true,
+                    title: Text("YWCA Of Bombay",
+                        style: TextStyle(
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 18.0,
+                            color: Colors.black87)),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    leading: IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                      ),
+                      onPressed: widget.onMenuPressed,
+                    ),
+                  ),
+                ),
+                PreferredSize(
+                  preferredSize: Size.fromHeight(100),
+                  child: Center(
+                    child: Column(
+                      children: <Widget>[
+                        // Distance from ywca
+                        // or else it will overlap
+                        SizedBox(height: 100),
+                        RichText(
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyText2,
+                            children: [
+                              TextSpan(
+                                text: 'Initiatives ',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  color: Color(0xff333333),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      Spacer(),
-                      Container(
-                        height: 40,
-                        width: 40,
-                      ),
-                      SizedBox(width: 15)
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -56,17 +78,6 @@ class _InitiativesState extends State<Initiatives> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Text(
-                      'Initiatives',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Color(0xff333333),
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'RacingSansOne'),
-                    ),
-                  ),
                   Center(
                     child: Container(
                       //padding: EdgeInsets.all(5.0),

@@ -205,7 +205,7 @@
 //                   top: _height * 0.01,
 //                   left: _height * 0.02,
 //                   right: _height * 0.02,
-//                   bottom: _height * 0.005,
+//                   bottom: _height * 0.001,
 //                 ),
 //                 child: Form(
 //                   key: _formKey,
@@ -454,63 +454,62 @@
 //                         ],
 //                       ),
 //                       SizedBox(height: _height * 0.015),
-//                       Padding(
-//                         padding: EdgeInsets.only(left: 20, right: 20),
-//                         child: Container(
-//                           decoration: BoxDecoration(
-//                               gradient: LinearGradient(
-//                                 colors: [
-//                                   firstButtonGradientColor,
-//                                   firstButtonGradientColor,
-//                                   secondButtonGradientColor
-//                                 ],
-//                                 begin: FractionalOffset.centerLeft,
-//                                 end: FractionalOffset.centerRight,
-//                               ),
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(20))),
-//                           child: FlatButton(
-//                             onPressed: () async {
-//                               if (!_formKey.currentState.validate()) {
-//                                 return;
-//                               }
-//                               _formKey.currentState.save();
-//                               if (!await _phoneNumberIsAlreadyRegistered(
-//                                   phoneNumber)) {
-//                                 print("user does not exist");
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                     builder: (context) => RegisterScreen2(
-//                                       // userData: _user,
-//                                       firstName: firstName,
-//                                       lastName: lastName,
-//                                       emailId: email,
-//                                       phoneNumber: phoneNumber,
-//                                       gender: gender,
-//                                       dateOfBirth: dob,
-//                                     ),
+//                       Container(
+//                         decoration: BoxDecoration(
+//                             gradient: LinearGradient(
+//                               colors: [
+//                                 firstButtonGradientColor,
+//                                 firstButtonGradientColor,
+//                                 secondButtonGradientColor
+//                               ],
+//                               begin: FractionalOffset.centerLeft,
+//                               end: FractionalOffset.centerRight,
+//                             ),
+//                             borderRadius:
+//                                 BorderRadius.all(Radius.circular(15))),
+//                         child: FlatButton(
+//                           onPressed: () async {
+//                             if (!_formKey.currentState.validate()) {
+//                               return;
+//                             }
+//                             _formKey.currentState.save();
+//                             if (!await _phoneNumberIsAlreadyRegistered(
+//                                 phoneNumber)) {
+//                               print("user does not exist");
+//                               Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                   builder: (context) => RegisterScreen2(
+//                                     // userData: _user,
+//                                     firstName: firstName,
+//                                     lastName: lastName,
+//                                     emailId: email,
+//                                     phoneNumber: phoneNumber,
+//                                     gender: gender,
+//                                     dateOfBirth: dob,
 //                                   ),
-//                                 );
-//                               } else {
-//                                 FocusScope.of(context).unfocus();
-//                                 print(
-//                                     "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-//                                 _showAlreadyRegisteredSnackBar();
-//                               }
-//                             },
-//                             child: Center(
-//                               child: Text(
-//                                 'Next',
-//                                 style: TextStyle(
-//                                   fontSize: 20,
-//                                   fontFamily: 'Montserrat',
-//                                   color: Colors.white,
 //                                 ),
+//                               );
+//                             } else {
+//                               FocusScope.of(context).unfocus();
+//                               print(
+//                                   "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+//                               _showAlreadyRegisteredSnackBar();
+//                             }
+//                           },
+//                           child: Center(
+//                             child: Text(
+//                               'Next',
+//                               style: TextStyle(
+//                                 fontSize: 20,
+//                                 fontFamily: 'Montserrat',
+//                                 color: Colors.white,
 //                               ),
 //                             ),
-//                             padding: EdgeInsets.symmetric(
-//                                 horizontal: 130.0, vertical: 25.0),
+//                           ),
+//                           padding: EdgeInsets.symmetric(
+//                             horizontal: 0.0,
+//                             vertical: _height * 0.035,
 //                           ),
 //                         ),
 //                       ),
@@ -552,7 +551,7 @@
 //                   ),
 //                 ],
 //               ),
-//               // SizedBox(height: _height * 0.015),
+//               SizedBox(height: _height * 0.015),
 //             ],
 //           ),
 //           // ),
@@ -672,7 +671,7 @@
 //                   top: _height * 0.01,
 //                   left: _height * 0.02,
 //                   right: _height * 0.02,
-//                   bottom: _height * 0.005,
+//                   bottom: _height * 0.01,
 //                 ),
 //                 child: Form(
 //                   key: _formKey,
@@ -786,6 +785,11 @@
 //                           color: formFieldFillColor,
 //                           // border: Border.all(),
 //                         ),
+//                         // Bug: on Redmi 8
+//                         // A RenderFlex overflowed by 74 pixels on the right.
+
+//                         // The relevant error-causing widget was
+//                         // DropdownButton<String>
 //                         child: DropdownButton<String>(
 //                           value: nearestCenter,
 //                           underline: Container(),
@@ -875,70 +879,66 @@
 //                         ],
 //                       ),
 //                       SizedBox(height: _height * 0.005),
-//                       Padding(
-//                         padding: EdgeInsets.only(
-//                           left: _height * 0.01,
-//                           right: _height * 0.01,
-//                         ),
-//                         child: Container(
-//                           decoration: BoxDecoration(
-//                               gradient: LinearGradient(
-//                                 colors: [
-//                                   secondaryColor,
-//                                   secondaryColor,
-//                                   secondButtonGradientColor
-//                                 ],
-//                                 begin: FractionalOffset.centerLeft,
-//                                 end: FractionalOffset.centerRight,
-//                               ),
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(20))),
-//                           child: FlatButton(
-//                             onPressed: () async {
-//                               if (!_formKey.currentState.validate()) {
-//                                 return;
-//                               }
-//                               print(firstName);
-//                               print(lastName);
-//                               print(dateOfBirth);
-//                               print(phoneNumber);
-//                               print(emailId);
-//                               print(gender);
-//                               print(profession);
-//                               print(placeOfWork);
-//                               print(nearestCenter);
-//                               print(interestInMembership);
+//                       Container(
+//                         decoration: BoxDecoration(
+//                             gradient: LinearGradient(
+//                               colors: [
+//                                 secondaryColor,
+//                                 secondaryColor,
+//                                 secondButtonGradientColor
+//                               ],
+//                               begin: FractionalOffset.centerLeft,
+//                               end: FractionalOffset.centerRight,
+//                             ),
+//                             borderRadius:
+//                                 BorderRadius.all(Radius.circular(15))),
+//                         child: FlatButton(
+//                           onPressed: () async {
+//                             if (!_formKey.currentState.validate()) {
+//                               return;
+//                             }
+//                             print(firstName);
+//                             print(lastName);
+//                             print(dateOfBirth);
+//                             print(phoneNumber);
+//                             print(emailId);
+//                             print(gender);
+//                             print(profession);
+//                             print(placeOfWork);
+//                             print(nearestCenter);
+//                             print(interestInMembership);
 
-//                               _formKey.currentState.save();
-//                               Navigator.of(context).push(
-//                                 MaterialPageRoute(
-//                                   builder: (context) => RegisterOtp(
-//                                     firstName: firstName,
-//                                     lastName: lastName,
-//                                     emailId: emailId,
-//                                     placeOfWork: placeOfWork,
-//                                     gender: gender,
-//                                     dateOfBirth: dateOfBirth,
-//                                     phoneNumber: phoneNumber,
-//                                     profession: profession,
-//                                     nearestCenter: nearestCenter,
-//                                     interestInMembership: interestInMembership,
-//                                   ),
+//                             _formKey.currentState.save();
+//                             Navigator.of(context).push(
+//                               MaterialPageRoute(
+//                                 builder: (context) => RegisterOtp(
+//                                   firstName: firstName,
+//                                   lastName: lastName,
+//                                   emailId: emailId,
+//                                   placeOfWork: placeOfWork,
+//                                   gender: gender,
+//                                   dateOfBirth: dateOfBirth,
+//                                   phoneNumber: phoneNumber,
+//                                   profession: profession,
+//                                   nearestCenter: nearestCenter,
+//                                   interestInMembership: interestInMembership,
 //                                 ),
-//                               );
-//                             },
-//                             child: Center(
-//                               child: Text(
-//                                 'Register',
-//                                 style: TextStyle(
-//                                   fontSize: 20,
-//                                   fontFamily: 'Montserrat',
-//                                   color: Colors.white,
-//                                 ),
+//                               ),
+//                             );
+//                           },
+//                           child: Center(
+//                             child: Text(
+//                               'Register',
+//                               style: TextStyle(
+//                                 fontSize: 20,
+//                                 fontFamily: 'Montserrat',
+//                                 color: Colors.white,
 //                               ),
 //                             ),
-//                             padding: EdgeInsets.symmetric(
-//                                 horizontal: 130.0, vertical: 25.0),
+//                           ),
+//                           padding: EdgeInsets.symmetric(
+//                             horizontal: 0.0,
+//                             vertical: _height * 0.035,
 //                           ),
 //                         ),
 //                       ),
@@ -946,7 +946,6 @@
 //                   ),
 //                 ),
 //               ),
-//               // SizedBox(height: 10),
 //             ],
 //           ),
 //         ),

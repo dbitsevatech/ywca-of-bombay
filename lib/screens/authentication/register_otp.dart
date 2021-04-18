@@ -251,7 +251,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: FractionallySizedBox(
         widthFactor: 0.85, // button width wrt screen width
@@ -331,7 +331,10 @@ class _RegisterOtpState extends State<RegisterOtp>
               ),
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 130.0, vertical: 25.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.0,
+            vertical: _screenSize.height * 0.035,
+          ),
         ),
       ),
     );

@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               end: FractionalOffset.centerRight,
                             ),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
+                                BorderRadius.all(Radius.circular(15))),
                         child: FlatButton(
                           onPressed: () async {
                             if (!_formKey.currentState.validate()) {
@@ -201,9 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           padding: EdgeInsets.symmetric(
-                              // horizontal: 130.0, vertical: 25.0),
-                              horizontal: 130.0,
-                              vertical: _height * 0.035),
+                            horizontal: 0.0,
+                            vertical: _height * 0.035,
+                          ),
                         ),
                       ),
                     ],
