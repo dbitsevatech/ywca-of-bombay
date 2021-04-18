@@ -11,6 +11,7 @@ void main() async {
   Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
+    // theme: ThemeData(fontFamily: 'Montserrat'),
     home: MyApp(),
   ));
 }

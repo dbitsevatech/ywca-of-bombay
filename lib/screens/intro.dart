@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'authentication/login.dart';
+import '../widgets/constants.dart';
 
 class Intro extends StatefulWidget {
   @override
@@ -34,115 +35,127 @@ class _IntroState extends State<Intro> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'intro',
-      theme: ThemeData(fontFamily: 'Montserrat'),
-      home: Scaffold(
-        body: Center(
-          child: ListView(
-            padding: const EdgeInsets.all(8),
-            children: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Container(
-                  child: CarouselSlider.builder(
-                    itemCount: images.length,
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 1.0,
-                      enlargeCenterPage: true,
-                    ),
-                    itemBuilder: (context, index, realIdx) {
-                      return Container(
-                        child: Center(
-                          child: Image.network(images[index],
-                              fit: BoxFit.cover, width: 1000),
-                        ),
-                      );
-                    },
-                  ),
+    final _height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      body: Container(
+        height: _height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            // circle design and Appbar
+            Stack(
+              children: <Widget>[
+                Positioned(
+                  child: Image.asset("assets/images/circle-design.png"),
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: Text(
-                  '\"BY LOVE, SERVE ONE ANOTHER\"',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: Text(
-                  'To empower women at all',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black45,
-                  ),
-                ),
-              ),
-              Center(
-                child: Text(
-                  'levels to struggle for justice',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black45,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xff00BBE4),
-                          Color(0xff00BBE4),
-                          Color(0xff005BE4),
-                        ],
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoginScreen()));
-                    },
-                    child: Center(
-                      child: Text(
-                        'LET\'S GO',
+                Positioned(
+                  child: AppBar(
+                    centerTitle: true,
+                    title: Text("YWCA Of Bombay",
                         style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 18.0,
+                            color: Colors.black87)),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
                   ),
                 ),
+              ],
+            ),
+            Center(
+              child: Container(
+                child: CarouselSlider.builder(
+                  itemCount: images.length,
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    aspectRatio: 1.0,
+                    enlargeCenterPage: true,
+                  ),
+                  itemBuilder: (context, index, realIdx) {
+                    return Container(
+                      child: Center(
+                        child: Image.network(images[index],
+                            fit: BoxFit.cover, width: 1000),
+                      ),
+                    );
+                  },
+                ),
               ),
-              SizedBox(
-                height: 10,
+            ),
+            Center(
+              child: Text(
+                '\"BY LOVE, SERVE ONE ANOTHER\"',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black,
+                ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Text(
+                'To empower women at all',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black45,
+                ),
+              ),
+            ),
+            Center(
+              child: Text(
+                'levels to struggle for justice',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black45,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        firstButtonGradientColor,
+                        firstButtonGradientColor,
+                        secondButtonGradientColor,
+                      ],
+                      begin: FractionalOffset.centerLeft,
+                      end: FractionalOffset.centerRight,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  },
+                  child: Center(
+                    child: Text(
+                      'LET\'S GO',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Montserrat',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          ],
         ),
       ),
     );

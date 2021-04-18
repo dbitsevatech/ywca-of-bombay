@@ -2,7 +2,8 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/carousel.dart';
+import 'carousel.dart';
+import '../../widgets/constants.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -20,7 +21,7 @@ class DetailPage extends StatelessWidget {
   var _xOffset = 1.0;
   var _yOffset = 0.0;
   var _blurRadius = 0.0;
-  Color btnColor = Color(0xFF00bbe4);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +62,7 @@ class DetailPage extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(300.0, 0.0, 0.0, 0.0),
               child: RaisedButton(
                 onPressed: () {},
-                color: Color(0xFF00bbe4),
+                color: secondaryColor,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
@@ -95,6 +96,7 @@ class DetailPage extends StatelessWidget {
                   // });
                 }),
           ),
+          // TODO: Carousel sliding dots not working
           // Sliding dots
           Row(
             // Row 3
@@ -142,6 +144,13 @@ class DetailPage extends StatelessWidget {
               Container(
                 width: 350,
                 margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
+                // TODO: Please use AutoSizeText widget instead of Text Widget to make the text responsive to all screen sizes
+                // https://pub.dev/packages/auto_size_text
+                //
+                // OR
+                //
+                // Wrap Text widgets with FittedBox widget to make the text responsive to all screen sizes
+                // https://api.flutter.dev/flutter/widgets/FittedBox-class.html
                 child: Text(
                   "Christmas Decorations don't have to be complicated to be elegant. We're sharing our favorite easy DIY Christmas decor ideas and tricks.",
                   style: TextStyle(
@@ -246,7 +255,7 @@ class OpenPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint()
-      ..color = Color(0xff49DEE8).withOpacity(0.5)
+      ..color = primaryColor.withOpacity(0.5)
       ..style = PaintingStyle.fill;
     //a circle
     canvas.drawCircle(Offset(-40, -20), 100, paint1);

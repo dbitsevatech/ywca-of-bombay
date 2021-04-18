@@ -3,6 +3,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 
 import 'event_details.dart';
 import '../../models/Event.dart';
+import '../../widgets/constants.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {
@@ -135,7 +136,7 @@ class _EventsState extends State<Events> {
             title: Text(
               _allEvents[index].dateTime,
               style: TextStyle(
-                  color: Color(0xFF49DEE8),
+                  color: primaryColor,
                   fontSize: 14.0,
                   fontWeight: FontWeight.normal),
             ),
@@ -184,7 +185,7 @@ class OpenPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint()
-      ..color = Color(0xff49DEE8).withOpacity(0.5)
+      ..color = primaryColor.withOpacity(0.5)
       ..style = PaintingStyle.fill;
     //circles
     canvas.drawCircle(Offset(-5, 45), 100, paint1);

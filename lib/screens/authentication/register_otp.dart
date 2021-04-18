@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
 
 class RegisterOtp extends StatefulWidget {
-  final color = const Color(0xff49DEE8);
   final String firstName;
   final String lastName;
   final String emailId;
@@ -223,7 +223,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         width: 120,
         decoration: BoxDecoration(
             // color: Colors.black,
-            color: Color(0xff00BBE4),
+            color: secondaryColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(32)),
         alignment: Alignment.center,
@@ -243,7 +243,11 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xff00BBE4), Color(0xff00BBE4), Color(0xff005BE4)],
+          colors: [
+            firstButtonGradientColor,
+            firstButtonGradientColor,
+            secondButtonGradientColor,
+          ],
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
         ),

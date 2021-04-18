@@ -10,7 +10,20 @@ class User {
   String nearestCenter = 'Chembur';
   String interestInMembership = 'Yes';
 
-  save() {
-    print('saving user using a web service');
-  }
+  User(
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.profession,
+    this.placeOfWork,
+    this.nearestCenter,
+    this.interestInMembership,
+  );
+
+  // save() {
+  //   print('saving user using a web service');
+  // }
 }

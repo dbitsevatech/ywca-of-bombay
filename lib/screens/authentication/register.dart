@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'register_otp.dart';
 import '../../models/user.dart';
+import '../../widgets/constants.dart';
 
 enum GenderChoices { female, male, declineToState }
 
@@ -19,9 +20,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String email;
   String phoneNumber;
   String gender = "Female";
-  final color = const Color(0xff49DEE8);
+  DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
 
-  final _user = User();
+  final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
+      null, null, null, null, null, null, null);
+
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
@@ -35,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future _selectDate() async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: _user.dateOfBirth,
+      initialDate: dob,
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
       // initialDatePickerMode: DatePickerMode.year,
@@ -50,15 +53,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.dark(
-              primary: Color(0xff49DEE8), // highlighed date color
+              primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
-              surface: Color(0xff49DEE8), // header color
+              surface: primaryColor, // header color
               onSurface: Colors.grey[800], // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: Color(0xff00BBE4), // button text color
+                primary: secondaryColor, // button text color
               ),
             ),
           ),
@@ -66,11 +69,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     );
-    if (picked != null && picked != _user.dateOfBirth) {
+    if (picked != null && picked != dob) {
       setState(() {
-        _user.dateOfBirth = picked;
+        dob = picked;
         // print(picked);
-        print(_user.dateOfBirth);
+        print(dob);
       });
     }
   }
@@ -123,444 +126,436 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final int height = 1;
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
+    final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       key: _scaffoldkey,
       body: SingleChildScrollView(
         child: Container(
+          // body: Container(
           // margin: EdgeInsets.all(16),
-          // height: MediaQuery.of(context).size.height, // giving render issue
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  // circle design
-                  children: <Widget>[
-                    Positioned(
-                      child: Image.asset("assets/images/circle-design.png"),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 100),
-                          child: Text(
-                            'REGISTER',
-                            style: TextStyle(
-                              fontSize: 35,
-                              color: Color(0xff49DEE8),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Already have an account? ',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
+          // height: _height,
+          // width: _width,
+          // child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // circle design and Title
+              Stack(
+                children: <Widget>[
+                  Positioned(
+                    child: Image.asset("assets/images/circle-design.png"),
+                  ),
+                  Positioned(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 100),
                         child: Text(
-                          'Log In',
+                          'REGISTER',
                           style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff49DEE8),
+                            fontSize: 35,
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RacingSansOne',
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      onSaved: (value) {
-                        setState(() {
-                          firstName = value;
-                        });
-                      },
-                      validator: (String value) {
-                        if (value.isEmpty)
-                          return 'First name is required.';
-                        else
-                          return null;
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.account_circle,
-                          color: Color(0xff00BBE4),
-                        ),
-                        labelText: 'First Name',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
+                  ),
+                ],
+              ),
+              // Have an account, LOG IN
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      'Already have an account? ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      onSaved: (value) {
-                        setState(() {
-                          lastName = value;
-                        });
-                      },
-                      validator: (String value) {
-                        if (value.isEmpty)
-                          return 'Last name is required.';
-                        else
-                          return null;
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.account_circle,
-                          color: Color(0xff00BBE4),
-                        ),
-                        labelText: 'Last Name',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      // keyboardType: TextInputType.datetime,
-                      onChanged: (value) {
-                        setState(() {
-                          // dateOfBirth = DateTime.parse(value);
-                          // dateOfBirth\ = value;
-                        });
-                      },
-                      controller: dateController,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.date_range,
-                          color: Color(0xff00BBE4),
-                        ),
-                        labelText: 'Date of Birth',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                      ),
-                      onTap: () async {
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        // TODO: BUG: text cursor showing over the date picker bcoz of async-await
-                        await _selectDate();
-                        dateController.text =
-                            "${_user.dateOfBirth.toLocal()}".split(' ')[0];
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: 360,
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    onSaved: (value) {
-                      setState(() {
-                        email = value;
-                      });
-                    },
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Email is required';
-                      }
-                      if (!RegExp(
-                              "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                          .hasMatch(value)) {
-                        return 'Enter a valid email address';
-                      }
-                      // return null coz validator has to return something
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.email,
-                        color: Color(0xff00BBE4),
-                      ),
-                      labelText: 'Email Address',
-                      filled: true,
-                      fillColor: Color(0xffF3F4F6),
-                      disabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                      maxLength: 10,
-                      validator: (String value) {
-                        if (value.isEmpty)
-                          return 'Mobile number is required';
-                        else if (!RegExp(r"^\d{10}$").hasMatch(value))
-                          return 'Please enter a valid mobile number';
-                        else
-                          return null;
-                      },
-                      // onChanged: (String value) {
-                      //   setState(() {
-                      //     phoneNumber = value;
-                      //   });
-                      // },
-                      onSaved: (String value) {
-                        setState(() {
-                          phoneNumber = value;
-                        });
-                        //   print("onSaved!: " + value);
-                        // List<String> _listOfPhoneNumbers = ['0'];
-                        // await FirebaseFirestore.instance
-                        //     .collection("users")
-                        //     .get()
-                        //     .then((querySnapshot) {
-                        //   querySnapshot.docs.forEach((result) {
-                        //     print(result.data()["phone"]);
-                        //     _listOfPhoneNumbers.add(result.data()["phone"]);
-                        //   });
-                        // });
-                        // print(_listOfPhoneNumbers);
-                        // if (!_listOfPhoneNumbers.contains(value)) {
-                        //   // if (!await _phoneNumberIsAlreadyRegistered(value)) {
-                        // } else {
-                        //   FocusScope.of(context).unfocus();
-                        //   print(
-                        //       "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-                        //   _showAlreadyRegisteredSnackBar();
-                        // }
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.account_circle,
-                          color: Color(0xff00BBE4),
-                        ),
-                        prefixText: '+91 | ',
-                        labelText: 'Mobile Number',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  'Gender',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xff49DEE8),
-                    fontWeight: FontWeight.w800,
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-                Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: const Text('Female'),
-                      leading: Radio(
-                        value: GenderChoices.female,
-                        groupValue: selectedGender,
-                        onChanged: (GenderChoices value) {
-                          setState(() {
-                            selectedGender = value;
-                            gender = "Female";
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text('Male'),
-                      leading: Radio(
-                        value: GenderChoices.male,
-                        groupValue: selectedGender,
-                        onChanged: (GenderChoices value) {
-                          setState(() {
-                            selectedGender = value;
-                            gender = "Male";
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text('Decline to state'),
-                      leading: Radio(
-                        value: GenderChoices.declineToState,
-                        groupValue: selectedGender,
-                        onChanged: (GenderChoices value) {
-                          setState(() {
-                            selectedGender = value;
-                            gender = "Decline to State";
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff00BBE4),
-                            Color(0xff00BBE4),
-                            Color(0xff005BE4)
-                          ],
-                          begin: FractionalOffset.centerLeft,
-                          end: FractionalOffset.centerRight,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: FlatButton(
-                      onPressed: () async {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        _formKey.currentState.save();
-                        if (!await _phoneNumberIsAlreadyRegistered(
-                            phoneNumber)) {
-                          print("user does not exist");
-                          Navigator.push(
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => RegisterScreen2(
-                                // userData: _user,
-                                firstName: firstName,
-                                lastName: lastName,
-                                emailId: email,
-                                phoneNumber: phoneNumber,
-                                gender: gender,
-                                dateOfBirth: _user.dateOfBirth,
-                              ),
-                            ),
-                          );
-                        } else {
-                          FocusScope.of(context).unfocus();
-                          print(
-                              "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-                          _showAlreadyRegisteredSnackBar();
-                        }
+                                builder: (context) => LoginScreen()));
                       },
-                      child: Center(
-                        child: Text(
-                          'Next',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 130.0, vertical: 25.0),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
                       child: Text(
-                        'Already have an account? ',
+                        'Log In',
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          color: primaryColor,
                         ),
                       ),
                     ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                  ),
+                ],
+              ),
+              SizedBox(height: _height * 0.01),
+              // Form
+              Padding(
+                padding: EdgeInsets.only(
+                  top: _height * 0.01,
+                  left: _height * 0.02,
+                  right: _height * 0.02,
+                  bottom: _height * 0.005,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      // Center(
+                      //   child: Container(
+                      //     width: 360,
+                      //     child:
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          setState(() {
+                            firstName = value;
+                          });
                         },
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff49DEE8),
+                        validator: (String value) {
+                          if (value.isEmpty)
+                            return 'First name is required.';
+                          else
+                            return null;
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.account_circle,
+                            color: secondaryColor,
+                          ),
+                          labelText: 'First Name',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                      ),
+                      //   ),
+                      // ),
+                      SizedBox(height: _height * 0.015),
+                      // Center(
+                      //   child: Container(
+                      //     width: 360,
+                      // child:
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          setState(() {
+                            lastName = value;
+                          });
+                        },
+                        validator: (String value) {
+                          if (value.isEmpty)
+                            return 'Last name is required.';
+                          else
+                            return null;
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.account_circle,
+                            color: secondaryColor,
+                          ),
+                          labelText: 'Last Name',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                      ),
+                      //   ),
+                      // ),
+                      SizedBox(height: _height * 0.015),
+                      // Center(
+                      //   child: Container(
+                      //     width: 360,
+                      //     child:
+                      TextFormField(
+                        // keyboardType: TextInputType.datetime,
+                        onChanged: (value) {
+                          setState(() {
+                            // dateOfBirth = DateTime.parse(value);
+                            // dateOfBirth\ = value;
+                          });
+                        },
+                        controller: dateController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.date_range,
+                            color: secondaryColor,
+                          ),
+                          labelText: 'Date of Birth',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                        onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          // TODO: BUG: text cursor showing over the date picker bcoz of async-await
+                          await _selectDate();
+                          dateController.text =
+                              "${dob.toLocal()}".split(' ')[0];
+                        },
+                      ),
+                      // ),
+                      // ),
+                      SizedBox(height: _height * 0.015),
+                      // Container(
+                      //   width: 360,
+                      // child:
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        onSaved: (value) {
+                          setState(() {
+                            email = value;
+                          });
+                        },
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Email is required';
+                          }
+                          if (!RegExp(
+                                  "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                              .hasMatch(value)) {
+                            return 'Enter a valid email address';
+                          }
+                          // return null coz validator has to return something
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.email,
+                            color: secondaryColor,
+                          ),
+                          labelText: 'Email Address',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                      ),
+                      // ),
+                      SizedBox(height: _height * 0.015),
+                      // Center(
+                      //   child: Container(
+                      //     width: 360,
+                      //     child:
+                      TextFormField(
+                        keyboardType: TextInputType.phone,
+                        maxLength: 10,
+                        validator: (String value) {
+                          if (value.isEmpty)
+                            return 'Mobile number is required';
+                          else if (!RegExp(r"^\d{10}$").hasMatch(value))
+                            return 'Please enter a valid mobile number';
+                          else
+                            return null;
+                        },
+                        onSaved: (String value) {
+                          setState(() {
+                            phoneNumber = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.phone_android,
+                            color: secondaryColor,
+                          ),
+                          prefixText: '+91 | ',
+                          labelText: 'Mobile Number',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                      ),
+                      // ),
+                      // ),
+                      // SizedBox(height: _height * 0.010),
+                      Text(
+                        'Gender',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: primaryColor,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text('Female'),
+                            leading: Radio(
+                              value: GenderChoices.female,
+                              groupValue: selectedGender,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (GenderChoices value) {
+                                setState(() {
+                                  selectedGender = value;
+                                  gender = "Female";
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Male'),
+                            leading: Radio(
+                              value: GenderChoices.male,
+                              groupValue: selectedGender,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (GenderChoices value) {
+                                setState(() {
+                                  selectedGender = value;
+                                  gender = "Male";
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Decline to state'),
+                            leading: Radio(
+                              value: GenderChoices.declineToState,
+                              groupValue: selectedGender,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (GenderChoices value) {
+                                setState(() {
+                                  selectedGender = value;
+                                  gender = "Decline to State";
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  firstButtonGradientColor,
+                                  firstButtonGradientColor,
+                                  secondButtonGradientColor
+                                ],
+                                begin: FractionalOffset.centerLeft,
+                                end: FractionalOffset.centerRight,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: FlatButton(
+                            onPressed: () async {
+                              if (!_formKey.currentState.validate()) {
+                                return;
+                              }
+                              _formKey.currentState.save();
+                              if (!await _phoneNumberIsAlreadyRegistered(
+                                  phoneNumber)) {
+                                print("user does not exist");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterScreen2(
+                                      // userData: _user,
+                                      firstName: firstName,
+                                      lastName: lastName,
+                                      emailId: email,
+                                      phoneNumber: phoneNumber,
+                                      gender: gender,
+                                      dateOfBirth: dob,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                FocusScope.of(context).unfocus();
+                                print(
+                                    "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+                                _showAlreadyRegisteredSnackBar();
+                              }
+                            },
+                            child: Center(
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 130.0, vertical: 25.0),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: _height * 0.015),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Text(
+                      'Already have an account? ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
+                      ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-              ],
-            ),
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+                      },
+                      child: Text(
+                        'Log In',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(height: _height * 0.015),
+            ],
           ),
+          // ),
         ),
       ),
     );
@@ -623,7 +618,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     this.gender,
     this.dateOfBirth,
   );
-  final color = const Color(0xff49DEE8);
   MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   final GlobalKey<FormState> _formKey =
@@ -640,352 +634,320 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           // margin: EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  // circle design
-                  children: <Widget>[
-                    Positioned(
-                      child: Image.asset("assets/images/circle-design.png"),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 100),
-                          child: Text(
-                            'REGISTER',
-                            style: TextStyle(
-                              fontSize: 35,
-                              color: Color(0xff49DEE8),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Container(
-                    width: 360,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      onSaved: (String value) {
-                        setState(() {
-                          profession = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.email,
-                          color: Color(0xff00BBE4),
-                        ),
-                        labelText: 'Profession',
-                        filled: true,
-                        fillColor: Color(0xffF3F4F6),
-                        disabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                      ),
-                    ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Stack(
+                // circle design
+                children: <Widget>[
+                  Positioned(
+                    child: Image.asset("assets/images/circle-design.png"),
                   ),
-                ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
+                  Positioned(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 100),
                         child: Text(
-                          '(Leave blank if retired)',
+                          'REGISTER',
                           style: TextStyle(
-                            color: Color(0xff49DEE8),
-                            fontSize: 15,
+                            fontSize: 35,
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RacingSansOne',
                           ),
                         ),
-                        padding: EdgeInsets.only(
-                          top: 5,
-                          bottom: 5,
-                          right: 25,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: 360,
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    onSaved: (value) {
-                      setState(() {
-                        if (value == '') {
-                          placeOfWork = 'Retired';
-                        } else {
-                          placeOfWork = value;
-                        }
-                      });
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.location_city,
-                        color: Color(0xff00BBE4),
                       ),
-                      labelText: 'Place of work/school/college',
-                      filled: true,
-                      fillColor: Color(0xffF3F4F6),
-                      disabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
                     ),
                   ),
+                ],
+              ),
+              // SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: _height * 0.01,
+                  left: _height * 0.02,
+                  right: _height * 0.02,
+                  bottom: _height * 0.005,
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        child: Text(
-                          '(Leave blank if retired)',
-                          style: TextStyle(
-                            color: Color(0xff49DEE8),
-                            fontSize: 15,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        onSaved: (String value) {
+                          setState(() {
+                            profession = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.email,
+                            color: secondaryColor,
                           ),
+                          labelText: 'Profession',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
                         ),
-                        padding: EdgeInsets.only(
-                          top: 5,
-                          bottom: 5,
-                          right: 25,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                // TODO: BUG: Focus goes to previous textfield after selecting center
-                // https://flutter.dev/docs/cookbook/forms/focus
-                // https://stackoverflow.com/questions/49592099/slide-focus-to-textfield-in-flutter
-                Text(
-                  'Nearest YWCA Center',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xff49DEE8),
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'RacingSansOne',
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  // width: 360,
-                  // child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 130.0, right: 130.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Color(0xffF3F4F6),
-                      // border: Border.all(),
-                    ),
-                    child: DropdownButton<String>(
-                      value: nearestCenter,
-                      underline: Container(),
-                      onChanged: (String value) {
-                        setState(() {
-                          nearestCenter = value;
-                          print(nearestCenter);
-                        });
-                      },
-                      items: <String>[
-                        'Andheri',
-                        'Bandra',
-                        'Belapur',
-                        'Borivali',
-                        'Byculla',
-                        'Chembur',
-                        'Fort',
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Interested in being a member?',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xff49DEE8),
-                    fontWeight: FontWeight.w800,
-                    fontFamily: 'Montserrat',
-                  ),
-                ),
-                Column(
-                  // TODO: Ability to select radio button when text is tapped
-                  children: <Widget>[
-                    ListTile(
-                      title: const Text('Yes'),
-                      leading: Radio(
-                        value: MemberChoices.yes,
-                        groupValue: _selectedMembershipInterest,
-                        onChanged: (MemberChoices value) {
-                          setState(() {
-                            _selectedMembershipInterest = value;
-                            interestInMembership = "Yes";
-                          });
-                        },
                       ),
-                    ),
-                    ListTile(
-                      title: const Text('No'),
-                      leading: Radio(
-                        value: MemberChoices.no,
-                        groupValue: _selectedMembershipInterest,
-                        onChanged: (MemberChoices value) {
-                          setState(() {
-                            _selectedMembershipInterest = value;
-                            interestInMembership = "No";
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text('Maybe'),
-                      leading: Radio(
-                        value: MemberChoices.maybe,
-                        groupValue: _selectedMembershipInterest,
-                        onChanged: (MemberChoices value) {
-                          setState(() {
-                            _selectedMembershipInterest = value;
-                            interestInMembership = "Maybe";
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xff00BBE4),
-                            Color(0xff00BBE4),
-                            Color(0xff005BE4)
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              child: Text(
+                                '(Leave blank if retired)',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              padding: EdgeInsets.only(
+                                top: 2.5,
+                                bottom: 2.5,
+                                right: 3,
+                              ),
+                            )
                           ],
-                          begin: FractionalOffset.centerLeft,
-                          end: FractionalOffset.centerRight,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: FlatButton(
-                      onPressed: () async {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        print(firstName);
-                        print(lastName);
-                        print(dateOfBirth);
-                        print(phoneNumber);
-                        print(emailId);
-                        print(gender);
-                        print(profession);
-                        print(placeOfWork);
-                        print(nearestCenter);
-                        print(interestInMembership);
-                        // CollectionReference users =
-                        //     FirebaseFirestore.instance.collection('users');
-                        // users.doc(documentId).get();
-                        _formKey.currentState.save();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => RegisterOtp(
-                              firstName: firstName,
-                              lastName: lastName,
-                              emailId: emailId,
-                              placeOfWork: placeOfWork,
-                              gender: gender,
-                              dateOfBirth: dateOfBirth,
-                              phoneNumber: phoneNumber,
-                              profession: profession,
-                              nearestCenter: nearestCenter,
-                              interestInMembership: interestInMembership,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white,
-                          ),
                         ),
                       ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 130.0, vertical: 25.0),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Already have an account? ',
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) {
+                          setState(() {
+                            if (value == '') {
+                              placeOfWork = 'Retired';
+                            } else {
+                              placeOfWork = value;
+                            }
+                          });
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.location_city,
+                            color: secondaryColor,
+                          ),
+                          labelText: 'Place of work/school/college',
+                          filled: true,
+                          fillColor: formFieldFillColor,
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                        ),
+                      ),
+                      Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              child: Text(
+                                '(Leave blank if retired)',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              padding: EdgeInsets.only(
+                                top: 2.5,
+                                bottom: 2.5,
+                                right: 3,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      // TODO: BUG: Focus goes to previous textfield after selecting center
+                      // https://flutter.dev/docs/cookbook/forms/focus
+                      // https://stackoverflow.com/questions/49592099/slide-focus-to-textfield-in-flutter
+                      Text(
+                        'Nearest YWCA Center',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
+                          color: primaryColor,
+                          fontWeight: FontWeight.w600,
                           fontFamily: 'Montserrat',
                         ),
                       ),
-                    ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff49DEE8),
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: _height * 0.215, right: _height * 0.215),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: formFieldFillColor,
+                          // border: Border.all(),
+                        ),
+                        child: DropdownButton<String>(
+                          value: nearestCenter,
+                          underline: Container(),
+                          onChanged: (String value) {
+                            setState(() {
+                              nearestCenter = value;
+                              print(nearestCenter);
+                            });
+                          },
+                          items: <String>[
+                            'Andheri',
+                            'Bandra',
+                            'Belapur',
+                            'Borivali',
+                            'Byculla',
+                            'Chembur',
+                            'Fort',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.010),
+                      Text(
+                        'Interested in being a member?',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: primaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                      Column(
+                        // TODO: Ability to select radio button when text is tapped
+                        children: <Widget>[
+                          ListTile(
+                            title: const Text('Yes'),
+                            leading: Radio(
+                              value: MemberChoices.yes,
+                              groupValue: _selectedMembershipInterest,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (MemberChoices value) {
+                                setState(() {
+                                  _selectedMembershipInterest = value;
+                                  interestInMembership = "Yes";
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('No'),
+                            leading: Radio(
+                              value: MemberChoices.no,
+                              groupValue: _selectedMembershipInterest,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (MemberChoices value) {
+                                setState(() {
+                                  _selectedMembershipInterest = value;
+                                  interestInMembership = "No";
+                                });
+                              },
+                            ),
+                          ),
+                          ListTile(
+                            title: const Text('Maybe'),
+                            leading: Radio(
+                              value: MemberChoices.maybe,
+                              groupValue: _selectedMembershipInterest,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                              onChanged: (MemberChoices value) {
+                                setState(() {
+                                  _selectedMembershipInterest = value;
+                                  interestInMembership = "Maybe";
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: _height * 0.005),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: _height * 0.01,
+                          right: _height * 0.01,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  secondaryColor,
+                                  secondaryColor,
+                                  secondButtonGradientColor
+                                ],
+                                begin: FractionalOffset.centerLeft,
+                                end: FractionalOffset.centerRight,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: FlatButton(
+                            onPressed: () async {
+                              if (!_formKey.currentState.validate()) {
+                                return;
+                              }
+                              print(firstName);
+                              print(lastName);
+                              print(dateOfBirth);
+                              print(phoneNumber);
+                              print(emailId);
+                              print(gender);
+                              print(profession);
+                              print(placeOfWork);
+                              print(nearestCenter);
+                              print(interestInMembership);
+
+                              _formKey.currentState.save();
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterOtp(
+                                    firstName: firstName,
+                                    lastName: lastName,
+                                    emailId: emailId,
+                                    placeOfWork: placeOfWork,
+                                    gender: gender,
+                                    dateOfBirth: dateOfBirth,
+                                    phoneNumber: phoneNumber,
+                                    profession: profession,
+                                    nearestCenter: nearestCenter,
+                                    interestInMembership: interestInMembership,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Center(
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 130.0, vertical: 25.0),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              // SizedBox(height: 10),
+            ],
           ),
         ),
       ),

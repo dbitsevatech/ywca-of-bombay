@@ -13,12 +13,11 @@ class _PiyaState extends State<Piya> {
     'assets/images/initiatives/img3.jpg',
     'assets/images/initiatives/img4.png',
   ];
+
+  final textColor = const Color(0xff333333);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('YWCA Of Bombay'),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -51,7 +50,7 @@ class _PiyaState extends State<Piya> {
                 'PIYA- Participation and involvement of youth in action',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Color(0xff333333),
+                    color: textColor,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'RacingSansOne'),
                 textAlign: TextAlign.center,
@@ -67,7 +66,7 @@ class _PiyaState extends State<Piya> {
                 maxLines: 8,
                 style: TextStyle(
                     fontSize: 15,
-                    color: Color(0xff333333),
+                    color: textColor,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'RacingSansOne'),
                 //textAlign: TextAlign.left,

@@ -13,6 +13,7 @@ class Initiatives extends KFDrawerContent {
 class _InitiativesState extends State<Initiatives> {
   @override
   Widget build(BuildContext context) {
+    final _height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Center(
         child: Column(
@@ -55,7 +56,6 @@ class _InitiativesState extends State<Initiatives> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  // Text('Initiatives'),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
                     child: Text(
@@ -67,8 +67,6 @@ class _InitiativesState extends State<Initiatives> {
                           fontFamily: 'RacingSansOne'),
                     ),
                   ),
-                  //
-
                   Center(
                     child: Container(
                       //padding: EdgeInsets.all(5.0),

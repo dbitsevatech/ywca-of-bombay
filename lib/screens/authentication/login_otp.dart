@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
 
 class LoginOtp extends StatefulWidget {
-  final color = const Color(0xff49DEE8);
-
   final String phoneNumber;
+  final String user;
 
-  const LoginOtp({this.phoneNumber});
+  const LoginOtp({this.phoneNumber, this.user});
 
   @override
-  _LoginOtpState createState() => _LoginOtpState(phoneNumber);
+  _LoginOtpState createState() => _LoginOtpState(phoneNumber, user);
 }
 
 class _LoginOtpState extends State<LoginOtp>
@@ -22,10 +22,11 @@ class _LoginOtpState extends State<LoginOtp>
   final int time = 59;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  final String phoneNumber;
+  final String _phoneNumber;
+  final String _user;
 
   String _verificationCode;
-  _LoginOtpState(this.phoneNumber);
+  _LoginOtpState(this._phoneNumber, this._user);
   AnimationController _controller;
   var otp;
   // Variables
@@ -176,7 +177,7 @@ class _LoginOtpState extends State<LoginOtp>
         width: 120,
         decoration: BoxDecoration(
           // color: Colors.black,
-          color: Color(0xff00BBE4),
+          color: secondaryColor,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(32),
         ),
@@ -197,7 +198,11 @@ class _LoginOtpState extends State<LoginOtp>
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xff00BBE4), Color(0xff00BBE4), Color(0xff005BE4)],
+          colors: [
+            firstButtonGradientColor,
+            firstButtonGradientColor,
+            secondButtonGradientColor,
+          ],
           begin: FractionalOffset.centerLeft,
           end: FractionalOffset.centerRight,
         ),
@@ -252,7 +257,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91$phoneNumber',
+        phoneNumber: '+91$_phoneNumber',
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance
               .signInWithCredential(credential)
