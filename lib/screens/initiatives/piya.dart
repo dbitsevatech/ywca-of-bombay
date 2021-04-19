@@ -11,6 +11,13 @@ class Piya extends StatelessWidget {
     'assets/images/initiatives/img4.png',
   ];
 
+  final titles = [
+    'Walk for freedom',
+    'Walkathon',
+    'A trek to Kaldurg Fort',
+    'Interschool competition',
+  ];
+
   final textColor = const Color(0xff333333);
   @override
   Widget build(BuildContext context) {
@@ -53,14 +60,28 @@ class Piya extends StatelessWidget {
                 autoplay: false,
                 itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image(
-                      // image: AssetImage(images1[index]),
-                      image: AssetImage(imageList[index]),
-                      // image: AssetImage("assets/images/img2.jpg"),
-                      fit: BoxFit.contain,
-                    ),
+                  return Column(
+                    // To centralize the children.
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image(
+                          image: AssetImage(imageList[index]),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Text(
+                        titles[index],
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff333333),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'RacingSansOne'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   );
                 },
                 viewportFraction: 0.8,
