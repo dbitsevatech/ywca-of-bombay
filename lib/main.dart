@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screens/class_builder.dart';
-import 'screens/intro.dart';
+import 'widgets/drawer.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -31,6 +31,6 @@ class MyApp extends StatelessWidget {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return Intro();
+    return MainWidget();
   }
 }
