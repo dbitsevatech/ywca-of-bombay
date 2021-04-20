@@ -102,8 +102,7 @@ class _InitiativesState extends State<Initiatives> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => General()),
+                                MaterialPageRoute(builder: (context) => Wdu()),
                               );
                             },
                             child: Container(
