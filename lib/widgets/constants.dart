@@ -7,3 +7,4 @@ final secondaryColor = const Color(0xff00BBE4);
 final firstButtonGradientColor = const Color(0xff00BBE4);
 final secondButtonGradientColor = const Color(0xff005BE4);
 final formFieldFillColor = const Color(0xffF3F4F6);
+final successStoriesCardBgColor = const Color(0xffcdf1ef);
