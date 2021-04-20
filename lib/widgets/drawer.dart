@@ -31,42 +31,80 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       initialPage: ClassBuilder.fromString('Home'),
       items: [
         KFDrawerItem.initWithPage(
-          text: Text('Home',
-              style: TextStyle(color: Colors.black87, fontSize: 22)),
+          text: Row(
+            children: [
+              Icon(Icons.home),
+              SizedBox(width: 10),
+              Text(
+                'Home',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
+          ),
           page: Home(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text(
-            'About us',
-            style: TextStyle(color: Colors.black87, fontSize: 22),
+          text: Row(
+            children: [
+              Icon(Icons.details),
+              SizedBox(width: 10),
+              Text(
+                'About Us',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
           ),
           page: AboutUs(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text(
-            'Events',
-            style: TextStyle(color: Colors.black87, fontSize: 22),
+          text: Row(
+            children: [
+              Icon(Icons.event),
+              SizedBox(width: 10),
+              Text(
+                'Events',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
           ),
           page: Events(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text(
-            'Initiatives',
-            style: TextStyle(color: Colors.black87, fontSize: 22),
+          text: Row(
+            children: [
+              Icon(Icons.follow_the_signs_sharp),
+              SizedBox(width: 10),
+              Text(
+                'Initiatives',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
           ),
           page: Initiatives(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text(
-            'Success Stories',
-            style: TextStyle(color: Colors.black87, fontSize: 22),
+          text: Row(
+            children: [
+              Icon(Icons.star),
+              SizedBox(width: 10),
+              Text(
+                'Success Stories',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
           ),
           page: SuccessStories(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text(
-            'Contact Us',
-            style: TextStyle(color: Colors.black87, fontSize: 22),
+          text: Row(
+            children: [
+              Icon(Icons.quick_contacts_mail),
+              SizedBox(width: 10),
+              Text(
+                'Contact Us',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
           ),
           page: ContactUs(),
         )
