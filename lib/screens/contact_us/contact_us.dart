@@ -49,11 +49,33 @@ class _ContactUsState extends State<ContactUs> {
               ],
             ),
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Contact us'),
-                ],
+              // child: Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     Text('Contact us'),
+              //   ],
+              // ),
+              child: DefaultTabController(
+                length: 3,
+                child: Scaffold(
+                  appBar: AppBar(
+                    bottom: TabBar(
+                      tabs: [
+                        Tab(text: "OFFICES"),
+                        Tab(text: "HOSTELS"),
+                        Tab(text: "GUEST HOUSES"),
+                      ],
+                    ),
+                    title: Text(''),
+                  ),
+                  body: TabBarView(
+                    children: [
+                      Center(),
+                      Center(),
+                      Center(),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

@@ -260,33 +260,34 @@ class _LoginOtpState extends State<LoginOtp>
 
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91$_phoneNumber',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
-                  (route) => false);
-            }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
-        },
-        codeSent: (String verficationID, int resendToken) {
-          setState(() {
-            _verificationCode = verficationID;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 120));
+      phoneNumber: '+91$_phoneNumber',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) async {
+          if (value.user != null) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainWidget()),
+                (route) => false);
+          }
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+      },
+      codeSent: (String verficationID, int resendToken) {
+        setState(() {
+          _verificationCode = verficationID;
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationID) {
+        setState(() {
+          _verificationCode = verificationID;
+        });
+      },
+      timeout: Duration(seconds: 120),
+    );
   }
 
   // Returns "Otp" keyboard
