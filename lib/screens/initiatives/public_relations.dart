@@ -2,25 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../../widgets/open_painter.dart';
 
-//DONE
 // ignore: must_be_immutable
-class Piya extends StatelessWidget {
+class PublicRelation extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
     'assets/images/initiatives/img3.jpg',
-    'assets/images/initiatives/img4.jpg',
-    'assets/images/initiatives/img5.jpg',
-    'assets/images/initiatives/img6.jpg',
   ];
 
   final titles = [
-    "Walk for freedom",
-    "Walkathon",
-    "A trek to Kaldurg Fort",
-    "Interschool competition",
-    "Dance Therapy by Piya",
-    "Piya",
+    "Staff Training",
+    "Music around the world",
+    "Training on GST",
   ];
 
   // static var decorator = DotsDecorator(
@@ -70,7 +63,7 @@ class Piya extends StatelessWidget {
               height: 300,
               child: Swiper(
                 autoplay: false,
-                itemCount: 6,
+                itemCount: 3,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     // To centralize the children.
@@ -113,7 +106,7 @@ class Piya extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Text(
-                'PIYA- Participation and involvement of youth in action',
+                "Public Relations",
                 style: TextStyle(
                     fontSize: 20,
                     color: textColor,
@@ -128,7 +121,7 @@ class Piya extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
+                "Public Relations (PR) manages the brand image of YWCA with both the internal and external stakeholders. It facilitates communication and contributes in myriad ways for the well-being and growth of the organization.",
                 //overflow: TextOverflow.fade,
                 maxLines: 8,
                 style: TextStyle(

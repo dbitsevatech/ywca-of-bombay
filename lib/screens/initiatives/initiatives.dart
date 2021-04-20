@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:ywcaofbombay/screens/initiatives/asha_kiran.dart';
+import 'package:ywcaofbombay/screens/initiatives/pasi.dart';
+import 'package:ywcaofbombay/screens/initiatives/wdu.dart';
 
 import 'piya.dart';
+import 'asha_kiran.dart';
+import 'pasi.dart';
+import 'wdu.dart';
+import 'hostels.dart';
+import 'public_relations.dart';
+import 'shelter_home.dart';
+import 'membership.dart';
+import 'ic_guesthouse.dart';
+import 'se.dart';
+import 'general.dart';
 import 'customclip_path.dart';
 
 // ignore: must_be_immutable
@@ -88,9 +101,10 @@ class _InitiativesState extends State<Initiatives> {
                           InkWell(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Piya()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => General()),
+                              );
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 50),
