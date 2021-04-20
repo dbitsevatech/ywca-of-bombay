@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+
 import '../../widgets/open_painter.dart';
 
 //DONE
 // ignore: must_be_immutable
-class Piya extends StatelessWidget {
+class AshaKiran extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
@@ -12,15 +13,17 @@ class Piya extends StatelessWidget {
     'assets/images/initiatives/img4.jpg',
     'assets/images/initiatives/img5.jpg',
     'assets/images/initiatives/img6.jpg',
+    'assets/images/initiatives/img7.jpg',
   ];
 
   final titles = [
-    "Walk for freedom",
-    "Walkathon",
-    "A trek to Kaldurg Fort",
-    "Interschool competition",
-    "Dance Therapy by Piya",
-    "Piya",
+    "Annual Day",
+    "Sports Day",
+    "Training of Puppeteers",
+    "Workshop on Muslim Legal Rights",
+    "Cartoon Making Workshop",
+    "Self Defence Training",
+    "Annual Day Celebration",
   ];
 
   // static var decorator = DotsDecorator(
@@ -70,7 +73,7 @@ class Piya extends StatelessWidget {
               height: 300,
               child: Swiper(
                 autoplay: false,
-                itemCount: 6,
+                itemCount: 7,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     // To centralize the children.
@@ -104,6 +107,11 @@ class Piya extends StatelessWidget {
                   builder: new DotSwiperPaginationBuilder(
                     color: Colors.grey,
                     activeColor: Color(0XFF80DEEA),
+                    // new DotsIndicator(
+                    // dotsCount: pageLength,
+                    // position: currentIndexPage,
+                    // dotsCount: pageLength,
+                    // decorator: DotsDecorator()
                   ),
                 ),
               ),
@@ -111,9 +119,9 @@ class Piya extends StatelessWidget {
 
 //
             Padding(
-              padding: const EdgeInsets.only(top: 0),
+              padding: const EdgeInsets.only(top: 20),
               child: Text(
-                'PIYA- Participation and involvement of youth in action',
+                'Asha Kiran Guest House',
                 style: TextStyle(
                     fontSize: 20,
                     color: textColor,
@@ -128,14 +136,14 @@ class Piya extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
                 //overflow: TextOverflow.fade,
+                "Asha Kiran, the women's development complex at Andheri continues to be a ray of hope to all its beneficiaries. It is dedicated to the all-round development of women and children of different backgrounds, age group, cultures, castes and creeds. It caters to the rapidly changing needs by providing a home away from home for Senior Citizens and Guests, to organizing awareness programmes, vocational courses, study centers, a day care center for senior citizens from the community, a crèche for children of domestic workers, and a shelter for women in distress. It also has an Amphitheatre and a hall facility.",
                 maxLines: 8,
                 style: TextStyle(
                     fontSize: 15,
                     color: textColor,
                     fontWeight: FontWeight.normal,
-                    fontFamily: 'RacingSansOne'),
+                    fontFamily: 'Rac ingSansOne'),
                 //textAlign: TextAlign.left,
               ),
             ),

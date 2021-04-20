@@ -4,7 +4,7 @@ import '../../widgets/open_painter.dart';
 
 //DONE
 // ignore: must_be_immutable
-class Piya extends StatelessWidget {
+class Hostel extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
@@ -15,12 +15,12 @@ class Piya extends StatelessWidget {
   ];
 
   final titles = [
-    "Walk for freedom",
-    "Walkathon",
-    "A trek to Kaldurg Fort",
-    "Interschool competition",
-    "Dance Therapy by Piya",
-    "Piya",
+    "ABH In-night",
+    "DDH",
+    "National Festival Celebration",
+    "Dining Room LWH",
+    "DDH Lounge",
+    "LWH Building",
   ];
 
   // static var decorator = DotsDecorator(
@@ -113,7 +113,7 @@ class Piya extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Text(
-                'PIYA- Participation and involvement of youth in action',
+                "YWCA Hostels",
                 style: TextStyle(
                     fontSize: 20,
                     color: textColor,
@@ -128,7 +128,7 @@ class Piya extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
+                "YWCA Hostels - Achamma Bhavan,Anugraha, Dipti Dhaman and Lady Willingdon is the bench mark in Mumbai/ Navi Mumbai for hygienic, well equipped and disciplined hostels. It provides a safe and secure surrounding to women who are new to the city.",
                 //overflow: TextOverflow.fade,
                 maxLines: 8,
                 style: TextStyle(

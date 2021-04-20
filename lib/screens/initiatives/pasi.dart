@@ -4,23 +4,21 @@ import '../../widgets/open_painter.dart';
 
 //DONE
 // ignore: must_be_immutable
-class Piya extends StatelessWidget {
+class Pasi extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
     'assets/images/initiatives/img3.jpg',
     'assets/images/initiatives/img4.jpg',
     'assets/images/initiatives/img5.jpg',
-    'assets/images/initiatives/img6.jpg',
   ];
 
   final titles = [
-    "Walk for freedom",
-    "Walkathon",
-    "A trek to Kaldurg Fort",
-    "Interschool competition",
-    "Dance Therapy by Piya",
-    "Piya",
+    "Panel Discussion on Women and Social Media",
+    "Paralegal training",
+    "Session on RTI",
+    "Life and Struggle of Transgender",
+    "Children's Day Celebration"
   ];
 
   // static var decorator = DotsDecorator(
@@ -70,7 +68,7 @@ class Piya extends StatelessWidget {
               height: 300,
               child: Swiper(
                 autoplay: false,
-                itemCount: 6,
+                itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     // To centralize the children.
@@ -104,6 +102,11 @@ class Piya extends StatelessWidget {
                   builder: new DotSwiperPaginationBuilder(
                     color: Colors.grey,
                     activeColor: Color(0XFF80DEEA),
+                    // new DotsIndicator(
+                    // dotsCount: pageLength,
+                    // position: currentIndexPage,
+                    // dotsCount: pageLength,
+                    // decorator: DotsDecorator()
                   ),
                 ),
               ),
@@ -113,7 +116,7 @@ class Piya extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Text(
-                'PIYA- Participation and involvement of youth in action',
+                'PASI-Public Affairs and Social Issues',
                 style: TextStyle(
                     fontSize: 20,
                     color: textColor,
@@ -128,7 +131,7 @@ class Piya extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
+                "Public Affairs and Social Issues(PASI) creates an impact both within and outside YWCA by organizing different programmes on current social issues, impacting lives of people in different spheres of life.It also networks with other like minded organisations to gain strength to address issues that need advocacy.",
                 //overflow: TextOverflow.fade,
                 maxLines: 8,
                 style: TextStyle(
