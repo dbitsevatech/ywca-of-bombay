@@ -65,7 +65,15 @@ flutter:
     - assets/images/initiatives/img1.jpg
     - assets/images/initiatives/img2.jpg
     - assets/images/initiatives/img3.jpg
-    - assets/images/initiatives/img4.png
+    - assets/images/initiatives/img4.jpg
+    - assets/images/initiatives/img5.jpg
+    - assets/images/initiatives/img6.jpg
+    - assets/images/initiatives/img7.jpg
+    - assets/images/initiatives/img8.jpg
+    - assets/images/initiatives/img9.jpg
+    - assets/images/initiatives/img10.jpg
+    - assets/images/initiatives/img11.jpg
+    - assets/images/initiatives/img12.jpg
 
   fonts:
     - family: Montserrat

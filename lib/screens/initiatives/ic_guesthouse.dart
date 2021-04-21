@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../../widgets/open_painter.dart';
 
-//DONE
 // ignore: must_be_immutable
-class Piya extends StatelessWidget {
+class Ic extends StatelessWidget {
   final imageList = [
     'assets/images/initiatives/img1.jpg',
     'assets/images/initiatives/img2.jpg',
     'assets/images/initiatives/img3.jpg',
     'assets/images/initiatives/img4.jpg',
-    'assets/images/initiatives/img5.jpg',
-    'assets/images/initiatives/img6.jpg',
   ];
 
   final titles = [
-    "Walk for freedom",
-    "Walkathon",
-    "A trek to Kaldurg Fort",
-    "Interschool competition",
-    "Dance Therapy by Piya",
-    "Piya",
+    "IC Review",
+    "Family Room",
+    "Waiting Room",
+    "Reception",
   ];
 
   // static var decorator = DotsDecorator(
@@ -70,7 +65,7 @@ class Piya extends StatelessWidget {
               height: 300,
               child: Swiper(
                 autoplay: false,
-                itemCount: 6,
+                itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
                     // To centralize the children.
@@ -101,7 +96,7 @@ class Piya extends StatelessWidget {
                 pagination: SwiperPagination(
                   //changing the color of the pagination dots and that of
                   //the active dot
-                  builder: DotSwiperPaginationBuilder(
+                  builder: new DotSwiperPaginationBuilder(
                     color: Colors.grey,
                     activeColor: Color(0XFF80DEEA),
                   ),
@@ -113,7 +108,7 @@ class Piya extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Text(
-                'PIYA- Participation and involvement of youth in action',
+                "IC-International Centre",
                 style: TextStyle(
                     fontSize: 20,
                     color: textColor,
@@ -128,7 +123,7 @@ class Piya extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
+                "International Centre (IC) provides for a temporary residence to people from various parts of the world.",
                 //overflow: TextOverflow.fade,
                 maxLines: 8,
                 style: TextStyle(

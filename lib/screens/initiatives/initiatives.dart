@@ -13,7 +13,7 @@ class Initiatives extends KFDrawerContent {
 class _InitiativesState extends State<Initiatives> {
   @override
   Widget build(BuildContext context) {
-    final _height = MediaQuery.of(context).size.height;
+    // final _height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Center(
         child: Column(
@@ -83,25 +83,24 @@ class _InitiativesState extends State<Initiatives> {
                       //padding: EdgeInsets.all(5.0),
                       height: 400,
                       width: 300,
-                      child: Column(children: <Widget>[
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
+                      child: Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Piya()));
-                          },
-//
-//
-//
-                          child: Container(
-                            margin: EdgeInsets.only(top: 50),
-                            padding: EdgeInsets.only(right: 100.0),
-                            width: 300.0,
-                            height: 100.0,
-                            //
-                            child: ClipPath(
-                              child: Container(
+                                  builder: (context) => Piya(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 50),
+                              padding: EdgeInsets.only(right: 100.0),
+                              width: 300.0,
+                              height: 100.0,
+                              child: ClipPath(
+                                child: Container(
                                   width: 300.0,
                                   child: Padding(
                                     padding:
@@ -118,208 +117,53 @@ class _InitiativesState extends State<Initiatives> {
                                   ),
                                   // color: Colors.yellow,
                                   decoration: BoxDecoration(
-                                    gradient: LinearGradient(stops: [
-                                      0.2,
-                                      1
-                                    ], colors: [
-                                      Colors.blue[600],
-                                      Colors.lightBlue[50]
-                                    ]),
+                                    gradient: LinearGradient(
+                                      stops: [0.2, 1],
+                                      colors: [
+                                        Colors.blue[600],
+                                        Colors.lightBlue[50]
+                                      ],
+                                    ),
                                     borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(20.0),
                                       bottomLeft: Radius.circular(20.0),
                                     ),
-                                  )),
-                              clipper: CustomClipPath(),
-                            ),
-                            //
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/initiatives/img1.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  blurRadius: 2,
-                                  offset:
-                                      Offset(5, 5), //changes position of shadow
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        // InkWell(
-                        //   onTap: () {
-                        //     print("tapped on container 2");
-                        //   },
-//
-//
-//
-                        Container(
-                          // padding: EdgeInsets.all(5.0),
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.only(right: 100.0),
-                          width: 300.0,
-                          height: 100.0,
-                          //
-                          //children: [
-                          //   child: ClipPath(
-                          //   child: Container(
-                          //     width: MediaQuery.of(context).size.width,
-                          //     color: Colors.yellow,
-                          //   ),
-                          //   clipper: CustomClipPath(),
-                          // ),
-                          // //
-
-                          child: ClipPath(
-                            child: Container(
-                                width: 300.0,
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(10, 10, 50, 5),
-                                  child: Text(
-                                    "Asha Kiran Guest House",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
                                   ),
                                 ),
-                                // color: Colors.yellow,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(stops: [
-                                    0.2,
-                                    1
-                                  ], colors: [
-                                    Colors.amber[400],
-                                    Colors.amber[50]
-                                  ]),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    bottomLeft: Radius.circular(20.0),
-                                  ),
-                                )),
-                            clipper: CustomClipPath(),
-                          ),
-                          //]
-                          //
-                          decoration: BoxDecoration(
-                            //color: const Color(0xFFD81B60),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/initiatives/img2.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                offset:
-                                    Offset(5, 5), // changes position of shadow
+                                clipper: CustomClipPath(),
                               ),
-                            ],
-                          ),
-                          //margin: EdgeInsets.all(5),
-                        ),
-                        // InkWell(
-                        //   onTap: () {
-                        //     print("tapped on container 3");
-                        //   },
-//
-//
-//
-                        Container(
-                          //padding: EdgeInsets.all(5.0),
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.only(right: 100.0),
-                          // width: 300.0,
-                          height: 100.0,
-                          //
-                          //
-                          child: ClipPath(
-                            child: Container(
-                              width: 300.0,
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(10, 20, 50, 20),
-                                child: Text(
-                                  "PASI",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              // color: Colors.yellow,
                               decoration: BoxDecoration(
-                                gradient: LinearGradient(stops: [
-                                  0.2,
-                                  1
-                                ], colors: [
-                                  Colors.pink[300],
-                                  Colors.orange[300]
-                                ]),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  bottomLeft: Radius.circular(20.0),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/initiatives/img1.jpg'),
+                                  fit: BoxFit.cover,
                                 ),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    blurRadius: 2,
+                                    offset: Offset(
+                                        5, 5), //changes position of shadow
+                                  ),
+                                ],
                               ),
                             ),
-                            clipper: CustomClipPath(),
                           ),
+
+                          //INITIATIVE NO 2
+                          //Initiative(Asha Kiran Guest House),
                           //
+                          //INITIATIVE NO 3
+                          //Initiative(PASI),
                           //
-                          // child: Container(
-                          //   width: 150,
-                          //   child: Text(
-                          //     "Nigel",
-                          //     textAlign: TextAlign.center,
-                          //     style: TextStyle(
-                          //       fontSize: 25,
-                          //       color: Colors.white,
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          //   // color: Colors.purple,
-                          //   decoration:  BoxDecoration(
-                          //     color: Colors.purple,
-                          //     borderRadius:  BorderRadius.only(
-                          //       topLeft:  Radius.circular(20.0),
-                          //       bottomLeft:  Radius.circular(20.0),
-                          //     ),
-                          //   ),
-                          // ),
-                          decoration: BoxDecoration(
-                            //color: const Color(0xFFD81B60),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/initiatives/img3.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 2,
-                                offset:
-                                    Offset(5, 5), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          //margin: EdgeInsets.all(5),
-                        ),
-                      ]),
+                          //INITIATIVE NO 4
+                          //
+                          //INITIATIVE NO  5
+                          //
+                        ],
+                      ),
                     ),
                   ),
                 ],
