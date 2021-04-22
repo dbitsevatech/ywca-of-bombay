@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import '../../widgets/open_painter.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class General extends StatelessWidget {
@@ -29,7 +29,6 @@ class General extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TODO: Make the back-button black color
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
@@ -53,9 +52,10 @@ class General extends StatelessWidget {
                 Container(
                   color: Colors.orange,
                   // margin: EdgeInsets.all(0.0),
-                  child: CustomPaint(
-                    painter: OpenPainter(),
-                  ),
+                  // child: CustomPaint(
+                  //   painter: OpenPainter(),
+                  // ),
+                  child: DetailPageBlueBubbleDesign(),
                 ),
               ],
             ),

@@ -22,6 +22,7 @@ class Event {
 
   static List<Event> allEvents() {
     var listOfEvents = List<Event>();
+    // var listOfEvents = [];
 
     listOfEvents.add(
       Event(

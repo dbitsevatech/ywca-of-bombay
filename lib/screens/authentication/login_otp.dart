@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
@@ -85,7 +86,7 @@ class _LoginOtpState extends State<LoginOtp>
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
     return Padding(
-      padding: EdgeInsets.only(top: 100),
+      padding: EdgeInsets.only(top: _screenSize.height * 0.12),
       child: Text(
         "Verification Code",
         textAlign: TextAlign.center,
@@ -129,9 +130,10 @@ class _LoginOtpState extends State<LoginOtp>
         // circle design
         Stack(
           children: <Widget>[
-            Positioned(
-              child: Image.asset("assets/images/circle-design.png"),
-            ),
+            // Positioned(
+            //   child: Image.asset("assets/images/circle-design.png"),
+            // ),
+            MainPageBlueBubbleDesign(),
             Positioned(
               child: Center(
                 child: _getVerificationCodeLabel,
@@ -437,10 +439,12 @@ class _LoginOtpState extends State<LoginOtp>
       // appBar: _getAppbar,
       key: _scaffoldkey,
       backgroundColor: Colors.white,
-      body: Container(
-        width: _screenSize.width,
+      body: SafeArea(
+        child: Container(
+          width: _screenSize.width,
 //        padding:  EdgeInsets.only(bottom: 16.0),
-        child: _getInputPart,
+          child: _getInputPart,
+        ),
       ),
     );
   }

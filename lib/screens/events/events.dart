@@ -4,6 +4,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'event_details.dart';
 import '../../models/Event.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {
@@ -23,15 +24,7 @@ class _EventsState extends State<Events> {
       child: Center(
         child: Stack(
           children: <Widget>[
-            // TODO: Decide whether CustomPaint or Image
-            // Container(
-            //   child: CustomPaint(
-            //     painter: OpenPainter(),
-            //   ),
-            // ),
-            Positioned(
-              child: Image.asset("assets/images/circle-design.png"),
-            ),
+            MainPageBlueBubbleDesign(),
             Positioned(
               child: AppBar(
                 centerTitle: true,
@@ -179,19 +172,4 @@ gotoSecondActivity(BuildContext context) {
     context,
     MaterialPageRoute(builder: (context) => DetailPage()),
   );
-}
-
-class OpenPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()
-      ..color = primaryColor.withOpacity(0.5)
-      ..style = PaintingStyle.fill;
-    //circles
-    canvas.drawCircle(Offset(-5, 45), 100, paint1);
-    canvas.drawCircle(Offset(105, 8), 100, paint1);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
