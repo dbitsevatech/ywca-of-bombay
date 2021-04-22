@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import '../../widgets/open_painter.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 //DONE
 // ignore: must_be_immutable
@@ -58,9 +58,10 @@ class Hostel extends StatelessWidget {
                 Container(
                   color: Colors.orange,
                   // margin: EdgeInsets.all(0.0),
-                  child: CustomPaint(
-                    painter: OpenPainter(),
-                  ),
+                  // child: CustomPaint(
+                  //   painter: OpenPainter(),
+                  // ),
+                  child: DetailPageBlueBubbleDesign(),
                 ),
               ],
             ),

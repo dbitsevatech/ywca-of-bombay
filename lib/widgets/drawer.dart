@@ -137,9 +137,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
                 Column(
                   children: <Widget>[
                     Text('YWCA OF BOMBAY',
