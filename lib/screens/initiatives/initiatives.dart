@@ -22,7 +22,7 @@ class _InitiativesState extends State<Initiatives> {
             Stack(
               // circle design
               children: <Widget>[
-                DetailPageBlueBubbleDesign(),
+                MainPageBlueBubbleDesign(),
                 Positioned(
                   child: AppBar(
                     centerTitle: true,

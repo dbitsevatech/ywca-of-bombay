@@ -81,18 +81,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   _showAlreadyRegisteredSnackBar() {
     final snackBar = SnackBar(
       content: Text(
-          'Your phone number is already registered!. Proceed to Log In :)'),
-      backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
+        'Your phone number is already registered! Proceed to Log In',
+        // style: TextStyle(fontSize: 15),
+      ),
+      // backgroundColor: Colors.red,
+      backgroundColor: Colors.red[400],
       action: SnackBarAction(
         label: 'Log In',
+        textColor: Colors.white,
         onPressed: () {
-          // Some code to undo the change.
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+          );
         },
       ),
     );
 
-    _scaffoldkey.currentState.showSnackBar(snackBar);
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<bool> _phoneNumberIsAlreadyRegistered(value) async {

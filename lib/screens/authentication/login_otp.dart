@@ -50,19 +50,22 @@ class _LoginOtpState extends State<LoginOtp>
 
   _showInvalidOTPSnackBar() {
     final snackBar = SnackBar(
-      content: Text('Invalid OTP. Try again'),
+      content: Text(
+        'Invalid OTP. Try again',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'OK',
-        onPressed: () {
-          // Some code to undo the change.
-        },
+        textColor: Colors.white,
+        onPressed: () {},
       ),
     );
-    // _scaffoldkey.currentState
-    // ignore: deprecated_member_use
-    _scaffoldkey.currentState.showSnackBar(snackBar);
+
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
   // Returns "Appbar"
   // get _getAppbar {

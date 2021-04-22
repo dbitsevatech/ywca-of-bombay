@@ -26,18 +26,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _showNumberNotRegisteredSnackBar() {
     final registerSnackBar = SnackBar(
-      content: Text('Phone number not registered!'),
+      content: Text(
+        'Phone number not registered!',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'Register',
+        textColor: Colors.white,
         onPressed: () {
-          // Some code to undo the change.
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegisterScreen()),
+          );
         },
       ),
     );
 
-    _scaffoldkey.currentState.showSnackBar(registerSnackBar);
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(registerSnackBar);
   }
 
   @override

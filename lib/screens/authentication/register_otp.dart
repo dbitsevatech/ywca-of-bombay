@@ -97,18 +97,22 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   _showInvalidOTPSnackBar() {
     final snackBar = SnackBar(
-      content: Text('Invalid OTP. Try again'),
+      content: Text(
+        'Invalid OTP. Try again',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'OK',
-        onPressed: () {
-          // Some code to undo the change.
-        },
+        textColor: Colors.white,
+        onPressed: () {},
       ),
     );
 
-    _scaffoldkey.currentState.showSnackBar(snackBar);
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
   // Returns "Appbar"
   // get _getAppbar {
@@ -298,20 +302,11 @@ class _RegisterOtpState extends State<RegisterOtp>
                       });
                     },
                   );
-                  // FirebaseFirestore.instance.collection("users").get().then(
-                  //   (querySnapshot) {
-                  //     querySnapshot.docs.forEach((result) {
-                  //       print(result.data());
-                  //     });
-                  //   },
-                  // );
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
-                }
-                // TODO: Phone Number already registered snackbar
-                else {
+                } else {
                   print("user already registered with this number");
                 }
               });
