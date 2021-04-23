@@ -247,6 +247,10 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Register button
   get _registerButton {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.0,
+        vertical: _screenSize.height * 0.02,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -261,64 +265,13 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
       child: FractionallySizedBox(
         widthFactor: 0.85, // button width wrt screen width
-        child: FlatButton(
-          // minWidth: 800,
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance
-                  .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: _verificationCode, smsCode: otp))
-                  .then((value) async {
-                final snapShot = await FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(value.user.uid)
-                    .get();
-
-                if (snapShot == null || !snapShot.exists) {
-                  print(value.user);
-                  print(value.user.uid);
-                  Map<String, dynamic> data = {
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "phoneNumber": phoneNumber,
-                    "emailId": emailId,
-                    "placeOfWork": placeOfWork,
-                    "gender": gender,
-                    "profession": profession,
-                    "nearestCenter": nearestCenter,
-                    "interestInMembership": interestInMembership,
-                    "dateOfBirth": dateOfBirth
-                  };
-                  CollectionReference users =
-                      FirebaseFirestore.instance.collection('users');
-                  users.doc(value.user.uid).set(data);
-                  print(value.user);
-                  print(value.user.uid);
-
-                  FirebaseFirestore.instance.collection("users").get().then(
-                    (querySnapshot) {
-                      querySnapshot.docs.forEach((result) {
-                        print(result.id);
-                      });
-                    },
-                  );
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
-                } else {
-                  print("user already registered with this number");
-                }
-              });
-            } catch (e) {
-              FocusScope.of(context).unfocus();
-              print(e);
-              print("Invalid OTP");
-
-              _showInvalidOTPSnackBar();
-            }
-          },
-          child: Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.0,
+            vertical: _screenSize.height * 0.02,
+          ),
+          // Register Button
+          child: TextButton(
             child: Text(
               'Register',
               style: TextStyle(
@@ -327,10 +280,61 @@ class _RegisterOtpState extends State<RegisterOtp>
                 color: Colors.white,
               ),
             ),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.0,
-            vertical: _screenSize.height * 0.035,
+            onPressed: () async {
+              try {
+                await FirebaseAuth.instance
+                    .signInWithCredential(PhoneAuthProvider.credential(
+                        verificationId: _verificationCode, smsCode: otp))
+                    .then((value) async {
+                  final snapShot = await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(value.user.uid)
+                      .get();
+
+                  if (snapShot == null || !snapShot.exists) {
+                    print(value.user);
+                    print(value.user.uid);
+                    Map<String, dynamic> data = {
+                      "firstName": firstName,
+                      "lastName": lastName,
+                      "phoneNumber": phoneNumber,
+                      "emailId": emailId,
+                      "placeOfWork": placeOfWork,
+                      "gender": gender,
+                      "profession": profession,
+                      "nearestCenter": nearestCenter,
+                      "interestInMembership": interestInMembership,
+                      "dateOfBirth": dateOfBirth
+                    };
+                    CollectionReference users =
+                        FirebaseFirestore.instance.collection('users');
+                    users.doc(value.user.uid).set(data);
+                    print(value.user);
+                    print(value.user.uid);
+
+                    FirebaseFirestore.instance.collection("users").get().then(
+                      (querySnapshot) {
+                        querySnapshot.docs.forEach((result) {
+                          print(result.id);
+                        });
+                      },
+                    );
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainWidget()),
+                        (route) => false);
+                  } else {
+                    print("user already registered with this number");
+                  }
+                });
+              } catch (e) {
+                FocusScope.of(context).unfocus();
+                print(e);
+                print("Invalid OTP");
+
+                _showInvalidOTPSnackBar();
+              }
+            },
           ),
         ),
       ),

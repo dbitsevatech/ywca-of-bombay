@@ -26,11 +26,14 @@ class _InitiativesState extends State<Initiatives> {
                 Positioned(
                   child: AppBar(
                     centerTitle: true,
-                    title: Text("YWCA Of Bombay",
-                        style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
-                            fontSize: 18.0,
-                            color: Colors.black87)),
+                    title: Text(
+                      "YWCA Of Bombay",
+                      style: TextStyle(
+                        fontFamily: 'LilyScriptOne',
+                        fontSize: 18.0,
+                        color: Colors.black87,
+                      ),
+                    ),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: IconButton(

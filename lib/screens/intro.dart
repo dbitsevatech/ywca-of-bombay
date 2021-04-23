@@ -37,6 +37,7 @@ class _IntroState extends State<Intro> {
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
+    // final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -133,6 +134,10 @@ class _IntroState extends State<Intro> {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                   child: Container(
+                    padding: EdgeInsets.symmetric(
+                      // horizontal: _width * 0.35,
+                      vertical: _height * 0.015,
+                    ),
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -144,11 +149,7 @@ class _IntroState extends State<Intro> {
                           end: FractionalOffset.centerRight,
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RegisterScreen()));
-                      },
+                    child: TextButton(
                       child: Center(
                         child: Text(
                           'LET\'S GO',
@@ -159,8 +160,10 @@ class _IntroState extends State<Intro> {
                           ),
                         ),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 0.0, vertical: 25.0),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => RegisterScreen()));
+                      },
                     ),
                   ),
                 ),

@@ -17,9 +17,6 @@ class _EventsState extends State<Events> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Decide whether SafeArea or Scaffold
-    // return Scaffold(
-    // body: Center
     return SafeArea(
       child: Center(
         child: Stack(
@@ -28,11 +25,14 @@ class _EventsState extends State<Events> {
             Positioned(
               child: AppBar(
                 centerTitle: true,
-                title: Text("YWCA Of Bombay",
-                    style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
-                        fontSize: 18.0,
-                        color: Colors.black87)),
+                title: Text(
+                  "YWCA Of Bombay",
+                  style: TextStyle(
+                    fontFamily: 'LilyScriptOne',
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
+                ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
@@ -57,11 +57,12 @@ class _EventsState extends State<Events> {
                       style: Theme.of(context).textTheme.bodyText2,
                       children: [
                         TextSpan(
-                            text: 'Events ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
+                          text: 'Events ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                         WidgetSpan(
                           child: Padding(
                             padding:
@@ -129,33 +130,50 @@ class _EventsState extends State<Events> {
             title: Text(
               _allEvents[index].dateTime,
               style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.normal),
+                color: primaryColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+              ),
             ),
             subtitle: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 5),
-                  Text(_allEvents[index].name,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold)),
-                  SizedBox(height: 5),
-                  Text('Resource Person: ${_allEvents[index].resourcePerson}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                  SizedBox(height: 5),
-                  Text('Venue: ${_allEvents[index].venue}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                  SizedBox(height: 5),
-                  Text('Amount: ${_allEvents[index].cost}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                ]),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 5),
+                Text(
+                  _allEvents[index].name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Resource Person: ${_allEvents[index].resourcePerson}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Venue: ${_allEvents[index].venue}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Amount: ${_allEvents[index].cost}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
             //trailing: ,
             onTap: () {
               gotoSecondActivity(context);

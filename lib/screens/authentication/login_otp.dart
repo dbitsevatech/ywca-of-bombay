@@ -201,6 +201,10 @@ class _LoginOtpState extends State<LoginOtp>
   // Log In button
   get _logInButton {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.0,
+        vertical: _screenSize.height * 0.015,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -214,9 +218,17 @@ class _LoginOtpState extends State<LoginOtp>
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: FractionallySizedBox(
-        widthFactor: 0.85, // button width wrt screen width
-        child: FlatButton(
-          // minWidth: 800,
+        widthFactor: 0.92, // button width wrt screen width
+        // Log In Button
+        child: TextButton(
+          child: Text(
+            'Log In',
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              color: Colors.white,
+            ),
+          ),
           onPressed: () async {
             try {
               await FirebaseAuth.instance
@@ -244,20 +256,6 @@ class _LoginOtpState extends State<LoginOtp>
             //   print(e.message);
             // }
           },
-          child: Center(
-            child: Text(
-              'Log In',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.0,
-            vertical: _screenSize.height * 0.035,
-          ),
         ),
       ),
     );

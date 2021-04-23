@@ -135,8 +135,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final int height = 1;
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldkey,
       body: SafeArea(
@@ -213,20 +213,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 // Form
                 Padding(
-                  padding: EdgeInsets.only(
-                    top: _height * 0.01,
-                    left: _height * 0.02,
-                    right: _height * 0.02,
-                    bottom: _height * 0.001,
+                  padding: EdgeInsets.symmetric(
+                    vertical: _height * 0.01,
+                    // horizontal: _height * 0.02,
+                    horizontal: _width * 0.04,
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        // Center(
-                        //   child: Container(
-                        //     width: 360,
-                        //     child:
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
@@ -254,13 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             errorBorder: InputBorder.none,
                           ),
                         ),
-                        //   ),
-                        // ),
                         SizedBox(height: _height * 0.015),
-                        // Center(
-                        //   child: Container(
-                        //     width: 360,
-                        // child:
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
@@ -288,13 +277,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             errorBorder: InputBorder.none,
                           ),
                         ),
-                        //   ),
-                        // ),
                         SizedBox(height: _height * 0.015),
-                        // Center(
-                        //   child: Container(
-                        //     width: 360,
-                        //     child:
                         TextFormField(
                           // keyboardType: TextInputType.datetime,
                           onChanged: (value) {
@@ -325,12 +308,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 "${dob.toLocal()}".split(' ')[0];
                           },
                         ),
-                        // ),
-                        // ),
                         SizedBox(height: _height * 0.015),
-                        // Container(
-                        //   width: 360,
-                        // child:
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (value) {
@@ -364,12 +342,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             errorBorder: InputBorder.none,
                           ),
                         ),
-                        // ),
                         SizedBox(height: _height * 0.015),
-                        // Center(
-                        //   child: Container(
-                        //     width: 360,
-                        //     child:
                         TextFormField(
                           keyboardType: TextInputType.phone,
                           maxLength: 10,
@@ -401,9 +374,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             errorBorder: InputBorder.none,
                           ),
                         ),
-                        // ),
-                        // ),
-                        // SizedBox(height: _height * 0.010),
                         Text(
                           'Gender',
                           style: TextStyle(
@@ -467,19 +437,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: _height * 0.015),
                         Container(
+                          padding: EdgeInsets.symmetric(
+                            // horizontal: _width * 0.35,
+                            vertical: _height * 0.015,
+                          ),
                           decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  firstButtonGradientColor,
-                                  firstButtonGradientColor,
-                                  secondButtonGradientColor
-                                ],
-                                begin: FractionalOffset.centerLeft,
-                                end: FractionalOffset.centerRight,
+                            gradient: LinearGradient(
+                              colors: [
+                                firstButtonGradientColor,
+                                firstButtonGradientColor,
+                                secondButtonGradientColor
+                              ],
+                              begin: FractionalOffset.centerLeft,
+                              end: FractionalOffset.centerRight,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: TextButton(
+                            child: Center(
+                              child: Text(
+                                'Next',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                ),
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: FlatButton(
+                            ),
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -509,20 +493,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 _showAlreadyRegisteredSnackBar();
                               }
                             },
-                            child: Center(
-                              child: Text(
-                                'Next',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 0.0,
-                              vertical: _height * 0.035,
-                            ),
                           ),
                         ),
                       ],
@@ -647,6 +617,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -681,11 +652,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                 ),
                 // SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(
-                    top: _height * 0.01,
-                    left: _height * 0.02,
-                    right: _height * 0.02,
-                    bottom: _height * 0.01,
+                  padding: EdgeInsets.symmetric(
+                    vertical: _height * 0.01,
+                    // horizontal: _height * 0.02,
+                    horizontal: _width * 0.04,
                   ),
                   child: Form(
                     key: _formKey,
@@ -799,8 +769,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             color: formFieldFillColor,
                             // border: Border.all(),
                           ),
-                          // Bug: on Redmi 8
+                          // Bug:
+                          // on Redmi 8
                           // A RenderFlex overflowed by 74 pixels on the right.
+                          // on Pixel 4XL
+                          // A RenderFlex overflowed by 63 pixels on the right.
 
                           // The relevant error-causing widget was
                           // DropdownButton<String>
@@ -894,6 +867,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         ),
                         SizedBox(height: _height * 0.005),
                         Container(
+                          padding: EdgeInsets.symmetric(
+                            // horizontal: _width * 0.35,
+                            vertical: _height * 0.015,
+                          ),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -906,41 +883,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               ),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          child: FlatButton(
-                            onPressed: () async {
-                              if (!_formKey.currentState.validate()) {
-                                return;
-                              }
-                              print(firstName);
-                              print(lastName);
-                              print(dateOfBirth);
-                              print(phoneNumber);
-                              print(emailId);
-                              print(gender);
-                              print(profession);
-                              print(placeOfWork);
-                              print(nearestCenter);
-                              print(interestInMembership);
-
-                              _formKey.currentState.save();
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => RegisterOtp(
-                                    firstName: firstName,
-                                    lastName: lastName,
-                                    emailId: emailId,
-                                    placeOfWork: placeOfWork,
-                                    gender: gender,
-                                    dateOfBirth: dateOfBirth,
-                                    phoneNumber: phoneNumber,
-                                    profession: profession,
-                                    nearestCenter: nearestCenter,
-                                    interestInMembership: interestInMembership,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Center(
+                          child: FractionallySizedBox(
+                            // button width wrt parent (here, Form widget which has padding) width
+                            widthFactor: 1,
+                            child: TextButton(
                               child: Text(
                                 'Register',
                                 style: TextStyle(
@@ -949,10 +895,40 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                   color: Colors.white,
                                 ),
                               ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 0.0,
-                              vertical: _height * 0.035,
+                              onPressed: () async {
+                                if (!_formKey.currentState.validate()) {
+                                  return;
+                                }
+                                print(firstName);
+                                print(lastName);
+                                print(dateOfBirth);
+                                print(phoneNumber);
+                                print(emailId);
+                                print(gender);
+                                print(profession);
+                                print(placeOfWork);
+                                print(nearestCenter);
+                                print(interestInMembership);
+
+                                _formKey.currentState.save();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisterOtp(
+                                      firstName: firstName,
+                                      lastName: lastName,
+                                      emailId: emailId,
+                                      placeOfWork: placeOfWork,
+                                      gender: gender,
+                                      dateOfBirth: dateOfBirth,
+                                      phoneNumber: phoneNumber,
+                                      profession: profession,
+                                      nearestCenter: nearestCenter,
+                                      interestInMembership:
+                                          interestInMembership,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
