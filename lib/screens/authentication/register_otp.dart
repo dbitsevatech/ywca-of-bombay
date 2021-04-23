@@ -249,7 +249,7 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.0,
-        vertical: _screenSize.height * 0.02,
+        vertical: _screenSize.height * 0.015,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -273,6 +273,7 @@ class _RegisterOtpState extends State<RegisterOtp>
               fontSize: 20,
               fontFamily: 'Montserrat',
               color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
           onPressed: () async {

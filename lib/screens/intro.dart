@@ -157,6 +157,7 @@ class _IntroState extends State<Intro> {
                             fontSize: 20,
                             fontFamily: 'Montserrat',
                             color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

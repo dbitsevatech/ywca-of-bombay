@@ -227,6 +227,7 @@ class _LoginOtpState extends State<LoginOtp>
               fontSize: 20,
               fontFamily: 'Montserrat',
               color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
           onPressed: () async {

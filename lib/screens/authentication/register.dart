@@ -461,6 +461,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fontSize: 20,
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -894,6 +895,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                   fontSize: 20,
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               onPressed: () async {

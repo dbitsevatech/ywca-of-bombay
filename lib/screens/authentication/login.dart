@@ -192,6 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontSize: 20,
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               // ),
