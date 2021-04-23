@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
 import '../widgets/constants.dart';
+import '../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class SuccessStories extends KFDrawerContent {
@@ -20,11 +21,12 @@ class _SuccessStoriesState extends State<SuccessStories> {
         child: Column(
           children: <Widget>[
             Stack(
-              // circle design
               children: <Widget>[
-                Positioned(
-                  child: Image.asset("assets/images/circle-design.png"),
-                ),
+                // circle design
+                // Positioned(
+                //   child: Image.asset("assets/images/circle-design.png"),
+                // ),
+                MainPageBlueBubbleDesign(),
                 Positioned(
                   child: Row(
                     children: <Widget>[

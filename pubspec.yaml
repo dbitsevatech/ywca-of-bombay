@@ -61,6 +61,8 @@ flutter:
     - assets/images/circles-encoded.svg
     - assets/images/circle-design.png
     - assets/images/ywca-logo.png
+    - assets/images/contact_us/hostel.png
+    - assets/images/contact_us/office.png
     - assets/images/events/christmas.jpg
     - assets/images/initiatives/img1.jpg
     - assets/images/initiatives/img2.jpg
