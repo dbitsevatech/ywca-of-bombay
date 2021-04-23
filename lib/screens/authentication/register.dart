@@ -42,10 +42,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
       // initialDatePickerMode: DatePickerMode.year,
-      // TODO: Check if above line UX issue is solved
       // https://github.com/flutter/flutter/issues/67909
       // https://github.com/flutter/flutter/pull/67926
       //
+      // TODO: Check if above line UX issue is solved
       // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
@@ -589,7 +589,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   String profession;
   String placeOfWork;
-  String nearestCenter = 'Chembur';
+  String nearestCenter;
   String interestInMembership = "Yes";
   _RegisterScreen2State(
     // this.userData,
@@ -622,7 +622,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            // margin: EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -650,11 +649,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     ),
                   ],
                 ),
-                // SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: _height * 0.01,
-                    // horizontal: _height * 0.02,
                     horizontal: _width * 0.04,
                   ),
                   child: Form(
@@ -763,22 +760,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         ),
                         Container(
                           padding: EdgeInsets.only(
-                              left: _height * 0.215, right: _height * 0.215),
+                            left: _width * 0.262,
+                            right: _width * 0.262,
+                          ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             color: formFieldFillColor,
                             // border: Border.all(),
                           ),
-                          // Bug:
-                          // on Redmi 8
-                          // A RenderFlex overflowed by 74 pixels on the right.
-                          // on Pixel 4XL
-                          // A RenderFlex overflowed by 63 pixels on the right.
-
-                          // The relevant error-causing widget was
-                          // DropdownButton<String>
                           child: DropdownButton<String>(
                             value: nearestCenter,
+                            icon: Icon(Icons.arrow_drop_down_rounded),
+                            elevation: 16,
                             underline: Container(),
                             onChanged: (String value) {
                               setState(() {
@@ -786,6 +779,14 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 print(nearestCenter);
                               });
                             },
+                            hint: Text(
+                              "Nearest YWCA Center",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                             items: <String>[
                               'Andheri',
                               'Bandra',

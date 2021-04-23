@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import '../../widgets/blue_bubble_design.dart';
 
-//DONE
 // ignore: must_be_immutable
 class Hostel extends StatelessWidget {
   final imageList = [
@@ -34,7 +33,6 @@ class Hostel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // TODO: Make the back-button black color
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
