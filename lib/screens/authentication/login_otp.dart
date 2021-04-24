@@ -50,19 +50,22 @@ class _LoginOtpState extends State<LoginOtp>
 
   _showInvalidOTPSnackBar() {
     final snackBar = SnackBar(
-      content: Text('Invalid OTP. Try again'),
+      content: Text(
+        'Invalid OTP. Try again',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'OK',
-        onPressed: () {
-          // Some code to undo the change.
-        },
+        textColor: Colors.white,
+        onPressed: () {},
       ),
     );
-    // _scaffoldkey.currentState
-    // ignore: deprecated_member_use
-    _scaffoldkey.currentState.showSnackBar(snackBar);
+
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
   // Returns "Appbar"
   // get _getAppbar {
@@ -198,6 +201,10 @@ class _LoginOtpState extends State<LoginOtp>
   // Log In button
   get _logInButton {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.0,
+        vertical: _screenSize.height * 0.015,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -211,9 +218,18 @@ class _LoginOtpState extends State<LoginOtp>
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: FractionallySizedBox(
-        widthFactor: 0.85, // button width wrt screen width
-        child: FlatButton(
-          // minWidth: 800,
+        widthFactor: 0.92, // button width wrt screen width
+        // Log In Button
+        child: TextButton(
+          child: Text(
+            'Log In',
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onPressed: () async {
             try {
               await FirebaseAuth.instance
@@ -241,20 +257,6 @@ class _LoginOtpState extends State<LoginOtp>
             //   print(e.message);
             // }
           },
-          child: Center(
-            child: Text(
-              'Log In',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.0,
-            vertical: _screenSize.height * 0.035,
-          ),
         ),
       ),
     );

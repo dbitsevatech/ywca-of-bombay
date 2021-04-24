@@ -21,8 +21,9 @@ class Event {
       this.image});
 
   static List<Event> allEvents() {
-    var listOfEvents = List<Event>();
-    // var listOfEvents = [];
+    // List<Event> listOfEvents = List<Event>(); // Deprecated
+    // https://stackoverflow.com/questions/65277843/flutter-list-is-deprecated
+    List<Event> listOfEvents = [];
 
     listOfEvents.add(
       Event(

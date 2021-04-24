@@ -26,22 +26,23 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.share,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                // share event
-              },
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
             ),
-          ],
-        ),
-        body: Column(children: <Widget>[
+            onPressed: () {
+              // share event
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
           Row(
             //ROW 1
             children: [
@@ -56,19 +57,34 @@ class DetailPage extends StatelessWidget {
             //ROW 2
             children: [
               Container(
-                // color: Colors.orange,
                 margin: EdgeInsets.fromLTRB(300.0, 0.0, 0.0, 0.0),
-                child: RaisedButton(
-                  onPressed: () {},
-                  color: secondaryColor,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.pressed))
+                        return secondaryColor.withOpacity(0.60);
+                      return secondaryColor;
+                    }),
+                    foregroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.pressed))
+                        return Colors.black45;
+                      return null;
+                    }),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
                   ),
                   child: Text(
                     "Member",
-                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
                   ),
+                  onPressed: () {},
                 ),
               ),
             ],
@@ -244,7 +260,9 @@ class DetailPage extends StatelessWidget {
               ),
             ],
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
 
