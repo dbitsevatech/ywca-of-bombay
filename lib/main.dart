@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screens/class_builder.dart';
+import 'screens/authentication/login.dart';
+import 'screens/intro.dart';
 import 'widgets/drawer.dart';
 
 void main() async {
