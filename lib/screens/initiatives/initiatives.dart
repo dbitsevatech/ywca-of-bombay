@@ -3,6 +3,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 
 import 'piya.dart';
 import 'customclip_path.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class Initiatives extends KFDrawerContent {
@@ -21,17 +22,18 @@ class _InitiativesState extends State<Initiatives> {
             Stack(
               // circle design
               children: <Widget>[
-                Positioned(
-                  child: Image.asset("assets/images/circle-design.png"),
-                ),
+                MainPageBlueBubbleDesign(),
                 Positioned(
                   child: AppBar(
                     centerTitle: true,
-                    title: Text("YWCA Of Bombay",
-                        style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
-                            fontSize: 18.0,
-                            color: Colors.black87)),
+                    title: Text(
+                      "YWCA Of Bombay",
+                      style: TextStyle(
+                        fontFamily: 'LilyScriptOne',
+                        fontSize: 18.0,
+                        color: Colors.black87,
+                      ),
+                    ),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: IconButton(

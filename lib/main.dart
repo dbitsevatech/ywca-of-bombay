@@ -3,17 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screens/class_builder.dart';
+import 'screens/authentication/login.dart';
+import 'screens/intro.dart';
 import 'widgets/drawer.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    // theme: ThemeData(fontFamily: 'Montserrat'),
-    home: MyApp(),
-  ));
+
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  //     .then((_) {
+  //   sv.Init(); // Init Screen Variables
+
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // theme: ThemeData(fontFamily: 'Montserrat'),
+      home: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,13 +33,15 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xff49DEE8),
-      // statusBarColor: Color(0xff00BBE4),
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Color(0xff49DEE8),
+        // statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
     return MainWidget();
   }
 }

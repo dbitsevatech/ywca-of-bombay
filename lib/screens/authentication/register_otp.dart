@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
@@ -96,18 +97,22 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   _showInvalidOTPSnackBar() {
     final snackBar = SnackBar(
-      content: Text('Invalid OTP. Try again'),
+      content: Text(
+        'Invalid OTP. Try again',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'OK',
-        onPressed: () {
-          // Some code to undo the change.
-        },
+        textColor: Colors.white,
+        onPressed: () {},
       ),
     );
 
-    _scaffoldkey.currentState.showSnackBar(snackBar);
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
   // Returns "Appbar"
   // get _getAppbar {
@@ -131,7 +136,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
     return Padding(
-      padding: EdgeInsets.only(top: 100),
+      padding: EdgeInsets.only(top: _screenSize.height * 0.12),
       child: Text(
         "Verification Code",
         textAlign: TextAlign.center,
@@ -175,9 +180,10 @@ class _RegisterOtpState extends State<RegisterOtp>
         // circle design
         Stack(
           children: <Widget>[
-            Positioned(
-              child: Image.asset("assets/images/circle-design.png"),
-            ),
+            // Positioned(
+            //   child: Image.asset("assets/images/circle-design.png"),
+            // ),
+            MainPageBlueBubbleDesign(),
             Positioned(
               child: Center(
                 child: _getVerificationCodeLabel,
@@ -241,6 +247,10 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Register button
   get _registerButton {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.0,
+        vertical: _screenSize.height * 0.015,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -254,9 +264,18 @@ class _RegisterOtpState extends State<RegisterOtp>
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: FractionallySizedBox(
-        widthFactor: 0.85, // button width wrt screen width
-        child: FlatButton(
-          // minWidth: 800,
+        widthFactor: 0.92, // button width wrt screen width
+        // Register Button
+        child: TextButton(
+          child: Text(
+            'Register',
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           onPressed: () async {
             try {
               await FirebaseAuth.instance
@@ -296,20 +315,11 @@ class _RegisterOtpState extends State<RegisterOtp>
                       });
                     },
                   );
-                  // FirebaseFirestore.instance.collection("users").get().then(
-                  //   (querySnapshot) {
-                  //     querySnapshot.docs.forEach((result) {
-                  //       print(result.data());
-                  //     });
-                  //   },
-                  // );
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => MainWidget()),
                       (route) => false);
-                }
-                // TODO: Phone Number already registered snackbar
-                else {
+                } else {
                   print("user already registered with this number");
                 }
               });
@@ -321,20 +331,6 @@ class _RegisterOtpState extends State<RegisterOtp>
               _showInvalidOTPSnackBar();
             }
           },
-          child: Center(
-            child: Text(
-              'Register',
-              style: TextStyle(
-                fontSize: 20,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.0,
-            vertical: _screenSize.height * 0.035,
-          ),
         ),
       ),
     );
@@ -531,10 +527,12 @@ class _RegisterOtpState extends State<RegisterOtp>
       // appBar: _getAppbar,
       key: _scaffoldkey,
       backgroundColor: Colors.white,
-      body: Container(
-        width: _screenSize.width,
+      body: SafeArea(
+        child: Container(
+          width: _screenSize.width,
 //        padding:  EdgeInsets.only(bottom: 16.0),
-        child: _getInputPart,
+          child: _getInputPart,
+        ),
       ),
     );
   }

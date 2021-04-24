@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'carousel.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/open_painter.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -26,54 +26,69 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          // TODO: Make the back-button black color
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.share,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                //do something
-                // gotoSecondActivity(context);
-              },
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
             ),
-          ],
-        ),
-        body: Column(children: <Widget>[
+            onPressed: () {
+              // share event
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
           Row(
             //ROW 1
             children: [
               Container(
                 color: Colors.orange,
                 // margin: EdgeInsets.all(0.0),
-                child: CustomPaint(
-                  painter: OpenPainter(),
+                child: DetailPageBlueBubbleDesign(),
+              ),
+            ],
+          ),
+          Row(
+            //ROW 2
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(300.0, 0.0, 0.0, 0.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.pressed))
+                        return secondaryColor.withOpacity(0.60);
+                      return secondaryColor;
+                    }),
+                    foregroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      if (states.contains(MaterialState.pressed))
+                        return Colors.black45;
+                      return null;
+                    }),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    "Member",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  onPressed: () {},
                 ),
               ),
             ],
           ),
-          Row(//ROW 2
-              children: [
-            Container(
-              // color: Colors.orange,
-              margin: EdgeInsets.fromLTRB(300.0, 0.0, 0.0, 0.0),
-              child: RaisedButton(
-                onPressed: () {},
-                color: secondaryColor,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                child: Text(
-                  "Member",
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-              ),
-            ),
-          ]),
           // Row(// ROW 3
           //     children: [
           //   Container(
@@ -88,14 +103,15 @@ class DetailPage extends StatelessWidget {
           CarouselSlider(
             items: imageSliders,
             options: CarouselOptions(
-                autoPlay: false,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  // setState(() {
-                  //   _current = index;
-                  // });
-                }),
+              autoPlay: false,
+              enlargeCenterPage: true,
+              aspectRatio: 2.0,
+              onPageChanged: (index, reason) {
+                // setState(() {
+                //   _current = index;
+                // });
+              },
+            ),
           ),
           // TODO: Carousel sliding dots not working
           // Sliding dots
@@ -125,16 +141,17 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Christmas Decor Workshop",
                   style: TextStyle(
-                      fontSize: 22.0,
-                      color: Colors.black87,
-                      shadows: [
-                        Shadow(
-                          color: Colors.blue.shade900.withOpacity(_opacity),
-                          offset: Offset(_xOffset, _yOffset),
-                          blurRadius: _blurRadius,
-                        ),
-                      ],
-                      fontWeight: FontWeight.bold),
+                    fontSize: 22.0,
+                    color: Colors.black87,
+                    shadows: [
+                      Shadow(
+                        color: Colors.blue.shade900.withOpacity(_opacity),
+                        offset: Offset(_xOffset, _yOffset),
+                        blurRadius: _blurRadius,
+                      ),
+                    ],
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
@@ -155,9 +172,10 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Christmas Decorations don't have to be complicated to be elegant. We're sharing our favorite easy DIY Christmas decor ideas and tricks.",
                   style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 16.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
@@ -170,9 +188,10 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Resource Person: Sharon Pires",
                   style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
@@ -185,9 +204,10 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Venue: Online",
                   style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
@@ -200,9 +220,10 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Amount : Free",
                   style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
@@ -215,9 +236,10 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Date : 19/12/2020",
                   style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
@@ -230,24 +252,20 @@ class DetailPage extends StatelessWidget {
                 child: Text(
                   "Time : 11:00 AM",
                   style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                      fontWeight: FontWeight.normal),
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
               ),
             ],
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
 
 goBackToPreviousScreen(BuildContext context) {
   Navigator.pop(context);
 }
-
-// gotoSecondActivity(BuildContext context) {
-//   Navigator.push(
-//     context,
-//     MaterialPageRoute(builder: (context) => CarouselDemo()),
-//   );
-// }

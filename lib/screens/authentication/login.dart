@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
 import 'login_otp.dart';
 import 'register.dart';
@@ -25,136 +26,149 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _showNumberNotRegisteredSnackBar() {
     final registerSnackBar = SnackBar(
-      content: Text('Phone number not registered!'),
+      content: Text(
+        'Phone number not registered!',
+        // style: TextStyle(fontSize: 15),
+      ),
       backgroundColor: Colors.red,
-      // TODO: Add action to snackbar
       action: SnackBarAction(
         label: 'Register',
+        textColor: Colors.white,
         onPressed: () {
-          // Some code to undo the change.
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RegisterScreen()),
+          );
         },
       ),
     );
 
-    _scaffoldkey.currentState.showSnackBar(registerSnackBar);
+    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
+    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
+    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+    ScaffoldMessenger.of(context).showSnackBar(registerSnackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldkey,
-      body: SingleChildScrollView(
-        child: Container(
-          // margin: EdgeInsets.all(16),
-          // height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Stack(
-                // circle design
-                children: <Widget>[
-                  Positioned(
-                    child: Image.asset("assets/images/circle-design.png"),
-                  ),
-                  Positioned(
-                    child: Center(
-                      child: Padding(
-                        // padding: EdgeInsets.only(top: 100),
-                        padding: EdgeInsets.only(top: _height * 0.15),
-                        child: Text(
-                          'LOG IN',
-                          style: TextStyle(
-                            fontSize: 35,
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'RacingSansOne',
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Stack(
+                  // circle design
+                  children: <Widget>[
+                    // Positioned(
+                    //   child: Image.asset("assets/images/circle-design.png"),
+                    // ),
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: Center(
+                        child: Padding(
+                          // padding: EdgeInsets.only(top: 100),
+                          padding: EdgeInsets.only(top: _height * 0.15),
+                          child: Text(
+                            'LOG IN',
+                            style: TextStyle(
+                              fontSize: 40,
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RacingSansOne',
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: _height * 0.1,
-              ),
-              Text(
-                'Welcome Back !',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: _height * 0.06,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Center(
-                  child: Text(
-                    'We are happy to see you again. You can continue where you left off by logging in.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xff7C82A1),
-                      fontFamily: 'Montserrat',
+                SizedBox(
+                  height: _height * 0.1,
+                ),
+                Text(
+                  'Welcome Back !',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: _height * 0.06,
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Center(
+                    child: Text(
+                      'We are happy to see you again. You can continue where you left off by logging in.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff7C82A1),
+                        fontFamily: 'Montserrat',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: _height * 0.06,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: _height * 0.01,
-                  right: _height * 0.02,
-                  bottom: _height * 0.02,
-                  left: _height * 0.02,
+                SizedBox(
+                  height: _height * 0.06,
                 ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        // controller: _controller,
-                        onChanged: (value) {
-                          setState(() {
-                            phoneNumber = value;
-                          });
-                        },
-                        validator: (String value) {
-                          if (value.isEmpty)
-                            return 'Mobile number is required';
-                          else if (!RegExp(r"^\d{10}$").hasMatch(value))
-                            return 'Please enter a valid mobile number';
-                          else
-                            return null;
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.phone_android,
-                            color: secondaryColor,
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: _height * 0.01,
+                    // horizontal: _height * 0.02,
+                    horizontal: _width * 0.04,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          maxLength: 10,
+                          // controller: _controller,
+                          onChanged: (value) {
+                            setState(() {
+                              phoneNumber = value;
+                            });
+                          },
+                          validator: (String value) {
+                            if (value.isEmpty)
+                              return 'Mobile number is required';
+                            else if (!RegExp(r"^\d{10}$").hasMatch(value))
+                              return 'Please enter a valid mobile number';
+                            else
+                              return null;
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.phone_android,
+                              color: secondaryColor,
+                            ),
+                            prefixText: '+91 | ',
+                            labelText: 'Mobile Number',
+                            filled: true,
+                            fillColor: formFieldFillColor,
+                            disabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
                           ),
-                          prefixText: '+91 | ',
-                          labelText: 'Mobile Number',
-                          filled: true,
-                          fillColor: formFieldFillColor,
-                          disabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
                         ),
-                      ),
-                      SizedBox(
-                        height: _height * 0.1,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
+                        SizedBox(
+                          height: _height * 0.1,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            // horizontal: _width * 0.35,
+                            vertical: _height * 0.015,
+                          ),
+                          decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
                                 firstButtonGradientColor,
@@ -164,87 +178,91 @@ class _LoginScreenState extends State<LoginScreen> {
                               begin: FractionalOffset.centerLeft,
                               end: FractionalOffset.centerRight,
                             ),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: FlatButton(
-                          onPressed: () async {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            var checkuser = await FirebaseFirestore.instance
-                                .collection('users')
-                                .where("phoneNumber", isEqualTo: phoneNumber)
-                                .get();
-                            if (checkuser.docs.length == 1) {
-                              print("User found");
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      LoginOtp(phoneNumber: phoneNumber),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          // Log In Button
+                          child: FractionallySizedBox(
+                            // button width wrt parent (here, Form widget which has padding) width
+                            widthFactor: 1,
+                            child: TextButton(
+                              child: Text(
+                                'Log In',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              );
-                            } else {
-                              FocusScope.of(context).unfocus();
-                              print("No user found");
-                              _showNumberNotRegisteredSnackBar();
-                            }
-                          },
-                          child: Center(
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
                               ),
+                              // ),
+                              onPressed: () async {
+                                if (!_formKey.currentState.validate()) {
+                                  return;
+                                }
+                                var checkuser = await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .where("phoneNumber",
+                                        isEqualTo: phoneNumber)
+                                    .get();
+                                if (checkuser.docs.length == 1) {
+                                  print("User found");
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoginOtp(phoneNumber: phoneNumber),
+                                    ),
+                                  );
+                                } else {
+                                  FocusScope.of(context).unfocus();
+                                  print("No user found");
+                                  _showNumberNotRegisteredSnackBar();
+                                }
+                              },
                             ),
                           ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 0.0,
-                            vertical: _height * 0.035,
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: Text("Don't have an account? ",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                        )),
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterScreen()));
-                      },
-                      child: Text(
-                        'Register',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text("Don't have an account? ",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Montserrat',
+                          )),
+                    ),
+                    Center(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: _height * 0.02,
-              ),
-            ],
+                  ],
+                ),
+                SizedBox(
+                  height: _height * 0.02,
+                ),
+              ],
+            ),
           ),
         ),
       ),

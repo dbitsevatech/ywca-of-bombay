@@ -4,6 +4,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'event_details.dart';
 import '../../models/Event.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {
@@ -16,30 +17,22 @@ class _EventsState extends State<Events> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Decide whether SafeArea or Scaffold
-    // return Scaffold(
-    // body: Center
     return SafeArea(
       child: Center(
         child: Stack(
           children: <Widget>[
-            // TODO: Decide whether CustomPaint or Image
-            // Container(
-            //   child: CustomPaint(
-            //     painter: OpenPainter(),
-            //   ),
-            // ),
-            Positioned(
-              child: Image.asset("assets/images/circle-design.png"),
-            ),
+            MainPageBlueBubbleDesign(),
             Positioned(
               child: AppBar(
                 centerTitle: true,
-                title: Text("YWCA Of Bombay",
-                    style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
-                        fontSize: 18.0,
-                        color: Colors.black87)),
+                title: Text(
+                  "YWCA Of Bombay",
+                  style: TextStyle(
+                    fontFamily: 'LilyScriptOne',
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
+                ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
@@ -64,11 +57,12 @@ class _EventsState extends State<Events> {
                       style: Theme.of(context).textTheme.bodyText2,
                       children: [
                         TextSpan(
-                            text: 'Events ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
+                          text: 'Events ',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
                         WidgetSpan(
                           child: Padding(
                             padding:
@@ -136,33 +130,50 @@ class _EventsState extends State<Events> {
             title: Text(
               _allEvents[index].dateTime,
               style: TextStyle(
-                  color: primaryColor,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.normal),
+                color: primaryColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+              ),
             ),
             subtitle: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 5),
-                  Text(_allEvents[index].name,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold)),
-                  SizedBox(height: 5),
-                  Text('Resource Person: ${_allEvents[index].resourcePerson}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                  SizedBox(height: 5),
-                  Text('Venue: ${_allEvents[index].venue}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                  SizedBox(height: 5),
-                  Text('Amount: ${_allEvents[index].cost}',
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.normal)),
-                ]),
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 5),
+                Text(
+                  _allEvents[index].name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Resource Person: ${_allEvents[index].resourcePerson}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Venue: ${_allEvents[index].venue}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Amount: ${_allEvents[index].cost}',
+                  style: TextStyle(
+                    fontSize: 11.0,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
             //trailing: ,
             onTap: () {
               gotoSecondActivity(context);
@@ -179,19 +190,4 @@ gotoSecondActivity(BuildContext context) {
     context,
     MaterialPageRoute(builder: (context) => DetailPage()),
   );
-}
-
-class OpenPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()
-      ..color = primaryColor.withOpacity(0.5)
-      ..style = PaintingStyle.fill;
-    //circles
-    canvas.drawCircle(Offset(-5, 45), 100, paint1);
-    canvas.drawCircle(Offset(105, 8), 100, paint1);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
