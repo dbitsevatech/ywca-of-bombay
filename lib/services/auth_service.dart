@@ -1,8 +1,15 @@
 // https://github.com/davefaliskie/travel_treasury/tree/episode_20/lib
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/material.dart';
+
+// import '../screens/authentication/login_otp.dart';
+// import '../screens/authentication/register.dart';
+// import '../screens/authentication/register_otp.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   Stream<String> get authStateChanges =>
       _firebaseAuth.authStateChanges().map((User user) => user?.uid);
@@ -32,6 +39,17 @@ class AuthService {
   // }
 
   // Phone Auth
+
+  // check if user already registered or not
+  Future<bool> userExists(String phoneNumber) async {
+    print("userExists function called");
+    var checkuser = await _firebaseFirestore
+        .collection('users')
+        .where("phoneNumber", isEqualTo: phoneNumber)
+        .get();
+    print("returned bool");
+    return (checkuser.docs.length == 1);
+  }
 
   // Sign Out
   signOut() {

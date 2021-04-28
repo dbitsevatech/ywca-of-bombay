@@ -116,6 +116,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // in Moto G5s Plus
+      // A RenderFlex overflowed by 90 pixels on the bottom.
+      // The relevant error-causing widget was
+      // KFDrawer
+      // lib\widgets\drawer.dart:119
       body: KFDrawer(
         controller: _drawerController,
         header: Align(
@@ -123,8 +128,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           child: Container(
             padding: EdgeInsets.fromLTRB(0, 10, 80, 0),
             width: MediaQuery.of(context).size.width * 0.8,
-            // Bug: on Redmi 8
-            // A RenderFlex overflowed by 2.0 pixels on the right.
+            // Bug: on Redmi 8/Moto G5s Plus
+            // A RenderFlex overflowed by 2.0/ 27.0 pixels on the right.
             // The relevant error-causing widget was
             // Row
             // lib\widgets\drawer.dart:88

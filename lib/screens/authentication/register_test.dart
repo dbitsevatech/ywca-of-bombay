@@ -4,7 +4,9 @@
 // import 'login.dart';
 // import 'register_otp.dart';
 // import '../../models/user.dart';
+// import '../../widgets/blue_bubble_design.dart';
 // import '../../widgets/constants.dart';
+// import '../../widgets/gradient_button.dart';
 
 // enum GenderChoices { female, male, declineToState }
 
@@ -17,10 +19,10 @@
 // class _RegisterScreenState extends State<RegisterScreen> {
 //   String firstName;
 //   String lastName;
-//   String email;
+//   DateTime dateOfBirth = new DateTime.now().subtract(Duration(days: 4380));
+//   String emailId;
 //   String phoneNumber;
 //   String gender = "Female";
-//   DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
 
 //   final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
 //       null, null, null, null, null, null, null);
@@ -38,7 +40,7 @@
 //   Future _selectDate() async {
 //     final DateTime picked = await showDatePicker(
 //       context: context,
-//       initialDate: dob,
+//       initialDate: dateOfBirth,
 //       firstDate: DateTime(1940),
 //       lastDate: DateTime.now().subtract(Duration(days: 4380)),
 //       // initialDatePickerMode: DatePickerMode.year,
@@ -69,11 +71,11 @@
 //         );
 //       },
 //     );
-//     if (picked != null && picked != dob) {
+//     if (picked != null && picked != dateOfBirth) {
 //       setState(() {
-//         dob = picked;
+//         dateOfBirth = picked;
 //         // print(picked);
-//         print(dob);
+//         print(dateOfBirth);
 //       });
 //     }
 //   }
@@ -104,23 +106,47 @@
 //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 //   }
 
-//   Future<bool> _phoneNumberIsAlreadyRegistered(value) async {
-//     List<String> _listOfPhoneNumbers = [];
-
+//   Future<bool> _phoneNumberIsAlreadyRegistered(enteredPhoneNumber) async {
+//     List<String> _listOfRegisteredPhoneNumbers = [];
+//     print("checking: $enteredPhoneNumber");
 //     await FirebaseFirestore.instance
 //         .collection("users")
 //         .get()
 //         .then((querySnapshot) {
 //       querySnapshot.docs.forEach((result) {
 //         print(result.data()["phoneNumber"]);
-//         _listOfPhoneNumbers.add(result.data()["phoneNumber"]);
+//         _listOfRegisteredPhoneNumbers.add(result.data()["phoneNumber"]);
 //       });
 //     });
 
-//     print("List of numbers: " + _listOfPhoneNumbers.toString());
+//     print("List of numbers: " + _listOfRegisteredPhoneNumbers.toString());
 //     print("Phone Number already registered: " +
-//         _listOfPhoneNumbers.contains(value).toString());
-//     return _listOfPhoneNumbers.contains(value);
+//         _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber).toString());
+//     return _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber);
+//   }
+
+//   void _onNextButtonPressed() async {
+//     if (!await _phoneNumberIsAlreadyRegistered(phoneNumber)) {
+//       print("user does not exist");
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//           builder: (context) => RegisterScreen2(
+//             // userData: _user,
+//             firstName: firstName,
+//             lastName: lastName,
+//             emailId: emailId,
+//             phoneNumber: phoneNumber,
+//             gender: gender,
+//             dateOfBirth: dateOfBirth,
+//           ),
+//         ),
+//       );
+//     } else {
+//       FocusScope.of(context).unfocus();
+//       print("PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+//       _showAlreadyRegisteredSnackBar();
+//     }
 //   }
 
 //   @override
@@ -142,20 +168,13 @@
 //       body: SafeArea(
 //         child: SingleChildScrollView(
 //           child: Container(
-//             // body: Container(
-//             // margin: EdgeInsets.all(16),
-//             // height: _height,
-//             // width: _width,
-//             // child: SafeArea(
 //             child: Column(
 //               mainAxisAlignment: MainAxisAlignment.center,
 //               children: <Widget>[
 //                 // circle design and Title
 //                 Stack(
 //                   children: <Widget>[
-//                     Positioned(
-//                       child: Image.asset("assets/images/circle-design.png"),
-//                     ),
+//                     MainPageBlueBubbleDesign(),
 //                     Positioned(
 //                       child: Center(
 //                         child: Padding(
@@ -305,7 +324,7 @@
 //                             // TODO: BUG: text cursor showing over the date picker bcoz of async-await
 //                             await _selectDate();
 //                             dateController.text =
-//                                 "${dob.toLocal()}".split(' ')[0];
+//                                 "${dateOfBirth.toLocal()}".split(' ')[0];
 //                           },
 //                         ),
 //                         SizedBox(height: _height * 0.015),
@@ -313,7 +332,7 @@
 //                           keyboardType: TextInputType.emailAddress,
 //                           onSaved: (value) {
 //                             setState(() {
-//                               email = value;
+//                               emailId = value;
 //                             });
 //                           },
 //                           validator: (String value) {
@@ -436,65 +455,18 @@
 //                           ],
 //                         ),
 //                         SizedBox(height: _height * 0.015),
-//                         Container(
-//                           padding: EdgeInsets.symmetric(
-//                             // horizontal: _width * 0.35,
-//                             vertical: _height * 0.015,
-//                           ),
-//                           decoration: BoxDecoration(
-//                             gradient: LinearGradient(
-//                               colors: [
-//                                 firstButtonGradientColor,
-//                                 firstButtonGradientColor,
-//                                 secondButtonGradientColor
-//                               ],
-//                               begin: FractionalOffset.centerLeft,
-//                               end: FractionalOffset.centerRight,
-//                             ),
-//                             borderRadius: BorderRadius.all(Radius.circular(15)),
-//                           ),
-//                           child: TextButton(
-//                             child: Center(
-//                               child: Text(
-//                                 'Next',
-//                                 style: TextStyle(
-//                                   fontSize: 20,
-//                                   fontFamily: 'Montserrat',
-//                                   color: Colors.white,
-//                                   fontWeight: FontWeight.bold,
-//                                 ),
-//                               ),
-//                             ),
-//                             onPressed: () async {
-//                               if (!_formKey.currentState.validate()) {
-//                                 return;
-//                               }
-//                               _formKey.currentState.save();
-//                               if (!await _phoneNumberIsAlreadyRegistered(
-//                                   phoneNumber)) {
-//                                 print("user does not exist");
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                     builder: (context) => RegisterScreen2(
-//                                       // userData: _user,
-//                                       firstName: firstName,
-//                                       lastName: lastName,
-//                                       emailId: email,
-//                                       phoneNumber: phoneNumber,
-//                                       gender: gender,
-//                                       dateOfBirth: dob,
-//                                     ),
-//                                   ),
-//                                 );
-//                               } else {
-//                                 FocusScope.of(context).unfocus();
-//                                 print(
-//                                     "PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-//                                 _showAlreadyRegisteredSnackBar();
-//                               }
-//                             },
-//                           ),
+//                         GradientButton(
+//                           buttonText: 'Next',
+//                           screenHeight: _height,
+//                           route: 'register2',
+//                           onPressedFunction: () async {
+//                             if (!_formKey.currentState.validate()) {
+//                               return;
+//                             }
+//                             _formKey.currentState.save();
+
+//                             _onNextButtonPressed();
+//                           },
 //                         ),
 //                       ],
 //                     ),
@@ -590,7 +562,7 @@
 
 //   String profession;
 //   String placeOfWork;
-//   String nearestCenter;
+//   String nearestCenter = "Chembur";
 //   String interestInMembership = "Yes";
 //   _RegisterScreen2State(
 //     // this.userData,
@@ -605,6 +577,36 @@
 
 //   final GlobalKey<FormState> _formKey =
 //       GlobalKey<FormState>(); // form key for validation
+
+//   void _onRegisterButtonPressed() async {
+//     print(firstName);
+//     print(lastName);
+//     print(dateOfBirth);
+//     print(emailId);
+//     print(phoneNumber);
+//     print(gender);
+//     print(profession);
+//     print(placeOfWork);
+//     print(nearestCenter);
+//     print(interestInMembership);
+
+//     Navigator.of(context).push(
+//       MaterialPageRoute(
+//         builder: (context) => RegisterOtp(
+//           firstName: firstName,
+//           lastName: lastName,
+//           emailId: emailId,
+//           placeOfWork: placeOfWork,
+//           gender: gender,
+//           dateOfBirth: dateOfBirth,
+//           phoneNumber: phoneNumber,
+//           profession: profession,
+//           nearestCenter: nearestCenter,
+//           interestInMembership: interestInMembership,
+//         ),
+//       ),
+//     );
+//   }
 
 //   @override
 //   void initState() {
@@ -663,7 +665,11 @@
 //                           keyboardType: TextInputType.text,
 //                           onSaved: (String value) {
 //                             setState(() {
-//                               profession = value;
+//                               if (value == '') {
+//                                 profession = 'Retired';
+//                               } else {
+//                                 profession = value;
+//                               }
 //                             });
 //                           },
 //                           decoration: InputDecoration(
@@ -868,72 +874,17 @@
 //                           ],
 //                         ),
 //                         SizedBox(height: _height * 0.005),
-//                         Container(
-//                           padding: EdgeInsets.symmetric(
-//                             // horizontal: _width * 0.35,
-//                             vertical: _height * 0.015,
-//                           ),
-//                           decoration: BoxDecoration(
-//                               gradient: LinearGradient(
-//                                 colors: [
-//                                   secondaryColor,
-//                                   secondaryColor,
-//                                   secondButtonGradientColor
-//                                 ],
-//                                 begin: FractionalOffset.centerLeft,
-//                                 end: FractionalOffset.centerRight,
-//                               ),
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(15))),
-//                           child: FractionallySizedBox(
-//                             // button width wrt parent (here, Form widget which has padding) width
-//                             widthFactor: 1,
-//                             child: TextButton(
-//                               child: Text(
-//                                 'Register',
-//                                 style: TextStyle(
-//                                   fontSize: 20,
-//                                   fontFamily: 'Montserrat',
-//                                   color: Colors.white,
-//                                   fontWeight: FontWeight.bold,
-//                                 ),
-//                               ),
-//                               onPressed: () async {
-//                                 if (!_formKey.currentState.validate()) {
-//                                   return;
-//                                 }
-//                                 print(firstName);
-//                                 print(lastName);
-//                                 print(dateOfBirth);
-//                                 print(phoneNumber);
-//                                 print(emailId);
-//                                 print(gender);
-//                                 print(profession);
-//                                 print(placeOfWork);
-//                                 print(nearestCenter);
-//                                 print(interestInMembership);
-
-//                                 _formKey.currentState.save();
-//                                 Navigator.of(context).push(
-//                                   MaterialPageRoute(
-//                                     builder: (context) => RegisterOtp(
-//                                       firstName: firstName,
-//                                       lastName: lastName,
-//                                       emailId: emailId,
-//                                       placeOfWork: placeOfWork,
-//                                       gender: gender,
-//                                       dateOfBirth: dateOfBirth,
-//                                       phoneNumber: phoneNumber,
-//                                       profession: profession,
-//                                       nearestCenter: nearestCenter,
-//                                       interestInMembership:
-//                                           interestInMembership,
-//                                     ),
-//                                   ),
-//                                 );
-//                               },
-//                             ),
-//                           ),
+//                         GradientButton(
+//                           buttonText: 'Register',
+//                           screenHeight: _height,
+//                           route: 'register_otp',
+//                           onPressedFunction: () {
+//                             if (!_formKey.currentState.validate()) {
+//                               return;
+//                             }
+//                             _formKey.currentState.save();
+//                             _onRegisterButtonPressed();
+//                           },
 //                         ),
 //                       ],
 //                     ),
