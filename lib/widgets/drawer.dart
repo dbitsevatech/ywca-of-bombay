@@ -10,7 +10,7 @@ import '../screens/contact_us/contact_us.dart';
 import '../screens/events/events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/home.dart';
-import '../screens/success_stories/success_stories.dart';
+import '../screens/success_stories.dart';
 import '../widgets/constants.dart';
 
 class MainWidget extends StatefulWidget {
