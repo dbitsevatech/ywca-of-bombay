@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
 import '../screens/about_us.dart';
-import '../screens/authentication/login.dart';
 import '../screens/class_builder.dart';
-import '../screens/contact_us/contact_us.dart';
-import '../screens/events/events.dart';
-import '../screens/initiatives/initiatives.dart';
-import '../screens/home.dart';
-import '../screens/success_stories/success_stories.dart';
 import '../widgets/constants.dart';
+import '../screens/contact_us/contact_us.dart';
+import '../screens/authentication/edit_profile.dart';
+import '../screens/events/events.dart';
+import '../screens/home.dart';
+import '../screens/initiatives/initiatives.dart';
+import '../screens/authentication/login.dart';
+import '../screens/success_stories/success_stories.dart';
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
@@ -173,6 +174,29 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                           fontSize: 20,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 15),
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.edit),
+                      label: Text('Edit Profile'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return primaryColor;
+                            return secondaryColor; // Use the component's default.
+                          },
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(height: 10),
                   ],

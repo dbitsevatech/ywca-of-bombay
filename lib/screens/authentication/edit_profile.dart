@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/constants.dart';
 import '../../widgets/blue_bubble_design.dart';
+import '../../widgets/constants.dart';
+import '../../widgets/gradient_button.dart';
 
 enum GenderChoices { female, male, declineToState }
 enum MemberChoices { yes, no, maybe }
@@ -109,9 +110,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             'EDIT PROFILE',
                             style: TextStyle(
                               fontSize: 35,
-                              color: Colors.black,
+                              // color: Color(0xff333333),
+                              color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(2.0, 5.0),
+                                  blurRadius: 3.0,
+                                  color: Color(0xff333333),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -131,6 +140,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        // TODO: Add form field to upload user image
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
@@ -596,39 +606,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ],
                         ),
                         SizedBox(height: _height * 0.005),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            // horizontal: _width * 0.35,
-                            vertical: _height * 0.015,
-                          ),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  secondaryColor,
-                                  secondaryColor,
-                                  secondButtonGradientColor
-                                ],
-                                begin: FractionalOffset.centerLeft,
-                                end: FractionalOffset.centerRight,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          child: FractionallySizedBox(
-                            // button width wrt parent (here, Form widget which has padding) width
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Update',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () async {},
-                            ),
-                          ),
+                        GradientButton(
+                          buttonText: 'Edit Profile',
+                          screenHeight: _height,
+                          route: 'home',
+                          onPressedFunction: () async {
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            }
+                            _formKey.currentState.save();
+
+                            // TODO: update changes to firebase
+
+                            Navigator.pop(context);
+                          },
                         ),
                         SizedBox(
                           height: 5,
