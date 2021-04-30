@@ -180,7 +180,11 @@ class _RegisterOtpState extends State<RegisterOtp>
         "Verification Code",
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
+          fontFamily: 'RacingSansOne',
+          fontSize: 35.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

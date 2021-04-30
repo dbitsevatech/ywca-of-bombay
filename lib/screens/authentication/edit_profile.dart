@@ -116,7 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               fontFamily: 'RacingSansOne',
                               shadows: <Shadow>[
                                 Shadow(
-                                  offset: Offset(2.0, 5.0),
+                                  offset: Offset(2.0, 3.0),
                                   blurRadius: 3.0,
                                   color: Color(0xff333333),
                                 ),

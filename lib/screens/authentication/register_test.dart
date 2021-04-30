@@ -186,6 +186,13 @@
 //                               color: primaryColor,
 //                               fontWeight: FontWeight.bold,
 //                               fontFamily: 'RacingSansOne',
+//                               shadows: <Shadow>[
+//                                 Shadow(
+//                                   offset: Offset(2.0, 3.0),
+//                                   blurRadius: 3.0,
+//                                   color: Color(0xff333333),
+//                                 ),
+//                               ],
 //                             ),
 //                           ),
 //                         ),
@@ -645,6 +652,13 @@
 //                               color: primaryColor,
 //                               fontWeight: FontWeight.bold,
 //                               fontFamily: 'RacingSansOne',
+//                               shadows: <Shadow>[
+//                                 Shadow(
+//                                   offset: Offset(2.0, 3.0),
+//                                   blurRadius: 3.0,
+//                                   color: Color(0xff333333),
+//                                 ),
+//                               ],
 //                             ),
 //                           ),
 //                         ),
