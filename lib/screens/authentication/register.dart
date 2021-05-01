@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'login.dart';
 import 'register_otp.dart';
 import '../../models/user.dart';
@@ -137,6 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       key: _scaffoldkey,
       body: SafeArea(
@@ -235,6 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
+                          style: TextStyle(fontFamily: 'Montserrat'),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -243,10 +244,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'First Name',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         SizedBox(height: _height * 0.015),
@@ -263,6 +272,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
+                          style: TextStyle(fontFamily: 'Montserrat'),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -271,10 +281,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Last Name',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         SizedBox(height: _height * 0.015),
@@ -287,6 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             });
                           },
                           controller: dateController,
+                          style: TextStyle(fontFamily: 'Montserrat'),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.date_range,
@@ -295,10 +314,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Date of Birth',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
@@ -328,6 +355,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             // return null coz validator has to return something
                             return null;
                           },
+                          style: TextStyle(fontFamily: 'Montserrat'),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -336,10 +364,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Email Address',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         SizedBox(height: _height * 0.015),
@@ -359,6 +395,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               phoneNumber = value;
                             });
                           },
+                          style: TextStyle(fontFamily: 'Montserrat'),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.phone_android,
@@ -368,10 +405,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             labelText: 'Mobile Number',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         Text(
@@ -674,10 +719,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             labelText: 'Profession',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         Center(
@@ -720,10 +773,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             labelText: 'Place of work/school/college',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         Center(
