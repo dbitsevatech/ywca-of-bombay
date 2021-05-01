@@ -2,23 +2,28 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'services/auth_service.dart';
 import 'screens/class_builder.dart';
 import 'widgets/drawer.dart';
+import 'screens/authentication/login.dart';
+import 'widgets/provider_widget.dart';
+import 'screens/authentication/register.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
-  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-  //     .then((_) {
-  //   sv.Init(); // Init Screen Variables
-
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(fontFamily: 'Montserrat'),
       home: MyApp(),
+      routes: <String, WidgetBuilder>{
+        // '/': (BuildContext context) => MyApp(),
+        '/register': (BuildContext context) => RegisterScreen(),
+        '/login': (BuildContext context) => LoginScreen(),
+      },
     ),
   );
 }
@@ -34,12 +39,29 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Color(0xff49DEE8),
-        // statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
     return MainWidget();
+    // return HomeController();
+  }
+}
+
+class HomeController extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final AuthService auth = Provider.of(context).auth;
+    return StreamBuilder<String>(
+      stream: auth.authStateChanges,
+      builder: (context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final bool signedIn = snapshot.hasData;
+          return signedIn ? MainWidget() : LoginScreen();
+        }
+        return CircularProgressIndicator();
+      },
+    );
   }
 }

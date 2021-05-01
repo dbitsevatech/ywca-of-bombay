@@ -4,17 +4,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
-import '../widgets/constants.dart';
 import 'authentication/register.dart';
+import '../widgets/blue_bubble_design.dart';
+import '../widgets/gradient_button.dart';
 
-class Intro extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   @override
-  _IntroState createState() => _IntroState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _IntroState extends State<Intro> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -68,6 +68,8 @@ class _IntroState extends State<Intro> {
                 ],
               ),
               // TODO: Make the carousel responsive
+              // https://pub.dev/packages/introduction_screen
+              // https://pub.dev/packages/gooey_carousel
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
@@ -133,39 +135,15 @@ class _IntroState extends State<Intro> {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      // horizontal: _width * 0.35,
-                      vertical: _height * 0.015,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            firstButtonGradientColor,
-                            firstButtonGradientColor,
-                            secondButtonGradientColor,
-                          ],
-                          begin: FractionalOffset.centerLeft,
-                          end: FractionalOffset.centerRight,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: TextButton(
-                      child: Center(
-                        child: Text(
-                          'LET\'S GO',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Montserrat',
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RegisterScreen()));
-                      },
-                    ),
+                  child: GradientButton(
+                    buttonText: "Let's Go!",
+                    screenHeight: _height,
+                    route: 'register',
+                    onPressedFunction: () async {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => RegisterScreen()));
+                    },
                   ),
                 ),
               ),

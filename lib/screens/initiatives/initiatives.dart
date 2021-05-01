@@ -40,6 +40,7 @@ class _InitiativesState extends State<Initiatives> {
                       icon: Icon(
                         Icons.menu,
                         color: Colors.black,
+                        size: 30,
                       ),
                       onPressed: widget.onMenuPressed,
                     ),

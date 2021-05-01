@@ -41,6 +41,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                       icon: Icon(
                         Icons.menu,
                         color: Colors.black,
+                        size: 30,
                       ),
                       onPressed: widget.onMenuPressed,
                     ),

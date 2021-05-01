@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 
 import '../screens/about_us.dart';
-import '../screens/authentication/login.dart';
 import '../screens/class_builder.dart';
-import '../screens/contact_us/contact_us.dart';
-import '../screens/events/events.dart';
-import '../screens/initiatives/initiatives.dart';
-import '../screens/home.dart';
-import '../screens/success_stories/success_stories.dart';
 import '../widgets/constants.dart';
+import '../screens/contact_us/contact_us.dart';
+import '../screens/profile.dart';
+import '../screens/events/events.dart';
+import '../screens/home.dart';
+import '../screens/initiatives/initiatives.dart';
+import '../screens/authentication/login.dart';
+import '../screens/success_stories/success_stories.dart';
 
 class MainWidget extends StatefulWidget {
   MainWidget({Key key, this.title}) : super(key: key);
@@ -116,6 +117,11 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // in Moto G5s Plus
+      // A RenderFlex overflowed by 90 pixels on the bottom.
+      // The relevant error-causing widget was
+      // KFDrawer
+      // lib\widgets\drawer.dart:119
       body: KFDrawer(
         controller: _drawerController,
         header: Align(
@@ -123,8 +129,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           child: Container(
             padding: EdgeInsets.fromLTRB(0, 10, 80, 0),
             width: MediaQuery.of(context).size.width * 0.8,
-            // Bug: on Redmi 8
-            // A RenderFlex overflowed by 2.0 pixels on the right.
+            // Bug: on Redmi 8/Moto G5s Plus
+            // A RenderFlex overflowed by 2.0/ 27.0 pixels on the right.
             // The relevant error-causing widget was
             // Row
             // lib\widgets\drawer.dart:88
@@ -168,6 +174,29 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                           fontSize: 20,
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 15),
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('View Profile'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return primaryColor;
+                            return secondaryColor; // Use the component's default.
+                          },
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(height: 10),
                   ],

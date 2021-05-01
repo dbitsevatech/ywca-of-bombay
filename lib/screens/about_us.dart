@@ -33,6 +33,7 @@ class _AboutUsState extends State<AboutUs> {
                             icon: Icon(
                               Icons.menu,
                               color: Colors.black,
+                              size: 30,
                             ),
                             onPressed: widget.onMenuPressed,
                           ),

@@ -44,6 +44,7 @@ class _ContactUsState extends State<ContactUs> {
                       icon: Icon(
                         Icons.menu,
                         color: Colors.black,
+                        size: 30,
                       ),
                       onPressed: widget.onMenuPressed,
                     ),
@@ -64,7 +65,7 @@ class _ContactUsState extends State<ContactUs> {
                               TextSpan(
                                 text: 'Contact Us',
                                 style: TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 32,
                                   color: Color(0xff333333),
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat',
