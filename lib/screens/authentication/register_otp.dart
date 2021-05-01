@@ -3,32 +3,33 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
+import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
+import '../../widgets/gradient_button.dart';
 
 class RegisterOtp extends StatefulWidget {
   final String firstName;
   final String lastName;
-  final String emailId;
-  final String placeOfWork;
-  final String gender;
   final DateTime dateOfBirth;
+  final String emailId;
   final String phoneNumber;
+  final String gender;
   final String profession;
+  final String placeOfWork;
   final String nearestCenter;
   final String interestInMembership;
 
   const RegisterOtp({
     this.firstName,
     this.lastName,
-    this.emailId,
-    this.placeOfWork,
-    this.gender,
     this.dateOfBirth,
+    this.emailId,
     this.phoneNumber,
+    this.gender,
     this.profession,
+    this.placeOfWork,
     this.nearestCenter,
     this.interestInMembership,
   });
@@ -37,12 +38,12 @@ class RegisterOtp extends StatefulWidget {
   _RegisterOtpState createState() => _RegisterOtpState(
         firstName,
         lastName,
-        emailId,
-        placeOfWork,
-        gender,
         dateOfBirth,
+        emailId,
         phoneNumber,
+        gender,
         profession,
+        placeOfWork,
         nearestCenter,
         interestInMembership,
       );
@@ -54,12 +55,12 @@ class _RegisterOtpState extends State<RegisterOtp>
   final int time = 59;
   final String firstName;
   final String lastName;
-  final String emailId;
-  final String placeOfWork;
-  final String gender;
   final DateTime dateOfBirth;
+  final String emailId;
   final String phoneNumber;
+  final String gender;
   final String profession;
+  final String placeOfWork;
   final String nearestCenter;
   final String interestInMembership;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -67,12 +68,12 @@ class _RegisterOtpState extends State<RegisterOtp>
   _RegisterOtpState(
       this.firstName,
       this.lastName,
-      this.emailId,
-      this.placeOfWork,
-      this.gender,
       this.dateOfBirth,
+      this.emailId,
       this.phoneNumber,
+      this.gender,
       this.profession,
+      this.placeOfWork,
       this.nearestCenter,
       this.interestInMembership);
   AnimationController _controller;
@@ -114,24 +115,62 @@ class _RegisterOtpState extends State<RegisterOtp>
     // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-  // Returns "Appbar"
-  // get _getAppbar {
-  //   return  AppBar(
-  //     backgroundColor: Colors.transparent,
-  //     elevation: 0.0,
-  //     leading:  InkWell(
-  //       borderRadius: BorderRadius.circular(30.0),
-  //       child:  Icon(
-  //         Icons.arrow_back,
-  //         color: Colors.black54,
-  //       ),
-  //       onTap: () {
-  //         Navigator.pop(context);
-  //       },
-  //     ),
-  //     centerTitle: true,
-  //   );
-  // }
+
+  void _onRegisterButtonPressed() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithCredential(PhoneAuthProvider.credential(
+              verificationId: _verificationCode, smsCode: otp))
+          .then((value) async {
+        final snapShot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(value.user.uid)
+            .get();
+
+        if (snapShot == null || !snapShot.exists) {
+          print(value.user);
+          print(value.user.uid);
+          Map<String, dynamic> data = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "dateOfBirth": dateOfBirth,
+            "emailId": emailId,
+            "phoneNumber": phoneNumber,
+            "gender": gender,
+            "profession": profession,
+            "placeOfWork": placeOfWork,
+            "nearestCenter": nearestCenter,
+            "interestInMembership": interestInMembership,
+          };
+          CollectionReference users =
+              FirebaseFirestore.instance.collection('users');
+          users.doc(value.user.uid).set(data);
+          print(value.user);
+          print(value.user.uid);
+
+          FirebaseFirestore.instance.collection("users").get().then(
+            (querySnapshot) {
+              querySnapshot.docs.forEach((result) {
+                print(result.id);
+              });
+            },
+          );
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MainWidget()),
+              (route) => false);
+        } else {
+          print("user already registered with this number");
+        }
+      });
+    } catch (e) {
+      FocusScope.of(context).unfocus();
+      print(e);
+      print("Invalid OTP");
+
+      _showInvalidOTPSnackBar();
+    }
+  }
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
@@ -141,7 +180,11 @@ class _RegisterOtpState extends State<RegisterOtp>
         "Verification Code",
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
+          fontFamily: 'RacingSansOne',
+          fontSize: 35.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -177,12 +220,9 @@ class _RegisterOtpState extends State<RegisterOtp>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        // circle design
         Stack(
           children: <Widget>[
-            // Positioned(
-            //   child: Image.asset("assets/images/circle-design.png"),
-            // ),
+            // circle design
             MainPageBlueBubbleDesign(),
             Positioned(
               child: Center(
@@ -246,92 +286,16 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Register button
   get _registerButton {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 0.0,
-        vertical: _screenSize.height * 0.015,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            firstButtonGradientColor,
-            firstButtonGradientColor,
-            secondButtonGradientColor,
-          ],
-          begin: FractionalOffset.centerLeft,
-          end: FractionalOffset.centerRight,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      child: FractionallySizedBox(
-        widthFactor: 0.92, // button width wrt screen width
-        // Register Button
-        child: TextButton(
-          child: Text(
-            'Register',
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance
-                  .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: _verificationCode, smsCode: otp))
-                  .then((value) async {
-                final snapShot = await FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(value.user.uid)
-                    .get();
-
-                if (snapShot == null || !snapShot.exists) {
-                  print(value.user);
-                  print(value.user.uid);
-                  Map<String, dynamic> data = {
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "phoneNumber": phoneNumber,
-                    "emailId": emailId,
-                    "placeOfWork": placeOfWork,
-                    "gender": gender,
-                    "profession": profession,
-                    "nearestCenter": nearestCenter,
-                    "interestInMembership": interestInMembership,
-                    "dateOfBirth": dateOfBirth
-                  };
-                  CollectionReference users =
-                      FirebaseFirestore.instance.collection('users');
-                  users.doc(value.user.uid).set(data);
-                  print(value.user);
-                  print(value.user.uid);
-
-                  FirebaseFirestore.instance.collection("users").get().then(
-                    (querySnapshot) {
-                      querySnapshot.docs.forEach((result) {
-                        print(result.id);
-                      });
-                    },
-                  );
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
-                } else {
-                  print("user already registered with this number");
-                }
-              });
-            } catch (e) {
-              FocusScope.of(context).unfocus();
-              print(e);
-              print("Invalid OTP");
-
-              _showInvalidOTPSnackBar();
-            }
-          },
-        ),
+    return FractionallySizedBox(
+      widthFactor: 0.92, // button width wrt screen width
+      // Register Button
+      child: GradientButton(
+        buttonText: 'Register',
+        screenHeight: _screenSize.height,
+        route: 'register_otp',
+        onPressedFunction: () {
+          _onRegisterButtonPressed();
+        },
       ),
     );
   }

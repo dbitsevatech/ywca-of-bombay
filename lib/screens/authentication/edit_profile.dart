@@ -1,37 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'login.dart';
-import 'register_otp.dart';
-import '../../models/user.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
 
 enum GenderChoices { female, male, declineToState }
+enum MemberChoices { yes, no, maybe }
 
 // ignore: must_be_immutable
-class RegisterScreen extends StatefulWidget {
+class EditProfileScreen extends StatefulWidget {
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   String firstName;
   String lastName;
-  DateTime dateOfBirth = new DateTime.now().subtract(Duration(days: 4380));
-  String emailId;
+  String email;
   String phoneNumber;
   String gender = "Female";
-
-  final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
-      null, null, null, null, null, null, null);
+  DateTime dob = new DateTime.now().subtract(Duration(days: 4380));
+  String profession;
+  String placeOfWork;
+  String nearestCenter;
+  String interestInMembership = "Yes";
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+
+  MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -40,15 +40,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future _selectDate() async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dateOfBirth,
+      initialDate: dob,
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
-      // initialDatePickerMode: DatePickerMode.year,
-      // https://github.com/flutter/flutter/issues/67909
-      // https://github.com/flutter/flutter/pull/67926
-      //
-      // TODO: Check if above line UX issue is solved
-      // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
@@ -71,81 +65,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     );
-    if (picked != null && picked != dateOfBirth) {
+    if (picked != null && picked != dob) {
       setState(() {
-        dateOfBirth = picked;
+        dob = picked;
         // print(picked);
-        print(dateOfBirth);
+        print(dob);
       });
-    }
-  }
-
-  _showAlreadyRegisteredSnackBar() {
-    final snackBar = SnackBar(
-      content: Text(
-        'Your phone number is already registered! Proceed to Log In',
-        // style: TextStyle(fontSize: 15),
-      ),
-      // backgroundColor: Colors.red,
-      backgroundColor: Colors.red[400],
-      action: SnackBarAction(
-        label: 'Log In',
-        textColor: Colors.white,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-          );
-        },
-      ),
-    );
-
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
-  Future<bool> _phoneNumberIsAlreadyRegistered(enteredPhoneNumber) async {
-    List<String> _listOfRegisteredPhoneNumbers = [];
-    print("checking: $enteredPhoneNumber");
-    await FirebaseFirestore.instance
-        .collection("users")
-        .get()
-        .then((querySnapshot) {
-      querySnapshot.docs.forEach((result) {
-        print(result.data()["phoneNumber"]);
-        _listOfRegisteredPhoneNumbers.add(result.data()["phoneNumber"]);
-      });
-    });
-
-    print("List of numbers: " + _listOfRegisteredPhoneNumbers.toString());
-    print("Phone Number already registered: " +
-        _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber).toString());
-    return _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber);
-  }
-
-  void _onNextButtonPressed() async {
-    if (!await _phoneNumberIsAlreadyRegistered(phoneNumber)) {
-      print("user does not exist");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => RegisterScreen2(
-            // userData: _user,
-            firstName: firstName,
-            lastName: lastName,
-            emailId: emailId,
-            phoneNumber: phoneNumber,
-            gender: gender,
-            dateOfBirth: dateOfBirth,
-          ),
-        ),
-      );
-    } else {
-      FocusScope.of(context).unfocus();
-      print("PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
-      _showAlreadyRegisteredSnackBar();
     }
   }
 
@@ -154,6 +79,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       selectedGender = GenderChoices.female;
       gender = "Female";
+      _selectedMembershipInterest = MemberChoices.yes;
+      interestInMembership = "Yes";
     });
     super.initState();
   }
@@ -180,9 +107,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Padding(
                           padding: EdgeInsets.only(top: _height * 0.095),
                           child: Text(
-                            'REGISTER',
+                            'EDIT PROFILE',
                             style: TextStyle(
                               fontSize: 35,
+                              // color: Color(0xff333333),
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
@@ -198,49 +126,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    // Have an account, LOG IN
-                    Padding(
-                      padding: EdgeInsets.only(top: _height * 0.15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Text(
-                              'Already have an account? ',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          ),
-                          Center(
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
-                              },
-                              child: Text(
-                                'Log In',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
                 // Form
+                SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.01,
+                    vertical: _height * 0.04,
                     // horizontal: _height * 0.02,
                     horizontal: _width * 0.04,
                   ),
@@ -248,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
+                        // TODO: Add form field to upload user image
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
@@ -270,8 +163,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -298,8 +197,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -322,16 +227,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            // TODO: BUG: text cursor showing over the date picker bcoz of async-await
                             await _selectDate();
                             dateController.text =
-                                "${dateOfBirth.toLocal()}".split(' ')[0];
+                                "${dob.toLocal()}".split(' ')[0];
                           },
                         ),
                         SizedBox(height: _height * 0.015),
@@ -339,7 +249,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (value) {
                             setState(() {
-                              emailId = value;
+                              email = value;
                             });
                           },
                           validator: (String value) {
@@ -363,8 +273,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -395,8 +311,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -461,229 +383,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: _height * 0.015),
-                        GradientButton(
-                          buttonText: 'Next',
-                          screenHeight: _height,
-                          route: 'register2',
-                          onPressedFunction: () async {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            _formKey.currentState.save();
-
-                            _onNextButtonPressed();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(height: _height * 0.015),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Already have an account? ',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: _height * 0.015),
-              ],
-            ),
-            // ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-enum MemberChoices { yes, no, maybe }
-
-// ignore: must_be_immutable
-class RegisterScreen2 extends StatefulWidget {
-  // final User userData;
-  // var userData = User();
-  final String firstName;
-  final String lastName;
-  final String emailId;
-  final String phoneNumber;
-  final String gender;
-  final DateTime dateOfBirth;
-  RegisterScreen2({
-    // this.userData,
-    this.firstName,
-    this.lastName,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.dateOfBirth,
-  });
-  @override
-  _RegisterScreen2State createState() => _RegisterScreen2State(
-        // userData,
-        firstName,
-        lastName,
-        emailId,
-        phoneNumber,
-        gender,
-        dateOfBirth,
-      );
-}
-
-class _RegisterScreen2State extends State<RegisterScreen2> {
-  // final User userData;
-  // var userData = User();
-  final String firstName;
-  final String lastName;
-  final String emailId;
-  final String phoneNumber;
-  final String gender;
-  final DateTime dateOfBirth;
-
-  String profession;
-  String placeOfWork;
-  String nearestCenter = "Chembur";
-  String interestInMembership = "Yes";
-  _RegisterScreen2State(
-    // this.userData,
-    this.firstName,
-    this.lastName,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.dateOfBirth,
-  );
-  MemberChoices _selectedMembershipInterest = MemberChoices.yes;
-
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validation
-
-  void _onRegisterButtonPressed() async {
-    print(firstName);
-    print(lastName);
-    print(dateOfBirth);
-    print(emailId);
-    print(phoneNumber);
-    print(gender);
-    print(profession);
-    print(placeOfWork);
-    print(nearestCenter);
-    print(interestInMembership);
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => RegisterOtp(
-          firstName: firstName,
-          lastName: lastName,
-          emailId: emailId,
-          placeOfWork: placeOfWork,
-          gender: gender,
-          dateOfBirth: dateOfBirth,
-          phoneNumber: phoneNumber,
-          profession: profession,
-          nearestCenter: nearestCenter,
-          interestInMembership: interestInMembership,
-        ),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    setState(() {
-      _selectedMembershipInterest = MemberChoices.yes;
-      interestInMembership = "Yes";
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final _height = MediaQuery.of(context).size.height;
-    final _width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  // circle design
-                  children: <Widget>[
-                    Positioned(
-                      child: Image.asset("assets/images/circle-design.png"),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.095),
-                          child: Text(
-                            'REGISTER',
-                            style: TextStyle(
-                              fontSize: 35,
-                              color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(2.0, 3.0),
-                                  blurRadius: 3.0,
-                                  color: Color(0xff333333),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.01,
-                    horizontal: _width * 0.04,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (String value) {
                             setState(() {
-                              if (value == '') {
-                                profession = 'Retired';
-                              } else {
-                                profession = value;
-                              }
+                              profession = value;
                             });
                           },
                           decoration: InputDecoration(
@@ -695,8 +399,14 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             filled: true,
                             fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -720,6 +430,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               )
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         TextFormField(
                           keyboardType: TextInputType.text,
@@ -739,10 +452,15 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             ),
                             labelText: 'Place of work/school/college',
                             filled: true,
-                            fillColor: formFieldFillColor,
                             disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: formFieldFillColor),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             errorBorder: InputBorder.none,
                           ),
                         ),
@@ -767,9 +485,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             ],
                           ),
                         ),
-                        // TODO: BUG: Focus goes to previous textfield after selecting center
-                        // https://flutter.dev/docs/cookbook/forms/focus
-                        // https://stackoverflow.com/questions/49592099/slide-focus-to-textfield-in-flutter
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           'Nearest YWCA Center',
                           style: TextStyle(
@@ -780,6 +498,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           ),
                         ),
                         Container(
+                          height: 55,
                           padding: EdgeInsets.only(
                             left: _width * 0.262,
                             right: _width * 0.262,
@@ -824,7 +543,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             }).toList(),
                           ),
                         ),
-                        SizedBox(height: _height * 0.010),
+                        SizedBox(height: 10),
                         Text(
                           'Interested in being a member?',
                           style: TextStyle(
@@ -835,7 +554,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           ),
                         ),
                         Column(
-                          // TODO: Ability to select radio button when text is tapped
                           children: <Widget>[
                             ListTile(
                               title: const Text('Yes'),
@@ -889,17 +607,34 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         ),
                         SizedBox(height: _height * 0.005),
                         GradientButton(
-                          buttonText: 'Register',
+                          buttonText: 'Edit Profile',
                           screenHeight: _height,
-                          route: 'register_otp',
-                          onPressedFunction: () {
+                          route: 'home',
+                          onPressedFunction: () async {
                             if (!_formKey.currentState.validate()) {
                               return;
                             }
                             _formKey.currentState.save();
-                            _onRegisterButtonPressed();
+
+                            // TODO: update changes to firebase
+
+                            Navigator.pop(context);
                           },
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Center(
+                          child: Text(
+                            'Your Details will be verified by admin and then updated within few days',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontFamily: 'RacingSansOne',
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        )
                       ],
                     ),
                   ),

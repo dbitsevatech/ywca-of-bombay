@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
 
+import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
+import '../../widgets/gradient_button.dart';
 
 class LoginOtp extends StatefulWidget {
   final String phoneNumber;
@@ -29,7 +30,7 @@ class _LoginOtpState extends State<LoginOtp>
   String _verificationCode;
   _LoginOtpState(this._phoneNumber, this._user);
   AnimationController _controller;
-  var otp;
+  String otp;
   // Variables
   Size _screenSize;
   int _currentDigit;
@@ -67,24 +68,34 @@ class _LoginOtpState extends State<LoginOtp>
     // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-  // Returns "Appbar"
-  // get _getAppbar {
-  //   return  AppBar(
-  //     backgroundColor: Colors.transparent,
-  //     elevation: 0.0,
-  //     leading:  InkWell(
-  //       borderRadius: BorderRadius.circular(30.0),
-  //       child:  Icon(
-  //         Icons.arrow_back,
-  //         color: Colors.black54,
-  //       ),
-  //       onTap: () {
-  //         Navigator.pop(context);
-  //       },
-  //     ),
-  //     centerTitle: true,
-  //   );
-  // }
+
+  void _onLoginButtonPressed() async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithCredential(PhoneAuthProvider.credential(
+              verificationId: _verificationCode, smsCode: otp))
+          .then(
+        (value) async {
+          if (value.user != null) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => MainWidget()),
+                (route) => false);
+          }
+        },
+      );
+    } catch (e) {
+      FocusScope.of(context).unfocus();
+      print(e);
+      print("Invalid OTP");
+
+      _showInvalidOTPSnackBar();
+    }
+    // on FirebaseAuthException catch (e) {
+    //   print('Failed with error code: ${e.code}');
+    //   print(e.message);
+    // }
+  }
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
@@ -94,7 +105,11 @@ class _LoginOtpState extends State<LoginOtp>
         "Verification Code",
         textAlign: TextAlign.center,
         style: TextStyle(
-            fontSize: 35.0, color: Colors.black, fontWeight: FontWeight.bold),
+          fontFamily: 'RacingSansOne',
+          fontSize: 35.0,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -130,12 +145,9 @@ class _LoginOtpState extends State<LoginOtp>
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        // circle design
         Stack(
           children: <Widget>[
-            // Positioned(
-            //   child: Image.asset("assets/images/circle-design.png"),
-            // ),
+            // circle design
             MainPageBlueBubbleDesign(),
             Positioned(
               child: Center(
@@ -144,7 +156,6 @@ class _LoginOtpState extends State<LoginOtp>
             ),
           ],
         ),
-        // _getVerificationCodeLabel,
         _getPleaseEnterLabel,
         _getInputField,
         _hideResendButton ? _getTimerText : _getResendButton,
@@ -200,64 +211,14 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Log In button
   get _logInButton {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 0.0,
-        vertical: _screenSize.height * 0.015,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            firstButtonGradientColor,
-            firstButtonGradientColor,
-            secondButtonGradientColor,
-          ],
-          begin: FractionalOffset.centerLeft,
-          end: FractionalOffset.centerRight,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      child: FractionallySizedBox(
-        widthFactor: 0.92, // button width wrt screen width
-        // Log In Button
-        child: TextButton(
-          child: Text(
-            'Log In',
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          onPressed: () async {
-            try {
-              await FirebaseAuth.instance
-                  .signInWithCredential(PhoneAuthProvider.credential(
-                      verificationId: _verificationCode, smsCode: otp))
-                  .then(
-                (value) async {
-                  if (value.user != null) {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainWidget()),
-                        (route) => false);
-                  }
-                },
-              );
-            } catch (e) {
-              FocusScope.of(context).unfocus();
-              print(e);
-              print("Invalid OTP");
-
-              _showInvalidOTPSnackBar();
-            }
-            // } on FirebaseAuthException catch (e) {
-            //   print('Failed with error code: ${e.code}');
-            //   print(e.message);
-            // }
-          },
-        ),
+    return FractionallySizedBox(
+      widthFactor: 0.92, // button width wrt screen width
+      // Log In Button
+      child: GradientButton(
+        buttonText: 'Log In',
+        screenHeight: _screenSize.height,
+        route: 'home',
+        onPressedFunction: () => _onLoginButtonPressed(),
       ),
     );
   }

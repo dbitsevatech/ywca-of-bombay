@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:ywcaofbombay/widgets/blue_bubble_design.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'login_otp.dart';
 import 'register.dart';
+import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/gradient_button.dart';
 
 void main() => runApp(LoginScreen());
 
@@ -24,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snackbar
 
-  _showNumberNotRegisteredSnackBar() {
+  void _showNumberNotRegisteredSnackBar() {
     final registerSnackBar = SnackBar(
       content: Text(
         'Phone number not registered!',
@@ -49,6 +50,41 @@ class _LoginScreenState extends State<LoginScreen> {
     ScaffoldMessenger.of(context).showSnackBar(registerSnackBar);
   }
 
+  void _onLoginButtonPressed(BuildContext context, String phoneNumber) async {
+    print("submit function called");
+    // final auth = Provider.of(context).auth;
+    // if (await auth.userExists(phoneNumber)) {
+    //   print("User found");
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => LoginOtp(phoneNumber: phoneNumber),
+    //     ),
+    //   );
+    // } else {
+    //   FocusScope.of(context).unfocus();
+    //   print("No user found");
+    //   _showNumberNotRegisteredSnackBar(); // context needed to be passed?
+    // }
+    var checkuser = await FirebaseFirestore.instance
+        .collection('users')
+        .where("phoneNumber", isEqualTo: phoneNumber)
+        .get();
+    if (checkuser.docs.length == 1) {
+      print("User found");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginOtp(phoneNumber: phoneNumber),
+        ),
+      );
+    } else {
+      FocusScope.of(context).unfocus();
+      print("No user found");
+      _showNumberNotRegisteredSnackBar();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -62,11 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Stack(
-                  // circle design
                   children: <Widget>[
-                    // Positioned(
-                    //   child: Image.asset("assets/images/circle-design.png"),
-                    // ),
+                    // circle design
                     MainPageBlueBubbleDesign(),
                     Positioned(
                       child: Center(
@@ -80,6 +113,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(2.0, 3.0),
+                                  blurRadius: 3.0,
+                                  color: Color(0xff333333),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -163,65 +203,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: _height * 0.1,
                         ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            // horizontal: _width * 0.35,
-                            vertical: _height * 0.015,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                firstButtonGradientColor,
-                                firstButtonGradientColor,
-                                secondButtonGradientColor
-                              ],
-                              begin: FractionalOffset.centerLeft,
-                              end: FractionalOffset.centerRight,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          // Log In Button
-                          child: FractionallySizedBox(
-                            // button width wrt parent (here, Form widget which has padding) width
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Log In',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              // ),
-                              onPressed: () async {
-                                if (!_formKey.currentState.validate()) {
-                                  return;
-                                }
-                                var checkuser = await FirebaseFirestore.instance
-                                    .collection('users')
-                                    .where("phoneNumber",
-                                        isEqualTo: phoneNumber)
-                                    .get();
-                                if (checkuser.docs.length == 1) {
-                                  print("User found");
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginOtp(phoneNumber: phoneNumber),
-                                    ),
-                                  );
-                                } else {
-                                  FocusScope.of(context).unfocus();
-                                  print("No user found");
-                                  _showNumberNotRegisteredSnackBar();
-                                }
-                              },
-                            ),
-                          ),
+                        GradientButton(
+                          buttonText: 'Log In',
+                          screenHeight: _height,
+                          route: 'login_otp',
+                          onPressedFunction: () async {
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            }
+
+                            _onLoginButtonPressed(context, phoneNumber);
+                          },
                         ),
                       ],
                     ),
