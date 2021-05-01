@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/blue_bubble_design.dart';
-import '../../widgets/constants.dart';
-import '../../widgets/gradient_button.dart';
+import '../widgets/blue_bubble_design.dart';
+import '../widgets/constants.dart';
+import '../widgets/gradient_button.dart';
 
 enum GenderChoices { female, male, declineToState }
 enum MemberChoices { yes, no, maybe }
@@ -103,6 +103,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   children: <Widget>[
                     MainPageBlueBubbleDesign(),
                     Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                      ),
+                    ),
+                    Positioned(
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: _height * 0.095),
@@ -132,8 +155,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.04,
-                    // horizontal: _height * 0.02,
+                    vertical: _height * 0.02,
                     horizontal: _width * 0.04,
                   ),
                   child: Form(
@@ -622,15 +644,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           },
                         ),
                         SizedBox(
-                          height: 5,
+                          height: _height * 0.020,
                         ),
                         Center(
                           child: Text(
-                            'Your Details will be verified by admin and then updated within few days',
+                            'Your details will be verified by the admin and then updated within a few days',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
-                              fontFamily: 'RacingSansOne',
+                              fontFamily: 'Montserrat',
                             ),
                             textAlign: TextAlign.center,
                           ),

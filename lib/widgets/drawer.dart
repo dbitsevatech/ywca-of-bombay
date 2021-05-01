@@ -7,7 +7,7 @@ import '../screens/about_us.dart';
 import '../screens/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
-import '../screens/authentication/edit_profile.dart';
+import '../screens/profile.dart';
 import '../screens/events/events.dart';
 import '../screens/home.dart';
 import '../screens/initiatives/initiatives.dart';
@@ -177,8 +177,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     ),
                     SizedBox(height: 15),
                     ElevatedButton.icon(
-                      icon: Icon(Icons.edit),
-                      label: Text('Edit Profile'),
+                      icon: Icon(Icons.person),
+                      label: Text('View Profile'),
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith<Color>(
@@ -193,7 +193,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditProfileScreen(),
+                            builder: (context) => ProfileScreen(),
                           ),
                         );
                       },

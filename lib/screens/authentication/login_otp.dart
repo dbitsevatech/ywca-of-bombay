@@ -150,6 +150,29 @@ class _LoginOtpState extends State<LoginOtp>
             // circle design
             MainPageBlueBubbleDesign(),
             Positioned(
+              child: AppBar(
+                centerTitle: true,
+                title: Text(
+                  "YWCA Of Bombay",
+                  style: TextStyle(
+                    fontFamily: 'LilyScriptOne',
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
+                ),
+                leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+              ),
+            ),
+            Positioned(
               child: Center(
                 child: _getVerificationCodeLabel,
               ),

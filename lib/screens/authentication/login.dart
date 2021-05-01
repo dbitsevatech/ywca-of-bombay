@@ -36,10 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
         label: 'Register',
         textColor: Colors.white,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => RegisterScreen()),
-          );
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  (route) => false);
         },
       ),
     );
@@ -101,6 +101,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <Widget>[
                     // circle design
                     MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    ),
                     Positioned(
                       child: Center(
                         child: Padding(
@@ -211,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!_formKey.currentState.validate()) {
                               return;
                             }
-
+                            _formKey.currentState.save();
                             _onLoginButtonPressed(context, phoneNumber);
                           },
                         ),
@@ -232,10 +247,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
+                              MaterialPageRoute(builder: (context) => RegisterScreen()),
+                                  (route) => false);
                         },
                         child: Text(
                           'Register',

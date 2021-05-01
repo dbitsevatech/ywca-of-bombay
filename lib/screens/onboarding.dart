@@ -136,9 +136,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                   child: GradientButton(
-                    buttonText: 'Log In',
+                    buttonText: "Let's Go!",
                     screenHeight: _height,
-                    route: 'login_otp',
+                    route: 'register',
                     onPressedFunction: () async {
                       Navigator.of(context).pop();
                       Navigator.of(context).push(MaterialPageRoute(

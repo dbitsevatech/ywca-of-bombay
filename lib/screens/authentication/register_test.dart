@@ -1,21 +1,21 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
-
+//
 // import 'login.dart';
 // import 'register_otp.dart';
 // import '../../models/user.dart';
 // import '../../widgets/blue_bubble_design.dart';
 // import '../../widgets/constants.dart';
 // import '../../widgets/gradient_button.dart';
-
+//
 // enum GenderChoices { female, male, declineToState }
-
+//
 // // ignore: must_be_immutable
 // class RegisterScreen extends StatefulWidget {
 //   @override
 //   _RegisterScreenState createState() => _RegisterScreenState();
 // }
-
+//
 // class _RegisterScreenState extends State<RegisterScreen> {
 //   String firstName;
 //   String lastName;
@@ -23,19 +23,19 @@
 //   String emailId;
 //   String phoneNumber;
 //   String gender = "Female";
-
+//
 //   final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
 //       null, null, null, null, null, null, null);
-
+//
 //   final GlobalKey<FormState> _formKey =
-//       GlobalKey<FormState>(); // form key for validation
-
+//   GlobalKey<FormState>(); // form key for validation
+//
 //   final GlobalKey<ScaffoldState> _scaffoldkey =
-//       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
-
+//   GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+//
 //   DateTime selectedDate = DateTime.now();
 //   TextEditingController dateController = TextEditingController();
-
+//
 //   GenderChoices selectedGender = GenderChoices.female;
 //   Future _selectDate() async {
 //     final DateTime picked = await showDatePicker(
@@ -79,7 +79,7 @@
 //       });
 //     }
 //   }
-
+//
 //   _showAlreadyRegisteredSnackBar() {
 //     final snackBar = SnackBar(
 //       content: Text(
@@ -92,20 +92,20 @@
 //         label: 'Log In',
 //         textColor: Colors.white,
 //         onPressed: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(builder: (context) => LoginScreen()),
-//           );
+//           Navigator.pushAndRemoveUntil(
+//               context,
+//               MaterialPageRoute(builder: (context) => LoginScreen()),
+//                   (route) => false);
 //         },
 //       ),
 //     );
-
+//
 //     // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
 //     // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
 //     // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
 //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
 //   }
-
+//
 //   Future<bool> _phoneNumberIsAlreadyRegistered(enteredPhoneNumber) async {
 //     List<String> _listOfRegisteredPhoneNumbers = [];
 //     print("checking: $enteredPhoneNumber");
@@ -118,13 +118,13 @@
 //         _listOfRegisteredPhoneNumbers.add(result.data()["phoneNumber"]);
 //       });
 //     });
-
+//
 //     print("List of numbers: " + _listOfRegisteredPhoneNumbers.toString());
 //     print("Phone Number already registered: " +
 //         _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber).toString());
 //     return _listOfRegisteredPhoneNumbers.contains(enteredPhoneNumber);
 //   }
-
+//
 //   void _onNextButtonPressed() async {
 //     if (!await _phoneNumberIsAlreadyRegistered(phoneNumber)) {
 //       print("user does not exist");
@@ -148,7 +148,7 @@
 //       _showAlreadyRegisteredSnackBar();
 //     }
 //   }
-
+//
 //   @override
 //   void initState() {
 //     setState(() {
@@ -157,7 +157,7 @@
 //     });
 //     super.initState();
 //   }
-
+//
 //   final int height = 1;
 //   @override
 //   Widget build(BuildContext context) {
@@ -175,6 +175,21 @@
 //                 Stack(
 //                   children: <Widget>[
 //                     MainPageBlueBubbleDesign(),
+//                     Positioned(
+//                       child: AppBar(
+//                         centerTitle: true,
+//                         title: Text(
+//                           "YWCA Of Bombay",
+//                           style: TextStyle(
+//                             fontFamily: 'LilyScriptOne',
+//                             fontSize: 18.0,
+//                             color: Colors.black87,
+//                           ),
+//                         ),
+//                         backgroundColor: Colors.transparent,
+//                         elevation: 0,
+//                       ),
+//                     ),
 //                     Positioned(
 //                       child: Center(
 //                         child: Padding(
@@ -216,10 +231,10 @@
 //                           Center(
 //                             child: InkWell(
 //                               onTap: () {
-//                                 Navigator.push(
+//                                 Navigator.pushAndRemoveUntil(
 //                                     context,
-//                                     MaterialPageRoute(
-//                                         builder: (context) => LoginScreen()));
+//                                     MaterialPageRoute(builder: (context) => LoginScreen()),
+//                                         (route) => false);
 //                               },
 //                               child: Text(
 //                                 'Log In',
@@ -331,7 +346,7 @@
 //                             // TODO: BUG: text cursor showing over the date picker bcoz of async-await
 //                             await _selectDate();
 //                             dateController.text =
-//                                 "${dateOfBirth.toLocal()}".split(' ')[0];
+//                             "${dateOfBirth.toLocal()}".split(' ')[0];
 //                           },
 //                         ),
 //                         SizedBox(height: _height * 0.015),
@@ -347,7 +362,7 @@
 //                               return 'Email is required';
 //                             }
 //                             if (!RegExp(
-//                                     "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+//                                 "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
 //                                 .hasMatch(value)) {
 //                               return 'Enter a valid email address';
 //                             }
@@ -471,7 +486,7 @@
 //                               return;
 //                             }
 //                             _formKey.currentState.save();
-
+//
 //                             _onNextButtonPressed();
 //                           },
 //                         ),
@@ -495,10 +510,10 @@
 //                     Center(
 //                       child: InkWell(
 //                         onTap: () {
-//                           Navigator.push(
+//                           Navigator.pushAndRemoveUntil(
 //                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) => LoginScreen()));
+//                               MaterialPageRoute(builder: (context) => LoginScreen()),
+//                                   (route) => false);
 //                         },
 //                         child: Text(
 //                           'Log In',
@@ -523,9 +538,9 @@
 //     );
 //   }
 // }
-
+//
 // enum MemberChoices { yes, no, maybe }
-
+//
 // // ignore: must_be_immutable
 // class RegisterScreen2 extends StatefulWidget {
 //   // final User userData;
@@ -547,16 +562,16 @@
 //   });
 //   @override
 //   _RegisterScreen2State createState() => _RegisterScreen2State(
-//         // userData,
-//         firstName,
-//         lastName,
-//         emailId,
-//         phoneNumber,
-//         gender,
-//         dateOfBirth,
-//       );
+//     // userData,
+//     firstName,
+//     lastName,
+//     emailId,
+//     phoneNumber,
+//     gender,
+//     dateOfBirth,
+//   );
 // }
-
+//
 // class _RegisterScreen2State extends State<RegisterScreen2> {
 //   // final User userData;
 //   // var userData = User();
@@ -566,25 +581,25 @@
 //   final String phoneNumber;
 //   final String gender;
 //   final DateTime dateOfBirth;
-
+//
 //   String profession;
 //   String placeOfWork;
 //   String nearestCenter = "Chembur";
 //   String interestInMembership = "Yes";
 //   _RegisterScreen2State(
-//     // this.userData,
-//     this.firstName,
-//     this.lastName,
-//     this.emailId,
-//     this.phoneNumber,
-//     this.gender,
-//     this.dateOfBirth,
-//   );
+//       // this.userData,
+//       this.firstName,
+//       this.lastName,
+//       this.emailId,
+//       this.phoneNumber,
+//       this.gender,
+//       this.dateOfBirth,
+//       );
 //   MemberChoices _selectedMembershipInterest = MemberChoices.yes;
-
+//
 //   final GlobalKey<FormState> _formKey =
-//       GlobalKey<FormState>(); // form key for validation
-
+//   GlobalKey<FormState>(); // form key for validation
+//
 //   void _onRegisterButtonPressed() async {
 //     print(firstName);
 //     print(lastName);
@@ -596,7 +611,7 @@
 //     print(placeOfWork);
 //     print(nearestCenter);
 //     print(interestInMembership);
-
+//
 //     Navigator.of(context).push(
 //       MaterialPageRoute(
 //         builder: (context) => RegisterOtp(
@@ -614,7 +629,7 @@
 //       ),
 //     );
 //   }
-
+//
 //   @override
 //   void initState() {
 //     setState(() {
@@ -623,7 +638,7 @@
 //     });
 //     super.initState();
 //   }
-
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     final _height = MediaQuery.of(context).size.height;
