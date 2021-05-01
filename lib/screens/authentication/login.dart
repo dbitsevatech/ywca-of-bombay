@@ -122,12 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           // padding: EdgeInsets.only(top: 100),
                           padding: EdgeInsets.only(top: _height * 0.15),
                           child: Text(
-                            'LOG IN',
+                            'LOGIN',
                             style: TextStyle(
                               fontSize: 40,
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
+                              letterSpacing: 3,
                               shadows: <Shadow>[
                                 Shadow(
                                   offset: Offset(2.0, 3.0),
@@ -192,6 +193,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               phoneNumber = value;
                             });
                           },
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           validator: (String value) {
                             if (value.isEmpty)
                               return 'Mobile number is required';
@@ -227,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: _height * 0.1,
                         ),
                         GradientButton(
-                          buttonText: 'Log In',
+                          buttonText: 'Login',
                           screenHeight: _height,
                           route: 'login_otp',
                           onPressedFunction: () async {
@@ -250,7 +256,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontFamily: 'Montserrat',
-                          )),
+                            letterSpacing: 2,
+                          ),
+                      ),
                     ),
                     Center(
                       child: InkWell(

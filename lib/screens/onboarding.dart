@@ -78,8 +78,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   // https://medium.com/flutter-community/flutter-web-getting-started-with-responsive-design-231511ef15d3
                   // https://stackoverflow.com/questions/61207980/create-a-flutter-carousel-slider-with-dynamic-heigth-for-each-page
                   // aspectRatio: 1.4, // This value perfectly fits for Pixel 2
-                  // aspectRatio: 0.95, // This value perfectly fits for Redmi 8
-                  aspectRatio: 1.1, // This value perfectly fits for Pixel 4XL
+                  aspectRatio: 0.95, // This value perfectly fi/ts for Redmi 8
+                  // aspectRatio: 1.1, // This value perfectly fits for Pixel 4XL
                   autoPlay: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   autoPlayAnimationDuration: Duration(milliseconds: 700),

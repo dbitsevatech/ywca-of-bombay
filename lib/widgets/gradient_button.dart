@@ -44,6 +44,7 @@ class GradientButton extends StatelessWidget {
               fontFamily: 'Montserrat',
               color: Colors.white,
               fontWeight: FontWeight.bold,
+              letterSpacing: 2,
             ),
           ),
         ),

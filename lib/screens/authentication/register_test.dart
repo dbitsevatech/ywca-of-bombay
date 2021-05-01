@@ -1,6 +1,5 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:flutter/material.dart';
-//
 // import 'login.dart';
 // import 'register_otp.dart';
 // import '../../models/user.dart';
@@ -163,6 +162,7 @@
 //   Widget build(BuildContext context) {
 //     final _height = MediaQuery.of(context).size.height;
 //     final _width = MediaQuery.of(context).size.width;
+//
 //     return Scaffold(
 //       key: _scaffoldkey,
 //       body: SafeArea(
@@ -201,6 +201,7 @@
 //                               color: primaryColor,
 //                               fontWeight: FontWeight.bold,
 //                               fontFamily: 'RacingSansOne',
+//                               letterSpacing: 2.5,
 //                               shadows: <Shadow>[
 //                                 Shadow(
 //                                   offset: Offset(2.0, 3.0),
@@ -225,6 +226,7 @@
 //                               style: TextStyle(
 //                                 fontSize: 18,
 //                                 fontFamily: 'Montserrat',
+//                                 letterSpacing: 2,
 //                               ),
 //                             ),
 //                           ),
@@ -276,6 +278,7 @@
 //                             else
 //                               return null;
 //                           },
+//                           style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
 //                           decoration: InputDecoration(
 //                             prefixIcon: Icon(
 //                               Icons.account_circle,
@@ -284,10 +287,18 @@
 //                             labelText: 'First Name',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         SizedBox(height: _height * 0.015),
@@ -304,6 +315,7 @@
 //                             else
 //                               return null;
 //                           },
+//                           style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
 //                           decoration: InputDecoration(
 //                             prefixIcon: Icon(
 //                               Icons.account_circle,
@@ -312,10 +324,18 @@
 //                             labelText: 'Last Name',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         SizedBox(height: _height * 0.015),
@@ -328,6 +348,7 @@
 //                             });
 //                           },
 //                           controller: dateController,
+//                           style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
 //                           decoration: InputDecoration(
 //                             prefixIcon: Icon(
 //                               Icons.date_range,
@@ -336,10 +357,18 @@
 //                             labelText: 'Date of Birth',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                           onTap: () async {
 //                             FocusScope.of(context).requestFocus(FocusNode());
@@ -369,6 +398,7 @@
 //                             // return null coz validator has to return something
 //                             return null;
 //                           },
+//                           style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
 //                           decoration: InputDecoration(
 //                             prefixIcon: Icon(
 //                               Icons.email,
@@ -377,10 +407,18 @@
 //                             labelText: 'Email Address',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         SizedBox(height: _height * 0.015),
@@ -400,6 +438,7 @@
 //                               phoneNumber = value;
 //                             });
 //                           },
+//                           style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
 //                           decoration: InputDecoration(
 //                             prefixIcon: Icon(
 //                               Icons.phone_android,
@@ -409,10 +448,18 @@
 //                             labelText: 'Mobile Number',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         Text(
@@ -422,12 +469,19 @@
 //                             color: primaryColor,
 //                             fontWeight: FontWeight.w800,
 //                             fontFamily: 'Montserrat',
+//                             letterSpacing: 2,
 //                           ),
 //                         ),
 //                         Column(
 //                           children: <Widget>[
 //                             ListTile(
-//                               title: const Text('Female'),
+//                               title: Text(
+//                                 'Female',
+//                                 style: TextStyle(
+//                                   fontFamily: 'Montserrat',
+//                                   letterSpacing: 2,
+//                                 ),
+//                               ),
 //                               leading: Radio(
 //                                 value: GenderChoices.female,
 //                                 groupValue: selectedGender,
@@ -443,7 +497,13 @@
 //                               ),
 //                             ),
 //                             ListTile(
-//                               title: const Text('Male'),
+//                               title: Text(
+//                                 'Male',
+//                                 style: TextStyle(
+//                                   fontFamily: 'Montserrat',
+//                                   letterSpacing: 2,
+//                                 ),
+//                               ),
 //                               leading: Radio(
 //                                 value: GenderChoices.male,
 //                                 groupValue: selectedGender,
@@ -459,7 +519,13 @@
 //                               ),
 //                             ),
 //                             ListTile(
-//                               title: const Text('Decline to state'),
+//                               title: Text(
+//                                 'Decline to state',
+//                                 style: TextStyle(
+//                                   fontFamily: 'Montserrat',
+//                                   letterSpacing: 2,
+//                                 ),
+//                               ),
 //                               leading: Radio(
 //                                 value: GenderChoices.declineToState,
 //                                 groupValue: selectedGender,
@@ -504,6 +570,7 @@
 //                         style: TextStyle(
 //                           fontSize: 18,
 //                           fontFamily: 'Montserrat',
+//                           letterSpacing: 2,
 //                         ),
 //                       ),
 //                     ),
@@ -667,6 +734,7 @@
 //                               color: primaryColor,
 //                               fontWeight: FontWeight.bold,
 //                               fontFamily: 'RacingSansOne',
+//                               letterSpacing: 2.5,
 //                               shadows: <Shadow>[
 //                                 Shadow(
 //                                   offset: Offset(2.0, 3.0),
@@ -709,10 +777,18 @@
 //                             labelText: 'Profession',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         Center(
@@ -755,10 +831,18 @@
 //                             labelText: 'Place of work/school/college',
 //                             filled: true,
 //                             fillColor: formFieldFillColor,
-//                             disabledBorder: InputBorder.none,
-//                             focusedBorder: InputBorder.none,
-//                             enabledBorder: InputBorder.none,
-//                             errorBorder: InputBorder.none,
+//                             border: OutlineInputBorder(
+//                               borderSide: BorderSide.none,
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
+//                             focusedErrorBorder: OutlineInputBorder(
+//                               borderSide: BorderSide(color: secondaryColor),
+//                               borderRadius: BorderRadius.circular(15),
+//                             ),
 //                           ),
 //                         ),
 //                         Center(
@@ -811,6 +895,7 @@
 //                             underline: Container(),
 //                             onChanged: (String value) {
 //                               setState(() {
+//                                 FocusScope.of(context).requestFocus(FocusNode());
 //                                 nearestCenter = value;
 //                                 print(nearestCenter);
 //                               });

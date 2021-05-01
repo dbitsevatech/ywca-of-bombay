@@ -6,6 +6,7 @@ import 'services/auth_service.dart';
 import 'screens/class_builder.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
+import 'screens/onboarding.dart';
 import 'widgets/provider_widget.dart';
 import 'screens/authentication/register.dart';
 
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return MainWidget();
+    return OnboardingScreen();
     // return HomeController();
   }
 }
