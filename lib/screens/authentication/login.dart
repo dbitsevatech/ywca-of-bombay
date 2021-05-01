@@ -209,10 +209,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             labelText: 'Mobile Number',
                             filled: true,
                             fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
                           ),
                         ),
                         SizedBox(
