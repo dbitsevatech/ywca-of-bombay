@@ -20,8 +20,8 @@ void main() async {
       // theme: ThemeData(fontFamily: 'Montserrat'),
       home: MyApp(),
       routes: <String, WidgetBuilder>{
+        // '/': (BuildContext context) => MyApp(),
         '/register': (BuildContext context) => RegisterScreen(),
-        '/home': (BuildContext context) => MainWidget(),
         '/login': (BuildContext context) => LoginScreen(),
       },
     ),
@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Color(0xff49DEE8),
-        // statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,

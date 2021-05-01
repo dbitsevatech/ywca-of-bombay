@@ -92,10 +92,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         label: 'Log In',
         textColor: Colors.white,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
-          );
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (route) => false);
         },
       ),
     );
@@ -176,6 +176,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: <Widget>[
                     MainPageBlueBubbleDesign(),
                     Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    ),
+                    Positioned(
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: _height * 0.095),
@@ -216,10 +231,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
+                                Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
+                                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                                        (route) => false);
                               },
                               child: Text(
                                 'Log In',
@@ -495,10 +510,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Center(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                              MaterialPageRoute(builder: (context) => LoginScreen()),
+                                  (route) => false);
                         },
                         child: Text(
                           'Log In',
