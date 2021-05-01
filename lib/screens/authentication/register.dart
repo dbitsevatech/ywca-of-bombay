@@ -201,6 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
+                              letterSpacing: 2.5,
                               shadows: <Shadow>[
                                 Shadow(
                                   offset: Offset(2.0, 3.0),
@@ -225,6 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontFamily: 'Montserrat',
+                                letterSpacing: 2,
                               ),
                             ),
                           ),
@@ -276,7 +278,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat'),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -313,7 +315,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat'),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -346,7 +348,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             });
                           },
                           controller: dateController,
-                          style: TextStyle(fontFamily: 'Montserrat'),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.date_range,
@@ -396,7 +398,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             // return null coz validator has to return something
                             return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat'),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -436,7 +438,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               phoneNumber = value;
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat'),
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.phone_android,
@@ -467,12 +469,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: primaryColor,
                             fontWeight: FontWeight.w800,
                             fontFamily: 'Montserrat',
+                            letterSpacing: 2,
                           ),
                         ),
                         Column(
                           children: <Widget>[
                             ListTile(
-                              title: const Text('Female'),
+                              title: Text(
+                                'Female',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 2,
+                                ),
+                              ),
                               leading: Radio(
                                 value: GenderChoices.female,
                                 groupValue: selectedGender,
@@ -488,7 +497,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             ListTile(
-                              title: const Text('Male'),
+                              title: Text(
+                                  'Male',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 2,
+                                ),
+                              ),
                               leading: Radio(
                                 value: GenderChoices.male,
                                 groupValue: selectedGender,
@@ -504,7 +519,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             ListTile(
-                              title: const Text('Decline to state'),
+                              title: Text(
+                                  'Decline to state',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  letterSpacing: 2,
+                                ),
+                              ),
                               leading: Radio(
                                 value: GenderChoices.declineToState,
                                 groupValue: selectedGender,
@@ -549,6 +570,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Montserrat',
+                          letterSpacing: 2,
                         ),
                       ),
                     ),
@@ -712,6 +734,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               color: primaryColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'RacingSansOne',
+                              letterSpacing: 2.5,
                               shadows: <Shadow>[
                                 Shadow(
                                   offset: Offset(2.0, 3.0),
@@ -872,6 +895,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             underline: Container(),
                             onChanged: (String value) {
                               setState(() {
+                                FocusScope.of(context).requestFocus(FocusNode());
                                 nearestCenter = value;
                                 print(nearestCenter);
                               });
