@@ -769,6 +769,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -823,6 +824,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
@@ -866,22 +868,22 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             ],
                           ),
                         ),
-                        // TODO: BUG: Focus goes to previous textfield after selecting center
-                        // https://flutter.dev/docs/cookbook/forms/focus
-                        // https://stackoverflow.com/questions/49592099/slide-focus-to-textfield-in-flutter
                         Text(
                           'Nearest YWCA Center',
                           style: TextStyle(
+                            fontFamily: 'Montserrat',
                             fontSize: 16,
                             color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
                           ),
                         ),
                         Container(
                           padding: EdgeInsets.only(
-                            left: _width * 0.262,
-                            right: _width * 0.262,
+                            // left: _width * 0.262,
+                            // right: _width * 0.262,
+                            left: _width * 0.245,
+                            right: _width * 0.245,
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
@@ -903,11 +905,35 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             hint: Text(
                               "Nearest YWCA Center",
                               style: TextStyle(
+                                fontFamily: 'Montserrat',
                                 color: Colors.black,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.5,
                               ),
                             ),
+                            // selectedItemBuilder: (BuildContext context) {
+                            //   return <String>[
+                            //     'Andheri',
+                            //     'Bandra',
+                            //     'Belapur',
+                            //     'Borivali',
+                            //     'Byculla',
+                            //     'Chembur',
+                            //     'Fort',
+                            //   ].map((String value) {
+                            //     return Center(
+                            //       child: Text(
+                            //         nearestCenter,
+                            //         style: TextStyle(
+                            //           fontFamily: 'Montserrat',
+                            //           color: Colors.black,
+                            //           fontSize: 16,
+                            //           letterSpacing: 2,
+                            //         ),
+                            //       ),
+                            //     );
+                            //   }).toList();
+                            // },
                             items: <String>[
                               'Andheri',
                               'Bandra',
@@ -919,7 +945,17 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
+                                child: Center(
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      letterSpacing: 2,
+                                    ),
+                                  ),
+                                ),
                               );
                             }).toList(),
                           ),
@@ -928,10 +964,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         Text(
                           'Interested in being a member?',
                           style: TextStyle(
+                            fontFamily: 'Montserrat',
                             fontSize: 16,
                             color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
                           ),
                         ),
                         Column(

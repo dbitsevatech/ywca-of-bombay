@@ -7,7 +7,7 @@ import '../screens/about_us.dart';
 import '../screens/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
-import '../screens/profile.dart';
+import '../screens/view_profile.dart';
 import '../screens/events/events.dart';
 import '../screens/home.dart';
 import '../screens/initiatives/initiatives.dart';
@@ -193,7 +193,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProfileScreen(),
+                            builder: (context) => ViewProfileScreen(),
                           ),
                         );
                       },

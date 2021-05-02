@@ -62,7 +62,8 @@ class _EventsState extends State<Events> {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,
+                          ),
                         ),
                         WidgetSpan(
                           child: Padding(
@@ -88,10 +89,12 @@ class _EventsState extends State<Events> {
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
+                            borderSide: BorderSide.none,
+                        ),
                         contentPadding: EdgeInsets.zero,
                         filled: true,
-                        fillColor: Colors.transparent),
+                        fillColor: Colors.transparent,
+                    ),
                   ),
                 ],
               ),
