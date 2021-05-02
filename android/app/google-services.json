@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "9370448097",
-    "firebase_url": "https://auth-a1b86-default-rtdb.firebaseio.com",
-    "project_id": "auth-a1b86",
-    "storage_bucket": "auth-a1b86.appspot.com"
+    "project_number": "6317206040",
+    "project_id": "ywca-of-bombay-68fb3",
+    "storage_bucket": "ywca-of-bombay-68fb3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:9370448097:android:6d7dc630bbe4a5847bc7a0",
+        "mobilesdk_app_id": "1:6317206040:android:9baa51c45e8598bbe9b16d",
         "android_client_info": {
           "package_name": "com.dbitsevatech.ywcaofbombay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "9370448097-50fptkve16qhgsq883cchv86c4441nna.apps.googleusercontent.com",
+          "client_id": "6317206040-s780k2cfoutvrev52446jbj6unidaleb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.dbitsevatech.ywcaofbombay",
-            "certificate_hash": "8803913870c9c35bf6bcc28dcbcecf8a43457ff9"
+            "certificate_hash": "96ac50c9ffda7dd71ffa1edce3ea8dad529390a2"
           }
         },
         {
-          "client_id": "9370448097-j64767f24h0ke6nhqu9b6nqpeh55bcul.apps.googleusercontent.com",
+          "client_id": "6317206040-fipqqt7d6q0nnv7b8mhbfpld95dmcp2n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJvtX8cfN0QYA0pBIE00y3E2QTtR9cg4Q"
+          "current_key": "AIzaSyDk_teHH8CAB2v5ucvtzoKRC7LLQnE0HHI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "9370448097-j64767f24h0ke6nhqu9b6nqpeh55bcul.apps.googleusercontent.com",
+              "client_id": "6317206040-fipqqt7d6q0nnv7b8mhbfpld95dmcp2n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
