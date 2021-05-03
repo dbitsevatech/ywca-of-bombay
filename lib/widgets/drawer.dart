@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +49,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
         KFDrawerItem.initWithPage(
           text: Row(
             children: [
-              Icon(Icons.details),
+              Icon(Icons.info),
               SizedBox(width: 10),
               Text(
                 'About Us',
@@ -126,85 +125,75 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       // lib\widgets\drawer.dart:119
       body: KFDrawer(
         controller: _drawerController,
-        header: Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 80, 0),
-            width: MediaQuery.of(context).size.width * 0.8,
-            // Bug: on Redmi 8/Moto G5s Plus
-            // A RenderFlex overflowed by 2.0/ 27.0 pixels on the right.
-            // The relevant error-causing widget was
-            // Row
-            // lib\widgets\drawer.dart:88
-            child: Row(
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
+        header: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: Row(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'YWCA Of Bombay',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: 'LilyScriptOne',
+                    ),
                   ),
-                ),
-                Column(
-                  children: <Widget>[
-                    Text('YWCA OF BOMBAY',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.black,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15),
-                    Text('MENU',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold)),
-                    SizedBox(height: 10),
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(
-                        "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
+                  // SizedBox(height: 15),
+                  Text(
+                    'MENU',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // SizedBox(height: 10),
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: NetworkImage(
+                      "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
+                    ),
+                  ),
+                  // SizedBox(height: 15),
+                  Text(
+                    'Welcome, ' +
+                        Provider.of<UserData>(context, listen: false)
+                            .getfirstName,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  // SizedBox(height: 15),
+                  ElevatedButton.icon(
+                    icon: Icon(Icons.person),
+                    label: Text('View Profile'),
+                    style: ButtonStyle(
+                      backgroundColor:
+                      MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed))
+                            return primaryColor;
+                          return secondaryColor; // Use the component's default.
+                        },
                       ),
                     ),
-                    SizedBox(height: 15),
-                    Text(
-                      'Welcome, ' +
-                          Provider.of<UserData>(context, listen: false)
-                              .getfirstName,
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 15),
-                    ElevatedButton.icon(
-                      icon: Icon(Icons.person),
-                      label: Text('View Profile'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed))
-                              return primaryColor;
-                            return secondaryColor; // Use the component's default.
-                          },
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProfileScreen(),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ViewProfileScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                )
-              ],
-            ),
+                      );
+                    },
+                  ),
+                  // SizedBox(height: 10),
+                ],
+              )
+            ],
           ),
         ),
         footer: KFDrawerItem(

@@ -88,6 +88,7 @@ class _ContactUsState extends State<ContactUs> {
                   backgroundColor: Colors.transparent,
                   appBar: AppBar(
                     // title: Text(''),
+                    automaticallyImplyLeading: false,
                     backgroundColor: Colors.transparent,
                     elevation: 0.0,
                     bottom: PreferredSize(

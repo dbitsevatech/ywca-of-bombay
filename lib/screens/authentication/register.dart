@@ -518,7 +518,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   setState(() {
                                     selectedGender = value;
                                     gender = "Female";
-                                  });
+                                  },);
                                 },
                               ),
                             ),
@@ -540,7 +540,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   setState(() {
                                     selectedGender = value;
                                     gender = "Male";
-                                  });
+                                  },);
                                 },
                               ),
                             ),
@@ -562,7 +562,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   setState(() {
                                     selectedGender = value;
                                     gender = "Decline to State";
-                                  });
+                                  },);
                                 },
                               ),
                             ),
