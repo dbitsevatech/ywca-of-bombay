@@ -1,9 +1,14 @@
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../models/user.dart';
+import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:ywcaofbombay/screens/authentication/login.dart';
+import 'package:ywcaofbombay/widgets/drawer.dart';
 
 import 'authentication/register.dart';
 import '../widgets/blue_bubble_design.dart';
@@ -15,6 +20,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  var userInfo;
   final List<String> images = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
@@ -25,7 +31,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
   ];
   @override
-  void initState() {
+  void initState()  {
+    userInfo = Provider.of<UserData>(context, listen:false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       images.forEach((imageUrl) {
         precacheImage(NetworkImage(imageUrl), context);
@@ -140,9 +147,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     screenHeight: _height,
                     route: 'register',
                     onPressedFunction: () async {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RegisterScreen()));
+                      var user = await FirebaseAuth.instance.currentUser;
+
+
+                      if( user != null){
+                        print(user.phoneNumber);
+                        var checkuser = await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(user.uid)
+                            .get();
+                        // print(checkuser.data());
+
+                          final userdata = checkuser.data();
+                          userInfo.updateAfterAuth(
+                              userdata['uid'],
+                              userdata['firstName'],
+                              userdata['lastName'],
+                              userdata['dateOfBirth'].toDate(),
+                              userdata['emailId'],
+                              userdata['phoneNumber'],
+                              userdata['gender'],
+                              userdata['profession'],
+                              userdata['placeOfWork'],
+                              userdata['nearestCenter'],
+                              userdata['interestInMembership']);
+
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MainWidget()));
+                      }
+                      else {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
+                      }
                     },
                   ),
                 ),
