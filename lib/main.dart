@@ -7,16 +7,16 @@ import 'screens/class_builder.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
 import 'screens/onboarding.dart';
-import 'widgets/provider_widget.dart';
 import 'screens/authentication/register.dart';
-
+import 'models/user.dart';
+import 'package:provider/provider.dart';
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
   runApp(
-    MaterialApp(
+    ChangeNotifierProvider(create: (context) => UserData() ,child: MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(fontFamily: 'Montserrat'),
       home: MyApp(),
@@ -25,7 +25,7 @@ void main() async {
         '/register': (BuildContext context) => RegisterScreen(),
         '/login': (BuildContext context) => LoginScreen(),
       },
-    ),
+    )),
   );
 }
 

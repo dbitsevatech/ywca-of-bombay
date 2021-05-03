@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import '../../models/user.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
@@ -52,6 +52,7 @@ class RegisterOtp extends StatefulWidget {
 class _RegisterOtpState extends State<RegisterOtp>
     with SingleTickerProviderStateMixin {
   // Constants
+  var userInfo;
   final int time = 59;
   final String firstName;
   final String lastName;
@@ -131,6 +132,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           print(value.user);
           print(value.user.uid);
           Map<String, dynamic> data = {
+            "uid": value.user.uid,
             "firstName": firstName,
             "lastName": lastName,
             "dateOfBirth": dateOfBirth,
@@ -142,6 +144,19 @@ class _RegisterOtpState extends State<RegisterOtp>
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
           };
+          userInfo.updateAfterAuth(
+              value.user.uid,
+            firstName,
+            lastName,
+            dateOfBirth,
+            emailId,
+            phoneNumber,
+            gender,
+            profession,
+            placeOfWork,
+            nearestCenter,
+            interestInMembership
+          );
           CollectionReference users =
               FirebaseFirestore.instance.collection('users');
           users.doc(value.user.uid).set(data);
@@ -483,6 +498,8 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Overridden methods
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
+
     super.initState();
     _verifyPhoneNumber();
     totalTimeInSeconds = time;

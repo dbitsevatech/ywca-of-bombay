@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login.dart';
 import 'register_otp.dart';
 import '../../models/user.dart';
@@ -22,9 +23,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String emailId;
   String phoneNumber;
   String gender = "Female";
+  var userInfo;
 
-  final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
-      null, null, null, null, null, null, null);
+
+  // final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
+  //     null, null, null, null, null, null, null);
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -150,6 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
     setState(() {
       selectedGender = GenderChoices.female;
       gender = "Female";
@@ -268,6 +272,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
+                            userInfo.updateName(value);
+                            print(Provider.of<UserData>(context, listen: false).getfirstName);
                             setState(() {
                               firstName = value;
                             });
@@ -642,12 +648,13 @@ class RegisterScreen2 extends StatefulWidget {
 class _RegisterScreen2State extends State<RegisterScreen2> {
   // final User userData;
   // var userData = User();
-  final String firstName;
+  String firstName;
   final String lastName;
   final String emailId;
   final String phoneNumber;
   final String gender;
   final DateTime dateOfBirth;
+  var userInfo;
 
   String profession;
   String placeOfWork;
@@ -699,6 +706,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
+    // firstName = userInfo.getfirstName();
     setState(() {
       _selectedMembershipInterest = MemberChoices.yes;
       interestInMembership = "Yes";
@@ -759,6 +768,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          // initialValue: Provider.of<User>(context, listen: false).getfirstName,
                           keyboardType: TextInputType.text,
                           onSaved: (String value) {
                             setState(() {
@@ -902,15 +912,15 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 print(nearestCenter);
                               });
                             },
-                            hint: Text(
-                              "Nearest YWCA Center",
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black,
-                                fontSize: 14,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
+                            // hint: Text(
+                            //   "Nearest YWCA Center",
+                            //   style: TextStyle(
+                            //     fontFamily: 'Montserrat',
+                            //     color: Colors.black,
+                            //     fontSize: 14,
+                            //     letterSpacing: 1.5,
+                            //   ),
+                            // ),
                             // selectedItemBuilder: (BuildContext context) {
                             //   return <String>[
                             //     'Andheri',
