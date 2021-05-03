@@ -23,13 +23,16 @@ class UserData extends ChangeNotifier{
   String get getnearestCenter => nearestCenter ;
   String interestInMembership = 'Yes';
   String get getinterestInMembership => interestInMembership ;
+  String memberRole = '';
+  String get getmemberRole => memberRole;
+
 
   updateName(fName){
   firstName = fName;
   notifyListeners();
   }
 
-  updateAfterAuth(uuid,fName, lName, dob, email, phone, genderchoice, prof, pow, center, interest){
+  updateAfterAuth(uuid,fName, lName, dob, email, phone, genderchoice, prof, pow, center, interest, role){
     uid =uuid;
     firstName = fName;
     lastName = lName;
@@ -41,6 +44,7 @@ class UserData extends ChangeNotifier{
     placeOfWork = pow;
     nearestCenter = center;
     interestInMembership = interest;
+    memberRole = role;
     notifyListeners();
   }
 

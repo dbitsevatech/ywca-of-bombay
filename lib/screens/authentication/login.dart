@@ -30,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen:false);
-    // print(userInfo);
     super.initState();
   }
 
@@ -93,9 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
           userdata['profession'],
           userdata['placeOfWork'],
           userdata['nearestCenter'],
-          userdata['interestInMembership']);
+          userdata['interestInMembership'],
+          userdata['memberRole']);
 
-      // print(userInfo);
       Navigator.push(
         context,
         MaterialPageRoute(

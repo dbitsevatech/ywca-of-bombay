@@ -170,7 +170,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               userdata['profession'],
                               userdata['placeOfWork'],
                               userdata['nearestCenter'],
-                              userdata['interestInMembership']);
+                              userdata['interestInMembership'],
+                            userdata['memberRole']
+                          );
 
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => MainWidget()));

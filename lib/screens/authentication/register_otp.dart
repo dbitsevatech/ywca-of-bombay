@@ -143,9 +143,10 @@ class _RegisterOtpState extends State<RegisterOtp>
             "placeOfWork": placeOfWork,
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
+            "memberRole" : "none"
           };
           userInfo.updateAfterAuth(
-              value.user.uid,
+            value.user.uid,
             firstName,
             lastName,
             dateOfBirth,
@@ -155,13 +156,12 @@ class _RegisterOtpState extends State<RegisterOtp>
             profession,
             placeOfWork,
             nearestCenter,
-            interestInMembership
+            interestInMembership,
+            "none"
           );
           CollectionReference users =
               FirebaseFirestore.instance.collection('users');
           users.doc(value.user.uid).set(data);
-          print(value.user);
-          print(value.user.uid);
 
           FirebaseFirestore.instance.collection("users").get().then(
             (querySnapshot) {
