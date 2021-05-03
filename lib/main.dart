@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import 'services/auth_service.dart';
@@ -9,23 +10,26 @@ import 'screens/authentication/login.dart';
 import 'screens/onboarding.dart';
 import 'screens/authentication/register.dart';
 import 'models/user.dart';
-import 'package:provider/provider.dart';
+
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
 
   runApp(
-    ChangeNotifierProvider(create: (context) => UserData() ,child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // theme: ThemeData(fontFamily: 'Montserrat'),
-      home: MyApp(),
-      routes: <String, WidgetBuilder>{
-        // '/': (BuildContext context) => MyApp(),
-        '/register': (BuildContext context) => RegisterScreen(),
-        '/login': (BuildContext context) => LoginScreen(),
-      },
-    )),
+    ChangeNotifierProvider(
+      create: (context) => UserData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // theme: ThemeData(fontFamily: 'Montserrat'),
+        home: MyApp(),
+        routes: <String, WidgetBuilder>{
+          // '/': (BuildContext context) => MyApp(),
+          '/register': (BuildContext context) => RegisterScreen(),
+          '/login': (BuildContext context) => LoginScreen(),
+        },
+      ),
+    ),
   );
 }
 

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/about_us.dart';
+import '../screens/admin/analytics/analytics.dart';
+import '../screens/admin/approval/approval.dart';
 import '../screens/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
@@ -16,15 +18,16 @@ import '../screens/success_stories/success_stories.dart';
 import '../models/user.dart';
 import '../screens/view_profile.dart';
 
-class MainWidget extends StatefulWidget {
-  MainWidget({Key key, this.title}) : super(key: key);
+class AdminMainWidget extends StatefulWidget {
+  AdminMainWidget({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MainWidgetState createState() => _MainWidgetState();
+  _AdminMainWidgetState createState() => _AdminMainWidgetState();
 }
 
-class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
+class _AdminMainWidgetState extends State<AdminMainWidget>
+    with TickerProviderStateMixin {
   KFDrawerController _drawerController;
   var userInfo;
   @override
@@ -111,7 +114,33 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
             ],
           ),
           page: ContactUs(),
-        )
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.quick_contacts_mail),
+              SizedBox(width: 10),
+              Text(
+                'Analytics',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
+          ),
+          page: AnalyticsScreen(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.quick_contacts_mail),
+              SizedBox(width: 10),
+              Text(
+                'Approval',
+                style: TextStyle(color: Colors.black87, fontSize: 22),
+              ),
+            ],
+          ),
+          page: ApprovalScreen(),
+        ),
       ],
     );
   }
