@@ -1,4 +1,6 @@
 import 'dart:async';
+import '../../models/user.dart';
+import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,6 @@ import '../../widgets/gradient_button.dart';
 class LoginOtp extends StatefulWidget {
   final String phoneNumber;
   final String user;
-
   const LoginOtp({this.phoneNumber, this.user});
 
   @override
@@ -22,6 +23,7 @@ class _LoginOtpState extends State<LoginOtp>
     with SingleTickerProviderStateMixin {
   // Constants
   final int time = 59;
+  var userInfo;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final String _phoneNumber;
@@ -77,6 +79,7 @@ class _LoginOtpState extends State<LoginOtp>
           .then(
         (value) async {
           if (value.user != null) {
+            // userInfo.updatefirstName(firstName);
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => MainWidget()),
@@ -394,6 +397,7 @@ class _LoginOtpState extends State<LoginOtp>
   // Overridden methods
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
     super.initState();
     _verifyPhoneNumber();
     totalTimeInSeconds = time;

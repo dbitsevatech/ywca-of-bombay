@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login.dart';
 import 'register_otp.dart';
 import '../../models/user.dart';
@@ -22,9 +23,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String emailId;
   String phoneNumber;
   String gender = "Female";
+  var userInfo;
 
-  final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
-      null, null, null, null, null, null, null);
+  // final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
+  //     null, null, null, null, null, null, null);
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -94,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false);
+              (route) => false);
         },
       ),
     );
@@ -150,6 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
       selectedGender = GenderChoices.female;
       gender = "Female";
@@ -235,8 +238,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onTap: () {
                                 Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                                        (route) => false);
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                    (route) => false);
                               },
                               child: Text(
                                 'Log In',
@@ -268,6 +272,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
+                            userInfo.updateName(value);
+                            print(Provider.of<UserData>(context, listen: false)
+                                .getfirstName);
                             setState(() {
                               firstName = value;
                             });
@@ -278,7 +285,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -315,7 +326,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -348,7 +363,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             });
                           },
                           controller: dateController,
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.date_range,
@@ -398,7 +417,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             // return null coz validator has to return something
                             return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -438,7 +461,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               phoneNumber = value;
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.phone_android,
@@ -498,7 +525,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             ListTile(
                               title: Text(
-                                  'Male',
+                                'Male',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   letterSpacing: 2,
@@ -520,7 +547,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             ListTile(
                               title: Text(
-                                  'Decline to state',
+                                'Decline to state',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   letterSpacing: 2,
@@ -579,8 +606,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginScreen()),
-                                  (route) => false);
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                              (route) => false);
                         },
                         child: Text(
                           'Log In',
@@ -642,12 +670,13 @@ class RegisterScreen2 extends StatefulWidget {
 class _RegisterScreen2State extends State<RegisterScreen2> {
   // final User userData;
   // var userData = User();
-  final String firstName;
+  String firstName;
   final String lastName;
   final String emailId;
   final String phoneNumber;
   final String gender;
   final DateTime dateOfBirth;
+  var userInfo;
 
   String profession;
   String placeOfWork;
@@ -699,6 +728,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    // firstName = userInfo.getfirstName();
     setState(() {
       _selectedMembershipInterest = MemberChoices.yes;
       interestInMembership = "Yes";
@@ -759,6 +790,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          // initialValue: Provider.of<User>(context, listen: false).getfirstName,
                           keyboardType: TextInputType.text,
                           onSaved: (String value) {
                             setState(() {
@@ -769,7 +801,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -824,7 +860,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
@@ -897,7 +937,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             underline: Container(),
                             onChanged: (String value) {
                               setState(() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 nearestCenter = value;
                                 print(nearestCenter);
                               });

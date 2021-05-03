@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../../models/user.dart';
+import 'package:provider/provider.dart';
 import 'login_otp.dart';
 import 'register.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -17,13 +18,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // TextEditingController _controller = TextEditingController();
+  var userInfo;
   String phoneNumber;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
-      GlobalKey<ScaffoldState>(); // scaffold key for snackbar
+      GlobalKey<ScaffoldState>();
+
+
+  @override
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
+    // print(userInfo);
+    super.initState();
+  }
 
   void _showNumberNotRegisteredSnackBar() {
     final registerSnackBar = SnackBar(
@@ -71,7 +80,22 @@ class _LoginScreenState extends State<LoginScreen> {
         .where("phoneNumber", isEqualTo: phoneNumber)
         .get();
     if (checkuser.docs.length == 1) {
-      print("User found");
+
+      final userdata = checkuser.docs[0].data();
+      userInfo.updateAfterAuth(
+          userdata['uid'],
+          userdata['firstName'],
+          userdata['lastName'],
+          userdata['dateOfBirth'].toDate(),
+          userdata['emailId'],
+          userdata['phoneNumber'],
+          userdata['gender'],
+          userdata['profession'],
+          userdata['placeOfWork'],
+          userdata['nearestCenter'],
+          userdata['interestInMembership']);
+
+      // print(userInfo);
       Navigator.push(
         context,
         MaterialPageRoute(

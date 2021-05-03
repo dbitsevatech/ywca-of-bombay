@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-
+import '../models/user.dart';
+import 'package:provider/provider.dart';
 import '../screens/about_us.dart';
 import '../screens/class_builder.dart';
 import '../widgets/constants.dart';
@@ -24,9 +25,10 @@ class MainWidget extends StatefulWidget {
 
 class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   KFDrawerController _drawerController;
-
+  var userInfo;
   @override
   void initState() {
+    userInfo = Provider.of<UserData>(context, listen:false);
     super.initState();
     _drawerController = KFDrawerController(
       initialPage: ClassBuilder.fromString('Home'),
@@ -169,7 +171,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     SizedBox(height: 15),
                     Text(
                       // TODO: Add user name
-                      'Welcome, user',
+                      'Welcome, '+ Provider.of<UserData>(context, listen:false).getfirstName,
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
