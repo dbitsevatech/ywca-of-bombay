@@ -1,18 +1,20 @@
 import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user.dart';
-import 'package:provider/provider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:ywcaofbombay/screens/authentication/login.dart';
-import 'package:ywcaofbombay/widgets/drawer.dart';
 
-import 'authentication/register.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/rendering.dart';
+
+import './authentication/login.dart';
+import '../widgets/admin_drawer.dart';
+import '../widgets/drawer.dart';
+
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/gradient_button.dart';
+import '../models/user.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -31,8 +33,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
   ];
   @override
-  void initState()  {
-    userInfo = Provider.of<UserData>(context, listen:false);
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       images.forEach((imageUrl) {
         precacheImage(NetworkImage(imageUrl), context);
@@ -149,8 +151,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressedFunction: () async {
                       var user = await FirebaseAuth.instance.currentUser;
 
-
-                      if( user != null){
+                      if (user != null) {
                         print(user.phoneNumber);
                         var checkuser = await FirebaseFirestore.instance
                             .collection('users')
@@ -158,24 +159,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             .get();
                         // print(checkuser.data());
 
-                          final userdata = checkuser.data();
-                          userInfo.updateAfterAuth(
-                              userdata['uid'],
-                              userdata['firstName'],
-                              userdata['lastName'],
-                              userdata['dateOfBirth'].toDate(),
-                              userdata['emailId'],
-                              userdata['phoneNumber'],
-                              userdata['gender'],
-                              userdata['profession'],
-                              userdata['placeOfWork'],
-                              userdata['nearestCenter'],
-                              userdata['interestInMembership']);
+                        final userdata = checkuser.data();
+                        userInfo.updateAfterAuth(
+                            userdata['uid'],
+                            userdata['firstName'],
+                            userdata['lastName'],
+                            userdata['dateOfBirth'].toDate(),
+                            userdata['emailId'],
+                            userdata['phoneNumber'],
+                            userdata['gender'],
+                            userdata['profession'],
+                            userdata['placeOfWork'],
+                            userdata['nearestCenter'],
+                            userdata['interestInMembership']);
 
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MainWidget()));
-                      }
-                      else {
+                            builder: (context) => AdminMainWidget()));
+                      } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => LoginScreen()));

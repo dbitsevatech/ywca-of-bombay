@@ -1,11 +1,13 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/user.dart';
-import 'package:intl/intl.dart';
+
+import './edit_profile.dart';
+
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
-import './edit_profile.dart';
 import '../widgets/gradient_button.dart';
+import '../models/user.dart';
 
 class ViewProfileScreen extends StatefulWidget {
   @override

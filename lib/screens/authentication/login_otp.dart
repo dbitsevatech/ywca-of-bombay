@@ -16,7 +16,7 @@ class LoginOtp extends StatefulWidget {
   const LoginOtp({this.phoneNumber, this.user});
 
   @override
-  _LoginOtpState createState() => _LoginOtpState(phoneNumber, user);
+  _LoginOtpState createState() => _LoginOtpState(phoneNumber);
 }
 
 class _LoginOtpState extends State<LoginOtp>
@@ -27,10 +27,9 @@ class _LoginOtpState extends State<LoginOtp>
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final String _phoneNumber;
-  final String _user;
 
   String _verificationCode;
-  _LoginOtpState(this._phoneNumber, this._user);
+  _LoginOtpState(this._phoneNumber);
   AnimationController _controller;
   String otp;
   // Variables
@@ -397,7 +396,7 @@ class _LoginOtpState extends State<LoginOtp>
   // Overridden methods
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
+    userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
     _verifyPhoneNumber();
     totalTimeInSeconds = time;

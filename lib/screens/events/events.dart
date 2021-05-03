@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:flutter/material.dart';
 
 import 'event_details.dart';
 import '../../models/Event.dart';
@@ -60,9 +60,9 @@ class _EventsState extends State<Events> {
                         TextSpan(
                           text: 'Events ',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         WidgetSpan(
@@ -78,22 +78,22 @@ class _EventsState extends State<Events> {
                   SizedBox(height: 5),
                   TextField(
                     decoration: InputDecoration(
-                        hintText: "Search by venue",
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        suffixIcon: Icon(
-                          Icons.mic,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.zero,
-                        filled: true,
-                        fillColor: Colors.transparent,
+                      hintText: "Search by venue",
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: Icon(
+                        Icons.mic,
+                        color: Colors.grey,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide.none,
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                      filled: true,
+                      fillColor: Colors.transparent,
                     ),
                   ),
                 ],

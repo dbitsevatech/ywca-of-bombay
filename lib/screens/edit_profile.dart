@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
-import '../models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
 import '../widgets/gradient_button.dart';
+import '../models/user.dart';
 
 enum GenderChoices { female, male, declineToState }
 enum MemberChoices { yes, no, maybe }
@@ -82,39 +82,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
-    uid =  Provider.of<UserData>(context, listen:false).getuid;
-    firstName = Provider.of<UserData>(context, listen:false).getfirstName;
-    lastName = Provider.of<UserData>(context, listen:false).getlastName;
-    email = Provider.of<UserData>(context, listen:false).getemailId;
-    phoneNumber =  Provider.of<UserData>(context, listen:false).getphoneNumber;
-    dob = Provider.of<UserData>(context, listen:false).getdateOfBirth;
-    gender = Provider.of<UserData>(context, listen:false).getgender;
-    nearestCenter = Provider.of<UserData>(context, listen:false).getnearestCenter;
-    placeOfWork = Provider.of<UserData>(context, listen:false).getplaceOfWork;
-    profession = Provider.of<UserData>(context, listen:false).getprofession;
-    interestInMembership = Provider.of<UserData>(context, listen:false).getinterestInMembership;
-    dateController.text =  DateFormat('yyyy-MM-dd').format(Provider.of<UserData>(context, listen:false).getdateOfBirth);
+    userInfo = Provider.of<UserData>(context, listen: false);
+    uid = Provider.of<UserData>(context, listen: false).getuid;
+    firstName = Provider.of<UserData>(context, listen: false).getfirstName;
+    lastName = Provider.of<UserData>(context, listen: false).getlastName;
+    email = Provider.of<UserData>(context, listen: false).getemailId;
+    phoneNumber = Provider.of<UserData>(context, listen: false).getphoneNumber;
+    dob = Provider.of<UserData>(context, listen: false).getdateOfBirth;
+    gender = Provider.of<UserData>(context, listen: false).getgender;
+    nearestCenter =
+        Provider.of<UserData>(context, listen: false).getnearestCenter;
+    placeOfWork = Provider.of<UserData>(context, listen: false).getplaceOfWork;
+    profession = Provider.of<UserData>(context, listen: false).getprofession;
+    interestInMembership =
+        Provider.of<UserData>(context, listen: false).getinterestInMembership;
+    dateController.text = DateFormat('yyyy-MM-dd')
+        .format(Provider.of<UserData>(context, listen: false).getdateOfBirth);
     setState(() {
-      if(interestInMembership == 'Yes'){
+      if (interestInMembership == 'Yes') {
         _selectedMembershipInterest = MemberChoices.yes;
-      }
-      else if(interestInMembership == 'Yes'){
+      } else if (interestInMembership == 'Yes') {
         _selectedMembershipInterest = MemberChoices.no;
-      }
-      else{
+      } else {
         _selectedMembershipInterest = MemberChoices.maybe;
       }
-      if(gender == 'Female'){
+      if (gender == 'Female') {
         selectedGender = GenderChoices.female;
-      }
-      else if(gender == 'Male'){
+      } else if (gender == 'Male') {
         selectedGender = GenderChoices.male;
-      }
-      else{
+      } else {
         selectedGender = GenderChoices.declineToState;
       }
-
     });
     super.initState();
   }
@@ -198,7 +196,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: <Widget>[
                         // TODO: Add form field to upload user image
                         TextFormField(
-                          initialValue : firstName,
+                          initialValue: firstName,
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             setState(() {
@@ -305,7 +303,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         SizedBox(height: _height * 0.015),
                         TextFormField(
-                          initialValue: Provider.of<UserData>(context, listen:false).getemailId,
+                          initialValue:
+                              Provider.of<UserData>(context, listen: false)
+                                  .getemailId,
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (value) {
                             setState(() {
@@ -408,7 +408,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ],
                         ),
                         TextFormField(
-                          initialValue: Provider.of<UserData>(context, listen:false).getprofession,
+                          initialValue:
+                              Provider.of<UserData>(context, listen: false)
+                                  .getprofession,
                           keyboardType: TextInputType.text,
                           onSaved: (String value) {
                             setState(() {
@@ -460,7 +462,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 10,
                         ),
                         TextFormField(
-                          initialValue: Provider.of<UserData>(context, listen:false).getplaceOfWork,
+                          initialValue:
+                              Provider.of<UserData>(context, listen: false)
+                                  .getplaceOfWork,
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             setState(() {
@@ -543,13 +547,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             underline: Container(),
                             onChanged: (String value) {
                               setState(() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 nearestCenter = value;
                                 print(nearestCenter);
                               });
                             },
-
-
                             items: <String>[
                               'Andheri',
                               'Bandra',
@@ -653,17 +656,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 .collection("users")
                                 .doc(uid)
                                 .update({
-                                        "firstName": firstName,
-                                        "lastName": lastName,
-                                        "dateOfBirth": dob,
-                                        "emailId": email,
-                                        "gender": gender,
-                                        "profession": profession,
-                                        "placeOfWork": placeOfWork,
-                                        "nearestCenter": nearestCenter,
-                                        "interestInMembership": interestInMembership })
+                                  "firstName": firstName,
+                                  "lastName": lastName,
+                                  "dateOfBirth": dob,
+                                  "emailId": email,
+                                  "gender": gender,
+                                  "profession": profession,
+                                  "placeOfWork": placeOfWork,
+                                  "nearestCenter": nearestCenter,
+                                  "interestInMembership": interestInMembership
+                                })
                                 .then((value) => print("User Updated"))
-                                .catchError((error) => print("Failed to update user: $error"));
+                                .catchError((error) =>
+                                    print("Failed to update user: $error"));
                             await userInfo.updateAfterAuth(
                                 uid,
                                 firstName,
@@ -675,8 +680,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 profession,
                                 placeOfWork,
                                 nearestCenter,
-                                interestInMembership
-                            );
+                                interestInMembership);
 
                             Navigator.pop(context);
                             Navigator.pop(context);

@@ -18,17 +18,18 @@ void main() async {
 
   runApp(
     ChangeNotifierProvider(
-        create: (context) => UserData(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          // theme: ThemeData(fontFamily: 'Montserrat'),
-          home: MyApp(),
-          routes: <String, WidgetBuilder>{
-            // '/': (BuildContext context) => MyApp(),
-            '/register': (BuildContext context) => RegisterScreen(),
-            '/login': (BuildContext context) => LoginScreen(),
-          },
-        )),
+      create: (context) => UserData(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // theme: ThemeData(fontFamily: 'Montserrat'),
+        home: MyApp(),
+        routes: <String, WidgetBuilder>{
+          // '/': (BuildContext context) => MyApp(),
+          '/register': (BuildContext context) => RegisterScreen(),
+          '/login': (BuildContext context) => LoginScreen(),
+        },
+      ),
+    ),
   );
 }
 

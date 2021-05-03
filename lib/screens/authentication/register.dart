@@ -391,7 +391,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            // TODO: BUG: text cursor showing over the date picker bcoz of async-await
                             await _selectDate();
                             dateController.text =
                                 "${dateOfBirth.toLocal()}".split(' ')[0];
@@ -1013,7 +1012,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           ),
                         ),
                         Column(
-                          // TODO: Ability to select radio button when text is tapped
                           children: <Widget>[
                             ListTile(
                               title: const Text('Yes'),
