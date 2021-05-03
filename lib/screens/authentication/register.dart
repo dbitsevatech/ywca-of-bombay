@@ -25,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String gender = "Female";
   var userInfo;
 
-
   // final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
   //     null, null, null, null, null, null, null);
 
@@ -97,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false);
+              (route) => false);
         },
       ),
     );
@@ -153,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
+    userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
       selectedGender = GenderChoices.female;
       gender = "Female";
@@ -239,8 +238,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onTap: () {
                                 Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                                        (route) => false);
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                    (route) => false);
                               },
                               child: Text(
                                 'Log In',
@@ -273,7 +273,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             userInfo.updateName(value);
-                            print(Provider.of<UserData>(context, listen: false).getfirstName);
+                            print(Provider.of<UserData>(context, listen: false)
+                                .getfirstName);
                             setState(() {
                               firstName = value;
                             });
@@ -284,7 +285,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -321,7 +326,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             else
                               return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.account_circle,
@@ -354,7 +363,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             });
                           },
                           controller: dateController,
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.date_range,
@@ -378,7 +391,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            // TODO: BUG: text cursor showing over the date picker bcoz of async-await
                             await _selectDate();
                             dateController.text =
                                 "${dateOfBirth.toLocal()}".split(' ')[0];
@@ -404,7 +416,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             // return null coz validator has to return something
                             return null;
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -444,7 +460,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               phoneNumber = value;
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.phone_android,
@@ -504,7 +524,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             ListTile(
                               title: Text(
-                                  'Male',
+                                'Male',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   letterSpacing: 2,
@@ -526,7 +546,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             ListTile(
                               title: Text(
-                                  'Decline to state',
+                                'Decline to state',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   letterSpacing: 2,
@@ -585,8 +605,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => LoginScreen()),
-                                  (route) => false);
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                              (route) => false);
                         },
                         child: Text(
                           'Log In',
@@ -706,7 +727,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
+    userInfo = Provider.of<UserData>(context, listen: false);
     // firstName = userInfo.getfirstName();
     setState(() {
       _selectedMembershipInterest = MemberChoices.yes;
@@ -779,7 +800,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
@@ -834,7 +859,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               }
                             });
                           },
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize:16, letterSpacing: 2,),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            letterSpacing: 2,
+                          ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
@@ -907,20 +936,21 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             underline: Container(),
                             onChanged: (String value) {
                               setState(() {
-                                FocusScope.of(context).requestFocus(FocusNode());
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
                                 nearestCenter = value;
                                 print(nearestCenter);
                               });
                             },
-                            // hint: Text(
-                            //   "Nearest YWCA Center",
-                            //   style: TextStyle(
-                            //     fontFamily: 'Montserrat',
-                            //     color: Colors.black,
-                            //     fontSize: 14,
-                            //     letterSpacing: 1.5,
-                            //   ),
-                            // ),
+                            hint: Text(
+                              "Nearest YWCA Center",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                color: Colors.black,
+                                fontSize: 14,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
                             // selectedItemBuilder: (BuildContext context) {
                             //   return <String>[
                             //     'Andheri',
@@ -982,7 +1012,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           ),
                         ),
                         Column(
-                          // TODO: Ability to select radio button when text is tapped
                           children: <Widget>[
                             ListTile(
                               title: const Text('Yes'),
