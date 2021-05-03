@@ -173,9 +173,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               userdata['interestInMembership'],
                             userdata['memberRole']
                           );
+                          if( userdata['memberRole'] == 'none'){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MainWidget()));
+                          }
+                          else if(userdata['memberRole'] == 'Admin'){
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AdminMainWidget()));
+                          }
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AdminMainWidget()));
+
                       } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(

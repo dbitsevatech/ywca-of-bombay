@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:ywcaofbombay/widgets/admin_drawer.dart';
+
 import '../../models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -79,10 +81,18 @@ class _LoginOtpState extends State<LoginOtp>
         (value) async {
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainWidget()),
-                (route) => false);
+            if( Provider.of<UserData>(context, listen: false).getmemberRole == 'none'){
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainWidget()),
+                      (route) => false);
+            }
+            else if(Provider.of<UserData>(context, listen: false).getmemberRole == 'Admin'){
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
+                      (route) => false);
+            }
           }
         },
       );
@@ -256,10 +266,19 @@ class _LoginOtpState extends State<LoginOtp>
             .signInWithCredential(credential)
             .then((value) async {
           if (value.user != null) {
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => MainWidget()),
-                (route) => false);
+            if( Provider.of<UserData>(context, listen: false).getmemberRole == 'none'){
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainWidget()),
+                      (route) => false);
+            }
+            else if(Provider.of<UserData>(context, listen: false).getmemberRole == 'Admin'){
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
+                      (route) => false);
+            }
+
           }
         });
       },

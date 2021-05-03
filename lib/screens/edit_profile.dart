@@ -680,7 +680,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 profession,
                                 placeOfWork,
                                 nearestCenter,
-                                interestInMembership);
+                                interestInMembership,
+                                Provider.of<UserData>(context, listen: false).getmemberRole);
 
                             Navigator.pop(context);
                             Navigator.pop(context);

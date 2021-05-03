@@ -222,7 +222,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
           ),
           onPressed: () async {
             userInfo.updateAfterAuth(
-                "", "", "", DateTime.now(), "", "", "", "", "", "", "");
+                "", "", "", DateTime.now(), "", "", "", "", "", "", "","");
             await FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
                 context,
