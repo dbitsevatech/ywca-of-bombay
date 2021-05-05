@@ -143,7 +143,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 0.0,
-                          vertical: 3,
+                          // vertical: 3,
                         ),
                         child: ConstrainedBox(
                           constraints: BoxConstraints.tightFor(
@@ -158,8 +158,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             child: Text(
                               "Approve",
                               style: const TextStyle(
-                                  fontFamily: 'montserrat',
-                                  color: Colors.white),
+                                fontFamily: 'Montserrat',
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -196,7 +197,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             child: Text(
                               "Reject",
                               style: const TextStyle(
-                                fontFamily: 'montserrat',
+                                fontFamily: 'Montserrat',
                                 color: Colors.white,
                               ),
                             ),
@@ -268,32 +269,61 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   ),
                 ),
                 PreferredSize(
-                  preferredSize: Size.fromHeight(100),
-                  child: Center(
-                    child: Column(
-                      children: <Widget>[
-                        // Distance from ywca
-                        // or else it will overlap
-                        SizedBox(height: 70),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                text: 'Approval',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  color: Color(0xff333333),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  letterSpacing: 0.5,
+                  preferredSize: Size.fromHeight(80),
+                  child: Column(
+                    children: <Widget>[
+                      // Distance from ywca
+                      // or else it will overlap
+                      SizedBox(height: 80),
+                      RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.bodyText2,
+                          children: [
+                            TextSpan(
+                              text: 'Approval ',
+                              style: TextStyle(
+                                fontSize: 28,
+                                color: Color(0xff333333),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 2.0),
+                                child: Icon(
+                                  Icons.notification_important,
+                                  size: 28,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 5),
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Search by name",
+                          hintStyle: TextStyle(fontFamily: 'Montserrat'),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          suffixIcon: Icon(
+                            Icons.mic,
+                            color: Colors.grey,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          fillColor: Colors.transparent,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -319,7 +349,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       transform: Matrix4.identity()..scale(scale, scale),
                       alignment: Alignment.bottomCenter,
                       child: Align(
-                        heightFactor: 0.7,
+                        heightFactor: 0.8,
                         alignment: Alignment.topCenter,
                         child: itemsData[index],
                       ),

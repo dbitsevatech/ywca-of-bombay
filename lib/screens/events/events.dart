@@ -60,16 +60,20 @@ class _EventsState extends State<Events> {
                         TextSpan(
                           text: 'Events ',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
+                            fontSize: 28,
+                            color: Color(0xff333333),
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
                           ),
                         ),
                         WidgetSpan(
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.notification_important),
+                            child: Icon(
+                              Icons.notification_important,
+                              size: 28,
+                            ),
                           ),
                         ),
                       ],
@@ -121,69 +125,65 @@ class _EventsState extends State<Events> {
   Widget _getItemUI(BuildContext context, int index) {
     return Card(
       elevation: 0,
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            // Image
-            leading: Image.asset(
-              "assets/images/events/" + _allEvents[index].image,
-              fit: BoxFit.cover,
-              width: 120.0,
-            ),
-            // Date & Time
-            title: Text(
-              _allEvents[index].dateTime,
+      child: ListTile(
+        // Image
+        leading: Image.asset(
+          "assets/images/events/" + _allEvents[index].image,
+          fit: BoxFit.cover,
+          width: 120.0,
+        ),
+        // Date & Time
+        title: Text(
+          _allEvents[index].dateTime,
+          style: TextStyle(
+            color: secondaryColor,
+            fontSize: 14.0,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 5),
+            Text(
+              _allEvents[index].name,
               style: TextStyle(
-                color: primaryColor,
-                fontSize: 14.0,
+                color: Colors.black,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'Resource Person: ${_allEvents[index].resourcePerson}',
+              style: TextStyle(
+                fontSize: 11.0,
                 fontWeight: FontWeight.normal,
               ),
             ),
-            subtitle: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 5),
-                Text(
-                  _allEvents[index].name,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Resource Person: ${_allEvents[index].resourcePerson}',
-                  style: TextStyle(
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Venue: ${_allEvents[index].venue}',
-                  style: TextStyle(
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Amount: ${_allEvents[index].cost}',
-                  style: TextStyle(
-                    fontSize: 11.0,
-                    fontWeight: FontWeight.normal,
-                  ),
-                ),
-              ],
+            SizedBox(height: 5),
+            Text(
+              'Venue: ${_allEvents[index].venue}',
+              style: TextStyle(
+                fontSize: 11.0,
+                fontWeight: FontWeight.normal,
+              ),
             ),
-            //trailing: ,
-            onTap: () {
-              gotoSecondActivity(context);
-            },
-          )
-        ],
+            SizedBox(height: 5),
+            Text(
+              'Amount: ${_allEvents[index].cost}',
+              style: TextStyle(
+                fontSize: 11.0,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+        //trailing: ,
+        onTap: () {
+          gotoSecondActivity(context);
+        },
       ),
     );
   }
