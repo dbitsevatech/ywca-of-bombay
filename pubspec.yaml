@@ -34,6 +34,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   search_widget: ^1.0.2
   provider: ^5.0.0
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
