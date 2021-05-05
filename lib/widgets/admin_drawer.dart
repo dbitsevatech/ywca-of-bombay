@@ -155,76 +155,73 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
       body: KFDrawer(
         controller: _drawerController,
         header: Container(
-            width: MediaQuery.of(context).size.width * 0.7,
-            child: Row(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'YWCA Of Bombay',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.black,
-                        fontFamily: 'LilyScriptOne',
-                      ),
+          width: MediaQuery.of(context).size.width * 0.7,
+          child: Row(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'YWCA Of Bombay',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: 'LilyScriptOne',
                     ),
-                    // SizedBox(height: 15),
-                    Text(
-                      'MENU',
-                      style: TextStyle(
+                  ),
+                  // SizedBox(height: 15),
+                  Text(
+                    'MENU',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // SizedBox(height: 10),
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: NetworkImage(
+                      "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
+                    ),
+                  ),
+                  // SizedBox(height: 15),
+                  Text(
+                    'Welcome, ' + userInfo.getfirstName,
+                    style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  // SizedBox(height: 15),
+                  ElevatedButton.icon(
+                    icon: Icon(Icons.person),
+                    label: Text('View Profile'),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed))
+                            return primaryColor;
+                          return secondaryColor; // Use the component's default.
+                        },
                       ),
                     ),
-                    // SizedBox(height: 10),
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(
-                        "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
-                      ),
-                    ),
-                    // SizedBox(height: 15),
-                    Text(
-                      'Welcome, ' +
-                          Provider.of<UserData>(context, listen: false)
-                              .getfirstName,
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    // SizedBox(height: 15),
-                    ElevatedButton.icon(
-                      icon: Icon(Icons.person),
-                      label: Text('View Profile'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.pressed))
-                              return primaryColor;
-                            return secondaryColor; // Use the component's default.
-                          },
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewProfileScreen(),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ViewProfileScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    // SizedBox(height: 10),
-                  ],
-                )
-              ],
-            ),
+                      );
+                    },
+                  ),
+                  // SizedBox(height: 10),
+                ],
+              )
+            ],
           ),
+        ),
         footer: KFDrawerItem(
           text: Text(
             'LOGOUT',
@@ -240,7 +237,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
           ),
           onPressed: () async {
             userInfo.updateAfterAuth(
-                "", "", "", DateTime.now(), "", "", "", "", "", "", "","");
+                "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
             await FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
                 context,

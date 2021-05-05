@@ -96,7 +96,7 @@ class Ic extends StatelessWidget {
                 pagination: SwiperPagination(
                   //changing the color of the pagination dots and that of
                   //the active dot
-                  builder: new DotSwiperPaginationBuilder(
+                  builder: DotSwiperPaginationBuilder(
                     color: Colors.grey,
                     activeColor: Color(0XFF80DEEA),
                   ),

@@ -26,6 +26,18 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
+
+    var firstName = userInfo.getfirstName;
+    var lastName = userInfo.getlastName;
+    var phoneNumber = userInfo.getphoneNumber;
+    var emailId = userInfo.getemailId;
+    var dateOfBirth = DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
+    var gender = userInfo.getgender;
+    var nearestCenter = userInfo.getnearestCenter;
+    var placeOfWork = userInfo.getplaceOfWork;
+    var profession = userInfo.getprofession;
+    var interestInMembership = userInfo.getinterestInMembership;
+
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -115,64 +127,34 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Name = firstName + lastName
-                        DetailText(
-                            text: "Name: " +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getfirstName +
-                                ' ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getlastName),
-                        // DetailText(text: 'Name: $firstName $lastName'),
+                        DetailText(text: 'Name: $firstName $lastName'),
                         SizedBox(height: 15),
                         // Phone
-                        DetailText(
-                            text: 'Contact number: +91' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getphoneNumber),
+                        DetailText(text: 'Phone number: +91 $phoneNumber'),
                         SizedBox(height: 15),
                         // Email id
-                        DetailText(
-                            text: 'Email ID: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getemailId),
+                        DetailText(text: 'Email ID: $emailId'),
                         SizedBox(height: 15),
                         // Date of birth
-                        DetailText(
-                            text: 'Date Of Birth: ' +
-                                DateFormat('yyyy-MM-dd').format(
-                                    Provider.of<UserData>(context,
-                                            listen: false)
-                                        .getdateOfBirth)),
+                        DetailText(text: 'Date Of Birth: $dateOfBirth'),
                         SizedBox(height: 15),
                         // Gender
-                        DetailText(
-                            text: 'Gender: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getgender),
+                        DetailText(text: 'Gender: $gender'),
                         SizedBox(height: 15),
                         // Nearest center
-                        DetailText(
-                            text: 'Nearest YWCA Centre: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getnearestCenter),
+                        DetailText(text: 'Nearest YWCA Centre: $nearestCenter'),
                         SizedBox(height: 15),
                         // Place of work/school/college
                         DetailText(
-                            text: 'Institute/Organization: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getplaceOfWork),
+                            text: 'Institute/Organization: $placeOfWork'),
                         SizedBox(height: 15),
                         // Profession
-                        DetailText(
-                            text: 'Profession: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getprofession),
+                        DetailText(text: 'Profession: $profession'),
                         SizedBox(height: 15),
                         // Interest in membership
                         DetailText(
-                            text: 'Interested in being a member: ' +
-                                Provider.of<UserData>(context, listen: false)
-                                    .getinterestInMembership),
+                            text:
+                                'Interested in being a member: $interestInMembership'),
                       ],
                     ),
                     decoration: const BoxDecoration(

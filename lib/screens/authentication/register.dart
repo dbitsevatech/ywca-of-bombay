@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'login.dart';
 import 'register_otp.dart';
+
 import '../../models/user.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
@@ -19,7 +22,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   String firstName;
   String lastName;
-  DateTime dateOfBirth = new DateTime.now().subtract(Duration(days: 4380));
+  DateTime dateOfBirth = DateTime.now().subtract(Duration(days: 4380));
   String emailId;
   String phoneNumber;
   String gender = "Female";
@@ -154,6 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
+      dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
       selectedGender = GenderChoices.female;
       gender = "Female";
     });
@@ -273,8 +277,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             userInfo.updateName(value);
-                            print(Provider.of<UserData>(context, listen: false)
-                                .getfirstName);
+                            print(userInfo.getfirstName);
                             setState(() {
                               firstName = value;
                             });
@@ -393,7 +396,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDate();
                             dateController.text =
-                                "${dateOfBirth.toLocal()}".split(' ')[0];
+                                "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
+                                    .split(' ')[0];
                           },
                         ),
                         SizedBox(height: _height * 0.015),
@@ -515,10 +519,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                                 onChanged: (GenderChoices value) {
-                                  setState(() {
-                                    selectedGender = value;
-                                    gender = "Female";
-                                  },);
+                                  setState(
+                                    () {
+                                      selectedGender = value;
+                                      gender = "Female";
+                                    },
+                                  );
                                 },
                               ),
                             ),
@@ -537,10 +543,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                                 onChanged: (GenderChoices value) {
-                                  setState(() {
-                                    selectedGender = value;
-                                    gender = "Male";
-                                  },);
+                                  setState(
+                                    () {
+                                      selectedGender = value;
+                                      gender = "Male";
+                                    },
+                                  );
                                 },
                               ),
                             ),
@@ -559,10 +567,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                                 onChanged: (GenderChoices value) {
-                                  setState(() {
-                                    selectedGender = value;
-                                    gender = "Decline to State";
-                                  },);
+                                  setState(
+                                    () {
+                                      selectedGender = value;
+                                      gender = "Decline to State";
+                                    },
+                                  );
                                 },
                               ),
                             ),
@@ -727,7 +737,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen: false);
+    userInfo = userInfo;
     // firstName = userInfo.getfirstName();
     setState(() {
       _selectedMembershipInterest = MemberChoices.yes;

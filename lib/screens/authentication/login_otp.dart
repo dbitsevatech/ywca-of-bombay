@@ -81,17 +81,16 @@ class _LoginOtpState extends State<LoginOtp>
         (value) async {
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
-            if( Provider.of<UserData>(context, listen: false).getmemberRole == 'none'){
+            if (userInfo.getmemberRole == 'none') {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
-            }
-            else if(Provider.of<UserData>(context, listen: false).getmemberRole == 'Admin'){
+                  (route) => false);
+            } else if (userInfo.getmemberRole == 'Admin') {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminMainWidget()),
-                      (route) => false);
+                  (route) => false);
             }
           }
         },
@@ -266,19 +265,17 @@ class _LoginOtpState extends State<LoginOtp>
             .signInWithCredential(credential)
             .then((value) async {
           if (value.user != null) {
-            if( Provider.of<UserData>(context, listen: false).getmemberRole == 'none'){
+            if (userInfo.getmemberRole == 'none') {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
-            }
-            else if(Provider.of<UserData>(context, listen: false).getmemberRole == 'Admin'){
+                  (route) => false);
+            } else if (userInfo.getmemberRole == 'Admin') {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminMainWidget()),
-                      (route) => false);
+                  (route) => false);
             }
-
           }
         });
       },

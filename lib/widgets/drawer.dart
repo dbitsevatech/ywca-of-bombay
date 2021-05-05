@@ -159,9 +159,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                   ),
                   // SizedBox(height: 15),
                   Text(
-                    'Welcome, ' +
-                        Provider.of<UserData>(context, listen: false)
-                            .getfirstName,
+                    'Welcome, ' + userInfo.getfirstName,
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -172,9 +170,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                     icon: Icon(Icons.person),
                     label: Text('View Profile'),
                     style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed))
                             return primaryColor;
                           return secondaryColor; // Use the component's default.
@@ -204,14 +201,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               fontSize: 22,
             ),
           ),
-          icon: Icon(
-            Icons.logout,
-            color: Colors.black,
-            size: 22,
-          ),
+          icon: Icon(Icons.logout, color: Colors.black, size: 22),
           onPressed: () async {
             userInfo.updateAfterAuth(
-                "", "", "", DateTime.now(), "", "", "", "", "", "", "","");
+                "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
             await FirebaseAuth.instance.signOut();
             Navigator.pushAndRemoveUntil(
                 context,

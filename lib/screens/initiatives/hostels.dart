@@ -100,7 +100,7 @@ class Hostel extends StatelessWidget {
                 pagination: SwiperPagination(
                   //changing the color of the pagination dots and that of
                   //the active dot
-                  builder: new DotSwiperPaginationBuilder(
+                  builder: DotSwiperPaginationBuilder(
                     color: Colors.grey,
                     activeColor: Color(0XFF80DEEA),
                   ),
@@ -127,7 +127,7 @@ class Hostel extends StatelessWidget {
               //Expanded(
               child: Text(
                 // '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.''',
-                "YWCA Hostels - Achamma Bhavan,Anugraha, Dipti Dhaman and Lady Willingdon is the bench mark in Mumbai/ Navi Mumbai for hygienic, well equipped and disciplined hostels. It provides a safe and secure surrounding to women who are new to the city.",
+                "YWCA Hostels - Achamma Bhavan,Anugraha, Dipti Dhaman and Lady Willingdon is the bench mark in Mumbai/ Navi Mumbai for hygienic, well equipped and disciplined hostels. It provides a safe and secure surrounding to women who are  to the city.",
                 //overflow: TextOverflow.fade,
                 maxLines: 8,
                 style: TextStyle(
