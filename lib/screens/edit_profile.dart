@@ -23,7 +23,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String email;
   String phoneNumber;
   String gender = "Female";
-  DateTime dob;
+  DateTime dateOfBirth;
   String profession;
   String placeOfWork;
   String nearestCenter = "Chembur";
@@ -46,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future _selectDate() async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: dob,
+      initialDate: dateOfBirth,
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
       helpText: 'Select Date of Birth',
@@ -71,11 +71,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         );
       },
     );
-    if (picked != null && picked != dob) {
+    if (picked != null && picked != dateOfBirth) {
       setState(() {
-        dob = picked;
+        dateOfBirth = picked;
         // print(picked);
-        print(dob);
+        print(dateOfBirth);
       });
     }
   }
@@ -83,21 +83,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
-    uid = Provider.of<UserData>(context, listen: false).getuid;
-    firstName = Provider.of<UserData>(context, listen: false).getfirstName;
-    lastName = Provider.of<UserData>(context, listen: false).getlastName;
-    email = Provider.of<UserData>(context, listen: false).getemailId;
-    phoneNumber = Provider.of<UserData>(context, listen: false).getphoneNumber;
-    dob = Provider.of<UserData>(context, listen: false).getdateOfBirth;
-    gender = Provider.of<UserData>(context, listen: false).getgender;
-    nearestCenter =
-        Provider.of<UserData>(context, listen: false).getnearestCenter;
-    placeOfWork = Provider.of<UserData>(context, listen: false).getplaceOfWork;
-    profession = Provider.of<UserData>(context, listen: false).getprofession;
-    interestInMembership =
-        Provider.of<UserData>(context, listen: false).getinterestInMembership;
-    dateController.text = DateFormat('yyyy-MM-dd')
-        .format(Provider.of<UserData>(context, listen: false).getdateOfBirth);
+    uid = userInfo.getuid;
+    firstName = userInfo.getfirstName;
+    lastName = userInfo.getlastName;
+    email = userInfo.getemailId;
+    phoneNumber = userInfo.getphoneNumber;
+    dateOfBirth = userInfo.getdateOfBirth;
+    gender = userInfo.getgender;
+    nearestCenter = userInfo.getnearestCenter;
+    placeOfWork = userInfo.getplaceOfWork;
+    profession = userInfo.getprofession;
+    interestInMembership = userInfo.getinterestInMembership;
+    dateController.text =
+        DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
+
     setState(() {
       if (interestInMembership == 'Yes') {
         _selectedMembershipInterest = MemberChoices.yes;
@@ -298,14 +297,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDate();
                             dateController.text =
-                                "${dob.toLocal()}".split(' ')[0];
+                                "${dateOfBirth.toLocal()}".split(' ')[0];
                           },
                         ),
                         SizedBox(height: _height * 0.015),
                         TextFormField(
-                          initialValue:
-                              Provider.of<UserData>(context, listen: false)
-                                  .getemailId,
+                          initialValue: userInfo.getemailId,
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (value) {
                             setState(() {
@@ -408,9 +405,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ],
                         ),
                         TextFormField(
-                          initialValue:
-                              Provider.of<UserData>(context, listen: false)
-                                  .getprofession,
+                          initialValue: userInfo.getprofession,
                           keyboardType: TextInputType.text,
                           onSaved: (String value) {
                             setState(() {
@@ -462,9 +457,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 10,
                         ),
                         TextFormField(
-                          initialValue:
-                              Provider.of<UserData>(context, listen: false)
-                                  .getplaceOfWork,
+                          initialValue: userInfo.getplaceOfWork,
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             setState(() {
@@ -658,7 +651,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 .update({
                                   "firstName": firstName,
                                   "lastName": lastName,
-                                  "dateOfBirth": dob,
+                                  "dateOfBirth": dateOfBirth,
                                   "emailId": email,
                                   "gender": gender,
                                   "profession": profession,
@@ -673,7 +666,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 uid,
                                 firstName,
                                 lastName,
-                                dob,
+                                dateOfBirth,
                                 email,
                                 phoneNumber,
                                 gender,
@@ -681,7 +674,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 placeOfWork,
                                 nearestCenter,
                                 interestInMembership,
-                                Provider.of<UserData>(context, listen: false).getmemberRole);
+                                userInfo.getmemberRole);
 
                             Navigator.pop(context);
                             Navigator.pop(context);

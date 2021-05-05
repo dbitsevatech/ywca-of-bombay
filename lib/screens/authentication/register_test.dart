@@ -18,7 +18,7 @@
 // class _RegisterScreenState extends State<RegisterScreen> {
 //   String firstName;
 //   String lastName;
-//   DateTime dateOfBirth = new DateTime.now().subtract(Duration(days: 4380));
+//   DateTime dateOfBirth = DateTime.now().subtract(Duration(days: 4380));
 //   String emailId;
 //   String phoneNumber;
 //   String gender = "Female";

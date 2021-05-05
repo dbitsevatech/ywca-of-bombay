@@ -53,7 +53,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Name: ${post["name"]}",
+                      "\Name: ${post["firstName"]} ${post["lastName"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
@@ -66,7 +66,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Contact Number: ${post["num"]}",
+                      "\Contact Number: ${post["phoneNumber"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
@@ -79,7 +79,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Email ID: ${post["email"]}",
+                      "\Email ID: ${post["emailId"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
@@ -92,7 +92,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Nearest YWCA center: ${post["center"]}",
+                      "\Nearest YWCA center: ${post["nearestCenter"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
@@ -105,7 +105,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Institute/Organisation: ${post["ins"]}",
+                      "\Institute/Organisation: ${post["placeOfWork"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
@@ -118,76 +118,94 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Profession: ${post["prof"]}",
+                      "\Profession: ${post["profession"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontFamily: 'Montserrat'),
                     ),
                   ),
                 ),
                 Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.only(left: 63, top: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          color: Colors.green,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withAlpha(100),
-                              blurRadius: 10.0,
-                            ),
-                          ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(left: 63, top: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(100),
+                            blurRadius: 10.0,
+                          ),
+                        ],
+                      ),
+                      width: 85,
+                      height: 24,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 0.0,
+                          vertical: 3,
                         ),
-                        width: 85,
-                        height: 24,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 0.0, vertical: 3),
-                          child: FittedBox(
-                            fit: BoxFit.fitHeight,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints.tightFor(
+                            width: 85,
+                            height: 24,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.green,
+                            ),
                             child: Text(
                               "Approve",
                               style: const TextStyle(
-                                fontFamily: 'Montserrat',
+                                  fontFamily: 'montserrat',
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 21, top: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(100),
+                            blurRadius: 10.0,
+                          ),
+                        ],
+                      ),
+                      width: 85,
+                      height: 24,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 0.0,
+                          vertical: 3,
+                        ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints.tightFor(
+                            width: 85,
+                            height: 24,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            child: Text(
+                              "Reject",
+                              style: const TextStyle(
+                                fontFamily: 'montserrat',
                                 color: Colors.white,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, top: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          color: Colors.red,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withAlpha(100),
-                              blurRadius: 10.0,
-                            ),
-                          ],
-                        ),
-                        width: 85,
-                        height: 24,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 0.0,
-                            vertical: 3,
-                          ),
-                          child: FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Text(
-                              "Reject",
-                              style: const TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ])
+                    ),
+                  ],
+                )
               ],
             ),
           ),
