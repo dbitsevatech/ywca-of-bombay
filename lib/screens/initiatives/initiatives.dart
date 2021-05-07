@@ -1,9 +1,11 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 // import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/screens/initiatives/piya.dart';
 
-import '../../widgets/initiative_card.dart';
+// import '../../widgets/initiative_card.dart';
 import '../../models/initiative.dart';
 import '../../widgets/blue_bubble_design.dart';
 
@@ -104,10 +106,11 @@ class _InitiativesState extends State<Initiatives> {
   // }
 
   Widget getAllInitiatives(BuildContext context) {
-    // pass array of all properties here
+    final _height = MediaQuery.of(context).size.height;
+
     return Expanded(
       child: Container(
-        height: MediaQuery.of(context).size.height,
+        height: _height,
         width: double.infinity, // max width possible
         child: ListView.builder(
           itemCount: _allInitiatives.length,
