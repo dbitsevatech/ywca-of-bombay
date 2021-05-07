@@ -1,10 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+// import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
-import 'piya.dart';
-import 'customclip_path.dart';
-import 'initiative_card.dart';
+import '../../widgets/initiative_card.dart';
 import '../../models/initiative.dart';
 import '../../widgets/blue_bubble_design.dart';
 
@@ -18,7 +17,7 @@ class _InitiativesState extends State<Initiatives> {
   final List<Initiative> _allInitiatives = Initiative.allInitiatives();
   @override
   Widget build(BuildContext context) {
-    // final _height = MediaQuery.of(context).size.height;
+    final _height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Center(
         child: Column(
@@ -57,143 +56,65 @@ class _InitiativesState extends State<Initiatives> {
                       children: <Widget>[
                         // Distance from ywca
                         // or else it will overlap
-                        SizedBox(height: 100),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                text: 'Initiatives ',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: Color(0xff333333),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ],
+                        SizedBox(height: _height * 0.1),
+                        Text(
+                          'Initiatives ',
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Color(0xff333333),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            letterSpacing: 1,
                           ),
                         ),
+                        SizedBox(height: _height * 0.02),
                       ],
                     ),
                   ),
                 ),
               ],
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 25),
-                    InitiativeCard(
-                      name: "PIYA",
-                      image: "img1.jpg",
-                      gradientColor: Colors.blue[600],
-                      route: "asha-kiran",
-                    ),
-                    InitiativeCard(
-                      name: "Asha Kiran Guest House",
-                      image: "img2.jpg",
-                      gradientColor: Colors.yellow[600],
-                      route: "asha-kiran",
-                    ),
-                    InitiativeCard(
-                      name: "PASI",
-                      image: "img3.jpg",
-                      gradientColor: Colors.red[600],
-                      route: "pasi",
-                    ),
-                    InitiativeCard(
-                      name: "Hostels",
-                      image: "img4.jpg",
-                      gradientColor: Colors.green[600],
-                      route: "hostels",
-                    ),
-                    InitiativeCard(
-                      name: "Hostels",
-                      image: "img4.jpg",
-                      gradientColor: Colors.blue[600],
-                      route: "hostels",
-                    ),
-                    getHomePageBody(context),
-                  ],
-                ),
-              ),
-            ),
+            getAllInitiatives(context),
           ],
         ),
       ),
     );
   }
 
-  _getAllInitiatives(BuildContext context) {
-    // pass array of all properties here
-  }
+  // TODO: Initiatives on Firebase
+  // TODO: add firebase code
 
-  Widget _getInitiativeCard(BuildContext context, int index) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 25),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Piya()),
-          );
-        },
-        child: Container(
-          padding: EdgeInsets.only(right: 100.0),
-          width: 300.0,
-          height: 100.0,
-          child: ClipPath(
-            child: Container(
-              alignment: Alignment.center,
-              width: 300.0,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(15, 20, 60, 20),
-                child: AutoSizeText(
-                  _allInitiatives[index].name,
-                  // "PIYA",
-                  maxLines: 3,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.2, 1],
-                  colors: [
-                    _allInitiatives[index].color,
-                    Colors.white,
-                  ],
-                ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  bottomLeft: Radius.circular(20.0),
-                ),
-              ),
-            ),
-            clipper: CustomClipPath(),
-          ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                  'assets/images/initiatives/' + _allInitiatives[index].image),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                blurRadius: 2,
-                offset: Offset(5, 5), //changes position of shadow
-              ),
-            ],
-          ),
+  // Stream<QuerySnapshot> getInitiativesStreamSnapshots(
+  //     BuildContext context) async* {
+  //   yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('trips').orderBy('startDate').snapshots();
+  // }
+
+  // Widget getAllInitiatives(BuildContext context) {
+  //   return Expanded(
+  //     child: StreamBuilder(
+  //       stream: getInitiativesStreamSnapshots(context),
+  //       builder: (context, snapshot) {
+  //         if (!snapshot.hasData) return const Text("Loading...");
+  //         return ListView.builder(
+  //           itemCount: _allInitiatives.length,
+  //           // itemCount: snapshot.data.documents.length + 1,
+  //           itemBuilder: (BuildContext context, int index) {
+  //             return _buildInitiativeCard(context, index);
+  //           },);},),);
+  // }
+
+  Widget getAllInitiatives(BuildContext context) {
+    // pass array of all properties here
+    return Expanded(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity, // max width possible
+        child: ListView.builder(
+          itemCount: _allInitiatives.length,
+          // itemCount: snapshot.data.documents.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            return buildInitiativeCard(context, index);
+          },
         ),
       ),
     );

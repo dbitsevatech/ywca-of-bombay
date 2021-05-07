@@ -75,115 +75,98 @@ class _AboutUsState extends State<AboutUs> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      height: _height * 0.06,
-                    ),
-                    Center(
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Center(
-                            child: Text(
-                              'THE YOUNG WOMEN\'S CHRISTIAN ASSOCIATION (YWCA) WAS ESTABLISHED IN 1855, '
-                                  'WHEN THE MOVEMENT FORMED ON PRAYER AND SERVICE UNITED TOGETHER AND ADOPTED'
-                                  'THE BLUE TRIANGLE AS ITS SYMBOL. THE BLUE TRIANGLE SIGNIFIES THE UNITY AND '
-                                  'COMPLETENESS OF BODY, MIND AND SPIRIT.\n',
-                              style: TextStyle(
-                                fontSize: 15,
-                                height: 1.25,
-                                color: Colors.black87,
-                                fontFamily: 'Montserrat',
-                              ),
-                            )
+                child: Container(
+                  margin: EdgeInsets.only(left: 30, right: 30),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: _height * 0.02,
+                      ),
+                      Text(
+                        'THE YOUNG WOMEN\'S CHRISTIAN ASSOCIATION (YWCA) WAS ESTABLISHED IN 1855, '
+                        'WHEN THE MOVEMENT FORMED ON PRAYER AND SERVICE UNITED TOGETHER AND ADOPTED'
+                        'THE BLUE TRIANGLE AS ITS SYMBOL. THE BLUE TRIANGLE SIGNIFIES THE UNITY AND '
+                        'COMPLETENESS OF BODY, MIND AND SPIRIT.\n',
+                        style: TextStyle(
+                          fontSize: 15,
+                          height: 1.25,
+                          color: Colors.black87,
+                          fontFamily: 'Montserrat',
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Center(
-                            child: Text(
-                              'THE HISTORY OF YWCA DATES BACK TO 1875 WHEN THE FIRST LOCAL ASSOCIATION WAS'
-                                  'ESTABLISHED IN MUMBAI. THIS WAS FOLLOWED BY THE YWCA OF INDIA IN THE YEAR'
-                                  '1896. IT IS ONE OF THE OLDEST NON-PROFIT COMMUNITY SERVICE ORGANIZATIONS FOR WOMEN'
-                                  'IN INDIA, WHICH IS BASED ON THE BIBLICAL PRINCIPLE \"LOVE THY NEIGHBOR AS THYSELF\".\n',
-                              style: TextStyle(
-                                fontSize: 15,
-                                height: 1.25,
-                                color: Colors.black87,
-                                fontFamily: 'Montserrat',
-
-                              ),
-                            )
+                      Text(
+                        'THE HISTORY OF YWCA DATES BACK TO 1875 WHEN THE FIRST LOCAL ASSOCIATION WAS'
+                        'ESTABLISHED IN MUMBAI. THIS WAS FOLLOWED BY THE YWCA OF INDIA IN THE YEAR'
+                        '1896. IT IS ONE OF THE OLDEST NON-PROFIT COMMUNITY SERVICE ORGANIZATIONS FOR WOMEN'
+                        'IN INDIA, WHICH IS BASED ON THE BIBLICAL PRINCIPLE \"LOVE THY NEIGHBOR AS THYSELF\".\n',
+                        style: TextStyle(
+                          fontSize: 15,
+                          height: 1.25,
+                          color: Colors.black87,
+                          fontFamily: 'Montserrat',
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Center(
-                            child: Text(
-                              'THE YWCA OF BOMBAY IS REGISTERED UNDER THE SOCIETIES REGISTRATION ACT, 1860 UNDER NO. 44 DATED'
-                                  '06-08-1952 AND OF THE BOMBAY PUBLIC TRUST ACT, 1950 UNDER NO. F/388 (BOM.) DATED 13-07-1953.',
-                              style: TextStyle(
-                                fontSize: 15,
-                                height:1.5,
-                                color: Colors.black87,
-                                fontFamily: 'Montserrat',
-
-                              ),
-                            )
+                      Text(
+                        'THE YWCA OF BOMBAY IS REGISTERED UNDER THE SOCIETIES REGISTRATION ACT, 1860 UNDER NO. 44 DATED'
+                        '06-08-1952 AND OF THE BOMBAY PUBLIC TRUST ACT, 1950 UNDER NO. F/388 (BOM.) DATED 13-07-1953.',
+                        style: TextStyle(
+                          fontSize: 15,
+                          height: 1.5,
+                          color: Colors.black87,
+                          fontFamily: 'Montserrat',
                         ),
                       ),
-                    ),
-
-                    SizedBox(
-                      height: _height * 0.05,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: GradientButton(
+                      // ),
+                      SizedBox(
+                        height: _height * 0.025,
+                      ),
+                      GradientButton(
                         buttonText: 'Become a member today!',
                         screenHeight: _height,
                         route: 'register2',
-                        onPressedFunction: () {
-                        },
+                        onPressedFunction: () {},
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: Text("To know more.",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.black54,
-                                  ),),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "To know more.",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              color: Colors.black54,
                             ),
-                            Center(
-                                child: Text(
-                                  ' Visit Here',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Montserrat',
-                                    color: Color(0xff49DEE8),
-                                  ),
-                                ),),
-                          ],
-                        ),)
-                  ],
+                          ),
+                          InkWell(
+                            onTap: () {
+                              // Navigator.pushAndRemoveUntil(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => LoginScreen()),
+                              //     (route) => false);
+                            },
+                            child: Text(
+                              ' Visit Here',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff49DEE8),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: _height * 0.01),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ),
             // Expanded(
             //   child: Column(
