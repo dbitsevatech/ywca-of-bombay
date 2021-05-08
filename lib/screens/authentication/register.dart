@@ -231,9 +231,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Text(
                               'Already have an account? ',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontFamily: 'Montserrat',
-                                letterSpacing: 2,
                               ),
                             ),
                           ),
@@ -291,7 +290,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -332,7 +330,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -369,7 +366,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -423,7 +419,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -467,7 +462,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -499,7 +493,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: primaryColor,
                             fontWeight: FontWeight.w800,
                             fontFamily: 'Montserrat',
-                            letterSpacing: 2,
                           ),
                         ),
                         Column(
@@ -509,7 +502,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 'Female',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  letterSpacing: 2,
                                 ),
                               ),
                               leading: Radio(
@@ -533,7 +525,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 'Male',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  letterSpacing: 2,
                                 ),
                               ),
                               leading: Radio(
@@ -557,7 +548,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 'Decline to state',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  letterSpacing: 2,
                                 ),
                               ),
                               leading: Radio(
@@ -604,9 +594,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Text(
                         'Already have an account? ',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontFamily: 'Montserrat',
-                          letterSpacing: 2,
                         ),
                       ),
                     ),
@@ -813,7 +802,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -872,7 +860,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
-                            letterSpacing: 2,
                           ),
                           decoration: InputDecoration(
                             prefixIcon: Icon(
@@ -1002,7 +989,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                       fontFamily: 'Montserrat',
                                       color: Colors.black,
                                       fontSize: 16,
-                                      letterSpacing: 2,
+                                      letterSpacing: 1.5,
                                     ),
                                   ),
                                 ),

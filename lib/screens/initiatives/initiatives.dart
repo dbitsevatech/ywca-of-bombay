@@ -64,7 +64,6 @@ class _InitiativesState extends State<Initiatives> {
                             color: Color(0xff333333),
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
-                            letterSpacing: 1,
                           ),
                         ),
                         SizedBox(height: _height * 0.02),

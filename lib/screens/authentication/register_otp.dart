@@ -143,22 +143,21 @@ class _RegisterOtpState extends State<RegisterOtp>
             "placeOfWork": placeOfWork,
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
-            "memberRole" : "none"
+            "memberRole": "none"
           };
           userInfo.updateAfterAuth(
-            value.user.uid,
-            firstName,
-            lastName,
-            dateOfBirth,
-            emailId,
-            phoneNumber,
-            gender,
-            profession,
-            placeOfWork,
-            nearestCenter,
-            interestInMembership,
-            "none"
-          );
+              value.user.uid,
+              firstName,
+              lastName,
+              dateOfBirth,
+              emailId,
+              phoneNumber,
+              gender,
+              profession,
+              placeOfWork,
+              nearestCenter,
+              interestInMembership,
+              "none");
           CollectionReference users =
               FirebaseFirestore.instance.collection('users');
           users.doc(value.user.uid).set(data);
@@ -196,7 +195,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'RacingSansOne',
-          fontSize: 35.0,
+          fontSize: 32.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
@@ -210,7 +209,10 @@ class _RegisterOtpState extends State<RegisterOtp>
       "Please enter the 6-digit OTP code sent\nto your registered mobile number.",
       textAlign: TextAlign.center,
       style: TextStyle(
-          fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontFamily: 'Montserrat',
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
     );
   }
 
@@ -498,7 +500,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Overridden methods
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
+    userInfo = Provider.of<UserData>(context, listen: false);
 
     super.initState();
     _verifyPhoneNumber();

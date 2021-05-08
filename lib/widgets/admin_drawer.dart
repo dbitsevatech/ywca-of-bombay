@@ -6,11 +6,10 @@ import 'package:provider/provider.dart';
 import '../screens/about_us.dart';
 import '../screens/admin/analytics/analytics.dart';
 import '../screens/admin/approval/approval.dart';
-import '../screens/class_builder.dart';
+import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
 import '../screens/events/events.dart';
-import '../screens/home.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
@@ -34,21 +33,8 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
     userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
     _drawerController = KFDrawerController(
-      initialPage: ClassBuilder.fromString('Home'),
+      initialPage: ClassBuilder.fromString('Events'),
       items: [
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.home),
-              SizedBox(width: 10),
-              Text(
-                'Home',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
-              ),
-            ],
-          ),
-          page: Home(),
-        ),
         KFDrawerItem.initWithPage(
           text: Row(
             children: [

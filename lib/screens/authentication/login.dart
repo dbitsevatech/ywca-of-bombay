@@ -23,13 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
-  final GlobalKey<ScaffoldState> _scaffoldkey =
-      GlobalKey<ScaffoldState>();
-
+  final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen:false);
+    userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
   }
 
@@ -47,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => RegisterScreen()),
-                  (route) => false);
+              (route) => false);
         },
       ),
     );
@@ -79,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
         .where("phoneNumber", isEqualTo: phoneNumber)
         .get();
     if (checkuser.docs.length == 1) {
-
       final userdata = checkuser.docs[0].data();
       userInfo.updateAfterAuth(
           userdata['uid'],
@@ -187,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       'We are happy to see you again. You can continue where you left off by logging in.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Color(0xff7C82A1),
                         fontFamily: 'Montserrat',
                       ),
@@ -275,12 +272,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
-                      child: Text("Don't have an account? ",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: 'Montserrat',
-                            letterSpacing: 2,
-                          ),
+                      child: Text(
+                        "Don't have an account? ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     ),
                     Center(
@@ -288,8 +285,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (context) => RegisterScreen()),
-                                  (route) => false);
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()),
+                              (route) => false);
                         },
                         child: Text(
                           'Register',

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
@@ -36,9 +37,10 @@ class GradientButton extends StatelessWidget {
       ),
       child: TextButton(
         child: Center(
-          child: Text(
+          child: AutoSizeText(
             buttonText,
             // 'LET\'S GO',
+            maxLines: 1,
             style: TextStyle(
               fontSize: 20,
               fontFamily: 'Montserrat',
