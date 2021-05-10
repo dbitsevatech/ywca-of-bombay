@@ -11,7 +11,7 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
 
-enum GenderChoices { female, male, declineToState }
+// enum GenderChoices { female, male, declineToState }
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
@@ -40,7 +40,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
-  GenderChoices selectedGender = GenderChoices.female;
+  // GenderChoices selectedGender = GenderChoices.female;
+
+  // female-0, male-1, decline to state-2
+  int _genderRadioValue = 0;
+  void _handleGenderRadioValueChange(int value) {
+    setState(() {
+      _genderRadioValue = value;
+      if (_genderRadioValue == 0) {
+        gender = "Female";
+      } else if (_genderRadioValue == 1) {
+        gender = "Male";
+      } else {
+        gender = "Decline to state";
+      }
+      print("gender selected: $gender");
+    });
+  }
+
   Future _selectDate() async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -157,8 +174,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
-      dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
-      selectedGender = GenderChoices.female;
+      // dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
+      // selectedGender = GenderChoices.female;
       gender = "Female";
     });
     super.initState();
@@ -495,75 +512,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontFamily: 'Montserrat',
                           ),
                         ),
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            ListTile(
-                              title: Text(
+                            Radio(
+                              value: 0,
+                              groupValue: _genderRadioValue,
+                              onChanged: _handleGenderRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _genderRadioValue = 0;
+                                  _handleGenderRadioValueChange(
+                                      _genderRadioValue);
+                                });
+                              },
+                              child: Text(
                                 'Female',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
+                                  fontSize: 16,
                                 ),
                               ),
-                              leading: Radio(
-                                value: GenderChoices.female,
-                                groupValue: selectedGender,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (GenderChoices value) {
-                                  setState(
-                                    () {
-                                      selectedGender = value;
-                                      gender = "Female";
-                                    },
-                                  );
-                                },
-                              ),
                             ),
-                            ListTile(
-                              title: Text(
+                            Radio(
+                              value: 1,
+                              groupValue: _genderRadioValue,
+                              onChanged: _handleGenderRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _genderRadioValue = 1;
+                                  _handleGenderRadioValueChange(
+                                      _genderRadioValue);
+                                });
+                              },
+                              child: Text(
                                 'Male',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
+                                  fontSize: 16,
                                 ),
                               ),
-                              leading: Radio(
-                                value: GenderChoices.male,
-                                groupValue: selectedGender,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (GenderChoices value) {
-                                  setState(
-                                    () {
-                                      selectedGender = value;
-                                      gender = "Male";
-                                    },
-                                  );
-                                },
-                              ),
                             ),
-                            ListTile(
-                              title: Text(
+                            Radio(
+                              value: 2,
+                              groupValue: _genderRadioValue,
+                              onChanged: _handleGenderRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _genderRadioValue = 2;
+                                  _handleGenderRadioValueChange(
+                                      _genderRadioValue);
+                                });
+                              },
+                              child: Text(
                                 'Decline to state',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
+                                  fontSize: 16,
                                 ),
-                              ),
-                              leading: Radio(
-                                value: GenderChoices.declineToState,
-                                groupValue: selectedGender,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (GenderChoices value) {
-                                  setState(
-                                    () {
-                                      selectedGender = value;
-                                      gender = "Decline to State";
-                                    },
-                                  );
-                                },
                               ),
                             ),
                           ],
@@ -632,7 +653,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
-enum MemberChoices { yes, no, maybe }
+// enum MemberChoices { yes, no, maybe }
 
 // ignore: must_be_immutable
 class RegisterScreen2 extends StatefulWidget {
@@ -689,7 +710,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     this.gender,
     this.dateOfBirth,
   );
-  MemberChoices _selectedMembershipInterest = MemberChoices.yes;
+  // MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -724,12 +745,26 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
     );
   }
 
+  // yes-0, no-1, maybe-2
+  int _interestInMembershipRadioValue = 0;
+  void _handleInterestInMembershipRadioValueChange(int value) {
+    setState(() {
+      _interestInMembershipRadioValue = value;
+      if (_interestInMembershipRadioValue == 0) {
+        interestInMembership = "Yes";
+      } else if (_interestInMembershipRadioValue == 1) {
+        interestInMembership = "No";
+      } else {
+        interestInMembership = "Maybe";
+      }
+      print("Membership interest selected: $interestInMembership");
+    });
+  }
+
   @override
   void initState() {
     userInfo = userInfo;
-    // firstName = userInfo.getfirstName();
     setState(() {
-      _selectedMembershipInterest = MemberChoices.yes;
       interestInMembership = "Yes";
     });
     super.initState();
@@ -916,8 +951,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         ),
                         Container(
                           padding: EdgeInsets.only(
-                            // left: _width * 0.262,
-                            // right: _width * 0.262,
                             left: _width * 0.245,
                             right: _width * 0.245,
                           ),
@@ -939,38 +972,15 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 print(nearestCenter);
                               });
                             },
-                            hint: Text(
-                              "Nearest YWCA Center",
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.black,
-                                fontSize: 14,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                            // selectedItemBuilder: (BuildContext context) {
-                            //   return <String>[
-                            //     'Andheri',
-                            //     'Bandra',
-                            //     'Belapur',
-                            //     'Borivali',
-                            //     'Byculla',
-                            //     'Chembur',
-                            //     'Fort',
-                            //   ].map((String value) {
-                            //     return Center(
-                            //       child: Text(
-                            //         nearestCenter,
-                            //         style: TextStyle(
-                            //           fontFamily: 'Montserrat',
-                            //           color: Colors.black,
-                            //           fontSize: 16,
-                            //           letterSpacing: 2,
-                            //         ),
-                            //       ),
-                            //     );
-                            //   }).toList();
-                            // },
+                            // hint: Text(
+                            //   "Nearest YWCA Center",
+                            //   style: TextStyle(
+                            //     fontFamily: 'Montserrat',
+                            //     color: Colors.black,
+                            //     fontSize: 14,
+                            //     letterSpacing: 1.5,
+                            //   ),
+                            // ),
                             items: <String>[
                               'Andheri',
                               'Bandra',
@@ -1008,55 +1018,92 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             letterSpacing: 1.5,
                           ),
                         ),
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            ListTile(
-                              title: const Text('Yes'),
-                              leading: Radio(
-                                value: MemberChoices.yes,
-                                groupValue: _selectedMembershipInterest,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (MemberChoices value) {
-                                  setState(() {
-                                    _selectedMembershipInterest = value;
-                                    interestInMembership = "Yes";
-                                  });
-                                },
+                            Radio(
+                              value: 0,
+                              groupValue: _interestInMembershipRadioValue,
+                              onChanged:
+                                  _handleInterestInMembershipRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _interestInMembershipRadioValue = 0;
+                                  _handleInterestInMembershipRadioValueChange(
+                                      _interestInMembershipRadioValue);
+                                });
+                              },
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                            ListTile(
-                              title: const Text('No'),
-                              leading: Radio(
-                                value: MemberChoices.no,
-                                groupValue: _selectedMembershipInterest,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (MemberChoices value) {
-                                  setState(() {
-                                    _selectedMembershipInterest = value;
-                                    interestInMembership = "No";
-                                  });
-                                },
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Radio(
+                              value: 1,
+                              groupValue: _interestInMembershipRadioValue,
+                              onChanged:
+                                  _handleInterestInMembershipRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _interestInMembershipRadioValue = 1;
+                                  _handleInterestInMembershipRadioValueChange(
+                                      _interestInMembershipRadioValue);
+                                });
+                              },
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                            ListTile(
-                              title: const Text('Maybe'),
-                              leading: Radio(
-                                value: MemberChoices.maybe,
-                                groupValue: _selectedMembershipInterest,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                                onChanged: (MemberChoices value) {
-                                  setState(() {
-                                    _selectedMembershipInterest = value;
-                                    interestInMembership = "Maybe";
-                                  });
-                                },
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: _interestInMembershipRadioValue,
+                              onChanged:
+                                  _handleInterestInMembershipRadioValueChange,
+                              focusColor: secondaryColor,
+                              hoverColor: secondaryColor,
+                              activeColor: secondaryColor,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _interestInMembershipRadioValue = 2;
+                                  _handleInterestInMembershipRadioValueChange(
+                                      _interestInMembershipRadioValue);
+                                });
+                              },
+                              child: Text(
+                                'Maybe',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                ),
                               ),
+                            ),
+                            SizedBox(
+                              width: 20,
                             ),
                           ],
                         ),
