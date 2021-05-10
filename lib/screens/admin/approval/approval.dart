@@ -237,128 +237,130 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
     final Size size = MediaQuery.of(context).size;
     // final double categoryHeight = size.height * 0.30;
     return SafeArea(
-      child: Container(
-        height: size.height,
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                // top-left corner intersecting circles design
-                MainPageBlueBubbleDesign(),
-                Positioned(
-                  child: AppBar(
-                    centerTitle: true,
-                    title: Text(
-                      "YWCA Of Bombay",
-                      style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
-                        fontSize: 18.0,
-                        color: Colors.black87,
+      child: Scaffold(
+        body: Container(
+          height: size.height,
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  // top-left corner intersecting circles design
+                  MainPageBlueBubbleDesign(),
+                  Positioned(
+                    child: AppBar(
+                      centerTitle: true,
+                      title: Text(
+                        "YWCA Of Bombay",
+                        style: TextStyle(
+                          fontFamily: 'LilyScriptOne',
+                          fontSize: 18.0,
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                        size: 30,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: widget.onMenuPressed,
                       ),
-                      onPressed: widget.onMenuPressed,
                     ),
                   ),
-                ),
-                PreferredSize(
-                  preferredSize: Size.fromHeight(80),
-                  child: Column(
-                    children: <Widget>[
-                      // Distance from ywca
-                      // or else it will overlap
-                      SizedBox(height: 80),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          children: [
-                            TextSpan(
-                              text: 'Approval ',
-                              style: TextStyle(
-                                fontSize: 28,
-                                color: Color(0xff333333),
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(
-                                  Icons.notification_important,
-                                  size: 28,
+                  PreferredSize(
+                    preferredSize: Size.fromHeight(80),
+                    child: Column(
+                      children: <Widget>[
+                        // Distance from ywca
+                        // or else it will overlap
+                        SizedBox(height: 80),
+                        RichText(
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyText2,
+                            children: [
+                              TextSpan(
+                                text: 'Approval ',
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color: Color(0xff333333),
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
                                 ),
                               ),
+                              WidgetSpan(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
+                                  child: Icon(
+                                    Icons.notification_important,
+                                    size: 28,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        TextField(
+                          decoration: InputDecoration(
+                            hintText: "Search by name",
+                            hintStyle: TextStyle(fontFamily: 'Montserrat'),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.grey,
                             ),
-                          ],
+                            suffixIcon: Icon(
+                              Icons.mic,
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.zero,
+                            filled: true,
+                            fillColor: Colors.transparent,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search by name",
-                          hintStyle: TextStyle(fontFamily: 'Montserrat'),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.mic,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                controller: controller,
-                itemCount: itemsData.length,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  double scale = 1.0;
-                  if (topContainer > 0.5) {
-                    scale = index + 0.5 - topContainer;
-                    if (scale < 0) {
-                      scale = 0;
-                    } else if (scale > 1) {
-                      scale = 1;
-                    }
-                  }
-                  return Opacity(
-                    opacity: scale,
-                    child: Transform(
-                      transform: Matrix4.identity()..scale(scale, scale),
-                      alignment: Alignment.bottomCenter,
-                      child: Align(
-                        heightFactor: 0.8,
-                        alignment: Alignment.topCenter,
-                        child: itemsData[index],
-                      ),
+                      ],
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-            ),
-          ],
+              Expanded(
+                child: ListView.builder(
+                  controller: controller,
+                  itemCount: itemsData.length,
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    double scale = 1.0;
+                    if (topContainer > 0.5) {
+                      scale = index + 0.5 - topContainer;
+                      if (scale < 0) {
+                        scale = 0;
+                      } else if (scale > 1) {
+                        scale = 1;
+                      }
+                    }
+                    return Opacity(
+                      opacity: scale,
+                      child: Transform(
+                        transform: Matrix4.identity()..scale(scale, scale),
+                        alignment: Alignment.bottomCenter,
+                        child: Align(
+                          heightFactor: 0.8,
+                          alignment: Alignment.topCenter,
+                          child: itemsData[index],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

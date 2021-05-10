@@ -1,16 +1,15 @@
 import 'dart:async';
-import 'package:ywcaofbombay/widgets/admin_drawer.dart';
-
-import '../../models/user.dart';
-import 'package:provider/provider.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../widgets/admin_drawer.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
+import '../../models/user.dart';
 
 class LoginOtp extends StatefulWidget {
   final String phoneNumber;
@@ -117,7 +116,7 @@ class _LoginOtpState extends State<LoginOtp>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'RacingSansOne',
-          fontSize: 35.0,
+          fontSize: 32.0,
           color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
@@ -131,7 +130,10 @@ class _LoginOtpState extends State<LoginOtp>
       "Please enter the 6-digit OTP code sent\nto your registered mobile number.",
       textAlign: TextAlign.center,
       style: TextStyle(
-          fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.w600),
+        fontFamily: 'Montserrat',
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
     );
   }
 

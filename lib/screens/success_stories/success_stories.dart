@@ -59,7 +59,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                           fontFamily: 'Montserrat',
                           color: Color(0xff333647),
                           fontWeight: FontWeight.bold,
-                          fontSize: 32,
+                          fontSize: 26,
                         ),
                       ),
                     ),

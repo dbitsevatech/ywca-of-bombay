@@ -65,11 +65,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Positioned(
                     child: AppBar(
                       centerTitle: true,
-                      title: Text("YWCA Of Bombay",
-                          style: TextStyle(
-                              fontFamily: 'LilyScriptOne',
-                              fontSize: 24.0,
-                              color: Colors.black87)),
+                      title: Text(
+                        "YWCA Of Bombay",
+                        style: TextStyle(
+                            fontFamily: 'LilyScriptOne',
+                            fontSize: 24.0,
+                            color: Colors.black87),
+                      ),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
                     ),
@@ -82,13 +84,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
-                  // Changes the size of the carousel
+                  // Changes the size of the carousel (and also messes up the blue bubble design
                   //
                   // https://medium.com/flutter-community/flutter-web-getting-started-with-responsive-design-231511ef15d3
                   // https://stackoverflow.com/questions/61207980/create-a-flutter-carousel-slider-with-dynamic-heigth-for-each-page
-                  // aspectRatio: 1.4, // This value perfectly fits for Pixel 2
-                  aspectRatio: 0.95, // This value perfectly fi/ts for Redmi 8
-                  // aspectRatio: 1.1, // This value perfectly fits for Pixel 4XL
+                  //
+                  // aspectRatio: 1.4, // Pixel 2 and Moto G5s plus
+                  aspectRatio: 1, // Redmi 8 and pixel 4xl
+                  // aspectRatio: 1.1, // Nokia 7 plus
                   autoPlay: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   autoPlayAnimationDuration: Duration(milliseconds: 700),
@@ -109,32 +112,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   );
                 },
               ),
-              Center(
-                child: Text(
-                  '\"BY LOVE, SERVE ONE ANOTHER\"',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Montserrat',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 70.0, vertical: 0.0),
-                  child: Text(
-                    'To empower women at all levels to struggle for justice',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      color: Colors.black45,
+              Container(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Center(
+                    //   child:
+                    Text(
+                      '\"BY LOVE, SERVE ONE ANOTHER\"',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Montserrat',
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
+                    // ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'To empower women at all levels to struggle for justice',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: 'Montserrat',
+                        color: Colors.black45,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -158,31 +165,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             .doc(user.uid)
                             .get();
                         // print(checkuser.data());
-                          final userdata = checkuser.data();
-                          userInfo.updateAfterAuth(
-                              userdata['uid'],
-                              userdata['firstName'],
-                              userdata['lastName'],
-                              userdata['dateOfBirth'].toDate(),
-                              userdata['emailId'],
-                              userdata['phoneNumber'],
-                              userdata['gender'],
-                              userdata['profession'],
-                              userdata['placeOfWork'],
-                              userdata['nearestCenter'],
-                              userdata['interestInMembership'],
-                            userdata['memberRole']
-                          );
-                          if( userdata['memberRole'] == 'none'){
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MainWidget()));
-                          }
-                          else if(userdata['memberRole'] == 'Admin'){
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AdminMainWidget()));
-                          }
-
-
+                        final userdata = checkuser.data();
+                        userInfo.updateAfterAuth(
+                            userdata['uid'],
+                            userdata['firstName'],
+                            userdata['lastName'],
+                            userdata['dateOfBirth'].toDate(),
+                            userdata['emailId'],
+                            userdata['phoneNumber'],
+                            userdata['gender'],
+                            userdata['profession'],
+                            userdata['placeOfWork'],
+                            userdata['nearestCenter'],
+                            userdata['interestInMembership'],
+                            userdata['memberRole']);
+                        if (userdata['memberRole'] == 'none') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MainWidget()));
+                        } else if (userdata['memberRole'] == 'Admin') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AdminMainWidget()));
+                        }
                       } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(

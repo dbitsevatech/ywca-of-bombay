@@ -65,11 +65,11 @@ class _ContactUsState extends State<ContactUs> {
                               TextSpan(
                                 text: 'Contact Us',
                                 style: TextStyle(
-                                  fontSize: 32,
+                                  fontSize: 26,
                                   color: Color(0xff333333),
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Montserrat',
-                                  letterSpacing: 0.5,
+                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ],

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 import 'services/auth_service.dart';
-import 'screens/class_builder.dart';
+import 'services/class_builder.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
 import 'screens/onboarding.dart';

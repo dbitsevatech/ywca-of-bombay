@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-import 'package:ywcaofbombay/widgets/gradient_button.dart';
 
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
+import '../widgets/gradient_button.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class AboutUs extends KFDrawerContent {
@@ -137,7 +137,7 @@ class _AboutUsState extends State<AboutUs> {
                           Text(
                             "To know more.",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontFamily: 'Montserrat',
                               color: Colors.black54,
                             ),
@@ -153,7 +153,7 @@ class _AboutUsState extends State<AboutUs> {
                             child: Text(
                               ' Visit Here',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xff49DEE8),

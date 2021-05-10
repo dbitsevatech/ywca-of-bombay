@@ -64,7 +64,6 @@ class _InitiativesState extends State<Initiatives> {
                             color: Color(0xff333333),
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
-                            letterSpacing: 1,
                           ),
                         ),
                         SizedBox(height: _height * 0.02),
@@ -104,10 +103,11 @@ class _InitiativesState extends State<Initiatives> {
   // }
 
   Widget getAllInitiatives(BuildContext context) {
-    // pass array of all properties here
+    final _height = MediaQuery.of(context).size.height;
+
     return Expanded(
       child: Container(
-        height: MediaQuery.of(context).size.height,
+        height: _height,
         width: double.infinity, // max width possible
         child: ListView.builder(
           itemCount: _allInitiatives.length,
