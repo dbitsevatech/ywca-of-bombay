@@ -130,7 +130,7 @@ class _AdminEventsState extends State<AdminEvents> {
             //   child:
             Column(
               children: [
-                Spacer(flex: 15),
+                Spacer(flex: 20),
                 Row(
                   children: [
                     Spacer(flex: 15),

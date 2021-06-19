@@ -63,8 +63,8 @@ class DetailPage extends StatelessWidget {
           Row(
             //ROW 2
             children: [
+              Spacer(flex: 9),
               Container(
-                margin: EdgeInsets.fromLTRB(300.0, 0.0, 0.0, 0.0),
                 child: ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
@@ -94,6 +94,7 @@ class DetailPage extends StatelessWidget {
                   onPressed: () {},
                 ),
               ),
+              Spacer(),
             ],
           ),
           // Row(// ROW 3
@@ -168,7 +169,8 @@ class DetailPage extends StatelessWidget {
             children: [
               Container(
                 width: 350,
-                margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
+                // margin: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
+                padding: EdgeInsets.fromLTRB(45.0, 10.0, 0.0, 0.0),
                 // TODO: Please use AutoSizeText widget instead of Text Widget to make the text responsive to all screen sizes
                 // https://pub.dev/packages/auto_size_text
                 //
