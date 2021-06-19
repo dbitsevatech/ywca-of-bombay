@@ -175,12 +175,12 @@ class _EventsState extends State<Events> {
               'Amount: ${_allEvents[index].cost}',
               style: TextStyle(
                 fontSize: 11.0,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
-        //trailing: ,
+        // trailing: Icon(Icons.more_vert),
         onTap: () {
           gotoSecondActivity(context);
         },

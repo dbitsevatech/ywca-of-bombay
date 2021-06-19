@@ -363,6 +363,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           setState(() {
             _verificationCode = verficationID;
           });
+          print("code sent. verification id = $_verificationCode");
         },
         codeAutoRetrievalTimeout: (String verificationID) {
           setState(() {
