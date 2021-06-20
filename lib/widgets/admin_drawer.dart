@@ -130,9 +130,37 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
     );
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure?'),
+          content: Text('You are going to exit the application!!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: _onBackPressed,
+      child: Scaffold(
       // in Moto G5s Plus
       // A RenderFlex overflowed by 90 pixels on the bottom.
       // The relevant error-causing widget was
@@ -245,6 +273,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
           ),
         ),
       ),
+    ),
     );
   }
 }
