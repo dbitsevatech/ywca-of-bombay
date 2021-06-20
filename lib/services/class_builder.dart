@@ -1,3 +1,4 @@
+import '../screens/admin/events/events.dart';
 import '../screens/events/events.dart';
 
 typedef T Constructor<T>();
@@ -12,6 +13,7 @@ void register<T>(Constructor<T> constructor) {
 class ClassBuilder {
   static void registerClasses() {
     register<Events>(() => Events());
+    register<AdminEvents>(() => AdminEvents());
   }
 
   static dynamic fromString(String type) {

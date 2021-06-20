@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 import '../screens/about_us.dart';
 import '../screens/admin/analytics/analytics.dart';
 import '../screens/admin/approval/approval.dart';
+import '../screens/admin/events/events.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
-import '../screens/events/events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
@@ -33,7 +33,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
     userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
     _drawerController = KFDrawerController(
-      initialPage: ClassBuilder.fromString('Events'),
+      initialPage: ClassBuilder.fromString('AdminEvents'),
       items: [
         KFDrawerItem.initWithPage(
           text: Row(
@@ -59,7 +59,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               ),
             ],
           ),
-          page: Events(),
+          page: AdminEvents(),
         ),
         KFDrawerItem.initWithPage(
           text: Row(

@@ -288,6 +288,7 @@ class _LoginOtpState extends State<LoginOtp>
         setState(() {
           _verificationCode = verficationID;
         });
+        print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
         setState(() {

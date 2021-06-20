@@ -2,17 +2,17 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'event_details.dart';
-import '../../models/Event.dart';
-import '../../widgets/constants.dart';
-import '../../widgets/blue_bubble_design.dart';
+import '../../../models/Event.dart';
+import '../../../widgets/constants.dart';
+import '../../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
-class Events extends KFDrawerContent {
+class AdminEvents extends KFDrawerContent {
   @override
-  _EventsState createState() => _EventsState();
+  _AdminEventsState createState() => _AdminEventsState();
 }
 
-class _EventsState extends State<Events> {
+class _AdminEventsState extends State<AdminEvents> {
   final List<Event> _allEvents = Event.allEvents();
 
   @override
@@ -105,8 +105,71 @@ class _EventsState extends State<Events> {
             ),
             // card view for the events
             Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
-                child: getHomePageBody(context))
+              padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+              child: getHomePageBody(context),
+            ),
+            // ElevatedButton.icon(
+            //   onPressed: () {},
+            //   style: ElevatedButton.styleFrom(
+            //     // backgroundColor: MaterialStateProperty.all(secondaryColor),
+            //     primary: secondaryColor,
+            //     onPrimary: Colors.black87,
+            //     // padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            //     ),
+            //     // textStyle: MaterialStateProperty.all(
+            //     //   TextStyle(fontSize: 30),
+            //     // ),
+            //   ),
+            //   icon: Icon(Icons.add),
+            //   label: Text("Add Event"),
+            // )
+            // Padding(
+            //   padding: EdgeInsets.fromLTRB(200.0, 650.0, 0.0, 0.0),
+            //   child:
+            Column(
+              children: [
+                Spacer(flex: 20),
+                Row(
+                  children: [
+                    Spacer(flex: 15),
+                    ElevatedButton.icon(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed))
+                            return secondaryColor.withOpacity(0.90);
+                          return firstButtonGradientColor;
+                        }),
+                        foregroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          // if (states.contains(MaterialState.pressed))
+                          //   return Colors.black45;
+                          return null;
+                        }),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      icon: Icon(Icons.add),
+                      label: Text(
+                        "New Event",
+                        style: TextStyle(
+                          fontSize: 17.0,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                    Spacer(),
+                  ],
+                ),
+                Spacer(),
+              ],
+            ),
+            // ),
           ],
         ),
       ),
@@ -177,6 +240,45 @@ class _EventsState extends State<Events> {
                 fontSize: 11.0,
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            Row(
+              children: [
+                Spacer(),
+                Spacer(),
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                    // textStyle: MaterialStateProperty.all(
+                    //   TextStyle(fontSize: 20),
+                    // ),
+                  ),
+                  child: Icon(
+                    Icons.edit,
+                  ),
+                ),
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                    padding: MaterialStateProperty.all(EdgeInsets.all(5)),
+                    // textStyle: MaterialStateProperty.all(
+                    //   TextStyle(fontSize: 30),
+                    // ),
+                  ),
+                  child: Icon(
+                    Icons.delete,
+                  ),
+                ),
+                // ElevatedButton.icon(
+                //   onPressed: () {},
+                //   icon: Icon(Icons.edit),
+                //   label: Text(""),
+                // ),
+              ],
             ),
           ],
         ),
