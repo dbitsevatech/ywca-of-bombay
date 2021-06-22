@@ -29,7 +29,7 @@ class _AboutUsState extends State<AboutUs> {
                     title: Text(
                       "YWCA Of Bombay",
                       style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
+                        fontFamily: 'Roboto',
                         fontSize: 18.0,
                         color: Colors.black87,
                       ),
@@ -85,10 +85,10 @@ class _AboutUsState extends State<AboutUs> {
                         height: _height * 0.02,
                       ),
                       Text(
-                        'THE YOUNG WOMEN\'S CHRISTIAN ASSOCIATION (YWCA) WAS ESTABLISHED IN 1855, '
-                        'WHEN THE MOVEMENT FORMED ON PRAYER AND SERVICE UNITED TOGETHER AND ADOPTED'
-                        'THE BLUE TRIANGLE AS ITS SYMBOL. THE BLUE TRIANGLE SIGNIFIES THE UNITY AND '
-                        'COMPLETENESS OF BODY, MIND AND SPIRIT.\n',
+                        'The young women\'s Christian association (YWCA) was established in 1855, '
+                            'when the movement formed on prayer and service united together and adopted'
+                            'the blue triangle as its symbol. The blue triangle signifies the unity and '
+                            'completeness of body, mind and spirit.\n',
                         style: TextStyle(
                           fontSize: 15,
                           height: 1.25,
@@ -97,10 +97,10 @@ class _AboutUsState extends State<AboutUs> {
                         ),
                       ),
                       Text(
-                        'THE HISTORY OF YWCA DATES BACK TO 1875 WHEN THE FIRST LOCAL ASSOCIATION WAS'
-                        'ESTABLISHED IN MUMBAI. THIS WAS FOLLOWED BY THE YWCA OF INDIA IN THE YEAR'
-                        '1896. IT IS ONE OF THE OLDEST NON-PROFIT COMMUNITY SERVICE ORGANIZATIONS FOR WOMEN'
-                        'IN INDIA, WHICH IS BASED ON THE BIBLICAL PRINCIPLE \"LOVE THY NEIGHBOR AS THYSELF\".\n',
+                        'The history of YWCA dates back to 1875 when the first local association was'
+                            'established in Mumbai. This was followed by the YWCA of India in the year'
+                            '1896. It is one of the oldest non-profit community service organizations for women'
+                            'In India, which is based on the biblical principle \"love thy neighbour as thyself\".\n',
                         style: TextStyle(
                           fontSize: 15,
                           height: 1.25,
@@ -109,8 +109,8 @@ class _AboutUsState extends State<AboutUs> {
                         ),
                       ),
                       Text(
-                        'THE YWCA OF BOMBAY IS REGISTERED UNDER THE SOCIETIES REGISTRATION ACT, 1860 UNDER NO. 44 DATED'
-                        '06-08-1952 AND OF THE BOMBAY PUBLIC TRUST ACT, 1950 UNDER NO. F/388 (BOM.) DATED 13-07-1953.',
+                        'The YWCA of Bombay is registered under the societies registration act, 1860 under no. 44 dated'
+                            '06-08-1952 and of the Bombay public trust act, 1950 under no. F/388 (BOM.) Dated 13-07-1953.',
                         style: TextStyle(
                           fontSize: 15,
                           height: 1.5,
