@@ -16,6 +16,7 @@ import '../screens/success_stories/success_stories.dart';
 import '../models/user.dart';
 import '../screens/view_profile.dart';
 
+
 class AdminMainWidget extends StatefulWidget {
   AdminMainWidget({Key key, this.title}) : super(key: key);
   final String title;
@@ -130,9 +131,71 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
     );
   }
 
+  // show dialog for back button press
+  Future<bool> _onBackPressed() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Are you sure?'),
+          content: Text('You are going to exit the application!!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // show dialog for logout press
+  Future<bool> _onLogoutPressed(){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you really want to Log Out ?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () async {
+                userInfo.updateAfterAuth(
+                    "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: _onBackPressed,
+      child: Scaffold(
       // in Moto G5s Plus
       // A RenderFlex overflowed by 90 pixels on the bottom.
       // The relevant error-causing widget was
@@ -222,13 +285,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
             size: 22,
           ),
           onPressed: () async {
-            userInfo.updateAfterAuth(
-                "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
-            await FirebaseAuth.instance.signOut();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
-                (route) => false);
+            _onLogoutPressed();
           },
         ),
         decoration: BoxDecoration(
@@ -245,6 +302,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
           ),
         ),
       ),
+    ),
     );
   }
 }

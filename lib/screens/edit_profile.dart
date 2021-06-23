@@ -112,6 +112,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  Future<bool> _onBackPressed() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Do you want to exit without saving changes?'),
+            content: Text('Please press the SAVE button at the bottom of the page'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('NO'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              TextButton(
+                child: Text('YES'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
@@ -136,14 +163,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
   }
 
+
+
   final int height = 1;
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return WillPopScope(
+          onWillPop: _onBackPressed,
+     child: Scaffold(
       key: _scaffoldkey,
-      body: SafeArea(
+      // body:WillPopScope(
+      //   onWillPop: _onBackPressed,
+       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: Column(
@@ -172,7 +205,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             color: Colors.black,
                             size: 30,
                           ),
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: (){
+                            _onBackPressed();
+                          },
+                          // onPressed: () => Navigator.of(context).pop(true),
+                          // onPressed: () => Navigator.pop(context),
                         ),
                       ),
                     ),
@@ -775,7 +812,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -785,6 +822,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }
