@@ -2,13 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:ywcaofbombay/widgets/admin_drawer.dart';
-import 'dart:async';
+import 'widgets/admin_drawer.dart';
 import 'services/auth_service.dart';
 import 'services/class_builder.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
-import 'screens/onboarding.dart';
+// import 'screens/onboarding.dart';
 import 'screens/authentication/register.dart';
 import 'models/user.dart';
 
@@ -51,45 +50,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    return MainWidget();
+    return AdminMainWidget();
     // return HomeController();
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Future<bool> _onBackPressed() {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-                title: Text('Are you sure?'),
-                content: Text('You are going to exit the application!!'),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text('NO'),
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                  ),
-                  TextButton(
-                    child: Text('YES'),
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                  ),
-                ],
-              ) ??
-              false;
-        },
-      );
-    }
-
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Container(),
-    );
   }
 }
 

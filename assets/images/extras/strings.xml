@@ -1,0 +1,107 @@
+<resources>
+    <string name="app_name">YWCA</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //profile
+    <string name="profile_name">Name: %1$s</string>
+    <string name="profile_phone">Phone: %1$s</string>
+    <string name="profile_email">Email: %1$s</string>
+    <string name="profile_ywca_location">YWCA location: %1$s</string>
+    <string name="profile_address">Address: %1$s</string>
+
+    //about us
+    <string name="ywca_of_bombay_our_story">YWCA of Bombay - Our Story</string>
+    <string name="about_description_txt">Young Women’s Christian Association formed on prayer and service, united together and adopted as their symbol the Blue Triangle that signifies the unity and completeness of body, mind and spirit.\n\nYWCA is a non–profit organisation committed to the empowerment of women at all levels.\n\n    The history dates back to 1875 when the first local association was established in Mumbai. It is one of the oldest non–profit community service organizations for women in India. The YWCA of Bombay is registered under the Societies Registration Act, 1860 under No. 44 dated 06–08-1952 and of the Bombay Public Trust Act, 1950 under No. F/388 (Bom.) dated 13-07-1953.\n\nTo find out more please visit our website:</string>
+    <string name="howtomembership">A prospective member has to attend minimum two meetings (either area meetings or YWCA programme/ event).\nShe then fills her membership form which is signed by Area Chairperson.\nThis is forwarded to the Membership committee.The Membership committee recommends it to the Board and then the membership is approved by the Board.\n\n\nFor more details visit the <b>[Contact us]</b> page </string>
+    <string name="phonenumbers"></string>
+    <string name="websitelink">www.ywcabombay.co.in</string>
+
+
+    //contact us
+
+    //tab1
+    <string name="hello_blank_fragment1">The YWCA offices are situated at the following centres in Mumbai:</string>
+    <string name="hello_blank_fragment2">The YWCA hostels are situated at the following centres in Mumbai:</string>
+    <string name="address">Asha Kiran,\n53, J.P. Road,\nAndheri (W),\nMumbai – 400058\nEmail: ywcaandheri@rediffmail.com"</string>
+    <string name="address0">53, J.P. Road,\nAndheri (W),\nMumbai – 400058\nEmail: ywcaandheri@rediffmail.com"</string>
+    <string name="loc1">BELAPUR</string>
+    <string name="address1">Anugraha Hostel,\nSector 8,\nCBD-Belapur,\nNavi Mumbai – 400614\nEmail: ywcabelapur@gmail.com"</string>
+    <string name="loc2">BYCULLA</string>
+    <string name="address2">75, Motlibai Street,\nNear Maratha Mandir,\nMumbai – 400008\nEmail: ybombaygs@gmail.com</string>
+    <string name="loc3">FORT</string>
+    <string name="address3">18, Madame Cama Road,\nFort, Mumbai – 400001\nEmail: ywcafinfort@rediffmail.com</string>
+
+    //tab2
+    <string name="loc4">ANDHERI</string>
+    <string name="name_of_hostel1">DIPTI DHAMAN HOSTEL</string>
+    <string name="address4">Asha Kiran,\n53, J.P. Road,\nAndheri (W),\nMumbai – 400058\nEmail: ywcaddh@rediffmail.com</string>
+    <string name="name2">ANUGRAHA HOSTEL</string>
+    <string name="address5">Sector 8,\nCBD-Belapur,\nNavi Mumbai – 400614\nE-mail: genhostelsbomy@gmail.com</string>
+    <string name="name3">ACHAMMA BHAVAN HOSTEL</string>
+    <string name="address6">75, Motlibai Street,\nNear Maratha Mandir,\nMumbai – 400008\nE-mail: abhywca@gmail.com</string>
+    <string name="name4">LADY WILLINGTON HOSTEL</string>
+    <string name="address7">18, Madame Cama Road,\nFort, Mumbai – 400001\nE-mail: ywcalwh@gmail.com</string>
+
+    //tab3
+    <string name="name5">INTERNATIONAL CENTRE</string>
+    <string name="address8">18, Madame Cama Road,\n Fort, Mumbai – 400001.\nEmail- ywcaic@mtnl.net.in \nWebsite: http://www.ywcaic.info</string>
+
+    //success stories
+
+    <string name="heading1">Success Stories</string>
+    <string name="heading2">A Slice of Support</string>
+    <string name="heading3">A Stitch in Time</string>
+    <string name="heading4">Beauty with Brains</string>
+    <string name="heading5">Food For Thought</string>
+    <string name="heading6">Hair Tales</string>
+    <string name="heading7">Nursing Aid</string>
+    <string name="heading8">Promoting Education</string>
+    <string name="heading9">Aasra</string>
+
+    <string name="desc1">"YWCA of Bombay is happy to be enablers, reaching out to women in distress, the underprivileged and marginalized in society. Actively engaging to address their issues through involvement and collaboration by providing sustainable and long-term solutions. Counselling through Aasra and providing shelter to women in distress. Skill training to equip them to take up jobs in varied fields and develop expertise in these areas and take care of themselves and their families."
+    </string>
+    <string name="desc2">"Shweta Berde was a very clever girl but the conditions at home were very poor. Her father was a diabetic patient and he was not working. She wanted to join a bakery course from YWCA so that she could pursue her dreams but her father could not support her due to their financial problems. Our Social worker made a home visit and then YWCA sponsored her for Cookery, Bakery and Confectionery courses in the year 2017-18. Now she is working in 1441 Pizzeria.\n"
+    </string>
+    <string name="desc3">"She was woman who faced domestic violence and then was supported in Sakhi (a group for women in distress). She completed her tailoring course at the Asha Kiran Centre and then joined a cushion maker where her finishing was exemplary. She was taken back to teach the finishing to girls at Asha Kiran and later on, she became an entrepreneur and took tailoring orders on her own and has now become economically stable.” - Shabana Shaikh\n"
+    </string>
+    <string name="desc4">"\"I completed the six-month Advance Beauty Parlour course from YWCA of Bombay. I was always interested in the field of beauty but was unable to attend such a course due to the cost and the limited course content. Thanks to YWCA, I completed the course and can now stand on my own feet.\" - Prajkta Ruke\n"
+    </string>
+    <string name="desc5">"Shivani Kudtarkar had completed a craft, cookery, bakery and confectionery courses from YWCA of Bombay in 2018-19. She was a student and there was no financial support as her father was an alcoholic and mother was a domestic worker. She was referred by Social worker from the community. She was sponsored by YWCA, and at present, she is working with Theobroma and can support herself.\n"
+    </string>
+    <string name="desc6">"\"I come from a very poor background in Colaba. One of my friends recommended YWCA for the Beauty course. I visited the institute and found the environment very comfortable but my financial condition was very weak so I contacted the social worker and she got a sponsor to pay my fees. I joined the course and learnt about beauty and self confidence. After the completion of the course, I joined a beauty parlor as a beautician. I feel very happy now, all thanks to the YWCA.\" - Neeta Nakva\n"
+    </string>
+    <string name="desc7">"\" I am an orphan. I chose the nursing course because I wanted to do something for the society. After completing SSC, I joined the nursing course at YWCA in 2006. After I completed my course I started private patient duty at the Breach Candy Hospital and earned Rs 1400 per day. Now I am mentally and financially strong and successful in life. I am really thankful to YWCA to make me stronger and financially independent\" - Sunita Ghosalkar\n"
+    </string>
+    <string name="desc8">"\"The Scholarship that I received from YWCA has helped me pay my college fees. My mom is not working and she falls sick very often, so she cannot work much, and she could not afford to pay for college. Had it not been for the help we received from YWCA, I do not know where would I have been. The scholarship too motivated me to study and improve myself.\" - Molly\n"
+    </string>
+    <string name="desc9">"\"I am married and have three children. Three years ago my husband had a heart attack. He was the only earning person in my family. I decided to do the YWCA nursing course so that I could help my family. It was really a turning point in my life. I got a great opportunity to serve the sick and needy people. With the blessings and efforts of the teachers, I got a good job in BSES Hospital and I am getting a good salary. I am very grateful to YWCA as well as Aasra –family counselling centre.\" - Sanika Deoghare\n"
+    </string>
+
+
+    //initiatives
+
+    <string name="piya_text">Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.</string>
+    <string name="membership_text">Membership is the foundation of all YWCA committees and activities, through which members promote the vision and mission of the Association.</string>
+
+    <string name="pr_text">Public Relations (PR) manages the brand image of YWCA with both the internal and external stakeholders. It facilitates communication and contributes in myriad ways for the well-being and growth of the organization.</string>
+    <string name="pasi_text">Public Affairs and Social Issues (PASI) creates an impact both within and outside YWCA by organizing different programmes on current social issues, impacting lives of people in different spheres of life. It also networks with other like-minded organisations to gain strength to address issues that need advocacy.</string>
+
+    <string name="asha_text">Asha Kiran, the women’s development complex at Andheri continues to be a ray of hope to all its beneficiaries. It is dedicated to the all-round development of women and children of different backgrounds, age group, cultures, castes and creeds. It caters to the rapidly changing needs by providing a home away from home for Senior Citizens and Guests, to organizing awareness programmes, vocational courses, study centers, a day care center for senior citizens from the community, a crèche for children of domestic workers, and a shelter for women in distress. It also has an Amphitheatre and a hall facility.</string>
+
+    <string name="wdu_text">Women’s Development Unit (WDU) promotes all round well-being of women and children. This is achieved through community development programs, vocational training courses, sustainability projects, capacity building activities and awareness programs. Aasra is a family counseling center which supports women in need.</string>
+    <string name="ywca_hostels_text">YWCA Hostels - Achamma Bhavan, Anugraha, Dipti Dhaman and Lady Willingdon is the bench mark in Mumbai/ Navi Mumbai for hygienic, well equipped and disciplined hostels. It provides a safe and secure surrounding to women who are new to the city. </string>
+    <string name="sh_text">Shelter Home run in collaboration with the BMC provides a home to homeless and distressed women.</string>
+    <string name="ic_text">International Centre (IC): provides for a temporary residence to people from various parts of the world.</string>
+    <string name="se_text">Spiritual Emphasis (SE) gives special study and thought to the implementation of YWCA statements of policy, relevant to the Christian emphasis.</string>
+
+    //non member membership popup
+    <string name="pop_up_title">Hey there, interested in becoming a member?</string>
+    <string name="pop_up_detail">For Membership details go to the [About Us] page of the app or get in touch with your nearest YWCA now.</string>
+
+    <string name="deadline_passed">Deadline to register has passed.\n Contact 8828024246 if you wish to register</string>
+    <string name="date_passed">Event date has passed.\n Contact 8828024246 for more details</string>
+    <string name="members_only_event">MEMBERS ONLY EVENT</string>
+
+</resources>
