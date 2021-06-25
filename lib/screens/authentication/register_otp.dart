@@ -158,7 +158,7 @@ class _RegisterOtpState extends State<RegisterOtp>
               nearestCenter,
               interestInMembership,
               "none");
-          CollectionReference users =
+          CollectionReference<Map<String, dynamic>> users =
               FirebaseFirestore.instance.collection('users');
           users.doc(value.user.uid).set(data);
 
