@@ -192,7 +192,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         title: Text(
                           "YWCA Of Bombay",
                           style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
                             fontSize: 18.0,
                             color: Colors.black87,
                           ),
@@ -755,7 +757,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         SizedBox(height: _height * 0.005),
                         GradientButton(
-                          buttonText: 'Edit Profile',
+                          buttonText: 'Update Profile',
                           screenHeight: _height,
                           route: 'home',
                           onPressedFunction: () async {

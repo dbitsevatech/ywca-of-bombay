@@ -216,7 +216,9 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
                     style: TextStyle(
                       fontSize: 22,
                       color: Colors.black,
-                      fontFamily: 'LilyScriptOne',
+                      fontFamily: 'LobsterTwo',
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   // SizedBox(height: 15),
@@ -237,7 +239,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
                   ),
                   // SizedBox(height: 15),
                   Text(
-                    'Welcome, ' + userInfo.getfirstName,
+                    'Welcome ' + userInfo.getfirstName,
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,

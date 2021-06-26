@@ -32,7 +32,9 @@ class _InitiativesState extends State<Initiatives> {
                     title: Text(
                       "YWCA Of Bombay",
                       style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
                         fontSize: 18.0,
                         color: Colors.black87,
                       ),
