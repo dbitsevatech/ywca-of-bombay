@@ -7,7 +7,7 @@ import '../screens/about_us.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
-import '../screens/events/events.dart';
+import '../screens/events/userEvents.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
