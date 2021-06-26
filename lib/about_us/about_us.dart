@@ -21,11 +21,11 @@ class _AboutUsState extends State<AboutUs> {
   var linkText = TextStyle(color: Colors.blue);
 
   final imageList = [
-    'assets/images/initiatives/img1.jpg',
-    'assets/images/initiatives/img2.jpg',
-    'assets/images/initiatives/img3.jpg',
-    'assets/images/initiatives/img4.jpg',
-    'assets/images/initiatives/img5.jpg',
+    'assets/images/about_us/Ywca_spotlight_1.jpg',
+    'assets/images/about_us/Ywca_spotlight_2.jpg',
+    'assets/images/about_us/Ywca_spotlight_3.jpg',
+    'assets/images/about_us/Ywca_spotlight_4.jpg',
+    'assets/images/about_us/Ywca_spotlight_5.jpg',
   ];
 
   @override
@@ -65,23 +65,65 @@ class _AboutUsState extends State<AboutUs> {
                 Positioned(
                   child: Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: _height * 0.095),
-                      child: Text(
-                        'OUR STORY',
-                        style: TextStyle(
-                          fontSize: 35,
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'RacingSansOne',
-                          letterSpacing: 2.5,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(2.0, 3.0),
-                              blurRadius: 3.0,
-                              color: Color(0xff333333),
+                      padding: EdgeInsets.only(top: _height * 0.1),
+                      child: Column(
+                        children: [
+                          Text(
+                            'OUR STORY',
+                            style: TextStyle(
+                              fontSize: 35,
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RacingSansOne',
+                              letterSpacing: 2.5,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(2.0, 3.0),
+                                  blurRadius: 3.0,
+                                  color: Color(0xff333333),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Container(
+                            height: 200,
+                            child: Swiper(
+                              autoplay: false,
+                              itemCount: 5,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  // To centralize the children.
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image(
+                                        image: AssetImage(imageList[index]),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                              viewportFraction: 0.87,
+                              scale: 0.9,
+                              pagination: SwiperPagination(
+                                //changing the color of the pagination dots and that of
+                                //the active dot
+                                builder: DotSwiperPaginationBuilder(
+                                  color: Colors.grey,
+                                  activeColor: Color(0XFF80DEEA),
+                                  //  DotsIndicator(
+                                  // dotsCount: pageLength,
+                                  // position: currentIndexPage,
+                                  // dotsCount: pageLength,
+                                  // decorator: DotsDecorator()
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -91,59 +133,18 @@ class _AboutUsState extends State<AboutUs> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.only(left: 30, right: 30),
+                  margin: EdgeInsets.only(top: 10, left: 30, right: 30),
                   child: Column(
                      mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                        height: _height * 0.02,
-                      ),
-                      Container(
-                        height: 300,
-                        child: Swiper(
-                          autoplay: false,
-                          itemCount: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              // To centralize the children.
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image(
-                                    image: AssetImage(imageList[index]),
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                          viewportFraction: 0.8,
-                          scale: 0.9,
-                          pagination: SwiperPagination(
-                            //changing the color of the pagination dots and that of
-                            //the active dot
-                            builder: DotSwiperPaginationBuilder(
-                              color: Colors.grey,
-                              activeColor: Color(0XFF80DEEA),
-                              //  DotsIndicator(
-                              // dotsCount: pageLength,
-                              // position: currentIndexPage,
-                              // dotsCount: pageLength,
-                              // decorator: DotsDecorator()
-                            ),
-                          ),
-                        ),
-                      ),
                       Text(
                         'The young women\'s Christian association (YWCA) was established in 1855, '
                             'when the movement formed on prayer and service united together and adopted'
                             'the blue triangle as its symbol. The blue triangle signifies the unity and '
                             'completeness of body, mind and spirit.\n',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 15,
                           height: 1.25,
                           fontFamily: 'Montserrat',
                         ),
@@ -154,7 +155,7 @@ class _AboutUsState extends State<AboutUs> {
                             '1896. It is one of the oldest non-profit community service organizations for women'
                             'In India, which is based on the biblical principle \"love thy neighbour as thyself\".\n',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 15,
                           height: 1.25,
                           fontFamily: 'Montserrat',
                         ),
@@ -163,7 +164,7 @@ class _AboutUsState extends State<AboutUs> {
                         'The YWCA of Bombay is registered under the societies registration act, 1860 under no. 44 dated'
                             '06-08-1952 and of the Bombay public trust act, 1950 under no. F/388 (BOM.) Dated 13-07-1953.',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 15,
                           height: 1.5,
                           fontFamily: 'Montserrat',
                         ),
@@ -208,80 +209,12 @@ class _AboutUsState extends State<AboutUs> {
                 ),
                         ],
                       ),
-                      SizedBox(height: _height * 0.01),
+                      SizedBox(height: _height * 0.015),
                     ],
                   ),
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: <Widget>[
-            //           Container(
-            //             margin: EdgeInsets.all(10),
-            //             height: 200.0,
-            //             child: SizedBox.fromSize(
-            //               size: Size(200, 200),
-            //               child: ClipOval(
-            //                 child: Material(
-            //                   color: Color.fromRGBO(0, 210, 225, 1),
-            //                   child: InkWell(
-            //                     splashColor: Color.fromRGBO(0, 250, 225, 1),
-            //                     onTap: () {},
-            //                     child: Center(
-            //                         child: Text(
-            //                       'OUR STORY!',
-            //                       style: TextStyle(
-            //                         shadows: [
-            //                           Shadow(
-            //                             blurRadius: 10.0,
-            //                             color: Colors.black,
-            //                             offset: Offset(5.0, 5.0),
-            //                           ),
-            //                         ],
-            //                         fontSize: 31,
-            //                         fontFamily: 'Lily Scipt One',
-            //                         fontWeight: FontWeight.bold,
-            //                         color: Colors.white,
-            //                       ),
-            //                     ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //       ),
-            //           Container(
-            //         margin: EdgeInsets.all(0),
-            //         height: 30.0,
-            //         child: Text(
-            //           'YWCA OF BOMBAY',
-            //           style: TextStyle(
-            //             fontSize: 25,
-            //             fontFamily: 'Lily Script One',
-            //             fontWeight: FontWeight.bold,
-            //             color: Colors.lightBlueAccent,
-            //           ),
-            //         ),
-            //       ),
-            //           Container(
-            //           margin: EdgeInsets.all(0),
-            //           height: 30.0,
-            //           child: Text(
-            //             'EMPOWERING WOMEN',
-            //             style: TextStyle(
-            //               fontSize: 25,
-            //               fontFamily: 'Lily Script One',
-            //               fontWeight: FontWeight.bold,
-            //               color: Colors.black87,
-            //             ),
-            //           ),
-            //         ),
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),

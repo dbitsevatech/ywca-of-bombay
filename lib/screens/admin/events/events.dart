@@ -15,6 +15,33 @@ class AdminEvents extends KFDrawerContent {
 class _AdminEventsState extends State<AdminEvents> {
   final List<Event> _allEvents = Event.allEvents();
 
+
+
+  Future<bool> _navigateToRoute(String name){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(name),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -116,7 +143,7 @@ class _AdminEventsState extends State<AdminEvents> {
             //     onPrimary: Colors.black87,
             //     // padding: MaterialStateProperty.all(EdgeInsets.all(5)),
             //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                       //       borderRadius: BorderRadius.all(Radius.circular(20.0)),
             //     ),
             //     // textStyle: MaterialStateProperty.all(
             //     //   TextStyle(fontSize: 30),
@@ -246,8 +273,9 @@ class _AdminEventsState extends State<AdminEvents> {
                 Spacer(),
                 Spacer(),
                 Spacer(),
-                ElevatedButton(
-                  onPressed: () {},
+                new ElevatedButton(
+                  onPressed: () => _navigateToRoute('Edit this event ?'),
+
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),
                     padding: MaterialStateProperty.all(EdgeInsets.all(5)),
@@ -261,7 +289,9 @@ class _AdminEventsState extends State<AdminEvents> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: (){
+                    _navigateToRoute('Delete this event ?');
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
                     padding: MaterialStateProperty.all(EdgeInsets.all(5)),

@@ -25,12 +25,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.0
-#  firebase_core: ^1.3.0
-#  firebase_auth: ^1.1.2
-#  cloud_firestore: ^1.0.7#
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.1
-  cloud_firestore: ^0.16.0+1
+  firebase_core: ^1.3.0
+  firebase_auth: ^1.4.1
+  cloud_firestore: ^2.2.2
+#  cloud_firestore: ^1.0.7
+#  firebase_core: ^0.7.0
+#  firebase_auth: ^0.20.1
+#  cloud_firestore: ^0.16.0+1
   pinput: ^0.2.6
   kf_drawer: ^1.1.1
   carousel_slider: ^4.0.0
@@ -75,6 +76,11 @@ flutter:
     - assets/images/contact_us/hostel.png
     - assets/images/contact_us/office.png
     - assets/images/events/christmas.jpg
+    - assets/images/about_us/Ywca_spotlight_1.jpg
+    - assets/images/about_us/Ywca_spotlight_2.jpg
+    - assets/images/about_us/Ywca_spotlight_3.jpg
+    - assets/images/about_us/Ywca_spotlight_4.jpg
+    - assets/images/about_us/Ywca_spotlight_5.jpg
     - assets/images/initiatives/img1.jpg
     - assets/images/initiatives/img2.jpg
     - assets/images/initiatives/img3.jpg

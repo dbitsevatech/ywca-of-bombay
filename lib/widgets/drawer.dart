@@ -26,6 +26,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   KFDrawerController _drawerController;
   var userInfo;
 
+// show dialog for back button press
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
@@ -44,6 +45,38 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               child: Text('YES'),
               onPressed: () {
                 Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // show dialog for logout press
+  Future<bool> _onLogoutPressed(){
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you really want to Log Out ?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () async {
+                userInfo.updateAfterAuth(
+                    "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
+                await FirebaseAuth.instance.signOut();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false);
               },
             ),
           ],
@@ -218,14 +251,9 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               ),
             ),
             icon: Icon(Icons.logout, color: Colors.black, size: 22),
+
             onPressed: () async {
-              userInfo.updateAfterAuth(
-                  "", "", "", DateTime.now(), "", "", "", "", "", "", "", "");
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false);
+              _onLogoutPressed();
             },
           ),
           decoration: BoxDecoration(
