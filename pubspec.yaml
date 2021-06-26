@@ -34,15 +34,25 @@ dependencies:
 #  cloud_firestore: ^0.16.0+1
   pinput: ^0.2.6
   kf_drawer: ^1.1.1
-  carousel_slider: ^3.0.0
+  carousel_slider: ^4.0.0
   flutter_swiper: ^1.1.6
   search_widget: ^1.0.2
   provider: ^5.0.0
   auto_size_text: ^2.1.0
 
+  url_launcher: ^6.0.3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.9.0
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,6 +76,11 @@ flutter:
     - assets/images/contact_us/hostel.png
     - assets/images/contact_us/office.png
     - assets/images/events/christmas.jpg
+    - assets/images/about_us/Ywca_spotlight_1.jpg
+    - assets/images/about_us/Ywca_spotlight_2.jpg
+    - assets/images/about_us/Ywca_spotlight_3.jpg
+    - assets/images/about_us/Ywca_spotlight_4.jpg
+    - assets/images/about_us/Ywca_spotlight_5.jpg
     - assets/images/initiatives/img1.jpg
     - assets/images/initiatives/img2.jpg
     - assets/images/initiatives/img3.jpg
@@ -88,9 +103,9 @@ flutter:
     - family: RacingSansOne
       fonts:
         - asset: assets/fonts/RacingSansOne-Regular.ttf
-    - family: LilyScriptOne
+    - family: LobsterTwo
       fonts:
-        - asset: assets/fonts/LilyScriptOne-Regular.ttf
+        - asset: assets/fonts/LobsterTwo-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
