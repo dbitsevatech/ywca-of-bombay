@@ -33,8 +33,9 @@ class _ContactUsState extends State<ContactUs> {
                     title: Text(
                       "YWCA Of Bombay",
                       style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
-                        fontSize: 18.0,
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
                     ),
