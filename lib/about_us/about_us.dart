@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/gestures.dart';
 
 import '../widgets/blue_bubble_design.dart';
@@ -18,6 +19,14 @@ class _AboutUsState extends State<AboutUs> {
 
   var defaultText = TextStyle(color: Colors.black);
   var linkText = TextStyle(color: Colors.blue);
+
+  final imageList = [
+    'assets/images/initiatives/img1.jpg',
+    'assets/images/initiatives/img2.jpg',
+    'assets/images/initiatives/img3.jpg',
+    'assets/images/initiatives/img4.jpg',
+    'assets/images/initiatives/img5.jpg',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +99,44 @@ class _AboutUsState extends State<AboutUs> {
                       SizedBox(
                         height: _height * 0.02,
                       ),
+                      Container(
+                        height: 300,
+                        child: Swiper(
+                          autoplay: false,
+                          itemCount: 5,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              // To centralize the children.
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image(
+                                    image: AssetImage(imageList[index]),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          viewportFraction: 0.8,
+                          scale: 0.9,
+                          pagination: SwiperPagination(
+                            //changing the color of the pagination dots and that of
+                            //the active dot
+                            builder: DotSwiperPaginationBuilder(
+                              color: Colors.grey,
+                              activeColor: Color(0XFF80DEEA),
+                              //  DotsIndicator(
+                              // dotsCount: pageLength,
+                              // position: currentIndexPage,
+                              // dotsCount: pageLength,
+                              // decorator: DotsDecorator()
+                            ),
+                          ),
+                        ),
+                      ),
                       Text(
                         'The young women\'s Christian association (YWCA) was established in 1855, '
                             'when the movement formed on prayer and service united together and adopted'
@@ -156,8 +203,8 @@ class _AboutUsState extends State<AboutUs> {
                                           }
                                         }
                                     ),
-                                  ]
-                              )
+                                  ],
+                              ),
                 ),
                         ],
                       ),
