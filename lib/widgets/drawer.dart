@@ -3,7 +3,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/about_us.dart';
+import '../about_us/about_us.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';

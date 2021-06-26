@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
@@ -13,6 +15,10 @@ class AboutUs extends KFDrawerContent {
 
 // ignore: camel_case_types
 class _AboutUsState extends State<AboutUs> {
+
+  var defaultText = TextStyle(color: Colors.black);
+  var linkText = TextStyle(color: Colors.blue);
+
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -78,7 +84,7 @@ class _AboutUsState extends State<AboutUs> {
                 child: Container(
                   margin: EdgeInsets.only(left: 30, right: 30),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
+                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
@@ -90,9 +96,8 @@ class _AboutUsState extends State<AboutUs> {
                             'the blue triangle as its symbol. The blue triangle signifies the unity and '
                             'completeness of body, mind and spirit.\n',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           height: 1.25,
-                          color: Colors.black87,
                           fontFamily: 'Montserrat',
                         ),
                       ),
@@ -102,9 +107,8 @@ class _AboutUsState extends State<AboutUs> {
                             '1896. It is one of the oldest non-profit community service organizations for women'
                             'In India, which is based on the biblical principle \"love thy neighbour as thyself\".\n',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           height: 1.25,
-                          color: Colors.black87,
                           fontFamily: 'Montserrat',
                         ),
                       ),
@@ -112,9 +116,8 @@ class _AboutUsState extends State<AboutUs> {
                         'The YWCA of Bombay is registered under the societies registration act, 1860 under no. 44 dated'
                             '06-08-1952 and of the Bombay public trust act, 1950 under no. F/388 (BOM.) Dated 13-07-1953.',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 13,
                           height: 1.5,
-                          color: Colors.black87,
                           fontFamily: 'Montserrat',
                         ),
                       ),
@@ -134,32 +137,28 @@ class _AboutUsState extends State<AboutUs> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "To know more.",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Montserrat',
-                              color: Colors.black54,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              // Navigator.pushAndRemoveUntil(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => LoginScreen()),
-                              //     (route) => false);
-                            },
-                            child: Text(
-                              ' Visit Here',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff49DEE8),
-                              ),
-                            ),
-                          ),
+                          RichText(
+                              text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        style: defaultText,
+                                        text: "To learn more visit our website below\n"
+                                    ),
+                                    TextSpan(
+                                        style: linkText,
+                                        text: "            www.ywcaofbombay.co.in",
+                                        recognizer: TapGestureRecognizer()..onTap =  () async{
+                                          var url = "http://www.ywcaofbombay.co.in/";
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        }
+                                    ),
+                                  ]
+                              )
+                ),
                         ],
                       ),
                       SizedBox(height: _height * 0.01),
