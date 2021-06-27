@@ -14,7 +14,7 @@ import 'models/user.dart';
 void main() async {
   ClassBuilder.registerClasses();
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   runApp(
     ChangeNotifierProvider(
