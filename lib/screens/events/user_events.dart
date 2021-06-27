@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import '../../widgets/blue_bubble_design.dart';
-import 'userEventDetails.dart';
+import 'user_event_details.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {

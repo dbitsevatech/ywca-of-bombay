@@ -4,9 +4,9 @@ import 'package:intl/intl.dart';
 import '../../../widgets/constants.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import '../../../widgets/blue_bubble_design.dart';
-import 'adminAddNewEvent.dart';
-import 'adminEditEvent.dart';
-import 'adminEventDetails.dart';
+import 'admin_new_event.dart';
+import 'admin_edit_event.dart';
+import 'admin_event_details.dart';
 
 // ignore: must_be_immutable
 class AdminEvents extends KFDrawerContent {
@@ -446,7 +446,7 @@ gotoEditEvent(
 gotoNewEvent(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => AdminAddNewEvent()),
+    MaterialPageRoute(builder: (context) => AdminNewEvent()),
   );
 }
 

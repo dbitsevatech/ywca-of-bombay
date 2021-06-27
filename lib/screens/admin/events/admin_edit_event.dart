@@ -9,7 +9,7 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'adminEvents.dart';
+import 'admin_events.dart';
 
 // ignore: must_be_immutable
 class AdminEditEvent extends StatefulWidget {
@@ -697,7 +697,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
 
   // Updating to firebase
   Future updateData(
-      BuildContext Context,
+      BuildContext context,
       id,
       eventName,
       eventDescription,
@@ -726,10 +726,10 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     print(eventDate);
     print('event deadline');
     print(eventDeadline);
-    TimeOfDay selected_time = eventTime;
+    TimeOfDay selectedTime = eventTime;
     final now = new DateTime.now();
-    DateTime new_time = DateTime(
-        now.year, now.month, now.day, selected_time.hour, selected_time.minute);
+    DateTime newTime = DateTime(
+        now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
     print("Updating record on firestore");
     FirebaseFirestore.instance.collection('events').doc(id).update({
@@ -739,7 +739,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
       'eventAmount': eventAmount,
       'eventDate': eventDate,
       'eventImageUrl': url,
-      'eventTime': new_time,
+      'eventTime': newTime,
       'eventDeadline': eventDeadline,
       'eventType': eventType
     });
