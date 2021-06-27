@@ -7,7 +7,7 @@ import '../about_us/about_us.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
-import '../screens/events/userEvents.dart';
+import '../screens/events/user_events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
@@ -54,7 +54,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   }
 
   // show dialog for logout press
-  Future<bool> _onLogoutPressed(){
+  Future<bool> _onLogoutPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -76,7 +76,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (route) => false);
+                    (route) => false);
               },
             ),
           ],
@@ -253,7 +253,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               ),
             ),
             icon: Icon(Icons.logout, color: Colors.black, size: 22),
-
             onPressed: () async {
               _onLogoutPressed();
             },

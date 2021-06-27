@@ -11,12 +11,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
 // ignore: must_be_immutable
-class AdminAddNewEvent extends StatefulWidget {
+class AdminNewEvent extends StatefulWidget {
   @override
-  _AdminAddNewEventState createState() => _AdminAddNewEventState();
+  _AdminNewEventState createState() => _AdminNewEventState();
 }
 
-class _AdminAddNewEventState extends State<AdminAddNewEvent> {
+class _AdminNewEventState extends State<AdminNewEvent> {
   String eventTitle, eventDescription, eventVenue, eventAmount, eventImageUrl;
   String eventType = "Everyone";
   final GlobalKey<FormState> _formKey =
@@ -135,7 +135,7 @@ class _AdminAddNewEventState extends State<AdminAddNewEvent> {
 
   // uploading image to firebase storage
   Future uploadData(
-      BuildContext Context,
+      BuildContext context,
       eventName,
       eventDescription,
       eventVenue,
@@ -161,10 +161,10 @@ class _AdminAddNewEventState extends State<AdminAddNewEvent> {
     // print("time");
     // print(eventTime);
 
-    TimeOfDay selected_time = eventTime;
+    TimeOfDay selectedTime = eventTime;
     final now = new DateTime.now();
-    DateTime new_time = DateTime(
-        now.year, now.month, now.day, selected_time.hour, selected_time.minute);
+    DateTime newTime = DateTime(
+        now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
     FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
@@ -174,7 +174,7 @@ class _AdminAddNewEventState extends State<AdminAddNewEvent> {
       'eventImageUrl': url,
       'eventDate': eventDate,
       'eventDeadline': eventDeadline,
-      'eventTime': new_time,
+      'eventTime': newTime,
       'eventType': eventType
     });
     // print("uploaded on firestore");

@@ -1,5 +1,5 @@
-import '../screens/admin/events/adminEvents.dart';
-import '../screens/events/userEvents.dart';
+import '../screens/admin/events/admin_events.dart';
+import '../screens/events/user_events.dart';
 
 typedef T Constructor<T>();
 

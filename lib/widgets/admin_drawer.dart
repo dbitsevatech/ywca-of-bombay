@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../about_us/about_us.dart';
 import '../screens/admin/analytics/analytics.dart';
 import '../screens/admin/approval/approval.dart';
-import '../screens/admin/events/adminEvents.dart';
+import '../screens/admin/events/admin_events.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
@@ -15,7 +15,6 @@ import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
 import '../models/user.dart';
 import '../screens/view_profile.dart';
-
 
 class AdminMainWidget extends StatefulWidget {
   AdminMainWidget({Key key, this.title}) : super(key: key);
@@ -159,7 +158,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
   }
 
   // show dialog for logout press
-  Future<bool> _onLogoutPressed(){
+  Future<bool> _onLogoutPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -181,7 +180,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (route) => false);
+                    (route) => false);
               },
             ),
           ],
@@ -190,121 +189,121 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackPressed,
+      onWillPop: _onBackPressed,
       child: Scaffold(
-      // in Moto G5s Plus
-      // A RenderFlex overflowed by 90 pixels on the bottom.
-      // The relevant error-causing widget was
-      // KFDrawer
-      // lib\widgets\drawer.dart:119
-      body: KFDrawer(
-        controller: _drawerController,
-        header: Container(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'YWCA Of Bombay',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontFamily: 'LobsterTwo',
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  // SizedBox(height: 15),
-                  Text(
-                    'MENU',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  // SizedBox(height: 10),
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: NetworkImage(
-                      "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
-                    ),
-                  ),
-                  // SizedBox(height: 15),
-                  Text(
-                    'Welcome ' + userInfo.getfirstName,
-                    style: TextStyle(
-                        fontSize: 20,
+        // in Moto G5s Plus
+        // A RenderFlex overflowed by 90 pixels on the bottom.
+        // The relevant error-causing widget was
+        // KFDrawer
+        // lib\widgets\drawer.dart:119
+        body: KFDrawer(
+          controller: _drawerController,
+          header: Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Row(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'YWCA Of Bombay',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 22,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  // SizedBox(height: 15),
-                  ElevatedButton.icon(
-                    icon: Icon(Icons.person),
-                    label: Text('View Profile'),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.pressed))
-                            return primaryColor;
-                          return secondaryColor; // Use the component's default.
-                        },
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ViewProfileScreen(),
+                    // SizedBox(height: 15),
+                    Text(
+                      'MENU',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    // SizedBox(height: 10),
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(
+                        "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
+                      ),
+                    ),
+                    // SizedBox(height: 15),
+                    Text(
+                      'Welcome ' + userInfo.getfirstName,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    // SizedBox(height: 15),
+                    ElevatedButton.icon(
+                      icon: Icon(Icons.person),
+                      label: Text('View Profile'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return primaryColor;
+                            return secondaryColor; // Use the component's default.
+                          },
                         ),
-                      );
-                    },
-                  ),
-                  // SizedBox(height: 10),
-                ],
-              )
-            ],
-          ),
-        ),
-        footer: KFDrawerItem(
-          text: Text(
-            'LOGOUT',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewProfileScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    // SizedBox(height: 10),
+                  ],
+                )
+              ],
             ),
           ),
-          icon: Icon(
-            Icons.logout,
-            color: Colors.black,
-            size: 22,
+          footer: KFDrawerItem(
+            text: Text(
+              'LOGOUT',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 22,
+              ),
+            ),
+            icon: Icon(
+              Icons.logout,
+              color: Colors.black,
+              size: 22,
+            ),
+            onPressed: () async {
+              _onLogoutPressed();
+            },
           ),
-          onPressed: () async {
-            _onLogoutPressed();
-          },
-        ),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.3, 0.8, 0.9],
-            colors: [
-              Colors.white,
-              Colors.white,
-              primaryColor,
-              secondaryColor,
-            ],
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0.1, 0.3, 0.8, 0.9],
+              colors: [
+                Colors.white,
+                Colors.white,
+                primaryColor,
+                secondaryColor,
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }
