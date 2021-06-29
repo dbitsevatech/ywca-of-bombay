@@ -50,7 +50,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    return AdminMainWidget();
+    // return AdminMainWidget();
+    return LoginScreen();
     // return HomeController();
   }
 }
