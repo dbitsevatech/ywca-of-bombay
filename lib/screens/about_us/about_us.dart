@@ -4,9 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/gestures.dart';
 
-import '../widgets/blue_bubble_design.dart';
-import '../widgets/constants.dart';
-import '../widgets/gradient_button.dart';
+import '../../widgets/blue_bubble_design.dart';
+import '../../widgets/constants.dart';
+import '../../widgets/gradient_button.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class AboutUs extends KFDrawerContent {
@@ -16,10 +16,6 @@ class AboutUs extends KFDrawerContent {
 
 // ignore: camel_case_types
 class _AboutUsState extends State<AboutUs> {
-
-  var defaultText = TextStyle(color: Colors.black);
-  var linkText = TextStyle(color: Colors.blue);
-
   final imageList = [
     'assets/images/about_us/Ywca_spotlight_1.jpg',
     'assets/images/about_us/Ywca_spotlight_2.jpg',
@@ -135,45 +131,87 @@ class _AboutUsState extends State<AboutUs> {
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.only(top: 10, left: 30, right: 30),
+                  margin: EdgeInsets.only(top: 0, left: 30, right: 30),
                   child: Column(
-                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'The young women\'s Christian association (YWCA) was established in 1855, '
-                            'when the movement formed on prayer and service united together and adopted'
-                            'the blue triangle as its symbol. The blue triangle signifies the unity and '
-                            'completeness of body, mind and spirit.\n',
+                        'The Young Women\'s Christian Association (YWCA) was established in 1855, when the movement formed on prayer and service united together and adopted the Blue Triangle as its symbol that signifies the unity and completeness of body, mind and spirit.\n',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 16,
                           height: 1.25,
                           fontFamily: 'Montserrat',
                         ),
                       ),
                       Text(
-                        'The history of YWCA dates back to 1875 when the first local association was'
-                            'established in Mumbai. This was followed by the YWCA of India in the year'
-                            '1896. It is one of the oldest non-profit community service organizations for women'
-                            'In India, which is based on the biblical principle \"love thy neighbour as thyself\".\n',
+                        'The history of YWCA dates back to 1875 when the first local association was established in Mumbai. This was followed by the YWCA of India in the year 1896.\n',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 16,
+                          height: 1.25,
+                          fontFamily: 'Montserrat',
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(
+                        'It is one of the oldest non-profit community service organizations for women In India, which is based on the biblical principle \"Love thy neighbour as thyself\".\n',
+                        style: TextStyle(
+                          fontSize: 16,
                           height: 1.25,
                           fontFamily: 'Montserrat',
                         ),
                       ),
                       Text(
-                        'The YWCA of Bombay is registered under the societies registration act, 1860 under no. 44 dated'
-                            '06-08-1952 and of the Bombay public trust act, 1950 under no. F/388 (BOM.) Dated 13-07-1953.',
+                        'The YWCA of Bombay is registered under the societies registration act, 1860 under no. 44 dated 06-08-1952 and of the Bombay public trust act, 1950 under no. F/388 (BOM.) dated 13-07-1953.',
                         style: TextStyle(
-                          fontSize: 15,
-                          height: 1.5,
+                          fontSize: 16,
+                          height: 1.25,
                           fontFamily: 'Montserrat',
                         ),
                       ),
                       // ),
                       SizedBox(
-                        height: _height * 0.025,
+                        height: _height * 0.010,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  text: "To learn more, visit our website:\n",
+                                ),
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  text: "www.ywcaofbombay.co.in",
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () async {
+                                      var url =
+                                          "http://www.ywcaofbombay.co.in/";
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
                       ),
                       GradientButton(
                         buttonText: 'Become a member today!',
@@ -181,37 +219,7 @@ class _AboutUsState extends State<AboutUs> {
                         route: 'register2',
                         onPressedFunction: () {},
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                              text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                        style: defaultText,
-                                        text: "To learn more visit our website below\n"
-                                    ),
-                                    TextSpan(
-                                        style: linkText,
-                                        text: "            www.ywcaofbombay.co.in",
-                                        recognizer: TapGestureRecognizer()..onTap =  () async{
-                                          var url = "http://www.ywcaofbombay.co.in/";
-                                          if (await canLaunch(url)) {
-                                            await launch(url);
-                                          } else {
-                                            throw 'Could not launch $url';
-                                          }
-                                        }
-                                    ),
-                                  ],
-                              ),
-                ),
-                        ],
-                      ),
-                      SizedBox(height: _height * 0.015),
+                      SizedBox(height: _height * 0.020),
                     ],
                   ),
                 ),
