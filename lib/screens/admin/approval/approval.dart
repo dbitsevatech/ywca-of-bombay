@@ -3,8 +3,6 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'constants.dart';
-
 import '../../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable

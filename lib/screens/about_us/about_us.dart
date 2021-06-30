@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
+import 'become_member.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class AboutUs extends KFDrawerContent {
@@ -217,7 +218,10 @@ class _AboutUsState extends State<AboutUs> {
                         buttonText: 'Become a member today!',
                         screenHeight: _height,
                         route: 'register2',
-                        onPressedFunction: () {},
+                        onPressedFunction: () {Navigator. push(
+                          context,
+                          MaterialPageRoute(builder: (context) => BecomeMemberScreen()),
+                        );},
                       ),
                       SizedBox(height: _height * 0.020),
                     ],
