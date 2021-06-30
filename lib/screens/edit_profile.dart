@@ -41,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // GenderChoices selectedGender = GenderChoices.female;
 
   // female-0, male-1, decline to state-2
-  int _genderRadioValue = 0;
+  int _genderRadioValue ;
   void _handleGenderRadioValueChange(int value) {
     setState(() {
       _genderRadioValue = value;
@@ -57,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // yes-0, no-1, maybe-2
-  int _interestInMembershipRadioValue = 0;
+  int _interestInMembershipRadioValue;
   void _handleInterestInMembershipRadioValueChange(int value) {
     setState(() {
       _interestInMembershipRadioValue = value;
@@ -139,6 +139,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
+  Future<bool> SavePressed() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Your request to change information has been successfully sent!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Continue'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
@@ -153,13 +173,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     placeOfWork = userInfo.getplaceOfWork;
     profession = userInfo.getprofession;
     interestInMembership = userInfo.getinterestInMembership;
+    if(gender == "Male"){
+      _genderRadioValue = 1;
+    }
+    else if(gender == "Female"){
+      _genderRadioValue =0;
+    }
+    else{
+      _genderRadioValue =2;
+    }
+    if(interestInMembership == "No"){
+      _interestInMembershipRadioValue = 1;
+    }
+    else if(interestInMembership == "Yes"){
+      _interestInMembershipRadioValue =0;
+    }
+    else{
+      _interestInMembershipRadioValue =2;
+    }
     dateController.text =
         DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
 
-    setState(() {
-      gender = "Female";
-      interestInMembership = "Yes";
-    });
+
     super.initState();
   }
 
@@ -765,39 +800,68 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               return;
                             }
                             _formKey.currentState.save();
+                            if(userInfo.getmemberRole == "Member") {
+                              await FirebaseFirestore.instance
+                                  .collection("approval")
+                                  .doc(uid)
+                                  .set({
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "dateOfBirth": dateOfBirth,
+                                "emailId": email,
+                                "gender": gender,
+                                "profession": profession,
+                                "placeOfWork": placeOfWork,
+                                "nearestCenter": nearestCenter,
+                                "interestInMembership": interestInMembership,
+                                "uid": uid,
+                                "phoneNumber": userInfo.getphoneNumber,
+                                "memberRole": userInfo.getmemberRole,
+                              })
+                                  .then((value) => print("Request Sent"))
+                                  .catchError((error) =>
+                                  print("Failed to update user: $error"));
+                              await SavePressed();
+                            }
+                            else{
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(uid)
+                                  .update({
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "dateOfBirth": dateOfBirth,
+                                "emailId": email,
+                                "gender": gender,
+                                "profession": profession,
+                                "placeOfWork": placeOfWork,
+                                "nearestCenter": nearestCenter,
+                                "interestInMembership": interestInMembership,
+                                "uid": uid,
+                                "phoneNumber": userInfo.getphoneNumber,
+                                "memberRole": userInfo.getmemberRole,
+                              })
+                                  .then((value) => print("Request Sent"))
+                                  .catchError((error) =>
+                                  print("Failed to update user: $error"));
+                              await userInfo.updateAfterAuth(
+                                  uid,
+                                  firstName,
+                                  lastName,
+                                  dateOfBirth,
+                                  email,
+                                  phoneNumber,
+                                  gender,
+                                  profession,
+                                  placeOfWork,
+                                  nearestCenter,
+                                  interestInMembership,
+                                  userInfo.getmemberRole);
+                            }
 
-                            await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(uid)
-                                .update({
-                                  "firstName": firstName,
-                                  "lastName": lastName,
-                                  "dateOfBirth": dateOfBirth,
-                                  "emailId": email,
-                                  "gender": gender,
-                                  "profession": profession,
-                                  "placeOfWork": placeOfWork,
-                                  "nearestCenter": nearestCenter,
-                                  "interestInMembership": interestInMembership
-                                })
-                                .then((value) => print("User Updated"))
-                                .catchError((error) =>
-                                    print("Failed to update user: $error"));
-                            await userInfo.updateAfterAuth(
-                                uid,
-                                firstName,
-                                lastName,
-                                dateOfBirth,
-                                email,
-                                phoneNumber,
-                                gender,
-                                profession,
-                                placeOfWork,
-                                nearestCenter,
-                                interestInMembership,
-                                userInfo.getmemberRole);
 
-                            Navigator.pop(context);
+
+                             Navigator.pop(context);
                             Navigator.pop(context);
                           },
                         ),

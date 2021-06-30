@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'constants.dart';
 
@@ -19,8 +20,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   List<Widget> itemsData = [];
 
-  void getPostsData() {
-    List<dynamic> responseList = DATA;
+
+
+  void getPostsData() async  {
+    var snapShot = await FirebaseFirestore.instance
+        .collection('approval')
+        .get();
+
+    List<dynamic> responseList = snapShot.docs;
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(
@@ -172,7 +179,28 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         constraints:
                             BoxConstraints.tightFor(width: 120, height: 35),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(post["uid"])
+                                .update({"firstName": post["firstName"],
+                              "lastName": post["lastName"],
+                              "dateOfBirth": post["dateOfBirth"],
+                              "emailId": post["emailId"],
+                              "gender": post["gender"],
+                              "profession": post["profession"],
+                              "placeOfWork": post["placeOfWork"],
+                              "nearestCenter": post["nearestCenter"],
+                              "interestInMembership": post["interestInMembership"],
+                              "uid" : post["uid"],
+                              "phoneNumber" : post["phoneNumber"],
+                              "memberRole" : post["memberRole"],})
+                                .then((value) => print("Approved"));
+                            await FirebaseFirestore.instance
+                                .collection('approval')
+                                .doc(post["uid"])
+                                .delete();
+                          },
                           icon: Icon(
                             Icons.check,
                             color: Colors.white,
@@ -227,7 +255,18 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         constraints:
                             BoxConstraints.tightFor(width: 120, height: 35),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection('approval')
+                                .doc(post["uid"])
+                                .delete()
+                                .then((value) => print("Rejected"));
+                            // Navigator.pop(context);
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => ApprovalScreen()));
+                          },
                           icon: Icon(
                             Icons.close,
                             color: Colors.white,
@@ -276,9 +315,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   void initState() {
     super.initState();
     getPostsData();
+    // List<dynamic> responseList = await DATA;
     controller.addListener(() {
       double value = controller.offset / 119;
-
       setState(() {
         topContainer = value;
         closeTopContainer = controller.offset > 50;
@@ -288,6 +327,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final Size size = MediaQuery.of(context).size;
     // final double categoryHeight = size.height * 0.30;
     return SafeArea(
