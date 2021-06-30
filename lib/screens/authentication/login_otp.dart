@@ -80,18 +80,19 @@ class _LoginOtpState extends State<LoginOtp>
         (value) async {
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
-            if (userInfo.getmemberRole == 'none') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
-                  (route) => false);
-            } else if (userInfo.getmemberRole == 'Admin') {
+            if (userInfo.getmemberRole == 'Admin') {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminMainWidget()),
                   (route) => false);
             }
-          }
+            else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainWidget()),
+                      (route) => false);
+            }
+        }
         },
       );
     } catch (e) {

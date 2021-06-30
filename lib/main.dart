@@ -7,7 +7,6 @@ import 'services/auth_service.dart';
 import 'services/class_builder.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
-// import 'screens/onboarding.dart';
 import 'screens/authentication/register.dart';
 import 'models/user.dart';
 
