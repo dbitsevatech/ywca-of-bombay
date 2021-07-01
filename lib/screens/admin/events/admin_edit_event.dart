@@ -154,7 +154,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     }
 
     // date of event
-    DateTime dateOfEvent = DateTime.now().subtract(Duration(days: 4380));
+    DateTime dateOfEvent = eventDate;
     Future _selectDate(context) async {
       final DateTime pickedEvent = await showDatePicker(
         context: context,
@@ -193,7 +193,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     }
 
     // Deadline of Event
-    DateTime deadlineOfEvent = DateTime.now().subtract(Duration(days: 4380));
+    DateTime deadlineOfEvent = eventDeadline;
 
     Future _selectDeadline(context) async {
       final DateTime pickedDeadline = await showDatePicker(
@@ -243,6 +243,16 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                   // circle design
                   children: <Widget>[
                     MainPageBlueBubbleDesign(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        //do something
+                        goBackToPreviousScreen(context);
+                      },
+                    ),
                     Positioned(
                       child: Center(
                         child: Padding(
@@ -308,11 +318,11 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                     fontFamily: 'RacingSansOne',
                   ),
                 ),
-                // Image.network(
-                //   eventImageUrl,
-                //   fit: BoxFit.cover,
-                //   width: 120.0,
-                // ),
+                Image.network(
+                  eventImageUrl,
+                  fit: BoxFit.cover,
+                  width: 120.0,
+                ),
                 // New selected image
                 Text(
                   'New Image',
@@ -439,7 +449,6 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                         SizedBox(
                           height: _height * 0.015,
                         ),
-                        // Date of event
                         TextFormField(
                           onChanged: (value) {
                             setState(() {});
@@ -756,4 +765,8 @@ gotoLastScreen(BuildContext context) {
     context,
     MaterialPageRoute(builder: (context) => AdminEvents()),
   );
+}
+
+goBackToPreviousScreen(BuildContext context) {
+  Navigator.pop(context);
 }
