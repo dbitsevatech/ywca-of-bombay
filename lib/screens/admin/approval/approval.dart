@@ -3,8 +3,6 @@ import 'package:kf_drawer/kf_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'constants.dart';
-
 import '../../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
@@ -20,12 +18,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   List<Widget> itemsData = [];
 
-
-
-  void getPostsData() async  {
-    var snapShot = await FirebaseFirestore.instance
-        .collection('approval')
-        .get();
+  void getPostsData() async {
+    var snapShot =
+        await FirebaseFirestore.instance.collection('approval').get();
 
     List<dynamic> responseList = snapShot.docs;
     List<Widget> listItems = [];
@@ -183,7 +178,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             await FirebaseFirestore.instance
                                 .collection('users')
                                 .doc(post["uid"])
-                                .update({"firstName": post["firstName"],
+                                .update({
+                              "firstName": post["firstName"],
                               "lastName": post["lastName"],
                               "dateOfBirth": post["dateOfBirth"],
                               "emailId": post["emailId"],
@@ -191,11 +187,12 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               "profession": post["profession"],
                               "placeOfWork": post["placeOfWork"],
                               "nearestCenter": post["nearestCenter"],
-                              "interestInMembership": post["interestInMembership"],
-                              "uid" : post["uid"],
-                              "phoneNumber" : post["phoneNumber"],
-                              "memberRole" : post["memberRole"],})
-                                .then((value) => print("Approved"));
+                              "interestInMembership":
+                                  post["interestInMembership"],
+                              "uid": post["uid"],
+                              "phoneNumber": post["phoneNumber"],
+                              "memberRole": post["memberRole"],
+                            }).then((value) => print("Approved"));
                             await FirebaseFirestore.instance
                                 .collection('approval')
                                 .doc(post["uid"])
@@ -327,7 +324,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final Size size = MediaQuery.of(context).size;
     // final double categoryHeight = size.height * 0.30;
     return SafeArea(

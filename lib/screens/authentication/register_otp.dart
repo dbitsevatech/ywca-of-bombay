@@ -119,6 +119,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   void _onRegisterButtonPressed() async {
     try {
+      print("register button pressed");
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
               verificationId: _verificationCode, smsCode: otp))
@@ -127,6 +128,18 @@ class _RegisterOtpState extends State<RegisterOtp>
             .collection('users')
             .doc(value.user.uid)
             .get();
+        print("line 131");
+        print("register OTP page: ");
+        print(firstName);
+        print(lastName);
+        print(dateOfBirth);
+        print(emailId);
+        print(phoneNumber);
+        print(gender);
+        print(profession);
+        print(placeOfWork);
+        print(nearestCenter);
+        print(interestInMembership);
 
         if (snapShot == null || !snapShot.exists) {
           print(value.user);
@@ -145,6 +158,7 @@ class _RegisterOtpState extends State<RegisterOtp>
             "interestInMembership": interestInMembership,
             "memberRole": "none"
           };
+          print("data map: " + data.toString());
           userInfo.updateAfterAuth(
               value.user.uid,
               firstName,
@@ -349,10 +363,63 @@ class _RegisterOtpState extends State<RegisterOtp>
               .signInWithCredential(credential)
               .then((value) async {
             if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
-                  (route) => false);
+              final snapShot = await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(value.user.uid)
+                  .get();
+              print("line 131");
+              print("register OTP page: ");
+              print(firstName);
+              print(lastName);
+              print(dateOfBirth);
+              print(emailId);
+              print(phoneNumber);
+              print(gender);
+              print(profession);
+              print(placeOfWork);
+              print(nearestCenter);
+              print(interestInMembership);
+
+              if (snapShot == null || !snapShot.exists) {
+                print(value.user);
+                print(value.user.uid);
+                Map<String, dynamic> data = {
+                  "uid": value.user.uid,
+                  "firstName": firstName,
+                  "lastName": lastName,
+                  "dateOfBirth": dateOfBirth,
+                  "emailId": emailId,
+                  "phoneNumber": phoneNumber,
+                  "gender": gender,
+                  "profession": profession,
+                  "placeOfWork": placeOfWork,
+                  "nearestCenter": nearestCenter,
+                  "interestInMembership": interestInMembership,
+                  "memberRole": "none"
+                };
+                print("data map: " + data.toString());
+                userInfo.updateAfterAuth(
+                    value.user.uid,
+                    firstName,
+                    lastName,
+                    dateOfBirth,
+                    emailId,
+                    phoneNumber,
+                    gender,
+                    profession,
+                    placeOfWork,
+                    nearestCenter,
+                    interestInMembership,
+                    "none");
+                CollectionReference<Map<String, dynamic>> users =
+                    FirebaseFirestore.instance.collection('users');
+                users.doc(value.user.uid).set(data);
+
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainWidget()),
+                    (route) => false);
+              }
             }
           });
         },

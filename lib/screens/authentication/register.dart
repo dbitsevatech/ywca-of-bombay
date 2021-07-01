@@ -716,6 +716,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       GlobalKey<FormState>(); // form key for validation
 
   void _onRegisterButtonPressed() async {
+    print("register page: ");
     print(firstName);
     print(lastName);
     print(dateOfBirth);
