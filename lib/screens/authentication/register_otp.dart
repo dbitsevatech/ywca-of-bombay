@@ -334,6 +334,8 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
       onTap: () {
         // Resend you OTP via API or anything
+        print("resend button pressed!");
+        _verifyPhoneNumber();
       },
     );
   }
@@ -357,87 +359,88 @@ class _RegisterOtpState extends State<RegisterOtp>
   _verifyPhoneNumber() async {
     print(phoneNumber);
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91$phoneNumber',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
-              final snapShot = await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(value.user.uid)
-                  .get();
-              print("line 131");
-              print("register OTP page: ");
-              print(firstName);
-              print(lastName);
-              print(dateOfBirth);
-              print(emailId);
-              print(phoneNumber);
-              print(gender);
-              print(profession);
-              print(placeOfWork);
-              print(nearestCenter);
-              print(interestInMembership);
+      phoneNumber: '+91$phoneNumber',
+      timeout: const Duration(seconds: 120),
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) async {
+          if (value.user != null) {
+            final snapShot = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(value.user.uid)
+                .get();
+            print("line 131");
+            print("register OTP page: ");
+            print(firstName);
+            print(lastName);
+            print(dateOfBirth);
+            print(emailId);
+            print(phoneNumber);
+            print(gender);
+            print(profession);
+            print(placeOfWork);
+            print(nearestCenter);
+            print(interestInMembership);
 
-              if (snapShot == null || !snapShot.exists) {
-                print(value.user);
-                print(value.user.uid);
-                Map<String, dynamic> data = {
-                  "uid": value.user.uid,
-                  "firstName": firstName,
-                  "lastName": lastName,
-                  "dateOfBirth": dateOfBirth,
-                  "emailId": emailId,
-                  "phoneNumber": phoneNumber,
-                  "gender": gender,
-                  "profession": profession,
-                  "placeOfWork": placeOfWork,
-                  "nearestCenter": nearestCenter,
-                  "interestInMembership": interestInMembership,
-                  "memberRole": "none"
-                };
-                print("data map: " + data.toString());
-                userInfo.updateAfterAuth(
-                    value.user.uid,
-                    firstName,
-                    lastName,
-                    dateOfBirth,
-                    emailId,
-                    phoneNumber,
-                    gender,
-                    profession,
-                    placeOfWork,
-                    nearestCenter,
-                    interestInMembership,
-                    "none");
-                CollectionReference<Map<String, dynamic>> users =
-                    FirebaseFirestore.instance.collection('users');
-                users.doc(value.user.uid).set(data);
+            if (snapShot == null || !snapShot.exists) {
+              print(value.user);
+              print(value.user.uid);
+              Map<String, dynamic> data = {
+                "uid": value.user.uid,
+                "firstName": firstName,
+                "lastName": lastName,
+                "dateOfBirth": dateOfBirth,
+                "emailId": emailId,
+                "phoneNumber": phoneNumber,
+                "gender": gender,
+                "profession": profession,
+                "placeOfWork": placeOfWork,
+                "nearestCenter": nearestCenter,
+                "interestInMembership": interestInMembership,
+                "memberRole": "none"
+              };
+              print("data map: " + data.toString());
+              userInfo.updateAfterAuth(
+                  value.user.uid,
+                  firstName,
+                  lastName,
+                  dateOfBirth,
+                  emailId,
+                  phoneNumber,
+                  gender,
+                  profession,
+                  placeOfWork,
+                  nearestCenter,
+                  interestInMembership,
+                  "none");
+              CollectionReference<Map<String, dynamic>> users =
+                  FirebaseFirestore.instance.collection('users');
+              users.doc(value.user.uid).set(data);
 
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainWidget()),
-                    (route) => false);
-              }
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  (route) => false);
             }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
-        },
-        codeSent: (String verficationID, int resendToken) {
-          setState(() {
-            _verificationCode = verficationID;
-          });
-          print("code sent. verification id = $_verificationCode");
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 120));
+          }
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+      },
+      codeSent: (String verficationID, int resendToken) {
+        setState(() {
+          _verificationCode = verficationID;
+        });
+        print("code sent. verification id = $_verificationCode");
+      },
+      codeAutoRetrievalTimeout: (String verificationID) {
+        setState(() {
+          _verificationCode = verificationID;
+        });
+      },
+    );
   }
 
   // Returns "Otp" keyboard

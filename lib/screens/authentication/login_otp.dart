@@ -85,14 +85,13 @@ class _LoginOtpState extends State<LoginOtp>
                   context,
                   MaterialPageRoute(builder: (context) => AdminMainWidget()),
                   (route) => false);
-            }
-            else {
+            } else {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => MainWidget()),
-                      (route) => false);
+                  (route) => false);
             }
-        }
+          }
         },
       );
     } catch (e) {
@@ -242,6 +241,8 @@ class _LoginOtpState extends State<LoginOtp>
       ),
       onTap: () {
         // Resend you OTP via API or anything
+        print("resend button pressed!");
+        _verifyPhoneNumber();
       },
     );
   }
@@ -263,6 +264,7 @@ class _LoginOtpState extends State<LoginOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$_phoneNumber',
+      timeout: const Duration(seconds: 120),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await FirebaseAuth.instance
             .signInWithCredential(credential)
@@ -296,7 +298,6 @@ class _LoginOtpState extends State<LoginOtp>
           _verificationCode = verificationID;
         });
       },
-      timeout: Duration(seconds: 120),
     );
   }
 
