@@ -200,11 +200,11 @@ class _AdminEventsState extends State<AdminEvents> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      // leading: new Image.network(
-                      //   // document['eventImageUrl'],
-                      //   fit: BoxFit.cover,
-                      //   width: 120.0,
-                      // ),
+                      leading: new Image.network(
+                        document['eventImageUrl'],
+                        fit: BoxFit.cover,
+                        width: 120.0,
+                      ),
                       title: new Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
@@ -267,6 +267,9 @@ class _AdminEventsState extends State<AdminEvents> {
                                           ),
                                           TextButton(
                                             onPressed: () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop(true);
                                               gotoEditEvent(
                                                   context,
                                                   document.id,
@@ -318,9 +321,25 @@ class _AdminEventsState extends State<AdminEvents> {
                                             child: Text('No'),
                                           ),
                                           TextButton(
-                                            onPressed: () {
-                                              gotoDeleteEvent(
-                                                  context, document.id);
+                                            onPressed: () async {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop(true);
+                                              var events = FirebaseFirestore
+                                                  .instance
+                                                  .collection('events');
+                                              var eventsBackup =
+                                                  FirebaseFirestore
+                                                      .instance
+                                                      .collection(
+                                                          'eventsBackup');
+                                              await events
+                                                  .doc(document.id)
+                                                  .delete();
+                                              await eventsBackup
+                                                  .doc(document.id)
+                                                  .delete();
+                                              setState(() {});
                                             },
                                             child: Text('Yes'),
                                           ),
@@ -447,14 +466,5 @@ gotoNewEvent(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => AdminNewEvent()),
-  );
-}
-
-gotoDeleteEvent(BuildContext context, String id) async {
-  var collection = FirebaseFirestore.instance.collection('events');
-  await collection.doc(id).delete();
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => AdminEvents()),
   );
 }
