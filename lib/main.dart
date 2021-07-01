@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    // return AdminMainWidget();
-    return LoginScreen();
+    return AdminMainWidget();
+    // return LoginScreen();
     // return HomeController();
   }
 }
