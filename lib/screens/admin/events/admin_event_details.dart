@@ -88,6 +88,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[

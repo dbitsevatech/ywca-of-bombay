@@ -166,7 +166,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     DateTime newTime = DateTime(
         now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
-    FirebaseFirestore.instance.collection('events').add({
+    final document = FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
       'eventDescription': eventDescription,
       'eventVenue': eventVenue,
@@ -176,8 +176,17 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventDeadline': eventDeadline,
       'eventTime': newTime,
       'eventType': eventType
-    });
-    // print("uploaded on firestore");
+    }).then((value) =>
+        // print(value.id)
+        FirebaseFirestore.instance
+            .collection('eventsBackup')
+            .doc(value.id)
+            .set({
+          // 'eventID' : value.id,
+          'eventName': eventName,
+          'eventImageUrl': url,
+          'eventDate': eventDate,
+        }));
   }
 
   // everyone-0, members-1
@@ -230,6 +239,16 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                 Stack(
                   children: <Widget>[
                     MainPageBlueBubbleDesign(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        //do something
+                        goBackToPreviousScreen(context);
+                      },
+                    ),
                     Positioned(
                       child: Center(
                         child: Padding(

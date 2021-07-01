@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
@@ -33,6 +34,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   int _currentIndex = 0;
 
   // carousel images
@@ -42,6 +44,29 @@ class _DetailPageState extends State<DetailPage> {
     'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
   ];
+
+  // onRegister for counting registration
+  void insertIntoOnRegisteration(String eventID, String eventName) async {
+    final User user = auth.currentUser;
+    final userID = user.uid;
+    FirebaseFirestore.instance
+        .collection('eventRegistration')
+        .where('eventID', isEqualTo: eventID)
+        .where('userID', isEqualTo: userID)
+        .get()
+        .then((checkSnapshot) {
+      print('snapshot size');
+      print(checkSnapshot.size);
+      if (checkSnapshot.size > 0) {
+        print("Already Exists");
+      } else {
+        print("adding");
+        FirebaseFirestore.instance
+            .collection('eventRegistration')
+            .add({'eventID': eventID, 'userID': userID});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +112,8 @@ class _DetailPageState extends State<DetailPage> {
 
     return Scaffold(
       appBar: AppBar(
+        // hiding the default white back button
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
@@ -121,7 +148,7 @@ class _DetailPageState extends State<DetailPage> {
             padding: EdgeInsets.only(top: _height * 0.005, left: _height * 0.3),
             child: RaisedButton(
               onPressed: () {
-                gotoSecondActivity(context);
+                insertIntoOnRegisteration(id, eventName);
               },
               color: Color(0xFF00bbe4),
               elevation: 0,
@@ -308,11 +335,4 @@ class _DetailPageState extends State<DetailPage> {
 
 goBackToPreviousScreen(BuildContext context) {
   Navigator.pop(context);
-}
-
-gotoSecondActivity(BuildContext context) {
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) => AdminAddNewEvent()),
-  // );
 }

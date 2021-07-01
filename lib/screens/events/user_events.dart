@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import '../../widgets/blue_bubble_design.dart';
 import 'user_event_details.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import '../../models/user.dart';
 
 // ignore: must_be_immutable
 class Events extends KFDrawerContent {
@@ -12,6 +15,32 @@ class Events extends KFDrawerContent {
 }
 
 class _EventsState extends State<Events> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var userInfo;
+
+  // onClick for counting clicks
+  void insertIntoOnClick(String eventID, String eventName) async {
+    final User user = auth.currentUser;
+    final userID = user.uid;
+    FirebaseFirestore.instance
+        .collection('eventClick')
+        .where('eventID', isEqualTo: eventID)
+        .where('userID', isEqualTo: userID)
+        .get()
+        .then((checkSnapshot) {
+      print('snapshot size');
+      print(checkSnapshot.size);
+      if (checkSnapshot.size > 0) {
+        print("Already Exists");
+      } else {
+        print("adding");
+        FirebaseFirestore.instance
+            .collection('eventClick')
+            .add({'eventID': eventID, 'userID': userID});
+      }
+    });
+  }
+
   // conversion of event date
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
@@ -112,6 +141,12 @@ class _EventsState extends State<Events> {
     )));
   }
 
+  @override
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+  }
+
   Widget getHomePageBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('events').snapshots(),
@@ -131,11 +166,11 @@ class _EventsState extends State<Events> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      // leading: new Image.network(
-                      //   // document['eventImageUrl'],
-                      //   fit: BoxFit.cover,
-                      //   width: 120.0,
-                      // ),
+                      leading: new Image.network(
+                        document['eventImageUrl'],
+                        fit: BoxFit.cover,
+                        width: 120.0,
+                      ),
                       title: new Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
@@ -175,6 +210,7 @@ class _EventsState extends State<Events> {
                       ),
                       onTap: () {
                         print('ontap');
+                        insertIntoOnClick(document.id, document['eventName']);
                         gotoDetailEvent(
                             context,
                             document.id,
