@@ -41,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // GenderChoices selectedGender = GenderChoices.female;
 
   // female-0, male-1, decline to state-2
-  int _genderRadioValue ;
+  int _genderRadioValue;
   void _handleGenderRadioValueChange(int value) {
     setState(() {
       _genderRadioValue = value;
@@ -118,7 +118,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Do you want to exit without saving changes?'),
-            content: Text('Please press the SAVE button at the bottom of the page'),
+            content:
+                Text('Please press the SAVE button at the bottom of the page'),
             actions: <Widget>[
               TextButton(
                 child: Text('NO'),
@@ -135,16 +136,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ],
           );
-        }
-    );
+        });
   }
 
-  Future<bool> SavePressed() {
+  Future<bool> savePressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Your request to change information has been successfully sent!'),
+          title: Text(
+              'Your request to change information has been successfully sent!'),
           actions: <Widget>[
             TextButton(
               child: Text('Continue'),
@@ -152,7 +153,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Navigator.of(context).pop(false);
               },
             ),
-
           ],
         );
       },
@@ -173,32 +173,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     placeOfWork = userInfo.getplaceOfWork;
     profession = userInfo.getprofession;
     interestInMembership = userInfo.getinterestInMembership;
-    if(gender == "Male"){
+    if (gender == "Male") {
       _genderRadioValue = 1;
+    } else if (gender == "Female") {
+      _genderRadioValue = 0;
+    } else {
+      _genderRadioValue = 2;
     }
-    else if(gender == "Female"){
-      _genderRadioValue =0;
-    }
-    else{
-      _genderRadioValue =2;
-    }
-    if(interestInMembership == "No"){
+    if (interestInMembership == "No") {
       _interestInMembershipRadioValue = 1;
-    }
-    else if(interestInMembership == "Yes"){
-      _interestInMembershipRadioValue =0;
-    }
-    else{
-      _interestInMembershipRadioValue =2;
+    } else if (interestInMembership == "Yes") {
+      _interestInMembershipRadioValue = 0;
+    } else {
+      _interestInMembershipRadioValue = 2;
     }
     dateController.text =
         DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
 
-
     super.initState();
   }
-
-
 
   final int height = 1;
   @override
@@ -206,689 +199,700 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return WillPopScope(
-          onWillPop: _onBackPressed,
-     child: Scaffold(
-      key: _scaffoldkey,
-      // body:WillPopScope(
-      //   onWillPop: _onBackPressed,
-       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // circle design and Title
-                Stack(
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    Positioned(
-                      child: AppBar(
-                        centerTitle: true,
-                        title: Text(
-                          "YWCA Of Bombay",
-                          style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        key: _scaffoldkey,
+        // body:WillPopScope(
+        //   onWillPop: _onBackPressed,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // circle design and Title
+                  Stack(
+                    children: <Widget>[
+                      MainPageBlueBubbleDesign(),
+                      Positioned(
+                        child: AppBar(
+                          centerTitle: true,
+                          title: Text(
+                            "YWCA Of Bombay",
+                            style: TextStyle(
+                              fontFamily: 'LobsterTwo',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              color: Colors.black87,
+                            ),
                           ),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        leading: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: Colors.black,
-                            size: 30,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          leading: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              _onBackPressed();
+                            },
+                            // onPressed: () => Navigator.of(context).pop(true),
+                            // onPressed: () => Navigator.pop(context),
                           ),
-                          onPressed: (){
-                            _onBackPressed();
-                          },
-                          // onPressed: () => Navigator.of(context).pop(true),
-                          // onPressed: () => Navigator.pop(context),
                         ),
                       ),
+                      Positioned(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: _height * 0.095),
+                            child: Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(
+                                fontSize: 35,
+                                // color: Color(0xff333333),
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RacingSansOne',
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(2.0, 3.0),
+                                    blurRadius: 3.0,
+                                    color: Color(0xff333333),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Form
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: _height * 0.02,
+                      horizontal: _width * 0.04,
                     ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.095),
-                          child: Text(
-                            'EDIT PROFILE',
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          // TODO: Add form field to upload user image
+                          TextFormField(
+                            initialValue: firstName,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                firstName = value;
+                              });
+                            },
+                            validator: (String value) {
+                              if (value.isEmpty)
+                                return 'First name is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'First Name',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            initialValue: lastName,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                lastName = value;
+                              });
+                            },
+                            validator: (String value) {
+                              if (value.isEmpty)
+                                return 'Last name is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Last Name',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            // initialValue: DateFormat('yyyy-MM-dd').format(Provider.of<UserData>(context, listen:false).getdateOfBirth).toString(),
+                            // keyboardType: TextInputType.datetime,
+                            onChanged: (value) {
+                              setState(() {
+                                // dateOfBirth = DateTime.parse(value);
+                                // dateOfBirth\ = value;
+                              });
+                            },
+                            controller: dateController,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.date_range,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Date of Birth',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              await _selectDate();
+                              dateController.text =
+                                  "${dateOfBirth.toLocal()}".split(' ')[0];
+                            },
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            initialValue: userInfo.getemailId,
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: (value) {
+                              setState(() {
+                                email = value;
+                              });
+                            },
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!RegExp(
+                                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                                  .hasMatch(value)) {
+                                return 'Enter a valid email address';
+                              }
+                              // return null coz validator has to return something
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Email Address',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+
+                          Text(
+                            'Gender',
                             style: TextStyle(
-                              fontSize: 35,
-                              // color: Color(0xff333333),
+                              fontSize: 18,
                               color: primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(2.0, 3.0),
-                                  blurRadius: 3.0,
-                                  color: Color(0xff333333),
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Radio(
+                                value: 0,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 0;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Female',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
                                 ),
+                              ),
+                              Radio(
+                                value: 1,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 1;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Male',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                value: 2,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 2;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Decline to state',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          TextFormField(
+                            initialValue: userInfo.getprofession,
+                            keyboardType: TextInputType.text,
+                            onSaved: (String value) {
+                              setState(() {
+                                profession = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Profession',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    '(Leave blank if retired)',
+                                    style: TextStyle(
+                                      color: primaryColor,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(
+                                    top: 2.5,
+                                    bottom: 2.5,
+                                    right: 3,
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // Form
-                SizedBox(height: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.02,
-                    horizontal: _width * 0.04,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        // TODO: Add form field to upload user image
-                        TextFormField(
-                          initialValue: firstName,
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            setState(() {
-                              firstName = value;
-                            });
-                          },
-                          validator: (String value) {
-                            if (value.isEmpty)
-                              return 'First name is required.';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.account_circle,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'First Name',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          initialValue: lastName,
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            setState(() {
-                              lastName = value;
-                            });
-                          },
-                          validator: (String value) {
-                            if (value.isEmpty)
-                              return 'Last name is required.';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.account_circle,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Last Name',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          // initialValue: DateFormat('yyyy-MM-dd').format(Provider.of<UserData>(context, listen:false).getdateOfBirth).toString(),
-                          // keyboardType: TextInputType.datetime,
-                          onChanged: (value) {
-                            setState(() {
-                              // dateOfBirth = DateTime.parse(value);
-                              // dateOfBirth\ = value;
-                            });
-                          },
-                          controller: dateController,
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.date_range,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Date of Birth',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
-                          ),
-                          onTap: () async {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDate();
-                            dateController.text =
-                                "${dateOfBirth.toLocal()}".split(' ')[0];
-                          },
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          initialValue: userInfo.getemailId,
-                          keyboardType: TextInputType.emailAddress,
-                          onSaved: (value) {
-                            setState(() {
-                              email = value;
-                            });
-                          },
-                          validator: (String value) {
-                            if (value.isEmpty) {
-                              return 'Email is required';
-                            }
-                            if (!RegExp(
-                                    "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                                .hasMatch(value)) {
-                              return 'Enter a valid email address';
-                            }
-                            // return null coz validator has to return something
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Email Address',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-
-                        Text(
-                          'Gender',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Radio(
-                              value: 0,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 0;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Female',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Radio(
-                              value: 1,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 1;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Male',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Radio(
-                              value: 2,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 2;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Decline to state',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        TextFormField(
-                          initialValue: userInfo.getprofession,
-                          keyboardType: TextInputType.text,
-                          onSaved: (String value) {
-                            setState(() {
-                              profession = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Profession',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                child: Text(
-                                  '(Leave blank if retired)',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                padding: EdgeInsets.only(
-                                  top: 2.5,
-                                  bottom: 2.5,
-                                  right: 3,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          initialValue: userInfo.getplaceOfWork,
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            setState(() {
-                              if (value == '') {
-                                placeOfWork = 'Retired';
-                              } else {
-                                placeOfWork = value;
-                              }
-                            });
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.location_city,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Place of work/school/college',
-                            filled: true,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: formFieldFillColor),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Container(
-                                child: Text(
-                                  '(Leave blank if retired)',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                padding: EdgeInsets.only(
-                                  top: 2.5,
-                                  bottom: 2.5,
-                                  right: 3,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Nearest YWCA Center',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.5,
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                            // left: _width * 0.262,
-                            // right: _width * 0.262,
-                            left: _width * 0.245,
-                            right: _width * 0.245,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: formFieldFillColor,
-                            // border: Border.all(),
-                          ),
-                          child: DropdownButton<String>(
-                            value: nearestCenter,
-                            icon: Icon(Icons.arrow_drop_down_rounded),
-                            elevation: 16,
-                            underline: Container(),
-                            onChanged: (String value) {
+                          TextFormField(
+                            initialValue: userInfo.getplaceOfWork,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
                               setState(() {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                nearestCenter = value;
-                                print(nearestCenter);
+                                if (value == '') {
+                                  placeOfWork = 'Retired';
+                                } else {
+                                  placeOfWork = value;
+                                }
                               });
                             },
-                            items: <String>[
-                              'Andheri',
-                              'Bandra',
-                              'Belapur',
-                              'Borivali',
-                              'Byculla',
-                              'Chembur',
-                              'Fort',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Center(
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.location_city,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Place of work/school/college',
+                              filled: true,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
                                   child: Text(
-                                    value,
+                                    '(Leave blank if retired)',
                                     style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      letterSpacing: 2,
+                                      color: primaryColor,
+                                      fontSize: 15,
                                     ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
+                                  padding: EdgeInsets.only(
+                                    top: 2.5,
+                                    bottom: 2.5,
+                                    right: 3,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Interested in being a member?',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Montserrat',
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Radio(
-                              value: 0,
-                              groupValue: _interestInMembershipRadioValue,
-                              onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 0;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Yes',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Radio(
-                              value: 1,
-                              groupValue: _interestInMembershipRadioValue,
-                              onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 1;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'No',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Radio(
-                              value: 2,
-                              groupValue: _interestInMembershipRadioValue,
-                              onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 2;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Maybe',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: _height * 0.005),
-                        GradientButton(
-                          buttonText: 'Update Profile',
-                          screenHeight: _height,
-                          route: 'home',
-                          onPressedFunction: () async {
-                            if (!_formKey.currentState.validate()) {
-                              return;
-                            }
-                            _formKey.currentState.save();
-                            if(userInfo.getmemberRole == "Member") {
-                              await FirebaseFirestore.instance
-                                  .collection("approval")
-                                  .doc(uid)
-                                  .set({
-                                "firstName": firstName,
-                                "lastName": lastName,
-                                "dateOfBirth": dateOfBirth,
-                                "emailId": email,
-                                "gender": gender,
-                                "profession": profession,
-                                "placeOfWork": placeOfWork,
-                                "nearestCenter": nearestCenter,
-                                "interestInMembership": interestInMembership,
-                                "uid": uid,
-                                "phoneNumber": userInfo.getphoneNumber,
-                                "memberRole": userInfo.getmemberRole,
-                              })
-                                  .then((value) => print("Request Sent"))
-                                  .catchError((error) =>
-                                  print("Failed to update user: $error"));
-                              await SavePressed();
-                            }
-                            else{
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(uid)
-                                  .update({
-                                "firstName": firstName,
-                                "lastName": lastName,
-                                "dateOfBirth": dateOfBirth,
-                                "emailId": email,
-                                "gender": gender,
-                                "profession": profession,
-                                "placeOfWork": placeOfWork,
-                                "nearestCenter": nearestCenter,
-                                "interestInMembership": interestInMembership,
-                                "uid": uid,
-                                "phoneNumber": userInfo.getphoneNumber,
-                                "memberRole": userInfo.getmemberRole,
-                              })
-                                  .then((value) => print("Request Sent"))
-                                  .catchError((error) =>
-                                  print("Failed to update user: $error"));
-                              await userInfo.updateAfterAuth(
-                                  uid,
-                                  firstName,
-                                  lastName,
-                                  dateOfBirth,
-                                  email,
-                                  phoneNumber,
-                                  gender,
-                                  profession,
-                                  placeOfWork,
-                                  nearestCenter,
-                                  interestInMembership,
-                                  userInfo.getmemberRole);
-                            }
-
-
-
-                             Navigator.pop(context);
-                            Navigator.pop(context);
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.020,
-                        ),
-                        Center(
-                          child: Text(
-                            'Your details will be verified by the admin and then updated within a few days',
+                          Text(
+                            'Nearest YWCA Center',
                             style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              // left: _width * 0.262,
+                              // right: _width * 0.262,
+                              left: _width * 0.245,
+                              right: _width * 0.245,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: formFieldFillColor,
+                              // border: Border.all(),
+                            ),
+                            child: DropdownButton<String>(
+                              value: nearestCenter,
+                              icon: Icon(Icons.arrow_drop_down_rounded),
+                              elevation: 16,
+                              underline: Container(),
+                              onChanged: (String value) {
+                                setState(() {
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                  nearestCenter = value;
+                                  print(nearestCenter);
+                                });
+                              },
+                              items: <String>[
+                                'Andheri',
+                                'Bandra',
+                                'Belapur',
+                                'Borivali',
+                                'Byculla',
+                                'Chembur',
+                                'Fort',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Center(
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        letterSpacing: 2,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Interested in being a member?',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w600,
                               fontFamily: 'Montserrat',
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ),
-                      ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Radio(
+                                value: 0,
+                                groupValue: _interestInMembershipRadioValue,
+                                onChanged:
+                                    _handleInterestInMembershipRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 0;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Radio(
+                                value: 1,
+                                groupValue: _interestInMembershipRadioValue,
+                                onChanged:
+                                    _handleInterestInMembershipRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 1;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Radio(
+                                value: 2,
+                                groupValue: _interestInMembershipRadioValue,
+                                onChanged:
+                                    _handleInterestInMembershipRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 2;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Maybe',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: _height * 0.005),
+                          GradientButton(
+                            buttonText: 'Update Profile',
+                            screenHeight: _height,
+                            route: 'home',
+                            onPressedFunction: () async {
+                              if (!_formKey.currentState.validate()) {
+                                return;
+                              }
+                              _formKey.currentState.save();
+                              if (userInfo.getmemberRole == "Member") {
+                                await FirebaseFirestore.instance
+                                    .collection("approval")
+                                    .doc(uid)
+                                    .set({
+                                      "firstName": firstName,
+                                      "lastName": lastName,
+                                      "dateOfBirth": dateOfBirth,
+                                      "emailId": email,
+                                      "gender": gender,
+                                      "profession": profession,
+                                      "placeOfWork": placeOfWork,
+                                      "nearestCenter": nearestCenter,
+                                      "interestInMembership":
+                                          interestInMembership,
+                                      "uid": uid,
+                                      "phoneNumber": userInfo.getphoneNumber,
+                                      "memberRole": userInfo.getmemberRole,
+                                    })
+                                    .then((value) => print("Request Sent"))
+                                    .catchError((error) =>
+                                        print("Failed to update user: $error"));
+                                await savePressed();
+                              } else {
+                                await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(uid)
+                                    .update({
+                                      "firstName": firstName,
+                                      "lastName": lastName,
+                                      "dateOfBirth": dateOfBirth,
+                                      "emailId": email,
+                                      "gender": gender,
+                                      "profession": profession,
+                                      "placeOfWork": placeOfWork,
+                                      "nearestCenter": nearestCenter,
+                                      "interestInMembership":
+                                          interestInMembership,
+                                      "uid": uid,
+                                      "phoneNumber": userInfo.getphoneNumber,
+                                      "memberRole": userInfo.getmemberRole,
+                                    })
+                                    .then((value) => print("Request Sent"))
+                                    .catchError((error) =>
+                                        print("Failed to update user: $error"));
+                                await userInfo.updateAfterAuth(
+                                    uid,
+                                    firstName,
+                                    lastName,
+                                    dateOfBirth,
+                                    email,
+                                    phoneNumber,
+                                    gender,
+                                    profession,
+                                    placeOfWork,
+                                    nearestCenter,
+                                    interestInMembership,
+                                    userInfo.getmemberRole);
+                              }
+
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
+                          SizedBox(
+                            height: _height * 0.020,
+                          ),
+                          Center(
+                            child: Text(
+                              'Your details will be verified by the admin and then updated within a few days',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }

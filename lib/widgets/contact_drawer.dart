@@ -4,133 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../screens/about_us/about_us.dart';
-import '../screens/admin/analytics/analytics.dart';
-import '../screens/admin/approval/approval.dart';
-import '../screens/admin/events/admin_events.dart';
 import '../services/class_builder.dart';
 import '../widgets/constants.dart';
 import '../screens/contact_us/contact_us.dart';
+import '../screens/events/user_events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
 import '../models/user.dart';
 import '../screens/view_profile.dart';
 
-class AdminMainWidget extends StatefulWidget {
-  AdminMainWidget({Key key, this.title}) : super(key: key);
+class MainWidget extends StatefulWidget {
+  MainWidget({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _AdminMainWidgetState createState() => _AdminMainWidgetState();
+  _MainWidgetState createState() => _MainWidgetState();
 }
 
-class _AdminMainWidgetState extends State<AdminMainWidget>
-    with TickerProviderStateMixin {
+class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   KFDrawerController _drawerController;
   var userInfo;
-  @override
-  void initState() {
-    userInfo = Provider.of<UserData>(context, listen: false);
-    super.initState();
-    _drawerController = KFDrawerController(
-      initialPage: ClassBuilder.fromString('AdminEvents'),
-      items: [
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.info),
-              SizedBox(width: 10),
-              Text(
-                'About Us',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: AboutUs(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.event),
-              SizedBox(width: 10),
-              Text(
-                'Events',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: AdminEvents(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.follow_the_signs_sharp),
-              SizedBox(width: 10),
-              Text(
-                'Initiatives',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: Initiatives(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.star),
-              SizedBox(width: 10),
-              Text(
-                'Success Stories',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: SuccessStories(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.quick_contacts_mail),
-              SizedBox(width: 10),
-              Text(
-                'Contact Us',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: ContactUs(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.insert_chart),
-              SizedBox(width: 10),
-              Text(
-                'Analytics',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: AnalyticsScreen(),
-        ),
-        KFDrawerItem.initWithPage(
-          text: Row(
-            children: [
-              Icon(Icons.verified_user),
-              SizedBox(width: 10),
-              Text(
-                'Approval',
-                style: TextStyle(color: Colors.black87, fontSize: 20),
-              ),
-            ],
-          ),
-          page: ApprovalScreen(),
-        ),
-      ],
-    );
-  }
 
-  // show dialog for back button press
+// show dialog for back button press
   Future<bool> _onBackPressed() {
     return showDialog(
       context: context,
@@ -190,16 +86,93 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
   }
 
   @override
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+    _drawerController = KFDrawerController(
+      initialPage: ClassBuilder.fromString('ContactUs'),
+      items: [
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.info),
+              SizedBox(width: 10),
+              Text(
+                'About Us',
+                style: TextStyle(color: Colors.black87, fontSize: 20),
+              ),
+            ],
+          ),
+          page: AboutUs(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.event),
+              SizedBox(width: 10),
+              Text(
+                'Events',
+                style: TextStyle(color: Colors.black87, fontSize: 20),
+              ),
+            ],
+          ),
+          page: Events(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.follow_the_signs_sharp),
+              SizedBox(width: 10),
+              Text(
+                'Initiatives',
+                style: TextStyle(color: Colors.black87, fontSize: 20),
+              ),
+            ],
+          ),
+          page: Initiatives(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.star),
+              SizedBox(width: 10),
+              Text(
+                'Success Stories',
+                style: TextStyle(color: Colors.black87, fontSize: 20),
+              ),
+            ],
+          ),
+          page: SuccessStories(),
+        ),
+        KFDrawerItem.initWithPage(
+          text: Row(
+            children: [
+              Icon(Icons.quick_contacts_mail),
+              SizedBox(width: 10),
+              Text(
+                'Contact Us',
+                style: TextStyle(color: Colors.black87, fontSize: 20),
+              ),
+            ],
+          ),
+          page: ContactUs(),
+        )
+      ],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        // in Moto G5s Plus
-        // A RenderFlex overflowed by 90 pixels on the bottom.
-        // The relevant error-causing widget was
-        // KFDrawer
-        // lib\widgets\drawer.dart:119
-        body: KFDrawer(
+    print("drawer");
+    return Scaffold(
+      // in Moto G5s Plus
+      // A RenderFlex overflowed by 90 pixels on the bottom.
+      // The relevant error-causing widget was
+      // KFDrawer
+      // lib\widgets\drawer.dart:119
+      body: WillPopScope(
+        onWillPop: _onBackPressed,
+        child: KFDrawer(
           controller: _drawerController,
           header: Container(
             width: MediaQuery.of(context).size.width * 0.7,
@@ -280,11 +253,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
                 fontSize: 20,
               ),
             ),
-            icon: Icon(
-              Icons.logout,
-              color: Colors.black,
-              size: 20,
-            ),
+            icon: Icon(Icons.logout, color: Colors.black, size: 20),
             onPressed: () async {
               _onLogoutPressed();
             },

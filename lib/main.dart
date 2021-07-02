@@ -9,7 +9,6 @@ import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
 import 'screens/authentication/register.dart';
 import 'models/user.dart';
-import 'widgets/admin_drawer.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    return AdminMainWidget();
+    return MainWidget();
     // return LoginScreen();
     // return HomeController();
   }

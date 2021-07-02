@@ -99,7 +99,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               SizedBox(width: 10),
               Text(
                 'About Us',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -112,7 +112,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               SizedBox(width: 10),
               Text(
                 'Events',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -125,7 +125,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               SizedBox(width: 10),
               Text(
                 'Initiatives',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -138,7 +138,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               SizedBox(width: 10),
               Text(
                 'Success Stories',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -151,7 +151,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               SizedBox(width: 10),
               Text(
                 'Contact Us',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -163,6 +163,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print("drawer");
     return Scaffold(
       // in Moto G5s Plus
       // A RenderFlex overflowed by 90 pixels on the bottom.
@@ -249,10 +250,10 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
               'LOGOUT',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
-            icon: Icon(Icons.logout, color: Colors.black, size: 22),
+            icon: Icon(Icons.logout, color: Colors.black, size: 20),
             onPressed: () async {
               _onLogoutPressed();
             },
