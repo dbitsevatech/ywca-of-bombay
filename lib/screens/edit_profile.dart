@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
 import '../widgets/gradient_button.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 // enum GenderChoices { female, male, declineToState }
 // enum MemberChoices { yes, no, maybe }

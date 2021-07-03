@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../models/user.dart';
+import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import 'login_otp.dart';
 import 'register.dart';

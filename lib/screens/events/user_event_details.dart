@@ -1,15 +1,16 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import '../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
-import '../../widgets/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../about_us/become_member.dart';
 import 'package:provider/provider.dart';
-import '../../models/user.dart';
+
+import '../about_us/become_member.dart';
+import '../../models/User.dart';
+import '../../widgets/blue_bubble_design.dart';
+import '../../widgets/constants.dart';
 
 // ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
@@ -48,7 +49,7 @@ class _DetailPageState extends State<DetailPage> {
   int _currentIndex = 0;
 
   // onRegister for counting registration
-  void insertIntoOnRegisteration(String eventID, String eventName) async {
+  void insertIntoOnRegistration(String eventID, String eventName) async {
     final User user = auth.currentUser;
     final userID = user.uid;
     FirebaseFirestore.instance
@@ -71,7 +72,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationgetText
+      GlobalKey<FormState>(); // form key for validationGetText
 
   @override
   Widget build(BuildContext context) {
@@ -90,23 +91,23 @@ class _DetailPageState extends State<DetailPage> {
     DateTime eventDeadline = widget.eventDeadline;
     Timestamp eventTime = widget.eventTime;
 
-      // carousel images
-  final List<String> imagesList = [
-    eventImageUrl,
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
-  ];
+    // carousel images
+    final List<String> imagesList = [
+      eventImageUrl,
+      'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+      'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+      'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+      'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+    ];
 
     // event date
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
 
-// event deadline
+    // event deadline
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
-// event time
+    // event time
     DateTime newEventTime = eventTime.toDate();
     String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
 
@@ -158,73 +159,76 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     // Members only button
                     // Members only button
-                    if (eventType == 'Everyone') 
-                    Column( children: <Widget> [
-                      Container(
-                      // color: Colors.orange,
-                      padding: EdgeInsets.only(
-                          top: _height * 0.07, left: _height * 0.3),
-                      child: RaisedButton(
-                        onPressed: () {},
-                        color: Color(0xFF00bbe4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "Everyone",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
+                    if (eventType == 'Everyone')
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            // color: Colors.orange,
+                            padding: EdgeInsets.only(
+                                top: _height * 0.07, left: _height * 0.3),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Color(0xFF00bbe4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "Everyone",
+                                style: new TextStyle(
+                                    fontSize: 18.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    ],
-                    ),
-                    if (eventType == 'Members') 
-                    Column( children: <Widget> [
-                      Container(
-                      // color: Colors.orange,
-                      padding: EdgeInsets.only(
-                          top: _height * 0.07, left: _height * 0.195),
-                      child: RaisedButton(
-                        onPressed: () {
-                          goToBecomeMember(context);
-                        },
-                        color: Color(0xFF00bbe4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "⭐ Members only",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
+                    if (eventType == 'Members')
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            // color: Colors.orange,
+                            padding: EdgeInsets.only(
+                                top: _height * 0.07, left: _height * 0.195),
+                            child: RaisedButton(
+                              onPressed: () {
+                                goToBecomeMember(context);
+                              },
+                              color: Color(0xFF00bbe4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "⭐ Members only",
+                                style: new TextStyle(
+                                    fontSize: 18.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    ],
-                    ),
-                    if(memberRole != 'Member')
-                    Column( children: <Widget> [
-                      Container(
-                      // color: Colors.orange,
-                      padding: EdgeInsets.only(
-                          top: _height * 0.14, left: _height * 0.195),
-                      child: RaisedButton(
-                        onPressed: () {
-                          goToBecomeMember(context);
-                        },
-                        color: Color(0xFF00bbe4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "Become a member",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
+                    if (memberRole != 'Member')
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            // color: Colors.orange,
+                            padding: EdgeInsets.only(
+                                top: _height * 0.14, left: _height * 0.195),
+                            child: RaisedButton(
+                              onPressed: () {
+                                goToBecomeMember(context);
+                              },
+                              color: Color(0xFF00bbe4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "Become a member",
+                                style: new TextStyle(
+                                    fontSize: 18.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    ],
-                    ),
                     Positioned(
                       child: Center(
                         child: Padding(
@@ -334,7 +338,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         // Event venue
                         Text(
-                          'Venue -' + eventVenue,
+                          'Venue: ' + eventVenue,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -345,7 +349,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         // Event amount
                         Text(
-                          'Amount -' + eventAmount,
+                          'Amount: ' + eventAmount,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -356,7 +360,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                         //Date of Event
                         Text(
-                          'Date of Event -' + formattedEventDate,
+                          'Date of Event: ' + formattedEventDate,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -365,7 +369,7 @@ class _DetailPageState extends State<DetailPage> {
                         SizedBox(height: _height * 0.015),
                         // Time
                         Text(
-                          'Event Time -' + formattedEventTime,
+                          'Event Time: ' + formattedEventTime,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -404,7 +408,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                insertIntoOnRegisteration(id, eventName);
+                                insertIntoOnRegistration(id, eventName);
                               },
                             ),
                           ),
@@ -429,7 +433,6 @@ goBackToPreviousScreen(BuildContext context) {
 goToBecomeMember(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(
-        builder: (context) => BecomeMemberScreen()),
+    MaterialPageRoute(builder: (context) => BecomeMemberScreen()),
   );
 }

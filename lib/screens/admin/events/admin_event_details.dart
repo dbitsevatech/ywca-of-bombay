@@ -139,7 +139,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: Text(
                                 "Everyone",
-                                style: new TextStyle(
+                                style: TextStyle(
                                     fontSize: 18.0, color: Colors.white),
                               ),
                             ),
@@ -161,7 +161,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                                   borderRadius: BorderRadius.circular(20)),
                               child: Text(
                                 "⭐ Members only",
-                                style: new TextStyle(
+                                style: TextStyle(
                                     fontSize: 18.0, color: Colors.white),
                               ),
                             ),

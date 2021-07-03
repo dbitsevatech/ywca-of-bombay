@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../models/user.dart';
+import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';

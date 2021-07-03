@@ -11,7 +11,7 @@ import '../screens/events/user_events.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class MainWidget extends StatefulWidget {

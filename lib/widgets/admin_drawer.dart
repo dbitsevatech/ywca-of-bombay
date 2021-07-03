@@ -13,7 +13,7 @@ import '../screens/contact_us/contact_us.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class AdminMainWidget extends StatefulWidget {

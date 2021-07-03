@@ -14,7 +14,7 @@ import '../widgets/drawer.dart';
 
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/gradient_button.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
