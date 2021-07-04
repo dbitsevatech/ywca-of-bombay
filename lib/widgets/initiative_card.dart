@@ -29,7 +29,8 @@ Widget buildInitiativeCard(BuildContext context, int index) {
                 builder: (context) => InitiativeDetails(
                   _allInitiatives[index].title,
                   _allInitiatives[index].description,
-                  _allInitiatives[index].imageList,
+                  _allInitiatives[index].imagePathList,
+                  _allInitiatives[index].imageTitleList,
                 ),
               ));
         },
@@ -77,8 +78,7 @@ Widget buildInitiativeCard(BuildContext context, int index) {
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                  'assets/images/initiatives/' + _allInitiatives[index].image),
+              image: AssetImage(_allInitiatives[index].image),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
