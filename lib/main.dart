@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'services/auth_service.dart';
 import 'services/class_builder.dart';
+import 'widgets/admin_drawer.dart';
 import 'widgets/drawer.dart';
 import 'screens/authentication/login.dart';
 import 'screens/authentication/register.dart';
-import 'models/user.dart';
-import 'widgets/admin_drawer.dart';
+import 'models/User.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    return AdminMainWidget();
+    return MainWidget();
     // return LoginScreen();
     // return HomeController();
   }

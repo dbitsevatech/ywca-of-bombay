@@ -13,7 +13,7 @@ import '../screens/contact_us/contact_us.dart';
 import '../screens/initiatives/initiatives.dart';
 import '../screens/authentication/login.dart';
 import '../screens/success_stories/success_stories.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class AdminMainWidget extends StatefulWidget {
@@ -42,7 +42,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'About Us',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -55,7 +55,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Events',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -68,7 +68,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Initiatives',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -81,7 +81,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Success Stories',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -94,7 +94,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Contact Us',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -107,7 +107,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Analytics',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -120,7 +120,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               SizedBox(width: 10),
               Text(
                 'Approval',
-                style: TextStyle(color: Colors.black87, fontSize: 22),
+                style: TextStyle(color: Colors.black87, fontSize: 20),
               ),
             ],
           ),
@@ -277,13 +277,13 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
               'LOGOUT',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 22,
+                fontSize: 20,
               ),
             ),
             icon: Icon(
               Icons.logout,
               color: Colors.black,
-              size: 22,
+              size: 20,
             ),
             onPressed: () async {
               _onLogoutPressed();

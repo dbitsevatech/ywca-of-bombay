@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../events/user_events.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/contact_drawer.dart';
 import '../../widgets/gradient_button.dart';
 import '../../widgets/blue_bubble_design.dart';
 
@@ -15,124 +15,144 @@ class BecomeMemberScreen extends StatefulWidget {
 }
 
 class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
-
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
-    // final _width = MediaQuery.of(context).size.width;
-
-    var defaultText = TextStyle(color: Colors.black);
-    var linkText = TextStyle(color: Colors.blue);
 
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              //do something
+              // gotoSecondActivity(context);
+            },
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
         child: Container(
-          height: _height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            // padding: const EdgeInsets.all(8),
             children: <Widget>[
-              // circle design and Appbar
-              Stack(
-                children: <Widget>[
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                    ),
+              Row(
+                children: [
+                  Container(
+                    // margin: EdgeInsets.all(0.0),
+                    // child: CustomPaint(
+                    //   painter: BlueBubbleDesign(),
+                    // ),
+                    child: DetailPageBlueBubbleDesign(),
                   ),
                 ],
               ),
-              // TODO: Make the carousel responsive
-              // https://pub.dev/packages/introduction_screen
-              // https://pub.dev/packages/gooey_carousel
               Container(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.only(
+                  top: _height * 0.05,
+                  left: 20,
+                  right: 20,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    new  Image.asset('assets/images/about_us/membership.png',
-                        width: 400,
-                        height: 200,
-                        fit:BoxFit.fill ),
+                    Image.asset(
+                      'assets/images/about_us/membership.png',
+                      width: 400,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      height: _height * 0.05,
+                    ),
                     Text(
-                      '\"Join the YWCA family Today\"',
+                      'Join the YWCA Family today!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 24,
                         fontFamily: 'RacingSansOne',
-                        color: primaryColor,
+                        color: secondaryColor,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: _height * 0.03,
                     ),
                     Text(
-                      'A prospective member has to attend minimum two meetings (either area meetings or YWCA program/event).'
-                          'She then fill the membership form which is signed by Area Chairperson. This is forwarded to the Membership Committee.'
-                          'The Membership Committee recommends it to the board and then the membership is approved by the board.',
+                      'A prospective member has to attend minimum two meetings (either area meetings or YWCA programme/event).'
+                      ' She then fills the membership form which is signed by the Area Chairperson. \n\n This is forwarded to the Membership Committee.'
+                      ' The Membership Committee then recommends it to the board and then the membership is approved by the board.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 17,
                         fontFamily: 'Montserrat',
-                        color: Colors.black45,
+                        height: 1.25,
+                        color: Colors.black,
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: _height * 0.03,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  style: defaultText,
-                                  text: "For more details"
-                              ),
-                              TextSpan(
-                                  style: linkText,
-                                  text: "Contact_Us\n",
-                                  recognizer: TapGestureRecognizer()..onTap =  () {
-                                  }
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: Padding(
-                            padding:
-                            EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-                            child: GradientButton(
-                              buttonText: "Return to Events",
-                              screenHeight: _height,
-                              route: 'events',
-                              onPressedFunction: () {
-                                Navigator. push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Events()),
-                                );
-                              }
-                              ,
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
+                            text: "For more details, visit:  ",
                           ),
-                        ),
-                      ],
+                          TextSpan(
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                            text: "Contact Us\n",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                // ContactUs();
+                                print("contact us pressed");
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MainWidget(),
+                                  ),
+                                );
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: _height * 0.01,
+                    ),
+                    GradientButton(
+                      buttonText: "Return to Events",
+                      screenHeight: _height,
+                      route: 'events',
+                      onPressedFunction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainWidget(),
+                          ),
+                        );
+                        // Navigator.pop(context);
+                      },
                     ),
                   ],
                 ),

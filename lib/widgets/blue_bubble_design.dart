@@ -78,12 +78,10 @@ class DetailPageBlueBubblePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     // main page circles
-    canvas.drawCircle(Offset(-80, -150), 100, paint1); // top circle
-    canvas.drawCircle(Offset(-180, -50), 100, paint1); // left circle
+    canvas.drawCircle(Offset(-5, 30), 100, paint1); // top circle
+    canvas.drawCircle(Offset(100, -40), 100, paint1); // left circle
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
-
-

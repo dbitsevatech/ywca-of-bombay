@@ -67,7 +67,7 @@ class _AdminEventsState extends State<AdminEvents> {
           child: AppBar(
             centerTitle: true,
             title: Text("YWCA Of Bombay",
-                style: new TextStyle(
+                style: TextStyle(
                     fontFamily: 'LilyScriptOne',
                     fontSize: 18.0,
                     color: Colors.black87)),
@@ -86,7 +86,7 @@ class _AdminEventsState extends State<AdminEvents> {
         // Events & Search bar Starts
         PreferredSize(
           preferredSize: Size.fromHeight(80),
-          child: new Column(
+          child: Column(
             children: <Widget>[
               // Distance from ywca
               // or else it will overlap
@@ -97,7 +97,7 @@ class _AdminEventsState extends State<AdminEvents> {
                   children: [
                     TextSpan(
                         text: 'Events ',
-                        style: new TextStyle(
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold)),
@@ -186,58 +186,58 @@ class _AdminEventsState extends State<AdminEvents> {
       stream: FirebaseFirestore.instance.collection('events').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
-          return new Text('Error: ${snapshot.error}' + 'something');
+          return Text('Error: ${snapshot.error}' + 'something');
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(
               child: CircularProgressIndicator(),
             );
           default:
-            return new ListView(
+            return ListView(
               padding: EdgeInsets.only(bottom: 80),
               children: snapshot.data.docs.map((DocumentSnapshot document) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      leading: new Image.network(
+                      leading: Image.network(
                         document['eventImageUrl'],
                         fit: BoxFit.cover,
                         width: 120.0,
                       ),
-                      title: new Text(
+                      title: Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
                             '| Time:' +
                             (readEventTime(document['eventTime'])),
-                        style: new TextStyle(
+                        style: TextStyle(
                             color: Color(0xFF49DEE8),
                             fontSize: 14.0,
                             fontWeight: FontWeight.normal),
                       ),
-                      subtitle: new Column(
+                      subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 5),
-                          new Text(document['eventName'],
-                              style: new TextStyle(
+                          Text(document['eventName'],
+                              style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.bold)),
                           SizedBox(height: 5),
-                          new Text('Resource Person: ' + document['eventName'],
-                              style: new TextStyle(
+                          Text('Resource Person: ' + document['eventName'],
+                              style: TextStyle(
                                   fontSize: 11.0,
                                   fontWeight: FontWeight.normal)),
                           SizedBox(height: 5),
-                          new Text('Venue: ' + document['eventVenue'],
-                              style: new TextStyle(
+                          Text('Venue: ' + document['eventVenue'],
+                              style: TextStyle(
                                   fontSize: 11.0,
                                   fontWeight: FontWeight.normal)),
                           SizedBox(height: 5),
-                          new Text('Amount: ' + document['eventAmount'],
-                              style: new TextStyle(
+                          Text('Amount: ' + document['eventAmount'],
+                              style: TextStyle(
                                   fontSize: 11.0,
                                   fontWeight: FontWeight.normal)),
                           // start of edit and delete
@@ -256,7 +256,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                         content: Text(
                                             'Are you sure you want to edit this event?'),
                                         actions: <Widget>[
-                                          new TextButton(
+                                          TextButton(
                                             onPressed: () {
                                               Navigator.of(context,
                                                       rootNavigator: true)
@@ -311,7 +311,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                         content: Text(
                                             'Are you sure you want to delete this event?'),
                                         actions: <Widget>[
-                                          new TextButton(
+                                          TextButton(
                                             onPressed: () {
                                               Navigator.of(context,
                                                       rootNavigator: true)

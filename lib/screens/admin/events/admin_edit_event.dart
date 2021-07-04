@@ -75,8 +75,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     if (_image != null) {
       return Image.file(_image);
     } else {
-      return Text('Choose a new image to show',
-          style: TextStyle(fontSize: 18.0));
+      return Text('Choose a image to show', style: TextStyle(fontSize: 18.0));
     }
   }
 
@@ -323,7 +322,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                   fit: BoxFit.cover,
                   width: 120.0,
                 ),
-                // New selected image
+                // selected image
                 Text(
                   'New Image',
                   style: TextStyle(
@@ -736,7 +735,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     print('event deadline');
     print(eventDeadline);
     TimeOfDay selectedTime = eventTime;
-    final now = new DateTime.now();
+    final now = DateTime.now();
     DateTime newTime = DateTime(
         now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 

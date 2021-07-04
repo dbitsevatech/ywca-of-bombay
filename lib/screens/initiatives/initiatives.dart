@@ -1,10 +1,8 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-// import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/initiative_card.dart';
-import '../../models/initiative.dart';
+import '../../models/Initiative.dart';
 import '../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
@@ -82,8 +80,8 @@ class _InitiativesState extends State<Initiatives> {
     );
   }
 
-  // TODO: Initiatives on Firebase
-  // TODO: add firebase code
+  // TODO: Initiatives on Firebase?
+  // TODO: add firebase code?
 
   // Stream<QuerySnapshot> getInitiativesStreamSnapshots(
   //     BuildContext context) async* {

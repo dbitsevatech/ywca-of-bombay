@@ -90,7 +90,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
     userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
     _drawerController = KFDrawerController(
-      initialPage: ClassBuilder.fromString('Events'),
+      initialPage: ClassBuilder.fromString('ContactUs'),
       items: [
         KFDrawerItem.initWithPage(
           text: Row(

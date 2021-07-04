@@ -59,14 +59,14 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     DateTime eventDeadline = widget.eventDeadline;
     Timestamp eventTime = widget.eventTime;
 
-      // carousel images
-  final List<String> imagesList = [
-    eventImageUrl,
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
-  ];
+    // carousel images
+    final List<String> imagesList = [
+      eventImageUrl,
+      'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+      'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+      'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+      'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+    ];
 
     // event date
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
@@ -122,50 +122,52 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                       ),
                       onPressed: () {},
                     ),
-                    
+
                     // Members only button
-                    if (eventType == 'Everyone') 
-                    Column( children: <Widget> [
-                      Container(
-                      // color: Colors.orange,
-                      padding: EdgeInsets.only(
-                          top: _height * 0.07, left: _height * 0.3),
-                      child: RaisedButton(
-                        onPressed: () {},
-                        color: Color(0xFF00bbe4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "Everyone",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
+                    if (eventType == 'Everyone')
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            // color: Colors.orange,
+                            padding: EdgeInsets.only(
+                                top: _height * 0.07, left: _height * 0.3),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Color(0xFF00bbe4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "Everyone",
+                                style: TextStyle(
+                                    fontSize: 18.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    ],
-                    ),
-                    if (eventType == 'Members') 
-                    Column( children: <Widget> [
-                      Container(
-                      // color: Colors.orange,
-                      padding: EdgeInsets.only(
-                          top: _height * 0.07, left: _height * 0.195),
-                      child: RaisedButton(
-                        onPressed: () {},
-                        color: Color(0xFF00bbe4),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "⭐ Members only",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
+                    if (eventType == 'Members')
+                      Column(
+                        children: <Widget>[
+                          Container(
+                            // color: Colors.orange,
+                            padding: EdgeInsets.only(
+                                top: _height * 0.07, left: _height * 0.195),
+                            child: RaisedButton(
+                              onPressed: () {},
+                              color: Color(0xFF00bbe4),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "⭐ Members only",
+                                style: TextStyle(
+                                    fontSize: 18.0, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    ],
-                    ),
                     Positioned(
                       child: Center(
                         child: Padding(
@@ -344,7 +346,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              onPressed: () { },
+                              onPressed: () {},
                             ),
                           ),
                         ),

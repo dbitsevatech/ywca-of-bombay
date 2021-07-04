@@ -7,7 +7,7 @@ import './edit_profile.dart';
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
 import '../widgets/gradient_button.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class ViewProfileScreen extends StatefulWidget {
   @override

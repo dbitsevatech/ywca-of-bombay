@@ -162,7 +162,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     // print(eventTime);
 
     TimeOfDay selectedTime = eventTime;
-    final now = new DateTime.now();
+    final now = DateTime.now();
     DateTime newTime = DateTime(
         now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
