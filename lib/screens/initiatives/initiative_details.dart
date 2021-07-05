@@ -53,6 +53,17 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
+        centerTitle: true,
+        title: Text(
+          "YWCA Of Bombay",
+          style: TextStyle(
+            fontFamily: 'LobsterTwo',
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Colors.black87,
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -82,7 +93,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                   ),
                 ],
               ),
-
               Padding(padding: const EdgeInsets.only(top: 10)),
               Container(
                 height: 420,
@@ -130,8 +140,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                   ),
                 ),
               ),
-
-//
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: Column(

@@ -39,6 +39,8 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
     var profession = userInfo.getprofession;
     var interestInMembership = userInfo.getinterestInMembership;
 
+    var role = userInfo.getmemberRole;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -120,16 +122,25 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     children: <Widget>[
                       SizedBox(height: _height * 0.03),
                       //greetings
-                      Container(
-                        child: Text(
-                          'Hello, thank you for submitting your information. You can choose to edit it by clicking below.',
+                      Text(
+                        'Hello $firstName, thanks for submitting your info!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.02),
+                      if (role != "Staff") ...[
+                        Text(
+                          'You can choose to edit this information by clicking the button at the bottom.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontFamily: 'Montserrat',
                           ),
                         ),
-                      ),
+                      ],
                       SizedBox(height: _height * 0.04),
                       //main_body
                       Container(
@@ -174,27 +185,43 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                           color: Color(0x1A49DEE8),
                         ),
                       ),
-                      SizedBox(height: _height * 0.04),
-                      GradientButton(
-                        buttonText: 'Edit Profile',
-                        screenHeight: _height,
-                        route: 'edit_profile',
-                        onPressedFunction: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfileScreen()));
-                        },
-                      ),
                       SizedBox(height: _height * 0.02),
-                      Text(
-                        'Contact the admin if you wish to make changes to your profile',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Montserrat',
+                      if (role == "Staff") ...[
+                        Text(
+                          'Kindly contact the admin if you wish to make changes to your profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
                         ),
-                      ),
+                      ],
+                      if (role == "Member") ...[
+                        Text(
+                          'Kindly contact the admin for approval AFTER you make changes to your profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ],
+                      SizedBox(height: _height * 0.02),
+                      if (role != "Staff") ...[
+                        GradientButton(
+                          buttonText: 'Edit Profile',
+                          screenHeight: _height,
+                          route: 'edit_profile',
+                          onPressedFunction: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen()));
+                          },
+                        )
+                      ],
                       SizedBox(height: _height * 0.02),
                     ],
                   ),
