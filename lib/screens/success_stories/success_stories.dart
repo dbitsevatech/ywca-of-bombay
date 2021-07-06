@@ -30,13 +30,16 @@ class _SuccessStoriesState extends State<SuccessStories> {
                 Positioned(
                   child: AppBar(
                     centerTitle: true,
-                    title: Text("YWCA Of Bombay",
-                        style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87)),
+                    title: Text(
+                      "YWCA Of Bombay",
+                      style: TextStyle(
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.black87,
+                      ),
+                    ),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: IconButton(
@@ -77,10 +80,10 @@ class _SuccessStoriesState extends State<SuccessStories> {
                   Container(
                     height: _height * 0.7,
                     child: DotPaginationSwiper.builder(
-                      itemCount: 8,
+                      itemCount: titles.length,
                       itemBuilder: (context, i) => Center(
-                        child:
-                            cardWid(titles[i], detailText[i], _height, _width),
+                        child: cardWid(images[i], titles[i], detailText[i],
+                            _height, _width),
                       ),
                     ),
                   ),
@@ -93,8 +96,8 @@ class _SuccessStoriesState extends State<SuccessStories> {
     );
   }
 
-  Container cardWid(
-      String title, String detailText, double _height, double _width) {
+  Container cardWid(String image, String title, String detailText,
+      double _height, double _width) {
     print(_height);
     print(_width);
     //  card start
@@ -116,10 +119,16 @@ class _SuccessStoriesState extends State<SuccessStories> {
             child: ClipRRect(
               // borderRadius: BorderRadius.circular(120.0),
               borderRadius: BorderRadius.circular(120.0),
-              child: Image.network(
-                'https://picsum.photos/250?image=9',
-                height: 150.0,
-                width: 150.0,
+              // child: Image.network(
+              //   'https://picsum.photos/250?image=9',
+              //   height: 150.0,
+              //   width: 150.0,
+              // ),
+              child: Image(
+                image: AssetImage(image),
+                fit: BoxFit.contain,
+                height: 200,
+                width: 200,
               ),
             ),
           ),

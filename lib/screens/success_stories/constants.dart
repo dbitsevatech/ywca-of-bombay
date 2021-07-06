@@ -1,5 +1,13 @@
-List images = [
-  // add image asset paths
+List<String> images = [
+  'assets/images/success_stories/1-success-stories.png',
+  'assets/images/success_stories/2-a-slice-of-support.png',
+  'assets/images/success_stories/3-a-stitch-in-time.png',
+  'assets/images/success_stories/4-beauty-with-brains.png',
+  'assets/images/success_stories/5-food-for-thought.png',
+  'assets/images/success_stories/6-hair-tales.png',
+  'assets/images/success_stories/7-nursing-aid.png',
+  'assets/images/success_stories/8-promoting-education.png',
+  'assets/images/success_stories/9-aasra.png',
 ];
 
 List<String> titles = [
