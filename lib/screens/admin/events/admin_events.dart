@@ -66,11 +66,16 @@ class _AdminEventsState extends State<AdminEvents> {
         Positioned(
           child: AppBar(
             centerTitle: true,
-            title: Text("YWCA Of Bombay",
-                style: TextStyle(
-                    fontFamily: 'LilyScriptOne',
-                    fontSize: 18.0,
-                    color: Colors.black87)),
+            title: Text(
+              "YWCA Of Bombay",
+              style: TextStyle(
+                fontFamily: 'LobsterTwo',
+                fontStyle: FontStyle.italic,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                color: Colors.black87,
+              ),
+            ),
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(
@@ -113,21 +118,23 @@ class _AdminEventsState extends State<AdminEvents> {
               SizedBox(height: 5),
               TextField(
                 decoration: InputDecoration(
-                    hintText: "Search by venue",
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey,
-                    ),
-                    suffixIcon: Icon(
-                      Icons.mic,
-                      color: Colors.grey,
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none),
-                    contentPadding: EdgeInsets.zero,
-                    filled: true,
-                    fillColor: Colors.transparent),
+                  hintText: "Search by venue",
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  suffixIcon: Icon(
+                    Icons.mic,
+                    color: Colors.grey,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: EdgeInsets.zero,
+                  filled: true,
+                  fillColor: Colors.transparent,
+                ),
               ),
             ],
           ),
@@ -211,35 +218,48 @@ class _AdminEventsState extends State<AdminEvents> {
                             '| Time:' +
                             (readEventTime(document['eventTime'])),
                         style: TextStyle(
-                            color: Color(0xFF49DEE8),
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.normal),
+                          color: Color(0xFF49DEE8),
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.normal,
+                        ),
                       ),
                       subtitle: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 5),
-                          Text(document['eventName'],
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold)),
+                          Text(
+                            document['eventName'],
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           SizedBox(height: 5),
-                          Text('Resource Person: ' + document['eventName'],
-                              style: TextStyle(
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.normal)),
+                          Text(
+                            'Resource Person: ' + document['eventName'],
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
                           SizedBox(height: 5),
-                          Text('Venue: ' + document['eventVenue'],
-                              style: TextStyle(
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.normal)),
+                          Text(
+                            'Venue: ' + document['eventVenue'],
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
                           SizedBox(height: 5),
-                          Text('Amount: ' + document['eventAmount'],
-                              style: TextStyle(
-                                  fontSize: 11.0,
-                                  fontWeight: FontWeight.normal)),
+                          Text(
+                            'Amount: ' + document['eventAmount'],
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
                           // start of edit and delete
                           Row(
                             children: [
@@ -258,10 +278,11 @@ class _AdminEventsState extends State<AdminEvents> {
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop(
-                                                      false); // dismisses only the dialog and returns false
+                                              Navigator.of(
+                                                context,
+                                                rootNavigator: true,
+                                              ).pop(
+                                                  false); // dismisses only the dialog and returns false
                                             },
                                             child: Text('No'),
                                           ),
@@ -271,17 +292,18 @@ class _AdminEventsState extends State<AdminEvents> {
                                                       rootNavigator: true)
                                                   .pop(true);
                                               gotoEditEvent(
-                                                  context,
-                                                  document.id,
-                                                  document['eventAmount'],
-                                                  document['eventDescription'],
-                                                  document['eventName'],
-                                                  document['eventImageUrl'],
-                                                  document['eventVenue'],
-                                                  document['eventType'],
-                                                  document['eventDate'],
-                                                  document['eventDeadline'],
-                                                  document['eventTime']);
+                                                context,
+                                                document.id,
+                                                document['eventAmount'],
+                                                document['eventDescription'],
+                                                document['eventName'],
+                                                document['eventImageUrl'],
+                                                document['eventVenue'],
+                                                document['eventType'],
+                                                document['eventDate'],
+                                                document['eventDeadline'],
+                                                document['eventTime'],
+                                              );
                                             },
                                             child: Text('Yes'),
                                           ),
@@ -309,14 +331,16 @@ class _AdminEventsState extends State<AdminEvents> {
                                       return AlertDialog(
                                         title: Text('Confirmation'),
                                         content: Text(
-                                            'Are you sure you want to delete this event?'),
+                                          'Are you sure you want to delete this event?',
+                                        ),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop(
-                                                      false); // dismisses only the dialog and returns false
+                                              Navigator.of(
+                                                context,
+                                                rootNavigator: true,
+                                              ).pop(
+                                                  false); // dismisses only the dialog and returns false
                                             },
                                             child: Text('No'),
                                           ),
@@ -410,17 +434,19 @@ gotoDetailEvent(
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => AdminEventDetailPage(
-            id: id,
-            eventAmount: eventAmount,
-            eventDescription: eventDescription,
-            eventName: eventName,
-            eventImageUrl: eventImageUrl,
-            eventVenue: eventVenue,
-            eventType: eventType,
-            eventDate: newEventDate,
-            eventDeadline: newEventDeadline,
-            eventTime: eventTime)),
+      builder: (context) => AdminEventDetailPage(
+        id: id,
+        eventAmount: eventAmount,
+        eventDescription: eventDescription,
+        eventName: eventName,
+        eventImageUrl: eventImageUrl,
+        eventVenue: eventVenue,
+        eventType: eventType,
+        eventDate: newEventDate,
+        eventDeadline: newEventDeadline,
+        eventTime: eventTime,
+      ),
+    ),
   );
 }
 
@@ -448,17 +474,19 @@ gotoEditEvent(
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => AdminEditEvent(
-            id: id,
-            eventAmount: eventAmount,
-            eventDescription: eventDescription,
-            eventName: eventName,
-            eventImageUrl: eventImageUrl,
-            eventVenue: eventVenue,
-            eventType: eventType,
-            eventDate: newEventDate,
-            eventDeadline: newEventDeadline,
-            eventTime: newEventTime)),
+      builder: (context) => AdminEditEvent(
+        id: id,
+        eventAmount: eventAmount,
+        eventDescription: eventDescription,
+        eventName: eventName,
+        eventImageUrl: eventImageUrl,
+        eventVenue: eventVenue,
+        eventType: eventType,
+        eventDate: newEventDate,
+        eventDeadline: newEventDeadline,
+        eventTime: newEventTime,
+      ),
+    ),
   );
 }
 

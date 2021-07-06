@@ -156,7 +156,7 @@ class _RegisterOtpState extends State<RegisterOtp>
             "placeOfWork": placeOfWork,
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
-            "memberRole": "none"
+            "memberRole": "NonMember"
           };
           print("data map: " + data.toString());
           userInfo.updateAfterAuth(
@@ -171,7 +171,7 @@ class _RegisterOtpState extends State<RegisterOtp>
               placeOfWork,
               nearestCenter,
               interestInMembership,
-              "none");
+              "NonMember");
           CollectionReference<Map<String, dynamic>> users =
               FirebaseFirestore.instance.collection('users');
           users.doc(value.user.uid).set(data);
@@ -261,7 +261,9 @@ class _RegisterOtpState extends State<RegisterOtp>
                 title: Text(
                   "YWCA Of Bombay",
                   style: TextStyle(
-                    fontFamily: 'LilyScriptOne',
+                    fontFamily: 'LobsterTwo',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                     color: Colors.black87,
                   ),
@@ -398,22 +400,23 @@ class _RegisterOtpState extends State<RegisterOtp>
                 "placeOfWork": placeOfWork,
                 "nearestCenter": nearestCenter,
                 "interestInMembership": interestInMembership,
-                "memberRole": "none"
+                "memberRole": "NonMember"
               };
               print("data map: " + data.toString());
               userInfo.updateAfterAuth(
-                  value.user.uid,
-                  firstName,
-                  lastName,
-                  dateOfBirth,
-                  emailId,
-                  phoneNumber,
-                  gender,
-                  profession,
-                  placeOfWork,
-                  nearestCenter,
-                  interestInMembership,
-                  "none");
+                value.user.uid,
+                firstName,
+                lastName,
+                dateOfBirth,
+                emailId,
+                phoneNumber,
+                gender,
+                profession,
+                placeOfWork,
+                nearestCenter,
+                interestInMembership,
+                "NonMember",
+              );
               CollectionReference<Map<String, dynamic>> users =
                   FirebaseFirestore.instance.collection('users');
               users.doc(value.user.uid).set(data);

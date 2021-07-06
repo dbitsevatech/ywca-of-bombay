@@ -94,6 +94,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     }
 
     return Scaffold(
+      // TODO: Add YWCA title
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

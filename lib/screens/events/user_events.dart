@@ -69,11 +69,16 @@ class _EventsState extends State<Events> {
             Positioned(
               child: AppBar(
                 centerTitle: true,
-                title: Text("YWCA Of Bombay",
-                    style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
-                        fontSize: 18.0,
-                        color: Colors.black87)),
+                title: Text(
+                  "YWCA Of Bombay",
+                  style: TextStyle(
+                    fontFamily: 'LobsterTwo',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
+                ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 leading: IconButton(
@@ -99,11 +104,13 @@ class _EventsState extends State<Events> {
                       style: Theme.of(context).textTheme.bodyText2,
                       children: [
                         TextSpan(
-                            text: 'Events ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
+                          text: 'Events ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         WidgetSpan(
                           child: Padding(
                             padding:
@@ -127,8 +134,9 @@ class _EventsState extends State<Events> {
                           color: Colors.grey,
                         ),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
                         contentPadding: EdgeInsets.zero,
                         filled: true,
                         fillColor: Colors.transparent),
@@ -169,7 +177,10 @@ class _EventsState extends State<Events> {
               children: snapshot.data.docs.map(
                 (DocumentSnapshot document) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 3,
+                      horizontal: 10,
+                    ),
                     child: Card(
                       child: ListTile(
                         leading: Image.network(
