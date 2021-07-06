@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:kf_drawer/kf_drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:kf_drawer/kf_drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import 'become_member.dart';
+
+import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
-import 'become_member.dart';
 
 // ignore: must_be_immutable, camel_case_types
 class AboutUs extends KFDrawerContent {
@@ -25,8 +28,16 @@ class _AboutUsState extends State<AboutUs> {
     'assets/images/about_us/Ywca_spotlight_5.jpg',
   ];
 
+  var userInfo;
+  @override
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var role = userInfo.getmemberRole;
     final _height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Center(
@@ -214,15 +225,20 @@ class _AboutUsState extends State<AboutUs> {
                       SizedBox(
                         height: _height * 0.015,
                       ),
-                      GradientButton(
-                        buttonText: 'Become a member today!',
-                        screenHeight: _height,
-                        route: 'register2',
-                        onPressedFunction: () {Navigator. push(
-                          context,
-                          MaterialPageRoute(builder: (context) => BecomeMemberScreen()),
-                        );},
-                      ),
+                      if (role == "NonMember") ...[
+                        GradientButton(
+                          buttonText: 'Become a member today!',
+                          screenHeight: _height,
+                          route: 'register2',
+                          onPressedFunction: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BecomeMemberScreen()),
+                            );
+                          },
+                        ),
+                      ],
                       SizedBox(height: _height * 0.020),
                     ],
                   ),
