@@ -82,8 +82,13 @@ class _SuccessStoriesState extends State<SuccessStories> {
                     child: DotPaginationSwiper.builder(
                       itemCount: titles.length,
                       itemBuilder: (context, i) => Center(
-                        child: cardWid(images[i], titles[i], detailText[i],
-                            _height, _width),
+                        child: cardWid(
+                          images[i],
+                          titles[i],
+                          detailText[i],
+                          _height,
+                          _width,
+                        ),
                       ),
                     ),
                   ),
@@ -96,8 +101,13 @@ class _SuccessStoriesState extends State<SuccessStories> {
     );
   }
 
-  Container cardWid(String image, String title, String detailText,
-      double _height, double _width) {
+  Container cardWid(
+    String image,
+    String title,
+    String detailText,
+    double _height,
+    double _width,
+  ) {
     print(_height);
     print(_width);
     //  card start
@@ -117,13 +127,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
           Container(
             margin: EdgeInsets.all(_height * 0.025),
             child: ClipRRect(
-              // borderRadius: BorderRadius.circular(120.0),
               borderRadius: BorderRadius.circular(120.0),
-              // child: Image.network(
-              //   'https://picsum.photos/250?image=9',
-              //   height: 150.0,
-              //   width: 150.0,
-              // ),
               child: Image(
                 image: AssetImage(image),
                 fit: BoxFit.contain,
@@ -139,7 +143,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
             // 'A Slice Of Support',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.grey[800],
+              fontFamily: "Montserrat",
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -157,9 +161,9 @@ class _SuccessStoriesState extends State<SuccessStories> {
               detailText,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey[800],
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+                fontFamily: "Montserrat",
+                height: 1.3,
+                fontSize: 15,
               ),
             ),
           ),
