@@ -72,11 +72,12 @@ class _EventsState extends State<Events> {
                 title: Text(
                   "YWCA Of Bombay",
                   style: TextStyle(
-                      fontFamily: 'LobsterTwo',
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black87),
+                    fontFamily: 'LobsterTwo',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -105,9 +106,10 @@ class _EventsState extends State<Events> {
                         TextSpan(
                           text: 'Events ',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         WidgetSpan(
                           child: Padding(
