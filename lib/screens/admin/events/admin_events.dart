@@ -7,6 +7,7 @@ import '../../../widgets/blue_bubble_design.dart';
 import 'admin_new_event.dart';
 import 'admin_edit_event.dart';
 import 'admin_event_details.dart';
+import 'adminEditEvent.dart';
 
 // ignore: must_be_immutable
 class AdminEvents extends KFDrawerContent {
@@ -291,8 +292,21 @@ class _AdminEventsState extends State<AdminEvents> {
                                               Navigator.of(context,
                                                       rootNavigator: true)
                                                   .pop(true);
-                                              gotoEditEvent(
-                                                context,
+                                              // gotoEditEvent(
+                                                // context,
+                                                // document.id,
+                                                // document['eventAmount'],
+                                                // document['eventDescription'],
+                                                // document['eventName'],
+                                                // document['eventImageUrl'],
+                                                // document['eventVenue'],
+                                                // document['eventType'],
+                                                // document['eventDate'],
+                                                // document['eventDeadline'],
+                                                // document['eventTime'],
+                                              // );
+                                              gotoEditEvent2(
+                                                  context,
                                                 document.id,
                                                 document['eventAmount'],
                                                 document['eventDescription'],
@@ -494,5 +508,46 @@ gotoNewEvent(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => AdminNewEvent()),
+  );
+}
+
+gotoEditEvent2(
+    BuildContext context,
+    String id,
+    String eventAmount,
+    String eventDescription,
+    String eventName,
+    String eventImageUrl,
+    String eventVenue,
+    String eventType,
+    Timestamp eventDate,
+    Timestamp eventDeadline,
+    Timestamp eventTime) {
+// event date
+  DateTime newEventDate = eventDate.toDate();
+
+// event deadline
+  DateTime newEventDeadline = eventDeadline.toDate();
+
+// event time
+  DateTime newEventTime = eventTime.toDate();
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => 
+      EditEventScreen(
+        id: id,
+        eventAmount: eventAmount,
+        eventDescription: eventDescription,
+        eventName: eventName,
+        eventImageUrl: eventImageUrl,
+        eventVenue: eventVenue,
+        eventType: eventType,
+        eventDate: newEventDate,
+        eventDeadline: newEventDeadline,
+        eventTime: newEventTime,
+      ),
+    ),
   );
 }
