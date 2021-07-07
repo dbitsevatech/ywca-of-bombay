@@ -4,7 +4,7 @@ import 'package:kf_drawer/kf_drawer.dart';
 // ignore: must_be_immutable
 class Home extends KFDrawerContent {
   Home({
-    Key key,
+    required Key key,
   });
 
   @override

@@ -11,12 +11,12 @@ import 'dart:io';
 
 // ignore: must_be_immutable
 class AdminEditEventImage extends StatefulWidget {
-  String id,
-      eventImageUrl;
+  String id, eventImageUrl;
 
-  AdminEditEventImage(
-      {this.id,
-      this.eventImageUrl});
+  AdminEditEventImage({
+    required this.id,
+    required this.eventImageUrl,
+  });
 
   @override
   _AdminEditEventImageState createState() => _AdminEditEventImageState();
@@ -60,14 +60,12 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
-    String id = widget.id,
-        eventImageUrl = widget.eventImageUrl;
+    String id = widget.id, eventImageUrl = widget.eventImageUrl;
 
     @override
     void initState() {
@@ -224,40 +222,38 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                   return;
                                 }
                                 bool result = await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text('Confirmation'),
-                                  content: Text(
-                                      'Are you sure you want to save new image?'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop(
-                                            false); // dismisses only the dialog and returns false
-                                      },
-                                      child: Text('No'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop(true);
-                                        updateData(
-                                    context,
-                                    id);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                      },
-                                      child: Text('Yes'),
-                                    ),
-                                  ],
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('Confirmation'),
+                                      content: Text(
+                                          'Are you sure you want to save new image?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(
+                                              context,
+                                              rootNavigator: true,
+                                            ).pop(
+                                                false); // dismisses only the dialog and returns false
+                                          },
+                                          child: Text('No'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop(true);
+                                            updateData(context, id);
+                                            Navigator.pop(context);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Yes'),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-                              },
-                            );
                                 // print("title");
                                 // updateData(
                                 //     context,
@@ -281,9 +277,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   }
 
   // Updating to firebase
-  Future updateData(
-      BuildContext context,
-      id) async {
+  Future updateData(BuildContext context, id) async {
     String fileName = basename(_image.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -298,9 +292,10 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     print("Image URL=" + url);
 
     print("Updating record on firestore");
-    FirebaseFirestore.instance.collection('events').doc(id).update({
-      'eventImageUrl': url
-    });
+    FirebaseFirestore.instance
+        .collection('events')
+        .doc(id)
+        .update({'eventImageUrl': url});
     print("updated on firestore");
   }
 }

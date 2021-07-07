@@ -20,17 +20,18 @@ class AdminEventDetailPage extends StatefulWidget {
   DateTime eventDate, eventDeadline;
   Timestamp eventTime;
 
-  AdminEventDetailPage(
-      {this.id,
-      this.eventAmount,
-      this.eventDescription,
-      this.eventName,
-      this.eventImageUrl,
-      this.eventVenue,
-      this.eventType,
-      this.eventDate,
-      this.eventDeadline,
-      this.eventTime});
+  AdminEventDetailPage({
+    required this.id,
+    required this.eventAmount,
+    required this.eventDescription,
+    required this.eventName,
+    required this.eventImageUrl,
+    required this.eventVenue,
+    required this.eventType,
+    required this.eventDate,
+    required this.eventDeadline,
+    required this.eventTime,
+  });
   @override
   _AdminEventDetailPageState createState() => _AdminEventDetailPageState();
 }

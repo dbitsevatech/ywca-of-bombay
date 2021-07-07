@@ -67,7 +67,7 @@ class _AboutUsState extends State<AboutUs> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: widget.onMenuPressed,
+                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
                 ),

@@ -22,16 +22,16 @@ class RegisterOtp extends StatefulWidget {
   final String interestInMembership;
 
   const RegisterOtp({
-    this.firstName,
-    this.lastName,
-    this.dateOfBirth,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.profession,
-    this.placeOfWork,
-    this.nearestCenter,
-    this.interestInMembership,
+    required this.firstName,
+    required this.lastName,
+    required this.dateOfBirth,
+    required this.emailId,
+    required this.phoneNumber,
+    required this.gender,
+    required this.profession,
+    required this.placeOfWork,
+    required this.nearestCenter,
+    required this.interestInMembership,
   });
 
   @override
@@ -67,27 +67,28 @@ class _RegisterOtpState extends State<RegisterOtp>
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode;
   _RegisterOtpState(
-      this.firstName,
-      this.lastName,
-      this.dateOfBirth,
-      this.emailId,
-      this.phoneNumber,
-      this.gender,
-      this.profession,
-      this.placeOfWork,
-      this.nearestCenter,
-      this.interestInMembership);
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.profession,
+    this.placeOfWork,
+    this.nearestCenter,
+    this.interestInMembership,
+  );
   AnimationController _controller;
   var otp;
   // Variables
   Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
-  int _fifthDigit;
-  int _sixthDigit;
+  int? _currentDigit;
+  int? _firstDigit;
+  int? _secondDigit;
+  int? _thirdDigit;
+  int? _fourthDigit;
+  int? _fifthDigit;
+  int? _sixthDigit;
 
   Timer timer;
   int totalTimeInSeconds;

@@ -237,7 +237,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
 
 class DetailText extends StatelessWidget {
   final String text;
-  DetailText({this.text});
+  DetailText({required this.text});
   @override
   Widget build(BuildContext context) {
     return Text(

@@ -485,7 +485,8 @@ class _LoginOtpState extends State<LoginOtp>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton(
+      {required String label, required VoidCallback onPressed}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -512,7 +513,8 @@ class _LoginOtpState extends State<LoginOtp>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton(
+      {required Widget label, required VoidCallback onPressed}) {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(40.0),

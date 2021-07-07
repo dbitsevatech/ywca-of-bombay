@@ -48,7 +48,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: widget.onMenuPressed,
+                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
                 ),
@@ -176,7 +176,11 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
 @immutable
 class ColorDot extends StatelessWidget {
-  const ColorDot({Key key, this.color, this.borderColor, this.radius})
+  const ColorDot(
+      {required Key key,
+      required this.color,
+      required this.borderColor,
+      required this.radius})
       : super(key: key);
 
   final Color color;
@@ -210,7 +214,7 @@ class ColorDot extends StatelessWidget {
 @immutable
 class DotPagination extends StatelessWidget {
   const DotPagination(
-      {Key key, @required this.itemCount, @required this.activeIndex})
+      {required Key key, required this.itemCount, required this.activeIndex})
       : assert(itemCount != null),
         assert(activeIndex != null),
         assert(activeIndex >= 0),
@@ -245,18 +249,18 @@ class DotPagination extends StatelessWidget {
 @immutable
 class DotPaginationSwiper extends StatefulWidget {
   DotPaginationSwiper({
-    Key key,
-    this.onPageChanged,
+    required Key key,
+    required this.onPageChanged,
     List<Widget> children = const <Widget>[],
   })  : childrenDelegate = SliverChildListDelegate(children),
         itemCount = children.length,
         super(key: key);
 
   DotPaginationSwiper.builder({
-    Key key,
-    this.onPageChanged,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    required Key key,
+    required this.onPageChanged,
+    required IndexedWidgetBuilder itemBuilder,
+    required int itemCount,
   })  : childrenDelegate =
             SliverChildBuilderDelegate(itemBuilder, childCount: itemCount),
         itemCount = itemCount,
@@ -271,7 +275,7 @@ class DotPaginationSwiper extends StatefulWidget {
 }
 
 class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
-  int _index;
+  int _index = 0;
 
   @override
   void initState() {

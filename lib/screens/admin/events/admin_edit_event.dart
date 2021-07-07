@@ -22,17 +22,18 @@ class AdminEditEvent extends StatefulWidget {
       eventType;
   DateTime eventDate, eventDeadline, eventTime;
 
-  AdminEditEvent(
-      {this.id,
-      this.eventAmount,
-      this.eventDescription,
-      this.eventName,
-      this.eventImageUrl,
-      this.eventVenue,
-      this.eventType,
-      this.eventDate,
-      this.eventDeadline,
-      this.eventTime});
+  AdminEditEvent({
+    required this.id,
+    required this.eventAmount,
+    required this.eventDescription,
+    required this.eventName,
+    required this.eventImageUrl,
+    required this.eventVenue,
+    required this.eventType,
+    required this.eventDate,
+    required this.eventDeadline,
+    required this.eventTime,
+  });
 
   @override
   _AdminEditEventState createState() => _AdminEditEventState();
@@ -51,7 +52,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
   String member = "Everyone";
 
   // choosing the image
-  File _image;
+  late File _image;
 
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -82,7 +83,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     }
   }
 
-  TimeOfDay time;
+  late TimeOfDay time;
 
   String getText() {
     if (time == null) {
@@ -173,7 +174,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                 onPrimary: Colors.black, // highlighted date text color
                 surface: primaryColor, // header color
                 onSurface:
-                    Colors.grey[800], // header text & calendar text color
+                    Colors.grey[800]!, // header text & calendar text color
               ),
               dialogBackgroundColor: Colors.white, // calendar bg color
               textButtonTheme: TextButtonThemeData(
@@ -213,7 +214,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                 onPrimary: Colors.black, // highlighted date text color
                 surface: primaryColor, // header color
                 onSurface:
-                    Colors.grey[800], // header text & calendar text color
+                    Colors.grey[800]!, // header text & calendar text color
               ),
               dialogBackgroundColor: Colors.white, // calendar bg color
               textButtonTheme: TextButtonThemeData(

@@ -357,7 +357,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: widget.onMenuPressed,
+                        onPressed: () => widget.onMenuPressed,
                       ),
                     ),
                   ),

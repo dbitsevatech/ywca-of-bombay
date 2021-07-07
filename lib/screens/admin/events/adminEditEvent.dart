@@ -20,30 +20,31 @@ class EditEventScreen extends StatefulWidget {
   DateTime eventDate, eventDeadline, eventTime;
   // Timestamp eventTime;
 
-  EditEventScreen(
-      {this.id,
-      this.eventAmount,
-      this.eventDescription,
-      this.eventName,
-      this.eventImageUrl,
-      this.eventVenue,
-      this.eventType,
-      this.eventDate,
-      this.eventDeadline,
-      this.eventTime});
+  EditEventScreen({
+    required this.id,
+    required this.eventAmount,
+    required this.eventDescription,
+    required this.eventName,
+    required this.eventImageUrl,
+    required this.eventVenue,
+    required this.eventType,
+    required this.eventDate,
+    required this.eventDeadline,
+    required this.eventTime,
+  });
   @override
   _EditEventScreenState createState() => _EditEventScreenState();
 }
 
 class _EditEventScreenState extends State<EditEventScreen> {
-  String id,
-      eventAmount,
-      eventDescription,
-      eventName,
-      eventImageUrl,
-      eventVenue;
+  String id = '';
+  String eventAmount = '';
+  String eventDescription = '';
+  String eventName = '';
+  String eventImageUrl = '';
+  String eventVenue = '';
   String eventType = "Everyone";
-  DateTime eventDate, eventDeadline, eventTime;
+  late DateTime eventDate, eventDeadline, eventTime;
   // Timestamp eventTime;
 
   final GlobalKey<FormState> _formKey =
@@ -53,8 +54,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
   // everyone-0, members only-1
-  int _eventTypeRadioValue;
-  void _handleEventTyptRadioValueChange(int value) {
+  int _eventTypeRadioValue = 0;
+  void _handleEventTypeRadioValueChange(int value) {
     setState(() {
       _eventTypeRadioValue = value;
       if (_eventTypeRadioValue == 0) {
@@ -90,7 +91,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
@@ -127,7 +128,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
@@ -689,7 +690,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               Radio(
                                 value: 0,
                                 groupValue: _eventTypeRadioValue,
-                                onChanged: _handleEventTyptRadioValueChange,
+                                onChanged: _handleEventTypeRadioValueChange,
                                 focusColor: secondaryColor,
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
@@ -698,7 +699,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 onTap: () {
                                   setState(() {
                                     _eventTypeRadioValue = 0;
-                                    _handleEventTyptRadioValueChange(
+                                    _handleEventTypeRadioValueChange(
                                         _eventTypeRadioValue);
                                   });
                                 },
@@ -713,7 +714,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               Radio(
                                 value: 1,
                                 groupValue: _eventTypeRadioValue,
-                                onChanged: _handleEventTyptRadioValueChange,
+                                onChanged: _handleEventTypeRadioValueChange,
                                 focusColor: secondaryColor,
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
@@ -722,7 +723,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 onTap: () {
                                   setState(() {
                                     _eventTypeRadioValue = 1;
-                                    _handleEventTyptRadioValueChange(
+                                    _handleEventTypeRadioValueChange(
                                         _eventTypeRadioValue);
                                   });
                                 },

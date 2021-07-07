@@ -18,17 +18,17 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  String firstName;
-  String lastName;
-  String email;
-  String phoneNumber;
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String phoneNumber = '';
   String gender = "Female";
-  DateTime dateOfBirth;
-  String profession;
-  String placeOfWork;
+  late DateTime dateOfBirth;
+  String profession = '';
+  String placeOfWork = '';
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
-  String uid;
+  String uid = '';
   var userInfo;
 
   final GlobalKey<FormState> _formKey =
@@ -41,7 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // GenderChoices selectedGender = GenderChoices.female;
 
   // female-0, male-1, decline to state-2
-  int _genderRadioValue;
+  int _genderRadioValue = 0;
   void _handleGenderRadioValueChange(int value) {
     setState(() {
       _genderRadioValue = value;
@@ -57,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // yes-0, no-1, maybe-2
-  int _interestInMembershipRadioValue;
+  late int _interestInMembershipRadioValue;
   void _handleInterestInMembershipRadioValueChange(int value) {
     setState(() {
       _interestInMembershipRadioValue = value;
@@ -90,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
@@ -114,32 +114,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Do you want to exit without saving changes?'),
-            content:
-                Text('Please press the SAVE button at the bottom of the page'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('NO'),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              TextButton(
-                child: Text('YES'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Do you want to exit without saving changes?'),
+          content:
+              Text('Please press the SAVE button at the bottom of the page'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('NO'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text('YES'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<bool> savePressed() {
+  Future<dynamic> savePressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
