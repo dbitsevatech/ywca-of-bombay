@@ -5,8 +5,8 @@ import 'constants.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 
-double _height;
-double _width;
+late double _height;
+late double _width;
 
 // ignore: must_be_immutable
 class ContactUs extends KFDrawerContent {
@@ -17,8 +17,8 @@ class ContactUs extends KFDrawerContent {
 class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
+    double _width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Center(
         child: Column(
@@ -47,7 +47,7 @@ class _ContactUsState extends State<ContactUs> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: widget.onMenuPressed,
+                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
                 ),

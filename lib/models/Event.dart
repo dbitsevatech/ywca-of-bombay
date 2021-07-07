@@ -13,12 +13,12 @@ class Event {
   final String image;
 
   Event({
-    this.dateTime,
-    this.name,
-    this.resourcePerson,
-    this.venue,
-    this.cost,
-    this.image,
+    required this.dateTime,
+    required this.name,
+    required this.resourcePerson,
+    required this.venue,
+    required this.cost,
+    required this.image,
   });
 
   static List<Event> allEvents() {

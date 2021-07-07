@@ -25,18 +25,20 @@ class DetailPage extends StatefulWidget {
   DateTime eventDate, eventDeadline;
   Timestamp eventTime;
 
-  DetailPage(
-      {this.id,
-      this.eventAmount,
-      this.eventDescription,
-      this.eventName,
-      this.eventImageUrl,
-      this.eventVenue,
-      this.eventType,
-      this.eventDate,
-      this.eventDeadline,
-      this.eventTime,
-      this.memberRole});
+  DetailPage({
+    required this.id,
+    required this.eventAmount,
+    required this.eventDescription,
+    required this.eventName,
+    required this.eventImageUrl,
+    required this.eventVenue,
+    required this.eventType,
+    required this.eventDate,
+    required this.eventDeadline,
+    required this.eventTime,
+    // TODO: ??
+    // this.memberRole,
+  });
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -44,7 +46,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
-  String memberRole;
+  late String memberRole;
 
   int _currentIndex = 0;
 

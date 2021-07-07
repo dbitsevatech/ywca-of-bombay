@@ -20,13 +20,13 @@ class Initiative {
   final List<String> imageTitleList;
 
   Initiative({
-    this.name,
-    this.image,
-    this.color,
-    this.title,
-    this.description,
-    this.imagePathList,
-    this.imageTitleList,
+    required this.name,
+    required this.image,
+    required this.color,
+    required this.title,
+    required this.description,
+    required this.imagePathList,
+    required this.imageTitleList,
   });
 
   static List<Initiative> allInitiatives() {
@@ -36,7 +36,8 @@ class Initiative {
       Initiative(
         name: "PIYA",
         image: 'assets/images/initiatives/piya/1-walk-for-freedom.jpeg',
-        color: Colors.blue[700],
+        // color: Colors.blue[700],
+        color: Colors.blue[700]!,
         title: "PIYA - Participation and involvement of youth in action",
         description:
             "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
@@ -62,7 +63,7 @@ class Initiative {
       Initiative(
         name: "Asha Kiran Guest House",
         image: "assets/images/initiatives/asha_kiran/1-annual-day.jpg",
-        color: Colors.yellow[700],
+        color: Colors.yellow[700]!,
         title: "Asha Kiran Guest House",
         description:
             "Asha Kiran, the women’s development complex at Andheri continues to be a ray of hope to all its beneficiaries. It is dedicated to the all-round development of women and children of different backgrounds, age group, cultures, castes and creeds. It caters to the rapidly changing needs by providing a home away from home for Senior Citizens and Guests, to organizing awareness programmes, vocational courses, study centers, a day care center for senior citizens from the community, a crèche for children of domestic workers, and a shelter for women in distress. It also has an Amphitheatre and a hall facility.",
@@ -91,7 +92,7 @@ class Initiative {
         name: "PASI",
         image:
             "assets/images/initiatives/pasi/1-panel-discussion-on-women-and-social-media.jpg",
-        color: Colors.red[700],
+        color: Colors.red[700]!,
         title: "PASI - Public Affairs and Social Issues",
         description:
             "Public Affairs and Social Issues (PASI) creates an impact both within and outside YWCA by organizing different programmes on current social issues, impacting lives of people in different spheres of life. It also networks with other like-minded organisations to gain strength to address issues that need advocacy.",
@@ -116,7 +117,7 @@ class Initiative {
         name: "WDU",
         image:
             "assets/images/initiatives/wdu/1-nutritious-food-competition.jpeg",
-        color: Colors.green[700],
+        color: Colors.green[700]!,
         title: "WDU - Women’s Development Unit",
         description:
             "Women’s Development Unit (WDU) promotes all round well-being of women and children. This is achieved through community development programs, vocational training courses, sustainability projects, capacity building activities and awareness programs. Aasra is a family counseling center which supports women in need.",
@@ -222,7 +223,7 @@ class Initiative {
       Initiative(
         name: "Membership",
         image: "assets/images/initiatives/memberships/1-ekta.jpeg",
-        color: Colors.yellow[700],
+        color: Colors.yellow[700]!,
         title: "Membership",
         description:
             "Membership is the foundation of all YWCA committees and activities, through which members promote the vision and mission of the Association.",
@@ -246,7 +247,7 @@ class Initiative {
       Initiative(
         name: "International Centre",
         image: "assets/images/initiatives/international_centre/1-ic-review.jpg",
-        color: Colors.blue[700],
+        color: Colors.blue[700]!,
         title: "IC - International Centre",
         description:
             "International Centre (IC): provides for a temporary residence to people from various parts of the world.",
@@ -269,7 +270,7 @@ class Initiative {
         name: "Spiritual Emphasis",
         image:
             "assets/images/initiatives/spiritual_emphasis/1-world-day-of-prayer.jpg",
-        color: Colors.green[700],
+        color: Colors.green[700]!,
         title: "SE - Spiritual Emphasis",
         description:
             "Spiritual Emphasis (SE) gives special study and thought to the implementation of YWCA statements of policy, relevant to the Christian emphasis.",

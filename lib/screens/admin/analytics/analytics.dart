@@ -176,7 +176,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: widget.onMenuPressed,
+                        onPressed: () => widget.onMenuPressed,
                       ),
                     ),
                   ),

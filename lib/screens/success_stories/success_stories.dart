@@ -30,13 +30,16 @@ class _SuccessStoriesState extends State<SuccessStories> {
                 Positioned(
                   child: AppBar(
                     centerTitle: true,
-                    title: Text("YWCA Of Bombay",
-                        style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87)),
+                    title: Text(
+                      "YWCA Of Bombay",
+                      style: TextStyle(
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.black87,
+                      ),
+                    ),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     leading: IconButton(
@@ -45,7 +48,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: widget.onMenuPressed,
+                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
                 ),
@@ -77,10 +80,15 @@ class _SuccessStoriesState extends State<SuccessStories> {
                   Container(
                     height: _height * 0.7,
                     child: DotPaginationSwiper.builder(
-                      itemCount: 8,
+                      itemCount: titles.length,
                       itemBuilder: (context, i) => Center(
-                        child:
-                            cardWid(titles[i], detailText[i], _height, _width),
+                        child: cardWid(
+                          images[i],
+                          titles[i],
+                          detailText[i],
+                          _height,
+                          _width,
+                        ),
                       ),
                     ),
                   ),
@@ -94,7 +102,12 @@ class _SuccessStoriesState extends State<SuccessStories> {
   }
 
   Container cardWid(
-      String title, String detailText, double _height, double _width) {
+    String image,
+    String title,
+    String detailText,
+    double _height,
+    double _width,
+  ) {
     print(_height);
     print(_width);
     //  card start
@@ -114,12 +127,12 @@ class _SuccessStoriesState extends State<SuccessStories> {
           Container(
             margin: EdgeInsets.all(_height * 0.025),
             child: ClipRRect(
-              // borderRadius: BorderRadius.circular(120.0),
               borderRadius: BorderRadius.circular(120.0),
-              child: Image.network(
-                'https://picsum.photos/250?image=9',
-                height: 150.0,
-                width: 150.0,
+              child: Image(
+                image: AssetImage(image),
+                fit: BoxFit.contain,
+                height: 200,
+                width: 200,
               ),
             ),
           ),
@@ -130,7 +143,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
             // 'A Slice Of Support',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.grey[800],
+              fontFamily: "Montserrat",
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -148,9 +161,9 @@ class _SuccessStoriesState extends State<SuccessStories> {
               detailText,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey[800],
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+                fontFamily: "Montserrat",
+                height: 1.3,
+                fontSize: 15,
               ),
             ),
           ),
@@ -163,7 +176,11 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
 @immutable
 class ColorDot extends StatelessWidget {
-  const ColorDot({Key key, this.color, this.borderColor, this.radius})
+  const ColorDot(
+      {required Key key,
+      required this.color,
+      required this.borderColor,
+      required this.radius})
       : super(key: key);
 
   final Color color;
@@ -197,7 +214,7 @@ class ColorDot extends StatelessWidget {
 @immutable
 class DotPagination extends StatelessWidget {
   const DotPagination(
-      {Key key, @required this.itemCount, @required this.activeIndex})
+      {required Key key, required this.itemCount, required this.activeIndex})
       : assert(itemCount != null),
         assert(activeIndex != null),
         assert(activeIndex >= 0),
@@ -232,18 +249,18 @@ class DotPagination extends StatelessWidget {
 @immutable
 class DotPaginationSwiper extends StatefulWidget {
   DotPaginationSwiper({
-    Key key,
-    this.onPageChanged,
+    required Key key,
+    required this.onPageChanged,
     List<Widget> children = const <Widget>[],
   })  : childrenDelegate = SliverChildListDelegate(children),
         itemCount = children.length,
         super(key: key);
 
   DotPaginationSwiper.builder({
-    Key key,
-    this.onPageChanged,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    required Key key,
+    required this.onPageChanged,
+    required IndexedWidgetBuilder itemBuilder,
+    required int itemCount,
   })  : childrenDelegate =
             SliverChildBuilderDelegate(itemBuilder, childCount: itemCount),
         itemCount = itemCount,
@@ -258,7 +275,7 @@ class DotPaginationSwiper extends StatefulWidget {
 }
 
 class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
-  int _index;
+  int _index = 0;
 
   @override
   void initState() {

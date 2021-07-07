@@ -46,7 +46,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
@@ -85,7 +85,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(

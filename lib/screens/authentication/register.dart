@@ -20,11 +20,11 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String firstName;
-  String lastName;
+  String firstName = '';
+  String lastName = '';
   DateTime dateOfBirth = DateTime.now().subtract(Duration(days: 4380));
-  String emailId;
-  String phoneNumber;
+  String emailId = '';
+  String phoneNumber = '';
   String gender = "Female";
   var userInfo;
 
@@ -79,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               primary: primaryColor, // highlighed date color
               onPrimary: Colors.black, // highlighted date text color
               surface: primaryColor, // header color
-              onSurface: Colors.grey[800], // header text & calendar text color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
             ),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
@@ -669,12 +669,12 @@ class RegisterScreen2 extends StatefulWidget {
   final DateTime dateOfBirth;
   RegisterScreen2({
     // this.userData,
-    this.firstName,
-    this.lastName,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.dateOfBirth,
+    required this.firstName,
+    required this.lastName,
+    required this.emailId,
+    required this.phoneNumber,
+    required this.gender,
+    required this.dateOfBirth,
   });
   @override
   _RegisterScreen2State createState() => _RegisterScreen2State(

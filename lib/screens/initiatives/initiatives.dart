@@ -45,7 +45,7 @@ class _InitiativesState extends State<Initiatives> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: widget.onMenuPressed,
+                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
                 ),
