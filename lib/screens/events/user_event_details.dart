@@ -37,7 +37,7 @@ class DetailPage extends StatefulWidget {
     required this.eventDeadline,
     required this.eventTime,
     // TODO: ??
-    // this.memberRole,
+    required this.memberRole,
   });
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -52,8 +52,8 @@ class _DetailPageState extends State<DetailPage> {
 
   // onRegister for counting registration
   void insertIntoOnRegistration(String eventID, String eventName) async {
-    final User user = auth.currentUser;
-    final userID = user.uid;
+    final User? user = auth.currentUser;
+    final userID = user?.uid;
     FirebaseFirestore.instance
         .collection('eventRegistration')
         .where('eventID', isEqualTo: eventID)
