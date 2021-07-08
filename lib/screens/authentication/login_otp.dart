@@ -257,7 +257,6 @@ class _LoginOtpState extends State<LoginOtp>
       child: GradientButton(
         buttonText: 'Log In',
         screenHeight: _screenSize.height,
-        route: 'home',
         onPressedFunction: () => _onLoginButtonPressed(),
       ),
     );

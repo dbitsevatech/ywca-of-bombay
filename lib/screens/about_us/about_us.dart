@@ -229,7 +229,6 @@ class _AboutUsState extends State<AboutUs> {
                         GradientButton(
                           buttonText: 'Become a member today!',
                           screenHeight: _height,
-                          route: 'register2',
                           onPressedFunction: () {
                             Navigator.push(
                               context,

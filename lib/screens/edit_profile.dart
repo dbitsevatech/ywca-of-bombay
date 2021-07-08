@@ -800,7 +800,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           GradientButton(
                             buttonText: 'Update Profile',
                             screenHeight: _height,
-                            route: 'home',
                             onPressedFunction: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;

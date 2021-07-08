@@ -17,8 +17,7 @@ import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class AdminMainWidget extends StatefulWidget {
-  AdminMainWidget({required Key key, required this.title}) : super(key: key);
-  final String title;
+  AdminMainWidget({required Key key}) : super(key: key);
 
   @override
   _AdminMainWidgetState createState() => _AdminMainWidgetState();

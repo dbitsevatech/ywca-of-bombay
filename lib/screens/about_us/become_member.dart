@@ -143,7 +143,6 @@ class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
                     GradientButton(
                       buttonText: "Return to Events",
                       screenHeight: _height,
-                      route: 'events',
                       onPressedFunction: () {
                         Navigator.push(
                           context,

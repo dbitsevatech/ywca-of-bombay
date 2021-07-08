@@ -156,7 +156,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: GradientButton(
                     buttonText: "Let's Go!",
                     screenHeight: _height,
-                    route: 'register',
                     onPressedFunction: () async {
                       var user = await FirebaseAuth.instance.currentUser;
 

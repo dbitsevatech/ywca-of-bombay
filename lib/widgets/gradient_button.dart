@@ -6,14 +6,12 @@ import 'constants.dart';
 class GradientButton extends StatelessWidget {
   final String buttonText;
   final double screenHeight;
-  final String route;
   final Function onPressedFunction;
 
   GradientButton({
-    @required this.buttonText,
-    @required this.screenHeight,
-    this.route,
-    this.onPressedFunction,
+    required this.buttonText,
+    required this.screenHeight,
+    required this.onPressedFunction,
   });
 
   @override
@@ -54,7 +52,6 @@ class GradientButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          // Navigator.of(context).pushReplacementNamed(route);
           onPressedFunction();
         },
       ),

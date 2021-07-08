@@ -15,8 +15,7 @@ import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class MainWidget extends StatefulWidget {
-  MainWidget({Key key, this.title}) : super(key: key);
-  final String title;
+  MainWidget({Key key}) : super(key: key);
 
   @override
   _MainWidgetState createState() => _MainWidgetState();

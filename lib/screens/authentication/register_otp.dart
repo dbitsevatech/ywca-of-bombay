@@ -351,7 +351,6 @@ class _RegisterOtpState extends State<RegisterOtp>
       child: GradientButton(
         buttonText: 'Register',
         screenHeight: _screenSize.height,
-        route: 'register_otp',
         onPressedFunction: () {
           _onRegisterButtonPressed();
         },

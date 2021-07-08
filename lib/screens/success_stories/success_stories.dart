@@ -176,12 +176,12 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
 @immutable
 class ColorDot extends StatelessWidget {
-  const ColorDot(
-      {required Key key,
-      required this.color,
-      required this.borderColor,
-      required this.radius})
-      : super(key: key);
+  const ColorDot({
+    Key key,
+    this.color,
+    this.borderColor,
+    this.radius,
+  }) : super(key: key);
 
   final Color color;
   final Color borderColor;
@@ -249,18 +249,18 @@ class DotPagination extends StatelessWidget {
 @immutable
 class DotPaginationSwiper extends StatefulWidget {
   DotPaginationSwiper({
-    required Key key,
-    required this.onPageChanged,
+    Key key,
+    this.onPageChanged,
     List<Widget> children = const <Widget>[],
   })  : childrenDelegate = SliverChildListDelegate(children),
         itemCount = children.length,
         super(key: key);
 
   DotPaginationSwiper.builder({
-    required Key key,
-    required this.onPageChanged,
-    required IndexedWidgetBuilder itemBuilder,
-    required int itemCount,
+    Key key,
+    this.onPageChanged,
+    IndexedWidgetBuilder itemBuilder,
+    int itemCount,
   })  : childrenDelegate =
             SliverChildBuilderDelegate(itemBuilder, childCount: itemCount),
         itemCount = itemCount,

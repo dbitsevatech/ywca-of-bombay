@@ -595,7 +595,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         GradientButton(
                           buttonText: 'Next',
                           screenHeight: _height,
-                          route: 'register2',
                           onPressedFunction: () async {
                             if (!_formKey.currentState.validate()) {
                               return;
@@ -1114,7 +1113,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         GradientButton(
                           buttonText: 'Register',
                           screenHeight: _height,
-                          route: 'register_otp',
                           onPressedFunction: () {
                             if (!_formKey.currentState.validate()) {
                               return;
