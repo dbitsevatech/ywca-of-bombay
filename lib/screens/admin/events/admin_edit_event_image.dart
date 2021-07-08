@@ -29,7 +29,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   final _formkey = GlobalKey<FormState>();
 
   // choosing the image
-  File _image;
+  late File _image;
 
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -218,7 +218,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_formKey.currentState.validate()) {
+                                if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
                                 bool result = await showDialog(
