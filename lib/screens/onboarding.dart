@@ -35,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       images.forEach((imageUrl) {
         precacheImage(NetworkImage(imageUrl), context);
       });
@@ -169,7 +169,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         // print(checkuser.data());
                         final userdata = checkuser.data();
                         userInfo.updateAfterAuth(
-                            userdata['uid'],
+                            userdata!['uid'],
                             userdata['firstName'],
                             userdata['lastName'],
                             userdata['dateOfBirth'].toDate(),
@@ -186,7 +186,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               builder: (context) => MainWidget()));
                         } else if (userdata['memberRole'] == 'Admin') {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AdminMainWidget()));
+                              builder: (context) => AdminMainWidget(title: '',)));
                         }
                       } else {
                         Navigator.of(context).pop();

@@ -44,9 +44,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   // female-0, male-1, decline to state-2
   int _genderRadioValue = 0;
-  void _handleGenderRadioValueChange(int value) {
+  void _handleGenderRadioValueChange(int? value) {
     setState(() {
-      _genderRadioValue = value;
+      _genderRadioValue = value!;
       if (_genderRadioValue == 0) {
         gender = "Female";
       } else if (_genderRadioValue == 1) {
@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future _selectDate() async {
-    final DateTime picked = await showDatePicker(
+    final DateTime picked = (await showDatePicker(
       context: context,
       initialDate: dateOfBirth,
       firstDate: DateTime(1940),
@@ -88,10 +88,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
-    );
+    ))!;
     if (picked != null && picked != dateOfBirth) {
       setState(() {
         dateOfBirth = picked;
@@ -297,11 +297,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             userInfo.updateName(value);
                             print(userInfo.getfirstName);
                             setState(() {
-                              firstName = value;
+                              firstName = value!;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value!.isEmpty)
                               return 'First name is required.';
                             else
                               return null;
@@ -337,11 +337,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.text,
                           onSaved: (value) {
                             setState(() {
-                              lastName = value;
+                              lastName = value!;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value!.isEmpty)
                               return 'Last name is required.';
                             else
                               return null;
@@ -420,11 +420,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (value) {
                             setState(() {
-                              emailId = value;
+                              emailId = value!;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
                               return 'Email is required';
                             }
                             if (!RegExp(
@@ -465,17 +465,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           keyboardType: TextInputType.phone,
                           maxLength: 10,
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value!.isEmpty)
                               return 'Mobile number is required';
                             else if (!RegExp(r"^\d{10}$").hasMatch(value))
                               return 'Please enter a valid mobile number';
                             else
                               return null;
                           },
-                          onSaved: (String value) {
+                          onSaved: (String? value) {
                             setState(() {
-                              phoneNumber = value;
+                              phoneNumber = value!;
                             });
                           },
                           style: TextStyle(
@@ -597,10 +597,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           screenHeight: _height,
                           route: 'register2',
                           onPressedFunction: () async {
-                            if (!_formKey.currentState.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               return;
                             }
-                            _formKey.currentState.save();
+                            _formKey.currentState!.save();
 
                             _onNextButtonPressed();
                           },
@@ -699,8 +699,8 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   final DateTime dateOfBirth;
   var userInfo;
 
-  String profession;
-  String placeOfWork;
+  String profession = "";
+  String placeOfWork = "";
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   _RegisterScreen2State(
@@ -750,9 +750,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
 
   // yes-0, no-1, maybe-2
   int _interestInMembershipRadioValue = 0;
-  void _handleInterestInMembershipRadioValueChange(int value) {
+  void _handleInterestInMembershipRadioValueChange(int? value) {
     setState(() {
-      _interestInMembershipRadioValue = value;
+      _interestInMembershipRadioValue = value!;
       if (_interestInMembershipRadioValue == 0) {
         interestInMembership = "Yes";
       } else if (_interestInMembershipRadioValue == 1) {
@@ -828,12 +828,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                         TextFormField(
                           // initialValue: Provider.of<User>(context, listen: false).getfirstName,
                           keyboardType: TextInputType.text,
-                          onSaved: (String value) {
+                          onSaved: (String? value) {
                             setState(() {
                               if (value == '') {
                                 profession = 'Retired';
                               } else {
-                                profession = value;
+                                profession = value!;
                               }
                             });
                           },
@@ -891,7 +891,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               if (value == '') {
                                 placeOfWork = 'Retired';
                               } else {
-                                placeOfWork = value;
+                                placeOfWork = value!;
                               }
                             });
                           },
@@ -967,11 +967,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                             icon: Icon(Icons.arrow_drop_down_rounded),
                             elevation: 16,
                             underline: Container(),
-                            onChanged: (String value) {
+                            onChanged: (String? value) {
                               setState(() {
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
-                                nearestCenter = value;
+                                nearestCenter = value!;
                                 print(nearestCenter);
                               });
                             },
@@ -1116,10 +1116,10 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           screenHeight: _height,
                           route: 'register_otp',
                           onPressedFunction: () {
-                            if (!_formKey.currentState.validate()) {
+                            if (_formKey.currentState!.validate()) {
                               return;
                             }
-                            _formKey.currentState.save();
+                            _formKey.currentState!.save();
                             _onRegisterButtonPressed();
                           },
                         ),
