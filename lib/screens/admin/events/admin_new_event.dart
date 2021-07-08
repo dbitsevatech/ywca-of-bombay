@@ -653,7 +653,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_formKey.currentState.validate()) {
+                                if (_formKey.currentState!.validate()) {
                                   return;
                                 }
                                 uploadData(

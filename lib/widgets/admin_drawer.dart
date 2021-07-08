@@ -17,7 +17,7 @@ import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class AdminMainWidget extends StatefulWidget {
-  AdminMainWidget({required Key key, required this.title}) : super(key: key);
+  AdminMainWidget({ required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -26,7 +26,7 @@ class AdminMainWidget extends StatefulWidget {
 
 class _AdminMainWidgetState extends State<AdminMainWidget>
     with TickerProviderStateMixin {
-  KFDrawerController _drawerController;
+  late KFDrawerController _drawerController;
   var userInfo;
   @override
   void initState() {
