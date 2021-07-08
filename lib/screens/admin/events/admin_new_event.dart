@@ -17,13 +17,13 @@ class AdminNewEvent extends StatefulWidget {
 }
 
 class _AdminNewEventState extends State<AdminNewEvent> {
-  String eventTitle, eventDescription, eventVenue, eventAmount, eventImageUrl;
+  late String eventTitle, eventDescription, eventVenue, eventAmount, eventImageUrl;
   String eventType = "Everyone";
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
 
   // choose the image
-  File _image;
+  late File _image;
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -32,7 +32,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   DateTime eventDate = DateTime.now().subtract(Duration(days: 4380));
   Future _selectDate(context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDate,
       firstDate: DateTime(1940),
@@ -55,7 +55,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -71,7 +71,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   DateTime eventDeadline = DateTime.now().subtract(Duration(days: 4380));
 
   Future _selectDeadline(context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDeadline,
       firstDate: DateTime(1940),
@@ -94,7 +94,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -190,8 +190,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   }
 
   // everyone-0, members-1
-  int _eventTypeRadioValue = 0;
-  void _handleEventRadioValueChange(int value) {
+  int? _eventTypeRadioValue = 0;
+  void _handleEventRadioValueChange(int? value) {
     setState(() {
       _eventTypeRadioValue = value;
       if (_eventTypeRadioValue == 0) {
@@ -212,14 +212,14 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   }
 
   // Time picker
-  TimeOfDay eventTime;
+  TimeOfDay? eventTime;
 
   String getText() {
     if (eventTime == null) {
       return 'Select Time';
     } else {
-      final hours = eventTime.hour.toString().padLeft(2, '0');
-      final minutes = eventTime.minute.toString().padLeft(2, '0');
+      final hours = eventTime!.hour.toString().padLeft(2, '0');
+      final minutes = eventTime!.minute.toString().padLeft(2, '0');
 
       return '$hours:$minutes';
     }
@@ -328,8 +328,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventTitle = value;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event name is required';
                             else
                               return null;
@@ -358,8 +358,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventDescription = value;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event description is required';
                             else
                               return null;
@@ -388,8 +388,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventVenue = value;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event venue is required';
                             else
                               return null;
@@ -418,8 +418,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventAmount = value;
                             });
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event amount is required';
                             else
                               return null;
@@ -653,7 +653,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_formKey.currentState.validate()) {
+                                if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
                                 uploadData(

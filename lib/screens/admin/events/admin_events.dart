@@ -16,7 +16,7 @@ class AdminEvents extends KFDrawerContent {
 }
 
 class _AdminEventsState extends State<AdminEvents> {
-  Future<bool> _navigateToRoute(String name) {
+  Future<bool?> _navigateToRoute(String name) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -85,7 +85,7 @@ class _AdminEventsState extends State<AdminEvents> {
                 color: Colors.black,
                 size: 30,
               ),
-              onPressed: widget.onMenuPressed,
+              onPressed: () => widget.onMenuPressed,
             ),
           ),
         ),
@@ -203,7 +203,7 @@ class _AdminEventsState extends State<AdminEvents> {
           default:
             return ListView(
               padding: EdgeInsets.only(bottom: 80),
-              children: snapshot.data.docs.map((DocumentSnapshot document) {
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(

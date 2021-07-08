@@ -97,8 +97,8 @@ class _AdminEditEventState extends State<AdminEditEvent> {
   }
 
   // everyone-0, members-1
-  int _memberRadioValue = 0;
-  void _handleEventRadioValueChange(int value) {
+  int? _memberRadioValue = 0;
+  void _handleEventRadioValueChange(int? value) {
     setState(() {
       _memberRadioValue = value;
       if (_memberRadioValue == 0) {
@@ -159,7 +159,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     // date of event
     DateTime dateOfEvent = eventDate;
     Future _selectDate(context) async {
-      final DateTime pickedEvent = await showDatePicker(
+      final DateTime? pickedEvent = await showDatePicker(
         context: context,
         initialDate: eventDate,
         firstDate: DateTime(1940),
@@ -183,7 +183,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                 ),
               ),
             ),
-            child: child,
+            child: child!,
           );
         },
       );
@@ -199,7 +199,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     DateTime deadlineOfEvent = eventDeadline;
 
     Future _selectDeadline(context) async {
-      final DateTime pickedDeadline = await showDatePicker(
+      final DateTime? pickedDeadline = await showDatePicker(
         context: context,
         initialDate: eventDeadline,
         firstDate: DateTime(1940),
@@ -223,7 +223,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                 ),
               ),
             ),
-            child: child,
+            child: child!,
           );
         },
       );
@@ -355,8 +355,8 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                           onChanged: (value) {
                             eventName = value;
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event name is required';
                             else
                               return null;
@@ -380,8 +380,8 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                           onChanged: (value) {
                             eventDescription = value;
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event description is required';
                             else
                               return null;
@@ -405,8 +405,8 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                           onChanged: (value) {
                             eventVenue = value;
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event venue is required';
                             else
                               return null;
@@ -430,8 +430,8 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                           onChanged: (value) {
                             eventAmount = value;
                           },
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: (String? value) {
+                            if (value == null)
                               return 'Event amount is required';
                             else
                               return null;
@@ -674,7 +674,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_formKey.currentState.validate()) {
+                                if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
                                 print("title");

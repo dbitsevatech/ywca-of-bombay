@@ -54,8 +54,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
   // everyone-0, members only-1
-  int _eventTypeRadioValue = 0;
-  void _handleEventTypeRadioValueChange(int value) {
+  int? _eventTypeRadioValue = 0;
+  void _handleEventTypeRadioValueChange(int? value) {
     setState(() {
       _eventTypeRadioValue = value;
       if (_eventTypeRadioValue == 0) {
@@ -77,7 +77,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   TextEditingController timeController = TextEditingController();
 
   Future _selectDate() async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDate,
       firstDate: DateTime(1940),
@@ -100,7 +100,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -114,7 +114,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   }
 
   Future _selectDeadline() async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDeadline,
       firstDate: DateTime(1940),
@@ -137,7 +137,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -150,20 +150,20 @@ class _EditEventScreenState extends State<EditEventScreen> {
     }
   }
 
-  TimeOfDay time;
+  TimeOfDay? time;
 
   String getText() {
     if (time == null) {
       return 'Select Time';
     } else {
-      final hours = time.hour.toString().padLeft(2, '0');
-      final minutes = time.minute.toString().padLeft(2, '0');
+      final hours = time!.hour.toString().padLeft(2, '0');
+      final minutes = time!.minute.toString().padLeft(2, '0');
 
       return '$hours:$minutes';
     }
   }
 
-  Future<bool> _onBackPressed() {
+  Future<bool?> _onBackPressed() async {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -190,7 +190,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
         });
   }
 
-  Future<bool> savePressed() {
+  Future<bool?> savePressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -249,7 +249,13 @@ class _EditEventScreenState extends State<EditEventScreen> {
     // print(timesEvent);
 
     return WillPopScope(
-      onWillPop: _onBackPressed,
+      onWillPop: () async {
+        bool? result = await _onBackPressed();
+          if(result == null){
+             result = false;
+          }
+          return result;
+      },
       child: Scaffold(
         key: _scaffoldkey,
         // body:WillPopScope(
@@ -356,7 +362,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            bool result = await showDialog(
+                            bool? result = await showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -414,11 +420,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                eventName = value;
+                                eventName = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value == null)
                                 return 'Event name is required.';
                               else
                                 return null;
@@ -452,11 +458,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                eventDescription = value;
+                                eventDescription = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value == null)
                                 return 'Event Description is required.';
                               else
                                 return null;
@@ -490,11 +496,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                eventVenue = value;
+                                eventVenue = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value == null)
                                 return 'Event Venue is required.';
                               else
                                 return null;
@@ -528,11 +534,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                eventAmount = value;
+                                eventAmount = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value == null)
                                 return 'Event Amount is required.';
                               else
                                 return null;
@@ -745,11 +751,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             screenHeight: _height,
                             route: 'home',
                             onPressedFunction: () async {
-                              if (!_formKey.currentState.validate()) {
+                              if (!_formKey.currentState!.validate()) {
                                 return;
                               }
-                              _formKey.currentState.save();
-                              bool result = await showDialog(
+                              _formKey.currentState!.save();
+                              bool? result = await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(

@@ -22,8 +22,8 @@ class _EventsState extends State<Events> {
 
   // onClick for counting clicks
   void insertIntoOnClick(String eventID, String eventName) async {
-    final User user = auth.currentUser;
-    final userID = user.uid;
+    final User? user = auth.currentUser;
+    final userID = user?.uid;
     FirebaseFirestore.instance
         .collection('eventClick')
         .where('eventID', isEqualTo: eventID)
@@ -87,7 +87,7 @@ class _EventsState extends State<Events> {
                     color: Colors.black,
                     size: 30,
                   ),
-                  onPressed: widget.onMenuPressed,
+                  onPressed: () => widget.onMenuPressed,
                 ),
               ),
             ),
@@ -174,7 +174,7 @@ class _EventsState extends State<Events> {
           default:
             return ListView(
               padding: EdgeInsets.only(bottom: 80),
-              children: snapshot.data.docs.map(
+              children: snapshot.data!.docs.map(
                 (DocumentSnapshot document) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
@@ -285,6 +285,7 @@ gotoDetailEvent(
   String onlyTime = dateFormat.format(DateTime.now());
 // // event deadline
   DateTime newEventDeadline = eventDeadline.toDate();
+  String memberRole = 'null';
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -296,6 +297,7 @@ gotoDetailEvent(
         eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
+        memberRole: memberRole,
         eventDate: newEventDate,
         eventDeadline: newEventDeadline,
         eventTime: eventTime,
