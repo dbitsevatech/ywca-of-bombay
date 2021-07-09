@@ -35,7 +35,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       images.forEach((imageUrl) {
         precacheImage(NetworkImage(imageUrl), context);
       });
@@ -83,6 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // TODO: Make the carousel responsive
               // https://pub.dev/packages/introduction_screen
               // https://pub.dev/packages/gooey_carousel
+              // https://pub.dev/packages/intro_slider ***
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
@@ -168,7 +169,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         // print(checkuser.data());
                         final userdata = checkuser.data();
                         userInfo.updateAfterAuth(
-                            userdata['uid'],
+                            userdata!['uid'],
                             userdata['firstName'],
                             userdata['lastName'],
                             userdata['dateOfBirth'].toDate(),

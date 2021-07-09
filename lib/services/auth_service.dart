@@ -12,7 +12,7 @@ class AuthService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   Stream<String> get authStateChanges =>
-      _firebaseAuth.authStateChanges().map((User user) => user?.uid);
+      _firebaseAuth.authStateChanges().map((User? user) => user!.uid);
 
   // // Email & Password Sign Up
   // Future<String> createUserWithEmailAndPassword(

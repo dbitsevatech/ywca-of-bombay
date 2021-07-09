@@ -177,21 +177,21 @@ class _SuccessStoriesState extends State<SuccessStories> {
 @immutable
 class ColorDot extends StatelessWidget {
   const ColorDot({
-    Key key,
+    Key? key,
     this.color,
     this.borderColor,
     this.radius,
   }) : super(key: key);
 
-  final Color color;
-  final Color borderColor;
-  final double radius;
+  final Color? color;
+  final Color? borderColor;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
-    Color color = this.color ?? Colors.grey;
-    Color borderColor = this.borderColor ?? Theme.of(context).primaryColor;
-    double radius = this.radius ?? 8;
+    Color? color = this.color;
+    Color? borderColor = this.borderColor;
+    double? radius = this.radius;
 
     return Padding(
       padding: const EdgeInsets.all(1),
@@ -203,7 +203,7 @@ class ColorDot extends StatelessWidget {
           color: color,
           border: Border.all(
             width: 0.8,
-            color: borderColor,
+            color: borderColor!,
           ),
         ),
       ),
@@ -214,10 +214,8 @@ class ColorDot extends StatelessWidget {
 @immutable
 class DotPagination extends StatelessWidget {
   const DotPagination(
-      {required Key key, required this.itemCount, required this.activeIndex})
-      : assert(itemCount != null),
-        assert(activeIndex != null),
-        assert(activeIndex >= 0),
+      {Key? key, required this.itemCount, required this.activeIndex})
+      : assert(activeIndex >= 0),
         assert(activeIndex < itemCount),
         super(key: key);
 
@@ -249,26 +247,26 @@ class DotPagination extends StatelessWidget {
 @immutable
 class DotPaginationSwiper extends StatefulWidget {
   DotPaginationSwiper({
-    Key key,
-    this.onPageChanged,
+    Key? key,
+    required this.onPageChanged,
     List<Widget> children = const <Widget>[],
   })  : childrenDelegate = SliverChildListDelegate(children),
         itemCount = children.length,
         super(key: key);
 
   DotPaginationSwiper.builder({
-    Key key,
+    Key? key,
     this.onPageChanged,
-    IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    IndexedWidgetBuilder? itemBuilder,
+    int? itemCount,
   })  : childrenDelegate =
-            SliverChildBuilderDelegate(itemBuilder, childCount: itemCount),
-        itemCount = itemCount,
+            SliverChildBuilderDelegate(itemBuilder!, childCount: itemCount),
+        itemCount = itemCount!,
         super(key: key);
 
   final SliverChildDelegate childrenDelegate;
   final int itemCount;
-  final ValueChanged<int> onPageChanged;
+  final ValueChanged<int>? onPageChanged;
 
   @override
   _DotPaginationSwiperState createState() => _DotPaginationSwiperState();
@@ -292,7 +290,7 @@ class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
             onPageChanged: (i) {
               setState(() {
                 _index = i;
-                widget.onPageChanged?.call(i);
+                widget.onPageChanged!.call(i);
               });
             }),
         Align(

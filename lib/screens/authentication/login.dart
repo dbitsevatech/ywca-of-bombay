@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var userInfo;
-  String phoneNumber;
+  String phoneNumber = "";
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
@@ -220,8 +220,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 16,
                             letterSpacing: 2,
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: ( value) {
+                            if (value!.isEmpty)
                               return 'Mobile number is required';
                             else if (!RegExp(r"^\d{10}$").hasMatch(value))
                               return 'Please enter a valid mobile number';
@@ -258,10 +258,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           buttonText: 'Login',
                           screenHeight: _height,
                           onPressedFunction: () async {
-                            if (!_formKey.currentState.validate()) {
+                            if (!_formKey.currentState!.validate()) {
                               return;
                             }
-                            _formKey.currentState.save();
+                            _formKey.currentState!.save();
                             _onLoginButtonPressed(context, phoneNumber);
                           },
                         ),

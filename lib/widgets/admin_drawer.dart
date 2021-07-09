@@ -17,7 +17,7 @@ import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class AdminMainWidget extends StatefulWidget {
-  AdminMainWidget({required Key key}) : super(key: key);
+  AdminMainWidget({Key? key}) : super(key: key);
 
   @override
   _AdminMainWidgetState createState() => _AdminMainWidgetState();
@@ -25,7 +25,7 @@ class AdminMainWidget extends StatefulWidget {
 
 class _AdminMainWidgetState extends State<AdminMainWidget>
     with TickerProviderStateMixin {
-  KFDrawerController _drawerController;
+  late KFDrawerController _drawerController;
   var userInfo;
   @override
   void initState() {
@@ -130,7 +130,9 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
   }
 
   // show dialog for back button press
-  Future<bool> _onBackPressed() {
+  //TODO: put "context" as parameter?
+  // Future<bool> _onBackPressed() {
+  _onBackPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -157,7 +159,8 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
   }
 
   // show dialog for logout press
-  Future<bool> _onLogoutPressed() {
+  // Future<bool> _onLogoutPressed() {
+  _onLogoutPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -191,7 +194,7 @@ class _AdminMainWidgetState extends State<AdminMainWidget>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onBackPressed,
+      onWillPop: _onBackPressed(),
       child: Scaffold(
         // in Moto G5s Plus
         // A RenderFlex overflowed by 90 pixels on the bottom.

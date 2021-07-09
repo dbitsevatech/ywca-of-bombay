@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+// import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -97,41 +97,44 @@ class _AboutUsState extends State<AboutUs> {
                           ),
                           Container(
                             height: 200,
-                            child: Swiper(
-                              autoplay: false,
-                              itemCount: 5,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  // To centralize the children.
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image(
-                                        image: AssetImage(imageList[index]),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                              viewportFraction: 0.87,
-                              scale: 0.9,
-                              pagination: SwiperPagination(
-                                //changing the color of the pagination dots and that of
-                                //the active dot
-                                builder: DotSwiperPaginationBuilder(
-                                  color: Colors.grey,
-                                  activeColor: Color(0XFF80DEEA),
-                                  //  DotsIndicator(
-                                  // dotsCount: pageLength,
-                                  // position: currentIndexPage,
-                                  // dotsCount: pageLength,
-                                  // decorator: DotsDecorator()
-                                ),
-                              ),
+                            child: SizedBox(
+                              height: 80,
                             ),
+                            // child: Swiper(
+                            //   autoplay: false,
+                            //   itemCount: 5,
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     return Column(
+                            //       // To centralize the children.
+                            //       mainAxisAlignment: MainAxisAlignment.center,
+                            //       crossAxisAlignment: CrossAxisAlignment.center,
+                            //       children: <Widget>[
+                            //         ClipRRect(
+                            //           borderRadius: BorderRadius.circular(10),
+                            //           child: Image(
+                            //             image: AssetImage(imageList[index]),
+                            //             fit: BoxFit.contain,
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     );
+                            //   },
+                            //   viewportFraction: 0.87,
+                            //   scale: 0.9,
+                            //   pagination: SwiperPagination(
+                            //     //changing the color of the pagination dots and that of
+                            //     //the active dot
+                            //     builder: DotSwiperPaginationBuilder(
+                            //       color: Colors.grey,
+                            //       activeColor: Color(0XFF80DEEA),
+                            //       //  DotsIndicator(
+                            //       // dotsCount: pageLength,
+                            //       // position: currentIndexPage,
+                            //       // dotsCount: pageLength,
+                            //       // decorator: DotsDecorator()
+                            //     ),
+                            //   ),
+                            // ),
                           ),
                         ],
                       ),

@@ -113,7 +113,8 @@ class _InitiativesState extends State<Initiatives> {
           itemCount: _allInitiatives.length,
           // itemCount: snapshot.data.documents.length + 1,
           itemBuilder: (BuildContext context, int index) {
-            return buildInitiativeCard(context, index);
+            // return buildInitiativeCard(context, index);
+            return SizedBox(height: 10);
           },
         ),
       ),

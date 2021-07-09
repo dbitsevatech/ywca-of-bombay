@@ -42,9 +42,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   // female-0, male-1, decline to state-2
   int _genderRadioValue = 0;
-  void _handleGenderRadioValueChange(int value) {
+  void _handleGenderRadioValueChange(int? value) {
     setState(() {
-      _genderRadioValue = value;
+      _genderRadioValue = value!;
       if (_genderRadioValue == 0) {
         gender = "Female";
       } else if (_genderRadioValue == 1) {
@@ -58,9 +58,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   // yes-0, no-1, maybe-2
   late int _interestInMembershipRadioValue;
-  void _handleInterestInMembershipRadioValueChange(int value) {
+  void _handleInterestInMembershipRadioValueChange(int? value) {
     setState(() {
-      _interestInMembershipRadioValue = value;
+      _interestInMembershipRadioValue = value!;
       if (_interestInMembershipRadioValue == 0) {
         interestInMembership = "Yes";
       } else if (_interestInMembershipRadioValue == 1) {
@@ -76,7 +76,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController dateController = TextEditingController();
 
   Future _selectDate() async {
-    final DateTime picked = await showDatePicker(
+    final DateTime picked = (await showDatePicker(
       context: context,
       initialDate: dateOfBirth,
       firstDate: DateTime(1940),
@@ -99,11 +99,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
           ),
-          child: child,
+          child: child!,
         );
       },
-    );
-    if (picked != null && picked != dateOfBirth) {
+    ))!;
+    if (picked != dateOfBirth) {
       setState(() {
         dateOfBirth = picked;
         // print(picked);
@@ -112,7 +112,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  Future<bool> _onBackPressed() {
+  // Future<bool> _onBackPressed() {
+  _onBackPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -200,7 +201,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: _onBackPressed,
+      onWillPop: () => _onBackPressed(),
       child: Scaffold(
         key: _scaffoldkey,
         // body:WillPopScope(
@@ -287,11 +288,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                firstName = value;
+                                firstName = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value!.isEmpty)
                                 return 'First name is required.';
                               else
                                 return null;
@@ -324,11 +325,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                lastName = value;
+                                lastName = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty)
+                            validator: (String? value) {
+                              if (value!.isEmpty)
                                 return 'Last name is required.';
                               else
                                 return null;
@@ -400,11 +401,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             keyboardType: TextInputType.emailAddress,
                             onSaved: (value) {
                               setState(() {
-                                email = value;
+                                email = value!;
                               });
                             },
-                            validator: (String value) {
-                              if (value.isEmpty) {
+                            validator: (String? value) {
+                              if (value!.isEmpty) {
                                 return 'Email is required';
                               }
                               if (!RegExp(
@@ -528,9 +529,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           TextFormField(
                             initialValue: userInfo.getprofession,
                             keyboardType: TextInputType.text,
-                            onSaved: (String value) {
+                            onSaved: (String? value) {
                               setState(() {
-                                profession = value;
+                                profession = value!;
                               });
                             },
                             decoration: InputDecoration(
@@ -587,7 +588,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 if (value == '') {
                                   placeOfWork = 'Retired';
                                 } else {
-                                  placeOfWork = value;
+                                  placeOfWork = value!;
                                 }
                               });
                             },
@@ -663,11 +664,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               icon: Icon(Icons.arrow_drop_down_rounded),
                               elevation: 16,
                               underline: Container(),
-                              onChanged: (String value) {
+                              onChanged: (String? value) {
                                 setState(() {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
-                                  nearestCenter = value;
+                                  nearestCenter = value!;
                                   print(nearestCenter);
                                 });
                               },
@@ -801,10 +802,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              if (!_formKey.currentState.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 return;
                               }
-                              _formKey.currentState.save();
+                              _formKey.currentState!.save();
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")

@@ -15,18 +15,19 @@ import '../models/User.dart';
 import '../screens/view_profile.dart';
 
 class MainWidget extends StatefulWidget {
-  MainWidget({Key key}) : super(key: key);
+  MainWidget({Key? key}) : super(key: key);
 
   @override
   _MainWidgetState createState() => _MainWidgetState();
 }
 
 class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
-  KFDrawerController _drawerController;
+  late KFDrawerController _drawerController;
   var userInfo;
 
 // show dialog for back button press
-  Future<bool> _onBackPressed() {
+//   Future<bool> _onBackPressed() {
+  _onBackPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -53,7 +54,8 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
   }
 
   // show dialog for logout press
-  Future<bool> _onLogoutPressed() {
+  // Future<bool> _onLogoutPressed() {
+  _onLogoutPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -170,7 +172,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
       // KFDrawer
       // lib\widgets\drawer.dart:119
       body: WillPopScope(
-        onWillPop: _onBackPressed,
+        onWillPop: _onBackPressed(),
         child: KFDrawer(
           controller: _drawerController,
           header: Container(
