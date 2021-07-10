@@ -9,9 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 
 import './authentication/login.dart';
-import '../widgets/admin_drawer.dart';
-import '../widgets/drawer.dart';
-
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/gradient_button.dart';
 import '../models/User.dart';
@@ -181,13 +178,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             userdata['nearestCenter'],
                             userdata['interestInMembership'],
                             userdata['memberRole']);
-                        if (userdata['memberRole'] == 'none') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MainWidget()));
-                        } else if (userdata['memberRole'] == 'Admin') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AdminMainWidget()));
-                        }
+                        // if (userdata['memberRole'] == 'none') {
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) => MainWidget()));
+                        // } else if (userdata['memberRole'] == 'Admin') {
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) => AdminMainWidget()));
+                        // }
                       } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(

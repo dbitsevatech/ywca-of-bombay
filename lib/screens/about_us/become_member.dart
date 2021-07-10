@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../events/user_events.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/contact_drawer.dart';
 import '../../widgets/gradient_button.dart';
 import '../../widgets/blue_bubble_design.dart';
 
@@ -125,13 +125,15 @@ class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
                               ..onTap = () async {
                                 // ContactUs();
                                 print("contact us pressed");
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MainWidget(),
-                                  ),
-                                );
+                                // TODO: Add contact us navigator
+                                // Navigator.pop(context);
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     // builder: (context) => MainWidget(),
+                                //     builder: (context) => ContactUs(),
+                                //   ),
+                                // );
                               },
                           ),
                         ],
@@ -147,7 +149,8 @@ class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainWidget(),
+                            // builder: (context) => MainWidget(),
+                            builder: (context) => Events(),
                           ),
                         );
                         // Navigator.pop(context);

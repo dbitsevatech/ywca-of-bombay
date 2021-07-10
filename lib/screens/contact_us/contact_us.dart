@@ -1,7 +1,10 @@
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
-import 'package:kf_drawer/kf_drawer.dart';
+import 'package:provider/provider.dart';
 
 import 'constants.dart';
+import '../../drawers_constants/user_drawer.dart';
+import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 
@@ -9,135 +12,175 @@ late double _height;
 late double _width;
 
 // ignore: must_be_immutable
-class ContactUs extends KFDrawerContent {
+class ContactUs extends StatefulWidget {
   @override
   _ContactUsState createState() => _ContactUsState();
 }
 
 class _ContactUsState extends State<ContactUs> {
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+
+  var userInfo;
+
+  @override
+  void initState() {
+    selectedMenuItemId = menuWithIcon.items[4].id;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                // top-left corner intersecting circles design
-                MainPageBlueBubbleDesign(),
-                Positioned(
-                  child: AppBar(
-                    centerTitle: true,
-                    title: Text(
-                      "YWCA Of Bombay",
-                      style: TextStyle(
-                        fontFamily: 'LobsterTwo',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    print("item: $selectedMenuItemId");
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red, menu: menuWithIcon,
+          animation: true,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(context, itemId);
+            });
+          },
+        )
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  // top-left corner intersecting circles design
+                  MainPageBlueBubbleDesign(),
+                  Positioned(
+                    child: AppBar(
+                      centerTitle: true,
+                      title: Text(
+                        "YWCA Of Bombay",
+                        style: TextStyle(
+                          fontFamily: 'LobsterTwo',
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                       ),
-                    ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                        size: 30,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () => {
+                          // widget.onMenuPressed,
+                          controller.toggle(Direction.left),
+                          // OR
+                          // controller.open()
+                        },
                       ),
-                      onPressed: () => widget.onMenuPressed,
                     ),
                   ),
-                ),
-                PreferredSize(
-                  preferredSize: Size.fromHeight(100),
-                  child: Center(
-                    child: Column(
-                      children: <Widget>[
-                        // Distance from ywca
-                        // or else it will overlap
-                        SizedBox(height: 70),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                text: 'Contact Us',
-                                style: TextStyle(
-                                  fontSize: 26,
-                                  color: Color(0xff333333),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                  letterSpacing: 1.5,
+                  PreferredSize(
+                    preferredSize: Size.fromHeight(100),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          // Distance from ywca
+                          // or else it will overlap
+                          SizedBox(height: 70),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              children: [
+                                TextSpan(
+                                  text: 'Contact Us',
+                                  style: TextStyle(
+                                    fontSize: 26,
+                                    color: Color(0xff333333),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                    letterSpacing: 1.5,
+                                  ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: DefaultTabController(
+                  length: 3,
+                  child: Scaffold(
+                    backgroundColor: Colors.transparent,
+                    appBar: AppBar(
+                      // title: Text(''),
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0.0,
+                      bottom: PreferredSize(
+                        preferredSize: const Size.fromHeight(10),
+                        child: Container(
+                          child: TabBar(
+                            labelPadding:
+                                EdgeInsets.symmetric(horizontal: 10.0),
+                            labelStyle: TextStyle(
+                              fontSize: 14.0,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            unselectedLabelColor: Colors.black54,
+                            labelColor: Colors.black,
+                            indicatorColor: secondaryColor,
+                            indicatorWeight: 2.5,
+                            tabs: [
+                              Container(
+                                height: 20.0,
+                                width: 120.0,
+                                child: Tab(text: 'OFFICES'),
+                              ),
+                              Container(
+                                height: 20.0,
+                                width: 120.0,
+                                child: Tab(text: 'HOSTELS'),
+                              ),
+                              Container(
+                                height: 20.0,
+                                width: 120.0,
+                                child: Tab(text: 'GUEST HOUSES'),
                               ),
                             ],
                           ),
                         ),
+                      ),
+                    ),
+                    body: TabBarView(
+                      children: <Widget>[
+                        officesTab(),
+                        hostelsTab(),
+                        guestHousesTab(),
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
-            Expanded(
-              child: DefaultTabController(
-                length: 3,
-                child: Scaffold(
-                  backgroundColor: Colors.transparent,
-                  appBar: AppBar(
-                    // title: Text(''),
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0.0,
-                    bottom: PreferredSize(
-                      preferredSize: const Size.fromHeight(10),
-                      child: Container(
-                        child: TabBar(
-                          labelPadding: EdgeInsets.symmetric(horizontal: 10.0),
-                          labelStyle: TextStyle(
-                            fontSize: 14.0,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                          ),
-                          unselectedLabelColor: Colors.black54,
-                          labelColor: Colors.black,
-                          indicatorColor: secondaryColor,
-                          indicatorWeight: 2.5,
-                          tabs: [
-                            Container(
-                              height: 20.0,
-                              width: 120.0,
-                              child: Tab(text: 'OFFICES'),
-                            ),
-                            Container(
-                              height: 20.0,
-                              width: 120.0,
-                              child: Tab(text: 'HOSTELS'),
-                            ),
-                            Container(
-                              height: 20.0,
-                              width: 120.0,
-                              child: Tab(text: 'GUEST HOUSES'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  body: TabBarView(
-                    children: <Widget>[
-                      officesTab(),
-                      hostelsTab(),
-                      guestHousesTab(),
-                    ],
-                  ),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,101 +1,142 @@
 import 'dart:ui';
 
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
-import 'package:kf_drawer/kf_drawer.dart';
+import 'package:provider/provider.dart';
 
 import 'constants.dart';
+import '../../drawers_constants/user_drawer.dart';
+import '../../models/User.dart';
 import '../../widgets/constants.dart';
 
 // ignore: must_be_immutable
-class SuccessStories extends KFDrawerContent {
+class SuccessStories extends StatefulWidget {
   @override
   _SuccessStoriesState createState() => _SuccessStoriesState();
 }
 
 class _SuccessStoriesState extends State<SuccessStories> {
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+  var userInfo;
+
+  @override
+  void initState() {
+    selectedMenuItemId = menuWithIcon.items[3].id;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              // circle design
-              children: <Widget>[
-                Positioned(
-                  child: Image.asset("assets/images/circle-design.png"),
-                ),
-                Positioned(
-                  child: AppBar(
-                    centerTitle: true,
-                    title: Text(
-                      "YWCA Of Bombay",
-                      style: TextStyle(
-                        fontFamily: 'LobsterTwo',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      onPressed: () => widget.onMenuPressed,
-                    ),
-                  ),
-                ),
-                //Title start
-                Padding(
-                  padding: EdgeInsets.only(top: _height * 0.12),
-                  child: Container(
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'Success Stories',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Color(0xff333647),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                //Title end
-              ],
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+    print("item: $selectedMenuItemId");
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red, menu: menuWithIcon,
+          animation: true,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(context, itemId);
+            });
+          },
+        )
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Stack(
+                // circle design
                 children: <Widget>[
-                  Container(
-                    height: _height * 0.7,
-                    child: DotPaginationSwiper.builder(
-                      itemCount: titles.length,
-                      itemBuilder: (context, i) => Center(
-                        child: cardWid(
-                          images[i],
-                          titles[i],
-                          detailText[i],
-                          _height,
-                          _width,
+                  Positioned(
+                    child: Image.asset("assets/images/circle-design.png"),
+                  ),
+                  Positioned(
+                    child: AppBar(
+                      centerTitle: true,
+                      title: Text(
+                        "YWCA Of Bombay",
+                        style: TextStyle(
+                          fontFamily: 'LobsterTwo',
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () => {
+                          // widget.onMenuPressed,
+                          controller.toggle(Direction.left),
+                          // OR
+                          // controller.open()
+                        },
+                      ),
+                    ),
+                  ),
+                  //Title start
+                  Padding(
+                    padding: EdgeInsets.only(top: _height * 0.12),
+                    child: Container(
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          'Success Stories',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff333647),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26,
+                          ),
                         ),
                       ),
                     ),
                   ),
+                  //Title end
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: _height * 0.7,
+                      child: DotPaginationSwiper.builder(
+                        itemCount: titles.length,
+                        itemBuilder: (context, i) => Center(
+                          child: cardWid(
+                            images[i],
+                            titles[i],
+                            detailText[i],
+                            _height,
+                            _width,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -236,6 +277,7 @@ class DotPagination extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8),
+      // TODO: Renderflex error
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: list,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/screens/events/user_events.dart';
 import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -187,7 +188,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           );
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainWidget()),
+              MaterialPageRoute(builder: (context) => Events()),
               (route) => false);
         } else {
           print("user already registered with this number");
@@ -425,7 +426,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
           }

@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ywcaofbombay/screens/events/user_events.dart';
 
-import '../../widgets/admin_drawer.dart';
+// import '../../widgets/admin_drawer.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/drawer.dart';
+// import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
 import '../../models/User.dart';
 
@@ -80,14 +81,15 @@ class _LoginOtpState extends State<LoginOtp>
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
             if (userInfo.getmemberRole == 'Admin') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
-                  (route) => false);
+              // TODO: Add Admin events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
           }
@@ -273,13 +275,14 @@ class _LoginOtpState extends State<LoginOtp>
             if (userInfo.getmemberRole == 'none') {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
-                  (route) => false);
+              // TODO: Add Admin Events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
             }
           }
         });

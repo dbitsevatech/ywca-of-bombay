@@ -36,7 +36,6 @@ class DetailPage extends StatefulWidget {
     required this.eventDate,
     required this.eventDeadline,
     required this.eventTime,
-    // TODO: ??
     required this.memberRole,
   });
   @override
@@ -59,18 +58,20 @@ class _DetailPageState extends State<DetailPage> {
         .where('eventID', isEqualTo: eventID)
         .where('userID', isEqualTo: userID)
         .get()
-        .then((checkSnapshot) {
-      print('snapshot size');
-      print(checkSnapshot.size);
-      if (checkSnapshot.size > 0) {
-        print("Already Exists");
-      } else {
-        print("adding");
-        FirebaseFirestore.instance
-            .collection('eventRegistration')
-            .add({'eventID': eventID, 'userID': userID});
-      }
-    });
+        .then(
+      (checkSnapshot) {
+        print('snapshot size');
+        print(checkSnapshot.size);
+        if (checkSnapshot.size > 0) {
+          print("Already Exists");
+        } else {
+          print("adding");
+          FirebaseFirestore.instance
+              .collection('eventRegistration')
+              .add({'eventID': eventID, 'userID': userID});
+        }
+      },
+    );
   }
 
   final GlobalKey<FormState> _formKey =
