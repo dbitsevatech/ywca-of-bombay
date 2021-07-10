@@ -1,21 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../widgets/constants.dart';
-import 'package:kf_drawer/kf_drawer.dart';
-import '../../../widgets/blue_bubble_design.dart';
-import 'admin_new_event.dart';
+
 import 'admin_edit_event.dart';
 import 'admin_event_details.dart';
 import 'adminEditEvent.dart';
+import 'admin_new_event.dart';
+
+import '../../../drawers_constants/user_drawer.dart';
+import '../../../widgets/constants.dart';
+import '../../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
-class AdminEvents extends KFDrawerContent {
+class AdminEvents extends StatefulWidget {
   @override
   _AdminEventsState createState() => _AdminEventsState();
 }
 
 class _AdminEventsState extends State<AdminEvents> {
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+
   Future<bool?> _navigateToRoute(String name) {
     return showDialog(
       context: context,
@@ -58,135 +64,168 @@ class _AdminEventsState extends State<AdminEvents> {
   }
 
   @override
+  void initState() {
+    selectedMenuItemId = menuWithIcon.items[1].id;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    print("item: $selectedMenuItemId");
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75,
+          menu: menuWithIcon,
+          animation: true,
+          color: Theme.of(context).primaryColor,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(itemId);
+            });
+          },
+        )
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
         child: Center(
-            child: Stack(
-      children: <Widget>[
-        EventPageBlueBubbleDesign(),
-        Positioned(
-          child: AppBar(
-            centerTitle: true,
-            title: Text(
-              "YWCA Of Bombay",
-              style: TextStyle(
-                fontFamily: 'LobsterTwo',
-                fontStyle: FontStyle.italic,
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-                color: Colors.black87,
-              ),
-            ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 30,
-              ),
-              onPressed: () => widget.onMenuPressed,
-            ),
-          ),
-        ),
-        // Events & Search bar Starts
-        PreferredSize(
-          preferredSize: Size.fromHeight(80),
-          child: Column(
+          child: Stack(
             children: <Widget>[
-              // Distance from ywca
-              // or else it will overlap
-              SizedBox(height: 80),
-              RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyText2,
-                  children: [
-                    TextSpan(
-                        text: 'Events ',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold)),
-                    WidgetSpan(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        child: Icon(Icons.notification_important),
+              EventPageBlueBubbleDesign(),
+              Positioned(
+                child: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    "YWCA Of Bombay",
+                    style: TextStyle(
+                      fontFamily: 'LobsterTwo',
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    onPressed: () => {
+                      controller.toggle(Direction.left),
+                      // OR
+                      // controller.open()
+                    },
+                  ),
+                ),
+              ),
+              // Events & Search bar Starts
+              PreferredSize(
+                preferredSize: Size.fromHeight(80),
+                child: Column(
+                  children: <Widget>[
+                    // Distance from ywca
+                    // or else it will overlap
+                    SizedBox(height: 80),
+                    RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyText2,
+                        children: [
+                          TextSpan(
+                              text: 'Events ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold)),
+                          WidgetSpan(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                              child: Icon(Icons.notification_important),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search by venue",
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                        suffixIcon: Icon(
+                          Icons.mic,
+                          color: Colors.grey,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                        filled: true,
+                        fillColor: Colors.transparent,
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 5),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Search by venue",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.grey,
+              // card view for the events
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                  child: getHomePageBody(context)),
+              Column(
+                children: [
+                  Spacer(flex: 20),
+                  Row(
+                    children: [
+                      Spacer(flex: 15),
+                      ElevatedButton.icon(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (states.contains(MaterialState.pressed))
+                              return secondaryColor.withOpacity(0.90);
+                            return firstButtonGradientColor;
+                          }),
+                          foregroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            return null;
+                          }),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                        icon: Icon(Icons.add),
+                        label: Text(
+                          "New Event",
+                          style: TextStyle(
+                            fontSize: 17.0,
+                          ),
+                        ),
+                        onPressed: () async {
+                          gotoNewEvent(context);
+                        },
+                      ),
+                      Spacer(),
+                    ],
                   ),
-                  suffixIcon: Icon(
-                    Icons.mic,
-                    color: Colors.grey,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: EdgeInsets.zero,
-                  filled: true,
-                  fillColor: Colors.transparent,
-                ),
+                  Spacer(),
+                ],
               ),
             ],
           ),
         ),
-        // card view for the events
-        Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
-            child: getHomePageBody(context)),
-        Column(
-          children: [
-            Spacer(flex: 20),
-            Row(
-              children: [
-                Spacer(flex: 15),
-                ElevatedButton.icon(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      if (states.contains(MaterialState.pressed))
-                        return secondaryColor.withOpacity(0.90);
-                      return firstButtonGradientColor;
-                    }),
-                    foregroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      return null;
-                    }),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  icon: Icon(Icons.add),
-                  label: Text(
-                    "New Event",
-                    style: TextStyle(
-                      fontSize: 17.0,
-                    ),
-                  ),
-                  onPressed: () async {
-                    gotoNewEvent(context);
-                  },
-                ),
-                Spacer(),
-              ],
-            ),
-            Spacer(),
-          ],
-        ),
-      ],
-    )));
+      ),
+    );
   }
 
   Widget getHomePageBody(BuildContext context) {
@@ -293,20 +332,20 @@ class _AdminEventsState extends State<AdminEvents> {
                                                       rootNavigator: true)
                                                   .pop(true);
                                               // gotoEditEvent(
-                                                // context,
-                                                // document.id,
-                                                // document['eventAmount'],
-                                                // document['eventDescription'],
-                                                // document['eventName'],
-                                                // document['eventImageUrl'],
-                                                // document['eventVenue'],
-                                                // document['eventType'],
-                                                // document['eventDate'],
-                                                // document['eventDeadline'],
-                                                // document['eventTime'],
+                                              // context,
+                                              // document.id,
+                                              // document['eventAmount'],
+                                              // document['eventDescription'],
+                                              // document['eventName'],
+                                              // document['eventImageUrl'],
+                                              // document['eventVenue'],
+                                              // document['eventType'],
+                                              // document['eventDate'],
+                                              // document['eventDeadline'],
+                                              // document['eventTime'],
                                               // );
                                               gotoEditEvent2(
-                                                  context,
+                                                context,
                                                 document.id,
                                                 document['eventAmount'],
                                                 document['eventDescription'],
@@ -425,6 +464,28 @@ class _AdminEventsState extends State<AdminEvents> {
       },
     );
   }
+
+  void selectedItem(int index) {
+    Navigator.of(context).pop();
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, "/about_us");
+        break;
+      case 1:
+        Navigator.pushNamed(context, "/events");
+        break;
+      case 2:
+        Navigator.pushNamed(context, "/initiatives");
+        break;
+      case 3:
+        Navigator.pushNamed(context, "/success_stories");
+        break;
+      case 4:
+        Navigator.pushNamed(context, "/contact_us");
+        break;
+    }
+  }
 }
 
 gotoDetailEvent(
@@ -535,8 +596,7 @@ gotoEditEvent2(
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => 
-      EditEventScreen(
+      builder: (context) => EditEventScreen(
         id: id,
         eventAmount: eventAmount,
         eventDescription: eventDescription,

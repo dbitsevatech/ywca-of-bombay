@@ -53,6 +53,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
 
   // displaying image
   Widget _buildImage() {
+    // ignore: unnecessary_null_comparison
     if (_image != null) {
       return Image.file(_image);
     } else {

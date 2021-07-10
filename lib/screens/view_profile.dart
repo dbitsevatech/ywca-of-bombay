@@ -213,7 +213,6 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                         GradientButton(
                           buttonText: 'Edit Profile',
                           screenHeight: _height,
-                          route: 'edit_profile',
                           onPressedFunction: () {
                             Navigator.push(
                                 context,

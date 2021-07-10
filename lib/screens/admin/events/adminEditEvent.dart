@@ -749,7 +749,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
                           GradientButton(
                             buttonText: 'Update Event',
                             screenHeight: _height,
-                            route: 'home',
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
                                 return;

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ywcaofbombay/screens/events/user_events.dart';
 import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -142,7 +143,8 @@ class _RegisterOtpState extends State<RegisterOtp>
         print(nearestCenter);
         print(interestInMembership);
 
-        if (snapShot == null || !snapShot.exists) {
+        if (!snapShot.exists) {
+          // if (snapShot == null || !snapShot.exists) {
           print(value.user);
           print(value.user!.uid);
           Map<String, dynamic> data = {
@@ -186,7 +188,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           );
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainWidget()),
+              MaterialPageRoute(builder: (context) => Events()),
               (route) => false);
         } else {
           print("user already registered with this number");
@@ -351,7 +353,6 @@ class _RegisterOtpState extends State<RegisterOtp>
       child: GradientButton(
         buttonText: 'Register',
         screenHeight: _screenSize!.height,
-        route: 'register_otp',
         onPressedFunction: () {
           _onRegisterButtonPressed();
         },
@@ -386,7 +387,8 @@ class _RegisterOtpState extends State<RegisterOtp>
             print(nearestCenter);
             print(interestInMembership);
 
-            if (snapShot == null || !snapShot.exists) {
+            if (!snapShot.exists) {
+              // if (snapShot == null || !snapShot.exists) {
               print(value.user);
               print(value.user!.uid);
               Map<String, dynamic> data = {
@@ -424,7 +426,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
           }
@@ -590,8 +592,8 @@ class _RegisterOtpState extends State<RegisterOtp>
               });
             }
           });
-    _controller!.reverse(
-        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
   }
 
@@ -625,7 +627,9 @@ class _RegisterOtpState extends State<RegisterOtp>
       height: 45.0,
       alignment: Alignment.center,
       child: Text(
+        // ignore: unnecessary_null_comparison
         digit != null ? digit.toString() : "",
+        // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
           color: Colors.black,
@@ -642,7 +646,8 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({required String label, required VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton(
+      {required String label, required VoidCallback onPressed}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -669,7 +674,8 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({required Widget label, required VoidCallback onPressed}) {
+  _otpKeyboardActionButton(
+      {required Widget label, required VoidCallback onPressed}) {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(40.0),
@@ -720,8 +726,8 @@ class _RegisterOtpState extends State<RegisterOtp>
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller!.reverse(
-        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {

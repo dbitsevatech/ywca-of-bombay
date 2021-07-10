@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+// import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../../widgets/blue_bubble_design.dart';
 
@@ -94,52 +94,53 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                 ],
               ),
               Padding(padding: const EdgeInsets.only(top: 10)),
-              Container(
-                height: 420,
-                child: Swiper(
-                  autoplay: false,
-                  itemCount: this._imagePathList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      // To centralize the children.
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image(
-                            image: AssetImage(this._imagePathList[index]),
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.01,
-                        ),
-                        Text(
-                          this._imageTitleList[index],
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: 'Monstserrat',
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    );
-                  },
-                  viewportFraction: 0.85,
-                  scale: 0.9,
-                  pagination: SwiperPagination(
-                    //changing the color of the pagination dots and that of
-                    //the active dot
-                    builder: DotSwiperPaginationBuilder(
-                      color: Colors.grey,
-                      activeColor: Color(0XFF80DEEA),
-                    ),
-                  ),
-                ),
-              ),
+              // TODO: Replace with null safe carousel
+              // Container(
+              //   height: 420,
+              //   child: Swiper(
+              //     autoplay: false,
+              //     itemCount: this._imagePathList.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return Column(
+              //         // To centralize the children.
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         crossAxisAlignment: CrossAxisAlignment.center,
+              //         children: <Widget>[
+              //           ClipRRect(
+              //             borderRadius: BorderRadius.circular(10),
+              //             child: Image(
+              //               image: AssetImage(this._imagePathList[index]),
+              //               fit: BoxFit.contain,
+              //             ),
+              //           ),
+              //           SizedBox(
+              //             height: _height * 0.01,
+              //           ),
+              //           Text(
+              //             this._imageTitleList[index],
+              //             style: TextStyle(
+              //               fontSize: 18,
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.normal,
+              //               fontFamily: 'Monstserrat',
+              //             ),
+              //             textAlign: TextAlign.center,
+              //           ),
+              //         ],
+              //       );
+              //     },
+              //     viewportFraction: 0.85,
+              //     scale: 0.9,
+              //     pagination: SwiperPagination(
+              //       //changing the color of the pagination dots and that of
+              //       //the active dot
+              //       builder: DotSwiperPaginationBuilder(
+              //         color: Colors.grey,
+              //         activeColor: Color(0XFF80DEEA),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: Column(

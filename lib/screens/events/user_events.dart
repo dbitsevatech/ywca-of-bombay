@@ -1,22 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kf_drawer/kf_drawer.dart';
 import 'package:provider/provider.dart';
 
 import 'user_event_details.dart';
 
 import '../../widgets/blue_bubble_design.dart';
+import '../../widgets/constants.dart';
 import '../../models/User.dart';
+import '../../drawers_constants/user_drawer.dart';
 
 // ignore: must_be_immutable
-class Events extends KFDrawerContent {
+class Events extends StatefulWidget {
   @override
   _EventsState createState() => _EventsState();
 }
 
 class _EventsState extends State<Events> {
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
 
@@ -60,104 +64,135 @@ class _EventsState extends State<Events> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Stack(
-          children: <Widget>[
-            EventPageBlueBubbleDesign(),
-            Positioned(
-              child: AppBar(
-                centerTitle: true,
-                title: Text(
-                  "YWCA Of Bombay",
-                  style: TextStyle(
-                    fontFamily: 'LobsterTwo',
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                    color: Colors.black87,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.black,
-                    size: 30,
-                  ),
-                  onPressed: () => widget.onMenuPressed,
-                ),
-              ),
-            ),
-            // Events & Search bar Starts
-            PreferredSize(
-              preferredSize: Size.fromHeight(80),
-              child: Column(
-                children: <Widget>[
-                  // Distance from ywca
-                  // or else it will overlap
-                  SizedBox(height: 80),
-                  RichText(
-                    text: TextSpan(
-                      style: Theme.of(context).textTheme.bodyText2,
-                      children: [
-                        TextSpan(
-                          text: 'Events ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        WidgetSpan(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Icon(Icons.notification_important),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  TextField(
-                    decoration: InputDecoration(
-                        hintText: "Search by venue",
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                        suffixIcon: Icon(
-                          Icons.mic,
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: EdgeInsets.zero,
-                        filled: true,
-                        fillColor: Colors.transparent),
-                  ),
-                ],
-              ),
-            ),
-            // card view for the events
-            Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
-                child: getHomePageBody(context)),
-          ],
-        ),
-      ),
-    );
+  void initState() {
+    selectedMenuItemId = menuWithIcon.items[1].id;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
   }
 
   @override
-  void initState() {
-    userInfo = Provider.of<UserData>(context, listen: false);
-    super.initState();
+  Widget build(BuildContext context) {
+    // final _height = MediaQuery.of(context).size.height;
+    print("item: $selectedMenuItemId");
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red,
+          menu: menuWithIcon,
+          animation: true,
+          // color: Theme.of(context).primaryColorLight,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(context, itemId);
+            });
+          },
+        )
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              EventPageBlueBubbleDesign(),
+              Positioned(
+                child: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    "YWCA Of Bombay",
+                    style: TextStyle(
+                      fontFamily: 'LobsterTwo',
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    onPressed: () => {
+                      controller.toggle(Direction.left),
+                      // OR
+                      // controller.open()
+                    },
+                  ),
+                ),
+              ),
+              // Events & Search bar Starts
+              PreferredSize(
+                preferredSize: Size.fromHeight(80),
+                child: Column(
+                  children: <Widget>[
+                    // Distance from ywca
+                    // or else it will overlap
+                    SizedBox(height: 80),
+                    RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyText2,
+                        children: [
+                          TextSpan(
+                            text: 'Events ',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          WidgetSpan(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 2.0,
+                              ),
+                              child: Icon(Icons.notification_important),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    TextField(
+                      decoration: InputDecoration(
+                          hintText: "Search by venue",
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.grey,
+                          ),
+                          suffixIcon: Icon(
+                            Icons.mic,
+                            color: Colors.grey,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          filled: true,
+                          fillColor: Colors.transparent),
+                    ),
+                  ],
+                ),
+              ),
+              // card view for the events
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                  child: getHomePageBody(context)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget getHomePageBody(BuildContext context) {
@@ -265,43 +300,43 @@ class _EventsState extends State<Events> {
       },
     );
   }
-}
 
-gotoDetailEvent(
-    BuildContext context,
-    String id,
-    String eventAmount,
-    String eventDescription,
-    String eventName,
-    String eventImageUrl,
-    String eventVenue,
-    String eventType,
-    Timestamp eventDate,
-    Timestamp eventDeadline,
-    Timestamp eventTime) {
-  // event date
-  DateTime newEventDate = eventDate.toDate();
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-  String onlyTime = dateFormat.format(DateTime.now());
+  gotoDetailEvent(
+      BuildContext context,
+      String id,
+      String eventAmount,
+      String eventDescription,
+      String eventName,
+      String eventImageUrl,
+      String eventVenue,
+      String eventType,
+      Timestamp eventDate,
+      Timestamp eventDeadline,
+      Timestamp eventTime) {
+    // event date
+    DateTime newEventDate = eventDate.toDate();
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+    String onlyTime = dateFormat.format(DateTime.now());
 // // event deadline
-  DateTime newEventDeadline = eventDeadline.toDate();
-  String memberRole = 'null';
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => DetailPage(
-        id: id,
-        eventAmount: eventAmount,
-        eventDescription: eventDescription,
-        eventName: eventName,
-        eventImageUrl: eventImageUrl,
-        eventVenue: eventVenue,
-        eventType: eventType,
-        memberRole: memberRole,
-        eventDate: newEventDate,
-        eventDeadline: newEventDeadline,
-        eventTime: eventTime,
+    DateTime newEventDeadline = eventDeadline.toDate();
+    String memberRole = 'null';
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailPage(
+          id: id,
+          eventAmount: eventAmount,
+          eventDescription: eventDescription,
+          eventName: eventName,
+          eventImageUrl: eventImageUrl,
+          eventVenue: eventVenue,
+          eventType: eventType,
+          eventDate: newEventDate,
+          eventDeadline: newEventDeadline,
+          eventTime: eventTime,
+          memberRole: memberRole,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

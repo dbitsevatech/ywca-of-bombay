@@ -76,6 +76,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
 
   // displaying image
   Widget _buildImage() {
+    // ignore: unnecessary_null_comparison
     if (_image != null) {
       return Image.file(_image);
     } else {
@@ -86,6 +87,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
   late TimeOfDay time;
 
   String getText() {
+    // ignore: unnecessary_null_comparison
     if (time == null) {
       return 'Select Time';
     } else {
@@ -514,7 +516,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                             final initialTime = TimeOfDay(hour: 9, minute: 0);
                             final newTime = await showTimePicker(
                               context: context,
-                              initialTime: time ?? initialTime,
+                              initialTime: time,
                             );
 
                             if (newTime == null) return;

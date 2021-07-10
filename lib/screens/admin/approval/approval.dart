@@ -1,18 +1,22 @@
-import 'package:flutter/cupertino.dart';
-import 'package:kf_drawer/kf_drawer.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/material.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
+import '../../../drawers_constants/user_drawer.dart';
 
 // ignore: must_be_immutable
-class ApprovalScreen extends KFDrawerContent {
+class ApprovalScreen extends StatefulWidget {
   @override
   _ApprovalScreenState createState() => _ApprovalScreenState();
 }
 
 class _ApprovalScreenState extends State<ApprovalScreen> {
-  ScrollController controller = ScrollController();
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+
+  ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
 
@@ -313,11 +317,11 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
     super.initState();
     getPostsData();
     // List<dynamic> responseList = await DATA;
-    controller.addListener(() {
-      double value = controller.offset / 119;
+    scrollController.addListener(() {
+      double value = scrollController.offset / 119;
       setState(() {
         topContainer = value;
-        closeTopContainer = controller.offset > 50;
+        closeTopContainer = scrollController.offset > 50;
       });
     });
   }
@@ -326,133 +330,157 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     // final double categoryHeight = size.height * 0.30;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: size.height,
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  // top-left corner intersecting circles design
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () => widget.onMenuPressed,
-                      ),
-                    ),
-                  ),
-                  PreferredSize(
-                    preferredSize: Size.fromHeight(80),
-                    child: Column(
-                      children: <Widget>[
-                        // Distance from ywca
-                        // or else it will overlap
-                        SizedBox(height: 80),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                text: 'Approval ',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  color: Color(0xff333333),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
-                              WidgetSpan(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 2.0,
-                                  ),
-                                  child: Icon(
-                                    Icons.notification_important,
-                                    size: 28,
-                                  ),
-                                ),
-                              ),
-                            ],
+    print("item: $selectedMenuItemId");
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75,
+          menu: menuWithIcon,
+          animation: true,
+          color: Theme.of(context).primaryColor,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(context, itemId);
+            });
+          },
+        )
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Scaffold(
+          body: Container(
+            height: size.height,
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    // top-left corner intersecting circles design
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: "Search by name",
-                            hintStyle: TextStyle(fontFamily: 'Montserrat'),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.mic,
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.zero,
-                            filled: true,
-                            fillColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  controller: controller,
-                  itemCount: itemsData.length,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    double scale = 1.0;
-                    if (topContainer > 0) {
-                      scale = index + 2 - topContainer / 1.3;
-                      if (scale < 0) {
-                        scale = 0;
-                      } else if (scale > 1) {
-                        scale = 1;
-                      }
-                    }
-                    return Opacity(
-                      opacity: scale,
-                      child: Transform(
-                        transform: Matrix4.identity()..scale(scale, scale),
-                        alignment: Alignment.bottomCenter,
-                        child: Align(
-                          heightFactor: 0.8,
-                          alignment: Alignment.topCenter,
-                          child: itemsData[index],
+                          onPressed: () => {
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    PreferredSize(
+                      preferredSize: Size.fromHeight(80),
+                      child: Column(
+                        children: <Widget>[
+                          // Distance from ywca
+                          // or else it will overlap
+                          SizedBox(height: 80),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              children: [
+                                TextSpan(
+                                  text: 'Approval ',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    color: Color(0xff333333),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0,
+                                    ),
+                                    child: Icon(
+                                      Icons.notification_important,
+                                      size: 28,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: "Search by name",
+                              hintStyle: TextStyle(fontFamily: 'Montserrat'),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              ),
+                              suffixIcon: Icon(
+                                Icons.mic,
+                                color: Colors.grey,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.zero,
+                              filled: true,
+                              fillColor: Colors.transparent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: itemsData.length,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      double scale = 1.0;
+                      if (topContainer > 0) {
+                        scale = index + 2 - topContainer / 1.3;
+                        if (scale < 0) {
+                          scale = 0;
+                        } else if (scale > 1) {
+                          scale = 1;
+                        }
+                      }
+                      return Opacity(
+                        opacity: scale,
+                        child: Transform(
+                          transform: Matrix4.identity()..scale(scale, scale),
+                          alignment: Alignment.bottomCenter,
+                          child: Align(
+                            heightFactor: 0.8,
+                            alignment: Alignment.topCenter,
+                            child: itemsData[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

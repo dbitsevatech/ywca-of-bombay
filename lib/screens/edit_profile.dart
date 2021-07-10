@@ -103,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         );
       },
     ))!;
-    if (picked != null && picked != dateOfBirth) {
+    if (picked != dateOfBirth) {
       setState(() {
         dateOfBirth = picked;
         // print(picked);
@@ -112,8 +112,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  dynamic _onBackPressed() {
-    
+  // Future<bool> _onBackPressed() {
+  _onBackPressed() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -201,7 +201,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () => _onBackPressed,
+      onWillPop: () => _onBackPressed(),
       child: Scaffold(
         key: _scaffoldkey,
         // body:WillPopScope(
@@ -801,7 +801,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           GradientButton(
                             buttonText: 'Update Profile',
                             screenHeight: _height,
-                            route: 'home',
                             onPressedFunction: () async {
                               if (_formKey.currentState!.validate()) {
                                 return;

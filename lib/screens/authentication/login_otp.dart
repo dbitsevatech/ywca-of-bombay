@@ -3,11 +3,12 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ywcaofbombay/screens/events/user_events.dart';
 
-import '../../widgets/admin_drawer.dart';
+// import '../../widgets/admin_drawer.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/drawer.dart';
+// import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
 import '../../models/User.dart';
 
@@ -30,7 +31,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   String _verificationCode = "";
   _LoginOtpState(this._phoneNumber);
-  AnimationController? _controller ;
+  AnimationController? _controller;
   String otp = "";
   // Variables
   Size? _screenSize;
@@ -80,14 +81,15 @@ class _LoginOtpState extends State<LoginOtp>
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
             if (userInfo.getmemberRole == 'Admin') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget(title: '', )),
-                  (route) => false);
+              // TODO: Add Admin events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
           }
@@ -256,7 +258,6 @@ class _LoginOtpState extends State<LoginOtp>
       child: GradientButton(
         buttonText: 'Log In',
         screenHeight: _screenSize!.height,
-        route: 'home',
         onPressedFunction: () => _onLoginButtonPressed(),
       ),
     );
@@ -274,13 +275,14 @@ class _LoginOtpState extends State<LoginOtp>
             if (userInfo.getmemberRole == 'none') {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget(title: '',)),
-                  (route) => false);
+              // TODO: Add Admin Events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
             }
           }
         });
@@ -432,8 +434,8 @@ class _LoginOtpState extends State<LoginOtp>
               });
             }
           });
-    _controller!.reverse(
-        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
   }
 
@@ -467,7 +469,9 @@ class _LoginOtpState extends State<LoginOtp>
       height: 45.0,
       alignment: Alignment.center,
       child: Text(
+        // ignore: unnecessary_null_comparison
         digit != null ? digit.toString() : "",
+        // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
           color: Colors.black,
@@ -564,8 +568,8 @@ class _LoginOtpState extends State<LoginOtp>
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller!.reverse(
-        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {

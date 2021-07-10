@@ -257,7 +257,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         GradientButton(
                           buttonText: 'Login',
                           screenHeight: _height,
-                          route: 'login_otp',
                           onPressedFunction: () async {
                             if (!_formKey.currentState!.validate()) {
                               return;

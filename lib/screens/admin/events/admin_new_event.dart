@@ -17,7 +17,11 @@ class AdminNewEvent extends StatefulWidget {
 }
 
 class _AdminNewEventState extends State<AdminNewEvent> {
-  late String eventTitle, eventDescription, eventVenue, eventAmount, eventImageUrl;
+  late String eventTitle,
+      eventDescription,
+      eventVenue,
+      eventAmount,
+      eventImageUrl;
   String eventType = "Everyone";
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
@@ -126,6 +130,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   // displaying image
   Widget _buildImage() {
+    // ignore: unnecessary_null_comparison
     if (_image != null) {
       return Image.file(_image);
     } else {
@@ -654,7 +659,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               ),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-
                                   return;
                                 }
                                 uploadData(
