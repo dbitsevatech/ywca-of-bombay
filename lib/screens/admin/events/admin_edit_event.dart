@@ -17,17 +17,18 @@ class AdminEditEvent extends StatefulWidget {
       eventAmount,
       eventDescription,
       eventName,
-      eventImageUrl,
+      // eventImageUrl,
       eventVenue,
-      eventType;
-  DateTime eventDate, eventDeadline, eventTime;
+      eventType,
+      eventTime;
+  DateTime eventDate, eventDeadline;
 
   AdminEditEvent({
     required this.id,
     required this.eventAmount,
     required this.eventDescription,
     required this.eventName,
-    required this.eventImageUrl,
+    // required this.eventImageUrl,
     required this.eventVenue,
     required this.eventType,
     required this.eventDate,
@@ -121,12 +122,12 @@ class _AdminEditEventState extends State<AdminEditEvent> {
         eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
-        eventImageUrl = widget.eventImageUrl,
+        // eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
-    DateTime eventTime = widget.eventTime;
+    String eventTime = widget.eventTime;
 
     //Time
     TextEditingController timeController = TextEditingController();
@@ -151,7 +152,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
       eventAmount = widget.eventAmount;
       eventDescription = widget.eventDescription;
       eventVenue = widget.eventVenue;
-      eventImageUrl = widget.eventImageUrl;
+      // eventImageUrl = widget.eventImageUrl;
       eventDate = widget.eventDate;
       eventType = widget.eventType;
       eventDeadline = widget.eventDeadline;
@@ -323,11 +324,11 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                     fontFamily: 'RacingSansOne',
                   ),
                 ),
-                Image.network(
-                  eventImageUrl,
-                  fit: BoxFit.cover,
-                  width: 120.0,
-                ),
+                // Image.network(
+                //   eventImageUrl,
+                //   fit: BoxFit.cover,
+                //   width: 120.0,
+                // ),
                 // selected image
                 Text(
                   'New Image',

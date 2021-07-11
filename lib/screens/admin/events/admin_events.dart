@@ -57,11 +57,11 @@ class _AdminEventsState extends State<AdminEvents> {
   }
 
   // conversion of event time
-  String readEventTime(Timestamp eventTime) {
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
-    return formattedEventTime;
-  }
+  // String readEventTime(Timestamp eventTime) {
+  //   DateTime newEventTime = eventTime.toDate();
+  //   String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
+  //   return formattedEventTime;
+  // }
 
   @override
   void initState() {
@@ -247,16 +247,16 @@ class _AdminEventsState extends State<AdminEvents> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      leading: Image.network(
-                        document['eventImageUrl'],
-                        fit: BoxFit.cover,
-                        width: 120.0,
-                      ),
+                      // leading: Image.network(
+                      //   document['eventImageUrl'],
+                      //   fit: BoxFit.cover,
+                      //   width: 120.0,
+                      // ),
                       title: Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
                             '| Time:' +
-                            (readEventTime(document['eventTime'])),
+                            (document['eventTime']),
                         style: TextStyle(
                           color: Color(0xFF49DEE8),
                           fontSize: 14.0,
@@ -286,7 +286,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Venue: ' + document['eventVenue'],
+                            'Venue: ' + document['eventName'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
@@ -294,7 +294,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            'Amount: ' + document['eventAmount'],
+                            'Amount: ' + document['eventName'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
@@ -337,7 +337,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                               // document['eventAmount'],
                                               // document['eventDescription'],
                                               // document['eventName'],
-                                              // document['eventImageUrl'],
+                                              // // document['eventImageUrl'],
                                               // document['eventVenue'],
                                               // document['eventType'],
                                               // document['eventDate'],
@@ -350,7 +350,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                                 document['eventAmount'],
                                                 document['eventDescription'],
                                                 document['eventName'],
-                                                document['eventImageUrl'],
+                                                // document['eventImageUrl'],
                                                 document['eventVenue'],
                                                 document['eventType'],
                                                 document['eventDate'],
@@ -448,7 +448,7 @@ class _AdminEventsState extends State<AdminEvents> {
                             document['eventAmount'],
                             document['eventDescription'],
                             document['eventName'],
-                            document['eventImageUrl'],
+                            // document['eventImageUrl'],
                             document['eventVenue'],
                             document['eventType'],
                             document['eventDate'],
@@ -494,7 +494,7 @@ gotoDetailEvent(
     String eventAmount,
     String eventDescription,
     String eventName,
-    String eventImageUrl,
+    // String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
@@ -514,7 +514,7 @@ gotoDetailEvent(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        eventImageUrl: eventImageUrl,
+        // eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,
@@ -531,12 +531,12 @@ gotoEditEvent(
     String eventAmount,
     String eventDescription,
     String eventName,
-    String eventImageUrl,
+    // String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
     Timestamp eventDeadline,
-    Timestamp eventTime) {
+    String eventTime) {
 // event date
   DateTime newEventDate = eventDate.toDate();
 
@@ -544,7 +544,7 @@ gotoEditEvent(
   DateTime newEventDeadline = eventDeadline.toDate();
 
 // event time
-  DateTime newEventTime = eventTime.toDate();
+  // DateTime newEventTime = eventTime.toDate();
 
   Navigator.push(
     context,
@@ -554,12 +554,12 @@ gotoEditEvent(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        eventImageUrl: eventImageUrl,
+        // eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,
         eventDeadline: newEventDeadline,
-        eventTime: newEventTime,
+        eventTime: eventTime,
       ),
     ),
   );
@@ -578,12 +578,12 @@ gotoEditEvent2(
     String eventAmount,
     String eventDescription,
     String eventName,
-    String eventImageUrl,
+    // String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
     Timestamp eventDeadline,
-    Timestamp eventTime) {
+    String eventTime) {
 // event date
   DateTime newEventDate = eventDate.toDate();
 
@@ -591,7 +591,7 @@ gotoEditEvent2(
   DateTime newEventDeadline = eventDeadline.toDate();
 
 // event time
-  DateTime newEventTime = eventTime.toDate();
+  // DateTime newEventTime = eventTime.toDate();
 
   Navigator.push(
     context,
@@ -601,12 +601,12 @@ gotoEditEvent2(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        eventImageUrl: eventImageUrl,
+        // eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,
         eventDeadline: newEventDeadline,
-        eventTime: newEventTime,
+        eventTime: eventTime,
       ),
     ),
   );

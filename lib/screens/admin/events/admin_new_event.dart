@@ -9,6 +9,8 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class AdminNewEvent extends StatefulWidget {
@@ -23,8 +25,22 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventAmount,
       eventImageUrl;
   String eventType = "Everyone";
+  String _valueChanged4 = '';
+  String _valueToValidate4 = '';
+  String _valueSaved4 = '';
+
+  late TextEditingController _controller4;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
+
+  Future<void> _getValue() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        //_initialValue = '2000-10-22 14:30';
+        _controller4.text = '17:01';
+      });
+    });
+  }
 
   // choose the image
   late File _image;
@@ -36,6 +52,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   DateTime eventDate = DateTime.now().subtract(Duration(days: 4380));
   Future _selectDate(context) async {
+    initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDate,
@@ -75,6 +92,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   DateTime eventDeadline = DateTime.now().subtract(Duration(days: 4380));
 
   Future _selectDeadline(context) async {
+    initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDeadline,
@@ -110,7 +128,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     }
   }
 
-  // Image
+  // // Image
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
@@ -160,26 +178,26 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     // reference to the firestore of the image
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     var url = imageUrl.toString();
-    // print("Image URL=" + url);
+    print("Image URL=" + url);
 
     // print("Creating record on firestore");
     // print("time");
     // print(eventTime);
 
-    TimeOfDay selectedTime = eventTime;
-    final now = DateTime.now();
-    DateTime newTime = DateTime(
-        now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
+    // TimeOfDay selectedTime = eventTime;
+    // final now = DateTime.now();
+    // DateTime newTime = DateTime(
+    //     now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
     final document = FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
       'eventDescription': eventDescription,
       'eventVenue': eventVenue,
       'eventAmount': eventAmount,
-      'eventImageUrl': url,
       'eventDate': eventDate,
+      'eventImageUrl' : url,
       'eventDeadline': eventDeadline,
-      'eventTime': newTime,
+      'eventTime': eventTime,
       'eventType': eventType
     }).then((value) =>
         // print(value.id)
@@ -208,12 +226,29 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     });
   }
 
+  // @override
+  // void initState() {
+
+  // }
+
   @override
   void initState() {
+    super.initState();
+    Intl.defaultLocale = 'pt_BR';
+    //_initialValue = DateTime.now().toString();
+    _controller4 = TextEditingController(text: DateTime.now().toString());
+
+    String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
+    String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
+    _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
+    // _image = ;
+
+    _getValue();
+
     setState(() {
       eventType = "Everyone";
     });
-    super.initState();
+    // super.initState();
   }
 
   // Time picker
@@ -305,7 +340,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () => captureImage(ImageSource.gallery),
+                      onPressed: () => {}
+                      // captureImage(ImageSource.gallery),
                     ),
                   ),
                 ),
@@ -313,7 +349,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                   height: _height * 0.015,
                 ),
                 // display image
-                Center(child: _buildImage()),
+                // Center(child: _buildImage()),
                 SizedBox(
                   height: _height * 0.015,
                 ),
@@ -487,36 +523,54 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           },
                         ),
                         SizedBox(height: _height * 0.015),
+                        DateTimePicker(
+                          type: DateTimePickerType.time,
+                          timePickerEntryModeInput: true,
+                          // controller: _controller4,
+                          initialValue: _controller4.text, //_initialValue,
+                          icon: Icon(Icons.access_time),
+                          timeLabelText: "Select Time",
+                          use24HourFormat: true,
+                          locale: Locale('pt', 'BR'),
+                          onChanged: (val) =>
+                              setState(() => _valueChanged4 = val),
+                          validator: (val) {
+                            setState(() => _valueToValidate4 = val ?? '');
+                            return null;
+                          },
+                          onSaved: (val) =>
+                              setState(() => _valueSaved4 = val ?? ''),
+                        ),
 
                         // Time
-                        TextFormField(
-                          controller: timeController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.timer,
-                              color: secondaryColor,
-                            ),
-                            labelText: getText(),
-                          ),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          onTap: () async {
-                            // pickTime(context);
-                            final initialTime = TimeOfDay(hour: 9, minute: 0);
-                            final newTime = await showTimePicker(
-                              context: context,
-                              initialTime: eventTime ?? initialTime,
-                            );
+                        // TextFormField(
+                        //   controller: timeController,
+                        //   onChanged: (value) {
+                        //     setState(() {});
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     prefixIcon: Icon(
+                        //       Icons.timer,
+                        //       color: secondaryColor,
+                        //     ),
+                        //     labelText: getText(),
+                        //   ),
+                        //   style: TextStyle(
+                        //     fontFamily: 'Montserrat',
+                        //     fontSize: 16,
+                        //   ),
+                        //   onTap: () async {
+                        //     // pickTime(context);
+                        //     final initialTime = TimeOfDay(hour: 9, minute: 0);
+                        //     final newTime = await showTimePicker(
+                        //       context: context,
+                        //       initialTime: eventTime ?? initialTime,
+                        //     );
 
-                            if (newTime == null) return;
-                            setState(() => eventTime = newTime);
-                          },
-                        ),
+                        //     if (newTime == null) return;
+                        //     setState(() => eventTime = newTime);
+                        //   },
+                        // ),
 
                         SizedBox(height: _height * 0.015),
                         //Deadline of Event
@@ -658,9 +712,11 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  return;
-                                }
+                                // if (_formKey.currentState!.validate()) {
+                                //   return;
+                                // }
+                                // print('printing time');
+                                // print(_valueChanged4);
                                 uploadData(
                                     context,
                                     eventTitle,
@@ -669,7 +725,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                     eventAmount,
                                     eventDate,
                                     eventDeadline,
-                                    eventTime,
+                                    _valueChanged4,
                                     eventType);
                                 goBackToPreviousScreen(context);
                               },
