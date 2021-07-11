@@ -7,6 +7,8 @@ import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 import 'admin_edit_event_image.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
@@ -17,7 +19,8 @@ class EditEventScreen extends StatefulWidget {
       eventImageUrl,
       eventVenue;
   String eventType;
-  DateTime eventDate, eventDeadline, eventTime;
+  DateTime eventDate, eventDeadline;
+  String eventTime;
   // Timestamp eventTime;
 
   EditEventScreen({
@@ -44,14 +47,29 @@ class _EditEventScreenState extends State<EditEventScreen> {
   String eventImageUrl = '';
   String eventVenue = '';
   String eventType = "Everyone";
-  late DateTime eventDate, eventDeadline, eventTime;
+  late DateTime eventDate, eventDeadline;
+  String eventTime = '';
   // Timestamp eventTime;
+
+  String _valueChanged4 = '';
+  String _valueToValidate4 = '';
+  String _valueSaved4 = '';
+  late TextEditingController _controller4;
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+
+      Future<void> _getValue() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        //_initialValue = '2000-10-22 14:30';
+        _controller4.text = '17:01';
+      });
+    });
+  }
 
   // everyone-0, members only-1
   int? _eventTypeRadioValue = 0;
@@ -147,19 +165,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
         // print(picked);
         print(eventDeadline);
       });
-    }
-  }
-
-  TimeOfDay? time;
-
-  String getText() {
-    if (time == null) {
-      return 'Select Time';
-    } else {
-      final hours = time!.hour.toString().padLeft(2, '0');
-      final minutes = time!.minute.toString().padLeft(2, '0');
-
-      return '$hours:$minutes';
     }
   }
 
@@ -606,39 +611,57 @@ class _EditEventScreenState extends State<EditEventScreen> {
                             },
                           ),
                           //Time
-                          TextFormField(
-                            controller: timeController,
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.timer,
-                                color: secondaryColor,
-                              ),
-                              labelText: getText(),
-                            ),
-                            // initialValue: ,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 16,
-                            ),
-                            onTap: () async {
-                              // print('time of event');
-                              // print(eventTime);
-                              // timeController.text = "${eventTime.toLocal()}".split(' ')[1];
-                              // print(timeController.text);
-                              final initialTime = TimeOfDay(hour: 9, minute: 0);
-                              final newTime = await showTimePicker(
-                                context: context,
-                                initialTime: time ?? initialTime,
-                              );
+                          // TextFormField(
+                          //   controller: timeController,
+                          //   onChanged: (value) {
+                          //     setState(() {});
+                          //   },
+                          //   decoration: InputDecoration(
+                          //     prefixIcon: Icon(
+                          //       Icons.timer,
+                          //       color: secondaryColor,
+                          //     ),
+                          //     labelText: getText(),
+                          //   ),
+                          //   // initialValue: ,
+                          //   style: TextStyle(
+                          //     fontFamily: 'Montserrat',
+                          //     fontSize: 16,
+                          //   ),
+                          //   onTap: () async {
+                          //     // print('time of event');
+                          //     // print(eventTime);
+                          //     // timeController.text = "${eventTime.toLocal()}".split(' ')[1];
+                          //     // print(timeController.text);
+                          //     final initialTime = TimeOfDay(hour: 9, minute: 0);
+                          //     final newTime = await showTimePicker(
+                          //       context: context,
+                          //       initialTime: time ?? initialTime,
+                          //     );
 
-                              if (newTime == null) return;
-                              setState(() => time = newTime);
-                            },
-                            // onClicked: () => pickTime(context),
-                          ),
+                          //     if (newTime == null) return;
+                          //     setState(() => time = newTime);
+                          //   },
+                          //   // onClicked: () => pickTime(context),
+                          // ),
+                          DateTimePicker(
+                          type: DateTimePickerType.time,
+                          timePickerEntryModeInput: true,
+                          // controller: _controller4,
+                          initialValue: eventTime, //_initialValue,
+                          icon: Icon(Icons.access_time),
+                          timeLabelText: "Select Time",
+                          use24HourFormat: true,
+                          locale: Locale('pt', 'BR'),
+                          onChanged: (val) =>
+                              setState(() => _valueChanged4 = val),
+                          validator: (val) {
+                            setState(() => _valueToValidate4 = val ?? '');
+                            return null;
+                          },
+                          onSaved: (val) =>
+                              setState(() => _valueSaved4 = val ?? ''),
+                        ),
 
                           SizedBox(height: _height * 0.015),
                           // Deadline to register
@@ -789,7 +812,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventAmount': eventAmount,
                                             'eventDate': eventDate,
                                             // 'eventImageUrl': url,
-                                            // 'eventTime': newTime,
+                                            'eventTime': _valueChanged4,
                                             'eventDeadline': eventDeadline,
                                             'eventType': eventType
                                           });

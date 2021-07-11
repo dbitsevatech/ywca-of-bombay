@@ -50,18 +50,16 @@ class _EventsState extends State<Events> {
   // conversion of event date
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    String onlyTime = dateFormat.format(DateTime.now());
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
     return formattedEventDate;
   }
 
   // conversion of event time
-  String readEventTime(Timestamp eventTime) {
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
-    return formattedEventTime;
-  }
+  // String readEventTime(Timestamp eventTime) {
+  //   DateTime newEventTime = eventTime.toDate();
+  //   String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
+  //   return formattedEventTime;
+  // }
 
   @override
   void initState() {
@@ -227,7 +225,7 @@ class _EventsState extends State<Events> {
                           'Date:' +
                               (readEventDate(document['eventDate'])) +
                               '| Time:' +
-                              (readEventTime(document['eventTime'])),
+                              (document['eventTime']),
                           style: TextStyle(
                             color: Color(0xFF49DEE8),
                             fontSize: 14.0,
@@ -312,11 +310,10 @@ class _EventsState extends State<Events> {
       String eventType,
       Timestamp eventDate,
       Timestamp eventDeadline,
-      Timestamp eventTime) {
+      String eventTime) {
     // event date
     DateTime newEventDate = eventDate.toDate();
     DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    String onlyTime = dateFormat.format(DateTime.now());
 // // event deadline
     DateTime newEventDeadline = eventDeadline.toDate();
     String memberRole = 'null';

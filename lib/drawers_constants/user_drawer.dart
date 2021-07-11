@@ -1,8 +1,8 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/constants.dart';
-import '../../screens/view_profile.dart';
+import '../widgets/constants.dart';
+import '../screens/view_profile.dart';
 
 List<MenuItem> items = [
   MenuItem<int>(

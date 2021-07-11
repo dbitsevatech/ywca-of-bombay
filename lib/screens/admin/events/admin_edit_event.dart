@@ -19,8 +19,9 @@ class AdminEditEvent extends StatefulWidget {
       eventName,
       eventImageUrl,
       eventVenue,
-      eventType;
-  DateTime eventDate, eventDeadline, eventTime;
+      eventType,
+      eventTime;
+  DateTime eventDate, eventDeadline;
 
   AdminEditEvent({
     required this.id,
@@ -52,7 +53,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
   String member = "Everyone";
 
   // choosing the image
-  late File _image;
+  File? _image;
 
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -74,13 +75,13 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     }
   }
 
-  // displaying image
+ // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
-      return Image.file(_image);
+      return Image.file(_image!);
     } else {
-      return Text('Choose a image to show', style: TextStyle(fontSize: 18.0));
+      return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
     }
   }
 
@@ -121,12 +122,12 @@ class _AdminEditEventState extends State<AdminEditEvent> {
         eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
-        eventImageUrl = widget.eventImageUrl,
+        // eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
-    DateTime eventTime = widget.eventTime;
+    String eventTime = widget.eventTime;
 
     //Time
     TextEditingController timeController = TextEditingController();
@@ -151,7 +152,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
       eventAmount = widget.eventAmount;
       eventDescription = widget.eventDescription;
       eventVenue = widget.eventVenue;
-      eventImageUrl = widget.eventImageUrl;
+      // eventImageUrl = widget.eventImageUrl;
       eventDate = widget.eventDate;
       eventType = widget.eventType;
       eventDeadline = widget.eventDeadline;
@@ -323,11 +324,11 @@ class _AdminEditEventState extends State<AdminEditEvent> {
                     fontFamily: 'RacingSansOne',
                   ),
                 ),
-                Image.network(
-                  eventImageUrl,
-                  fit: BoxFit.cover,
-                  width: 120.0,
-                ),
+                // Image.network(
+                //   eventImageUrl,
+                //   fit: BoxFit.cover,
+                //   width: 120.0,
+                // ),
                 // selected image
                 Text(
                   'New Image',
@@ -721,10 +722,10 @@ class _AdminEditEventState extends State<AdminEditEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
-    String fileName = basename(_image.path);
+    String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
     uploadTask.whenComplete(() {
       print("uploaded");

@@ -29,7 +29,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   final _formkey = GlobalKey<FormState>();
 
   // choosing the image
-  late File _image;
+  File? _image;
 
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -51,13 +51,13 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     }
   }
 
-  // displaying image
+ // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
-      return Image.file(_image);
+      return Image.file(_image!);
     } else {
-      return Text('Choose a image to show', style: TextStyle(fontSize: 18.0));
+      return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
     }
   }
 
@@ -279,10 +279,10 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
 
   // Updating to firebase
   Future updateData(BuildContext context, id) async {
-    String fileName = basename(_image.path);
+    String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
     uploadTask.whenComplete(() {
       print("uploaded");
