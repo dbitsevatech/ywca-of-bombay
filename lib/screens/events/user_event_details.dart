@@ -23,7 +23,7 @@ class DetailPage extends StatefulWidget {
       eventType,
       memberRole;
   DateTime eventDate, eventDeadline;
-  Timestamp eventTime;
+  String eventTime;
 
   DetailPage({
     required this.id,
@@ -45,7 +45,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
-  late String memberRole;
+  String? memberRole;
 
   int _currentIndex = 0;
 
@@ -92,7 +92,7 @@ class _DetailPageState extends State<DetailPage> {
 
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
-    Timestamp eventTime = widget.eventTime;
+    String eventTime = widget.eventTime;
 
     // carousel images
     final List<String> imagesList = [
@@ -109,10 +109,6 @@ class _DetailPageState extends State<DetailPage> {
     // event deadline
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
-
-    // event time
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
 
     @override
     void initState() {
@@ -372,7 +368,7 @@ class _DetailPageState extends State<DetailPage> {
                         SizedBox(height: _height * 0.015),
                         // Time
                         Text(
-                          'Event Time: ' + formattedEventTime,
+                          'Event Time: ' + eventTime,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,

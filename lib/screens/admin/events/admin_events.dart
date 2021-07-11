@@ -247,11 +247,11 @@ class _AdminEventsState extends State<AdminEvents> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      // leading: Image.network(
-                      //   document['eventImageUrl'],
-                      //   fit: BoxFit.cover,
-                      //   width: 120.0,
-                      // ),
+                      leading: Image.network(
+                        document['eventImageUrl'],
+                        fit: BoxFit.cover,
+                        width: 120.0,
+                      ),
                       title: Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
@@ -350,7 +350,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                                 document['eventAmount'],
                                                 document['eventDescription'],
                                                 document['eventName'],
-                                                // document['eventImageUrl'],
+                                                document['eventImageUrl'],
                                                 document['eventVenue'],
                                                 document['eventType'],
                                                 document['eventDate'],
@@ -448,7 +448,7 @@ class _AdminEventsState extends State<AdminEvents> {
                             document['eventAmount'],
                             document['eventDescription'],
                             document['eventName'],
-                            // document['eventImageUrl'],
+                            document['eventImageUrl'],
                             document['eventVenue'],
                             document['eventType'],
                             document['eventDate'],
@@ -494,17 +494,16 @@ gotoDetailEvent(
     String eventAmount,
     String eventDescription,
     String eventName,
-    // String eventImageUrl,
+    String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
     Timestamp eventDeadline,
-    Timestamp eventTime) {
+    String eventTime) {
   // event date
   DateTime newEventDate = eventDate.toDate();
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-  String onlyTime = dateFormat.format(DateTime.now());
-// // event deadline
+
+// event deadline
   DateTime newEventDeadline = eventDeadline.toDate();
   Navigator.push(
     context,
@@ -514,7 +513,7 @@ gotoDetailEvent(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        // eventImageUrl: eventImageUrl,
+        eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,
@@ -531,7 +530,7 @@ gotoEditEvent(
     String eventAmount,
     String eventDescription,
     String eventName,
-    // String eventImageUrl,
+    String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
@@ -543,9 +542,6 @@ gotoEditEvent(
 // event deadline
   DateTime newEventDeadline = eventDeadline.toDate();
 
-// event time
-  // DateTime newEventTime = eventTime.toDate();
-
   Navigator.push(
     context,
     MaterialPageRoute(
@@ -554,7 +550,7 @@ gotoEditEvent(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        // eventImageUrl: eventImageUrl,
+        eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,
@@ -578,7 +574,7 @@ gotoEditEvent2(
     String eventAmount,
     String eventDescription,
     String eventName,
-    // String eventImageUrl,
+    String eventImageUrl,
     String eventVenue,
     String eventType,
     Timestamp eventDate,
@@ -601,7 +597,7 @@ gotoEditEvent2(
         eventAmount: eventAmount,
         eventDescription: eventDescription,
         eventName: eventName,
-        // eventImageUrl: eventImageUrl,
+        eventImageUrl: eventImageUrl,
         eventVenue: eventVenue,
         eventType: eventType,
         eventDate: newEventDate,

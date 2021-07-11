@@ -43,7 +43,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   }
 
   // choose the image
-  late File _image;
+  File? _image;
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -146,11 +146,11 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     }
   }
 
-  // displaying image
+ // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
-      return Image.file(_image);
+      return Image.file(_image!);
     } else {
       return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
     }
@@ -167,10 +167,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
-    String fileName = basename(_image.path);
+    String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
     uploadTask.whenComplete(() {
       // print("uploaded");
@@ -340,8 +340,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () => {}
-                      // captureImage(ImageSource.gallery),
+                      onPressed: () => 
+                      captureImage(ImageSource.gallery),
                     ),
                   ),
                 ),
@@ -349,7 +349,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                   height: _height * 0.015,
                 ),
                 // display image
-                // Center(child: _buildImage()),
+                Center(child: _buildImage()),
                 SizedBox(
                   height: _height * 0.015,
                 ),

@@ -14,18 +14,18 @@ class AdminEventDetailPage extends StatefulWidget {
       eventAmount,
       eventDescription,
       eventName,
-      // eventImageUrl,
+      eventImageUrl,
       eventVenue,
       eventType;
   DateTime eventDate, eventDeadline;
-  Timestamp eventTime;
+  String eventTime;
 
   AdminEventDetailPage({
     required this.id,
     required this.eventAmount,
     required this.eventDescription,
     required this.eventName,
-    // required this.eventImageUrl,
+    required this.eventImageUrl,
     required this.eventVenue,
     required this.eventType,
     required this.eventDate,
@@ -52,17 +52,16 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
         eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
-        // eventImageUrl = widget.eventImageUrl,
+        eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
-
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
-    Timestamp eventTime = widget.eventTime;
+    String eventTime = widget.eventTime;
 
     // carousel images
     final List<String> imagesList = [
-      // eventImageUrl,
+      eventImageUrl,
       'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
       'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
       'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
@@ -76,10 +75,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
-// event time
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
-
     @override
     void initState() {
       super.initState();
@@ -88,9 +83,10 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
       eventAmount = widget.eventAmount;
       eventDescription = widget.eventDescription;
       eventVenue = widget.eventVenue;
-      // eventImageUrl = widget.eventImageUrl;
+      eventImageUrl = widget.eventImageUrl;
       eventDate = widget.eventDate;
       eventType = widget.eventType;
+      eventTime = widget.eventTime;
       // event_deadline = widget.event_deadline;
     }
 
@@ -310,7 +306,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                         SizedBox(height: _height * 0.015),
                         // Time
                         Text(
-                          'Event Time -' + formattedEventTime,
+                          'Event Time -' + eventTime,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,

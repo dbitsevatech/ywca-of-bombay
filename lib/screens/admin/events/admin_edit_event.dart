@@ -17,7 +17,7 @@ class AdminEditEvent extends StatefulWidget {
       eventAmount,
       eventDescription,
       eventName,
-      // eventImageUrl,
+      eventImageUrl,
       eventVenue,
       eventType,
       eventTime;
@@ -28,7 +28,7 @@ class AdminEditEvent extends StatefulWidget {
     required this.eventAmount,
     required this.eventDescription,
     required this.eventName,
-    // required this.eventImageUrl,
+    required this.eventImageUrl,
     required this.eventVenue,
     required this.eventType,
     required this.eventDate,
@@ -53,7 +53,7 @@ class _AdminEditEventState extends State<AdminEditEvent> {
   String member = "Everyone";
 
   // choosing the image
-  late File _image;
+  File? _image;
 
   Future<void> captureImage(ImageSource imageSource) async {
     try {
@@ -75,13 +75,13 @@ class _AdminEditEventState extends State<AdminEditEvent> {
     }
   }
 
-  // displaying image
+ // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
-      return Image.file(_image);
+      return Image.file(_image!);
     } else {
-      return Text('Choose a image to show', style: TextStyle(fontSize: 18.0));
+      return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
     }
   }
 
@@ -722,10 +722,10 @@ class _AdminEditEventState extends State<AdminEditEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
-    String fileName = basename(_image.path);
+    String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
     uploadTask.whenComplete(() {
       print("uploaded");

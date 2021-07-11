@@ -16,7 +16,7 @@ class EditEventScreen extends StatefulWidget {
       eventAmount,
       eventDescription,
       eventName,
-      // eventImageUrl,
+      eventImageUrl,
       eventVenue;
   String eventType;
   DateTime eventDate, eventDeadline;
@@ -28,7 +28,7 @@ class EditEventScreen extends StatefulWidget {
     required this.eventAmount,
     required this.eventDescription,
     required this.eventName,
-    // required this.eventImageUrl,
+    required this.eventImageUrl,
     required this.eventVenue,
     required this.eventType,
     required this.eventDate,
@@ -168,19 +168,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
     }
   }
 
-  TimeOfDay? time;
-
-  String getText() {
-    if (time == null) {
-      return 'Select Time';
-    } else {
-      final hours = time!.hour.toString().padLeft(2, '0');
-      final minutes = time!.minute.toString().padLeft(2, '0');
-
-      return '$hours:$minutes';
-    }
-  }
-
   Future<bool?> _onBackPressed() async {
     return showDialog(
         context: context,
@@ -235,7 +222,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     eventAmount = widget.eventAmount;
     eventDescription = widget.eventDescription;
     eventVenue = widget.eventVenue;
-    // eventImageUrl = widget.eventImageUrl;
+    eventImageUrl = widget.eventImageUrl;
     eventDate = widget.eventDate;
     eventTime = widget.eventTime;
     eventType = widget.eventType;
