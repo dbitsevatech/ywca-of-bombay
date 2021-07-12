@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
 import '../../../widgets/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -68,10 +67,10 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     ];
 
-    // event date
+    // event date conversion to string for displaying
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
 
-// event deadline
+    // event deadline conversion to string for displaying
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
@@ -91,89 +90,49 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     }
 
     return Scaffold(
-      // TODO: Add YWCA title
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "YWCA Of Bombay",
+          style: TextStyle(
+            fontFamily: 'LobsterTwo',
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Colors.black87,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
+            tooltip: 'Comment Icon',
+            onPressed: () {},
+          ), //IconButton
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => {
+            goBackToPreviousScreen(context),
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.04),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //do something
-                        goBackToPreviousScreen(context);
-                      },
-                    ),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.85),
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {},
-                    ),
-
-                    // Members only button
-                    if (eventType == 'Everyone')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.3),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "Everyone",
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (eventType == 'Members')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.195),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "⭐ Members only",
-                                style: TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.15),
-                        ),
-                      ),
-                    ),
-                  ],
+                AdminDetailPageBlueBubbleDesign(),
+                SizedBox(
+                  height: _height * 0.015,
                 ),
                 // Carousel
                 CarouselSlider(
@@ -307,6 +266,15 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                         // Time
                         Text(
                           'Event Time -' + eventTime,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: _height * 0.015),
+                        // Type
+                        Text(
+                          'Event Type -' + eventType,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,

@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import 'user_event_details.dart';
-
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../models/User.dart';
@@ -21,10 +19,18 @@ class Events extends StatefulWidget {
 class _EventsState extends State<Events> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+  // Firebase auth for couting the onClick and Onregister count of event
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
 
-  // onClick for counting clicks
+  // conversion of event date for displaying
+  String readEventDate(Timestamp eventDate) {
+    DateTime newEventDate = eventDate.toDate();
+    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
+    return formattedEventDate;
+  }
+
+  // onClick for counting number of clicks by the user
   void insertIntoOnClick(String eventID, String eventName) async {
     final User? user = auth.currentUser;
     final userID = user?.uid;
@@ -46,20 +52,6 @@ class _EventsState extends State<Events> {
       }
     });
   }
-
-  // conversion of event date
-  String readEventDate(Timestamp eventDate) {
-    DateTime newEventDate = eventDate.toDate();
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
-    return formattedEventDate;
-  }
-
-  // conversion of event time
-  // String readEventTime(Timestamp eventTime) {
-  //   DateTime newEventTime = eventTime.toDate();
-  //   String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
-  //   return formattedEventTime;
-  // }
 
   @override
   void initState() {
@@ -216,11 +208,13 @@ class _EventsState extends State<Events> {
                     ),
                     child: Card(
                       child: ListTile(
+                        // Event Image
                         leading: Image.network(
                           document['eventImageUrl'],
                           fit: BoxFit.cover,
                           width: 120.0,
                         ),
+                        // Event date and time
                         title: Text(
                           'Date:' +
                               (readEventDate(document['eventDate'])) +
@@ -237,6 +231,7 @@ class _EventsState extends State<Events> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(height: 5),
+                            // Event name
                             Text(
                               document['eventName'],
                               style: TextStyle(
@@ -246,14 +241,16 @@ class _EventsState extends State<Events> {
                               ),
                             ),
                             SizedBox(height: 5),
+                            // Event Resource Person
                             Text(
-                              'Resource Person: ' + document['eventName'],
+                              'Resource Person: Sharon Pies',
                               style: TextStyle(
                                 fontSize: 11.0,
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
                             SizedBox(height: 5),
+                            // Event Venue
                             Text(
                               'Venue: ' + document['eventVenue'],
                               style: TextStyle(
@@ -262,6 +259,7 @@ class _EventsState extends State<Events> {
                               ),
                             ),
                             SizedBox(height: 5),
+                            // Event Amount
                             Text(
                               'Amount: ' + document['eventAmount'],
                               style: TextStyle(
@@ -272,8 +270,12 @@ class _EventsState extends State<Events> {
                           ],
                         ),
                         onTap: () {
-                          print('ontap');
+                          // when clicked on the event, the user id is saved
+                          // and if the user clicks again it is checked with the db
+                          // if it already exists it is not inserted again for the same event
                           insertIntoOnClick(document.id, document['eventName']);
+
+                          // opening detail page for particular event
                           gotoDetailEvent(
                             context,
                             document.id,
@@ -311,11 +313,12 @@ class _EventsState extends State<Events> {
       Timestamp eventDate,
       Timestamp eventDeadline,
       String eventTime) {
-    // event date
+    // TimeStamp to DateTime conversion of event date for displaying
     DateTime newEventDate = eventDate.toDate();
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-// // event deadline
+
+    // TimeStamp to DateTime conversion of event deadline for displaying
     DateTime newEventDeadline = eventDeadline.toDate();
+
     String memberRole = 'null';
     Navigator.push(
       context,

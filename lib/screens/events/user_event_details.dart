@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'user_events.dart';
 import '../about_us/become_member.dart';
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -46,10 +46,12 @@ class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
   String? memberRole;
-
   int _currentIndex = 0;
 
-  // onRegister for counting registration
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // form key for validationGetText
+
+  // onRegister for counting registration by the user
   void insertIntoOnRegistration(String eventID, String eventName) async {
     final User? user = auth.currentUser;
     final userID = user?.uid;
@@ -74,9 +76,6 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationGetText
-
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -89,10 +88,14 @@ class _DetailPageState extends State<DetailPage> {
         eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
-
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
     String eventTime = widget.eventTime;
+    // event date
+    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
+    // event deadline
+    String formattedDeadlineDate =
+        DateFormat('dd-MM-yyyy').format(eventDeadline);
 
     // carousel images
     final List<String> imagesList = [
@@ -102,13 +105,6 @@ class _DetailPageState extends State<DetailPage> {
       'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     ];
-
-    // event date
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
-
-    // event deadline
-    String formattedDeadlineDate =
-        DateFormat('dd-MM-yyyy').format(eventDeadline);
 
     @override
     void initState() {
@@ -143,11 +139,26 @@ class _DetailPageState extends State<DetailPage> {
                         Icons.arrow_back,
                         color: Colors.black,
                       ),
-                      onPressed: () {
+                      onPressed: () => {
                         //do something
-                        goBackToPreviousScreen(context);
+                        goBackToPreviousScreen(context),
                       },
                     ),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(_width * 0.3,
+                            _width * 0.03, _width * 0.1, _width * 0.1),
+                        // YWCA text
+                        child: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
+                          textAlign: TextAlign.center,
+                        )),
                     IconButton(
                       padding: EdgeInsets.only(left: _width * 0.85),
                       icon: Icon(
@@ -156,8 +167,7 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                       onPressed: () {},
                     ),
-                    // Members only button
-                    // Members only button
+                    // Event type displaying
                     if (eventType == 'Everyone')
                       Column(
                         children: <Widget>[
@@ -312,7 +322,7 @@ class _DetailPageState extends State<DetailPage> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        // Event title
+                        // Event Name
                         Text(
                           eventName,
                           style: TextStyle(
@@ -374,6 +384,15 @@ class _DetailPageState extends State<DetailPage> {
                             fontSize: 16,
                           ),
                         ),
+                        SizedBox(height: _height * 0.015),
+                        // event type
+                        Text(
+                          'Event Type: ' + eventType,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
@@ -426,7 +445,11 @@ class _DetailPageState extends State<DetailPage> {
 }
 
 goBackToPreviousScreen(BuildContext context) {
-  Navigator.pop(context);
+  // Navigator.pop(context);
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Events()),
+  );
 }
 
 goToBecomeMember(BuildContext context) {
