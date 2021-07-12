@@ -1,29 +1,26 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import '../../../widgets/blue_bubble_design.dart';
-import 'package:intl/intl.dart';
-import '../../../widgets/constants.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import 'admin_events.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import '../../../widgets/blue_bubble_design.dart';
+import '../../../widgets/constants.dart';
+import '../../../widgets/gradient_button.dart';
+import 'admin_edit_event_image.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
-class AdminEditEvent extends StatefulWidget {
+class EditEventScreen extends StatefulWidget {
   String id,
       eventAmount,
       eventDescription,
       eventName,
       eventImageUrl,
-      eventVenue,
-      eventType,
-      eventTime;
+      eventVenue;
+  String eventType;
   DateTime eventDate, eventDeadline;
+  String eventTime;
 
-  AdminEditEvent({
+  EditEventScreen({
     required this.id,
     required this.eventAmount,
     required this.eventDescription,
@@ -35,744 +32,753 @@ class AdminEditEvent extends StatefulWidget {
     required this.eventDeadline,
     required this.eventTime,
   });
-
   @override
-  _AdminEditEventState createState() => _AdminEditEventState();
+  _EditEventScreenState createState() => _EditEventScreenState();
 }
 
-class _AdminEditEventState extends State<AdminEditEvent> {
-  CollectionReference collectionUser =
-      FirebaseFirestore.instance.collection('events');
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _formkey = GlobalKey<FormState>();
+class _EditEventScreenState extends State<EditEventScreen> {
+  String id = '';
+  String eventAmount = '';
+  String eventDescription = '';
+  String eventName = '';
+  String eventImageUrl = '';
+  String eventVenue = '';
+  String eventType = "Everyone";
+  late DateTime eventDate, eventDeadline;
+  String eventTime = '';
 
-  DateTime selectedDate = DateTime.now();
+  // Variables for TimePicker
+  String _valueChanged4 = '';
+  String _valueToValidate4 = '';
+  String _valueSaved4 = '';
+  late TextEditingController _controller4;
+  TextEditingController timeController = TextEditingController();
+
+  // Variables for Date of event and Deadline
+  DateTime selectedDateOfEvent = DateTime.now();
   TextEditingController dateController = TextEditingController();
+
+  DateTime selectedDateOfDeadline = DateTime.now();
   TextEditingController deadlineController = TextEditingController();
 
-  String member = "Everyone";
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // form key for validation
 
-  // choosing the image
-  File? _image;
+  final GlobalKey<ScaffoldState> _scaffoldkey =
+      GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
-  Future<void> captureImage(ImageSource imageSource) async {
-    try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.getImage(
-        source: ImageSource.gallery,
-        maxHeight: 300,
-        maxWidth: 300,
-      );
+  Future<void> _getValue() async {
+    await Future.delayed(const Duration(seconds: 3), () {
       setState(() {
-        if (pickedFile != null) {
-          _image = File(pickedFile.path);
-        } else {
-          print('No image selected.');
-        }
+        //_initialValue = '2000-10-22 14:30';
+        _controller4.text = '17:01';
       });
-    } catch (e) {
-      print(e);
-    }
-  }
-
- // displaying image
-  Widget _buildImage() {
-    // ignore: unnecessary_null_comparison
-    if (_image != null) {
-      return Image.file(_image!);
-    } else {
-      return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
-    }
-  }
-
-  late TimeOfDay time;
-
-  String getText() {
-    // ignore: unnecessary_null_comparison
-    if (time == null) {
-      return 'Select Time';
-    } else {
-      final hours = time.hour.toString().padLeft(2, '0');
-      final minutes = time.minute.toString().padLeft(2, '0');
-
-      return '$hours:$minutes';
-    }
-  }
-
-  // everyone-0, members-1
-  int? _memberRadioValue = 0;
-  void _handleEventRadioValueChange(int? value) {
-    setState(() {
-      _memberRadioValue = value;
-      if (_memberRadioValue == 0) {
-        member = "Everyone";
-      } else {
-        member = "Members only";
-      }
-      print("Event is for: $member");
     });
   }
 
+  // everyone-0, members only-1
+  int? _eventTypeRadioValue = 0;
+  void _handleEventTypeRadioValueChange(int? value) {
+    setState(() {
+      _eventTypeRadioValue = value;
+      if (_eventTypeRadioValue == 0) {
+        eventType = "Everyone";
+      } else {
+        eventType = "Members only";
+      }
+      print("eventType selected: $eventType");
+    });
+  }
+
+  Future _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: eventDate,
+      firstDate: DateTime(1940),
+      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      helpText: 'Select Date of Birth',
+      fieldLabelText: 'Enter date of birth',
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor, // highlighed date color
+              onPrimary: Colors.black, // highlighted date text color
+              surface: primaryColor, // header color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
+            ),
+            dialogBackgroundColor: Colors.white, // calendar bg color
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: secondaryColor, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != eventDate) {
+      setState(() {
+        eventDate = picked;
+        // print(picked);
+        print(eventDate);
+      });
+    }
+  }
+
+  Future _selectDeadline() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: eventDeadline,
+      firstDate: DateTime(1940),
+      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      helpText: 'Select Date of Birth',
+      fieldLabelText: 'Enter date of birth',
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor, // highlighed date color
+              onPrimary: Colors.black, // highlighted date text color
+              surface: primaryColor, // header color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
+            ),
+            dialogBackgroundColor: Colors.white, // calendar bg color
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: secondaryColor, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != eventDeadline) {
+      setState(() {
+        eventDeadline = picked;
+        // print(picked);
+        print(eventDeadline);
+      });
+    }
+  }
+
+  Future<bool?> _onBackPressed() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Do you want to exit without saving changes?'),
+            content:
+                Text('Please press the SAVE button at the bottom of the page'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('NO'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              TextButton(
+                child: Text('YES'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<bool?> savePressed() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+              'Your request to change information has been successfully sent!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Continue'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    id = widget.id;
+    eventName = widget.eventName;
+    eventAmount = widget.eventAmount;
+    eventDescription = widget.eventDescription;
+    eventVenue = widget.eventVenue;
+    eventImageUrl = widget.eventImageUrl;
+    eventDate = widget.eventDate;
+    eventTime = widget.eventTime;
+    eventType = widget.eventType;
+    eventDeadline = widget.eventDeadline;
+    if (eventType == "Members only") {
+      _eventTypeRadioValue = 1;
+    } else if (eventType == "Everyone") {
+      _eventTypeRadioValue = 0;
+    }
+    dateController.text = DateFormat('dd-MM-yyyy').format(widget.eventDate);
+
+    deadlineController.text =
+        DateFormat('dd-MM-yyyy').format(widget.eventDeadline);
+
+    super.initState();
+  }
+
+  final int height = 1;
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    // fetching the values
-    String id = widget.id,
-        eventAmount = widget.eventAmount,
-        eventDescription = widget.eventDescription,
-        eventName = widget.eventName,
-        // eventImageUrl = widget.eventImageUrl,
-        eventVenue = widget.eventVenue,
-        eventType = widget.eventType;
-    DateTime eventDate = widget.eventDate;
-    DateTime eventDeadline = widget.eventDeadline;
-    String eventTime = widget.eventTime;
 
-    //Time
-    TextEditingController timeController = TextEditingController();
-
-    // dateTime variable
-    String newEventTime = eventTime.toString();
-    TimeOfDay timesEvent =
-        TimeOfDay.fromDateTime(DateTime.parse(newEventTime)); // 4:30pm
-    print('printing time');
-    print(timesEvent);
-
-    print("event date");
-    print(eventDate);
-    print('event deadline');
-    print(eventDeadline);
-
-    @override
-    void initState() {
-      super.initState();
-      id = widget.id;
-      eventName = widget.eventName;
-      eventAmount = widget.eventAmount;
-      eventDescription = widget.eventDescription;
-      eventVenue = widget.eventVenue;
-      // eventImageUrl = widget.eventImageUrl;
-      eventDate = widget.eventDate;
-      eventType = widget.eventType;
-      eventDeadline = widget.eventDeadline;
-      eventTime = widget.eventTime;
-    }
-
-    // date of event
-    DateTime dateOfEvent = eventDate;
-    Future _selectDate(context) async {
-      final DateTime? pickedEvent = await showDatePicker(
-        context: context,
-        initialDate: eventDate,
-        firstDate: DateTime(1940),
-        lastDate: DateTime.now().subtract(Duration(days: 4380)),
-        helpText: 'Select Date of Event',
-        fieldLabelText: 'Enter date of Event',
-        builder: (context, child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: primaryColor, // highlighed date color
-                onPrimary: Colors.black, // highlighted date text color
-                surface: primaryColor, // header color
-                onSurface:
-                    Colors.grey[800]!, // header text & calendar text color
-              ),
-              dialogBackgroundColor: Colors.white, // calendar bg color
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  primary: secondaryColor, // button text color
-                ),
-              ),
-            ),
-            child: child!,
-          );
-        },
-      );
-      if (pickedEvent != null && pickedEvent != dateOfEvent) {
-        setState(() {
-          dateOfEvent = pickedEvent;
-          print(dateOfEvent);
-        });
-      }
-    }
-
-    // Deadline of Event
-    DateTime deadlineOfEvent = eventDeadline;
-
-    Future _selectDeadline(context) async {
-      final DateTime? pickedDeadline = await showDatePicker(
-        context: context,
-        initialDate: eventDeadline,
-        firstDate: DateTime(1940),
-        lastDate: DateTime.now().subtract(Duration(days: 4380)),
-        helpText: 'Select Deadline of Event',
-        fieldLabelText: 'Enter Deadline of Event',
-        builder: (context, child) {
-          return Theme(
-            data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: primaryColor, // highlighed date color
-                onPrimary: Colors.black, // highlighted date text color
-                surface: primaryColor, // header color
-                onSurface:
-                    Colors.grey[800]!, // header text & calendar text color
-              ),
-              dialogBackgroundColor: Colors.white, // calendar bg color
-              textButtonTheme: TextButtonThemeData(
-                style: TextButton.styleFrom(
-                  primary: secondaryColor, // button text color
-                ),
-              ),
-            ),
-            child: child!,
-          );
-        },
-      );
-      if (pickedDeadline != null && pickedDeadline != deadlineOfEvent) {
-        setState(() {
-          deadlineOfEvent = pickedDeadline;
-          print(deadlineOfEvent);
-        });
-      }
-    }
-
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  // circle design
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //do something
-                        goBackToPreviousScreen(context);
-                      },
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.15),
-                          child: Text(
-                            'Edit Event',
+    return WillPopScope(
+      onWillPop: () async {
+        bool? result = await _onBackPressed();
+        if (result == null) {
+          result = false;
+        }
+        return result;
+      },
+      child: Scaffold(
+        key: _scaffoldkey,
+        // body:WillPopScope(
+        //   onWillPop: _onBackPressed,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // circle design and Title
+                  Stack(
+                    children: <Widget>[
+                      MainPageBlueBubbleDesign(),
+                      Positioned(
+                        child: AppBar(
+                          centerTitle: true,
+                          title: Text(
+                            "YWCA Of Bombay",
                             style: TextStyle(
-                              fontSize: 40,
-                              color: primaryColor,
+                              fontFamily: 'LobsterTwo',
+                              fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
+                              fontSize: 18.0,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          leading: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              _onBackPressed();
+                            },
+                            // onPressed: () => Navigator.of(context).pop(true),
+                            // onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: _height * 0.095),
+                            child: Text(
+                              'EDIT EVENT',
+                              style: TextStyle(
+                                fontSize: 35,
+                                // color: Color(0xff333333),
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RacingSansOne',
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(2.0, 3.0),
+                                    blurRadius: 3.0,
+                                    color: Color(0xff333333),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                // choose image
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.015,
+                    ],
                   ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        firstButtonGradientColor,
-                        firstButtonGradientColor,
-                        secondButtonGradientColor
-                      ],
-                      begin: FractionalOffset.centerLeft,
-                      end: FractionalOffset.centerRight,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  // Displaying event image
+                  Image.network(
+                    eventImageUrl,
+                    fit: BoxFit.cover,
+                    width: 120.0,
                   ),
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    child: TextButton(
-                      child: Text(
-                        'Choose File',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  SizedBox(height: 20),
+                  // choose image
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: _height * 0.015,
+                    ),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          firstButtonGradientColor,
+                          firstButtonGradientColor,
+                          secondButtonGradientColor
+                        ],
+                        begin: FractionalOffset.centerLeft,
+                        end: FractionalOffset.centerRight,
                       ),
-                      onPressed: () => captureImage(ImageSource.gallery),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: _height * 0.015,
-                ),
-                // Old image
-                Text(
-                  'Old Image',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'RacingSansOne',
-                  ),
-                ),
-                // Image.network(
-                //   eventImageUrl,
-                //   fit: BoxFit.cover,
-                //   width: 120.0,
-                // ),
-                // selected image
-                Text(
-                  'New Image',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'RacingSansOne',
-                  ),
-                ),
-                Center(child: _buildImage()),
-                SizedBox(
-                  height: _height * 0.015,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.01,
-                    horizontal: _width * 0.04,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        // Event title
-                        TextFormField(
-                          initialValue: eventName,
-                          onChanged: (value) {
-                            eventName = value;
-                          },
-                          validator: (String? value) {
-                            if (value == null)
-                              return 'Event name is required';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Event title',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Description
-                        TextFormField(
-                          initialValue: eventDescription,
-                          onChanged: (value) {
-                            eventDescription = value;
-                          },
-                          validator: (String? value) {
-                            if (value == null)
-                              return 'Event description is required';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Event description',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Venue
-                        TextFormField(
-                          initialValue: eventVenue,
-                          onChanged: (value) {
-                            eventVenue = value;
-                          },
-                          validator: (String? value) {
-                            if (value == null)
-                              return 'Event venue is required';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Event venue',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Amount
-                        TextFormField(
-                          initialValue: eventAmount,
-                          onChanged: (value) {
-                            eventAmount = value;
-                          },
-                          validator: (String? value) {
-                            if (value == null)
-                              return 'Event amount is required';
-                            else
-                              return null;
-                          },
-                          decoration: InputDecoration(
-                            labelText: 'Event amount',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            disabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        TextFormField(
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          controller: dateController,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.date_range,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Date of Event',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
+                    child: FractionallySizedBox(
+                      widthFactor: 1,
+                      child: TextButton(
+                          child: Text(
+                            'Edit Image',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Montserrat',
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          onTap: () async {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDate(context);
-                            dateController.text =
-                                "${DateFormat('dd-MM-yyyy').format(dateOfEvent.toLocal())}"
-                                    .split(' ')[0];
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        //Time
-                        TextFormField(
-                          controller: timeController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.timer,
-                              color: secondaryColor,
-                            ),
-                            labelText: getText(),
-                          ),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          onTap: () async {
-                            final initialTime = TimeOfDay(hour: 9, minute: 0);
-                            final newTime = await showTimePicker(
+                          onPressed: () async {
+                            // Edit event image alertbox
+                            bool? result = await showDialog(
                               context: context,
-                              initialTime: time,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Confirmation'),
+                                  content: Text(
+                                      'Are you sure you want to edit this image?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(
+                                          context,
+                                          rootNavigator: true,
+                                        ).pop(
+                                            false); // dismisses only the dialog and returns false
+                                      },
+                                      child: Text('No'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop(true);
+                                        goToEditEventImage(
+                                            context, id, eventImageUrl);
+                                      },
+                                      child: Text('Yes'),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-
-                            if (newTime == null) return;
-                            setState(() => time = newTime);
-                          },
-                          // onClicked: () => pickTime(context),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Deadline
-                        TextFormField(
-                          // keyboardType: TextInputType.datetime,
-                          onChanged: (value) {
-                            setState(() {
-                              // dateOfEvent = DateTime.parse(value);
-                              // dateOfEvent\ = value;
-                            });
-                          },
-                          controller: deadlineController,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.date_range,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Deadline of Event',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onTap: () async {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDeadline(context);
-                            deadlineController.text =
-                                "${DateFormat('dd-MM-yyyy').format(deadlineOfEvent.toLocal())}"
-                                    .split(' ')[0];
-                          },
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-
-                        // Event is for
-                        Text(
-                          'Event is for:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Radio(
-                              value: 0,
-                              groupValue: _memberRadioValue,
-                              onChanged: _handleEventRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _memberRadioValue = 0;
-                                  _handleEventRadioValueChange(
-                                      _memberRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Everyone',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Radio(
-                              value: 1,
-                              groupValue: _memberRadioValue,
-                              onChanged: _handleEventRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _memberRadioValue = 1;
-                                  _handleEventRadioValueChange(
-                                      _memberRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Members only',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        // end
-
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: _height * 0.015,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                firstButtonGradientColor,
-                                firstButtonGradientColor,
-                                secondButtonGradientColor
-                              ],
-                              begin: FractionalOffset.centerLeft,
-                              end: FractionalOffset.centerRight,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: FractionallySizedBox(
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Upload',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () async {
-                                if (!_formKey.currentState!.validate()) {
-                                  return;
-                                }
-                                print("title");
-                                print(eventName);
-                                updateData(
-                                    context,
-                                    id,
-                                    eventName,
-                                    eventDescription,
-                                    eventVenue,
-                                    eventAmount,
-                                    dateOfEvent,
-                                    deadlineOfEvent,
-                                    time,
-                                    member);
-                                gotoLastScreen(context);
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                          }),
                     ),
                   ),
-                ),
-              ],
+                  // Form
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: _height * 0.02,
+                      horizontal: _width * 0.04,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          // Event Name
+                          TextFormField(
+                            initialValue: eventName,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                eventName = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null)
+                                return 'Event name is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              // prefixIcon: Icon(
+                              //   Icons.account_circle,
+                              //   color: secondaryColor,
+                              // ),
+                              labelText: 'Event Name',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          // Event Description
+                          TextFormField(
+                            initialValue: eventDescription,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                eventDescription = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null)
+                                return 'Event Description is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Event Description',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          // Event Venue
+                          TextFormField(
+                            initialValue: eventVenue,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                eventVenue = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null)
+                                return 'Event Venue is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Event Venue',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          // Event Amount
+                          TextFormField(
+                            initialValue: eventAmount,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                eventAmount = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value == null)
+                                return 'Event Amount is required.';
+                              else
+                                return null;
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'Event Amount',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          // Date of event
+                          TextFormField(
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            controller: dateController,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.date_range,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Date of Event',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              await _selectDate();
+                              dateController.text =
+                                  "${eventDate.toLocal()}".split(' ')[0];
+                            },
+                          ),
+                          DateTimePicker(
+                            type: DateTimePickerType.time,
+                            timePickerEntryModeInput: true,
+                            // controller: _controller4,
+                            initialValue: eventTime, //_initialValue,
+                            icon: Icon(Icons.access_time),
+                            timeLabelText: "Select Time",
+                            use24HourFormat: true,
+                            locale: Locale('pt', 'BR'),
+                            onChanged: (val) =>
+                                setState(() => _valueChanged4 = val),
+                            validator: (val) {
+                              setState(() => _valueToValidate4 = val ?? '');
+                              return null;
+                            },
+                            onSaved: (val) =>
+                                setState(() => _valueSaved4 = val ?? ''),
+                          ),
+
+                          SizedBox(height: _height * 0.015),
+                          // Deadline to register
+                          TextFormField(
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            controller: deadlineController,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.date_range,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Deadline to register',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              await _selectDeadline();
+                              deadlineController.text =
+                                  "${eventDeadline.toLocal()}".split(' ')[0];
+                            },
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          // Event Type
+                          Text(
+                            'Event Type',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Radio(
+                                value: 0,
+                                groupValue: _eventTypeRadioValue,
+                                onChanged: _handleEventTypeRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _eventTypeRadioValue = 0;
+                                    _handleEventTypeRadioValueChange(
+                                        _eventTypeRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Everyone',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                value: 1,
+                                groupValue: _eventTypeRadioValue,
+                                onChanged: _handleEventTypeRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _eventTypeRadioValue = 1;
+                                    _handleEventTypeRadioValueChange(
+                                        _eventTypeRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Members only',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // Update event button
+                          GradientButton(
+                            buttonText: 'Update Event',
+                            screenHeight: _height,
+                            onPressedFunction: () async {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState!.save();
+                              bool? result = await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Confirmation'),
+                                    content: Text(
+                                        'Are you sure you want to save the changes?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(
+                                            context,
+                                            rootNavigator: true,
+                                          ).pop(
+                                              false); // dismisses only the dialog and returns false
+                                        },
+                                        child: Text('No'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop(true);
+                                          // updating the event after changes if yes pressed
+                                          print("Updating record on firestore");
+                                          FirebaseFirestore.instance
+                                              .collection('events')
+                                              .doc(id)
+                                              .update({
+                                            'eventName': eventName,
+                                            'eventDescription':
+                                                eventDescription,
+                                            'eventVenue': eventVenue,
+                                            'eventAmount': eventAmount,
+                                            'eventDate': eventDate,
+                                            'eventTime': _valueChanged4,
+                                            'eventDeadline': eventDeadline,
+                                            'eventType': eventType
+                                          });
+                                          print("updated on firestore");
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('Yes'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
-  // Updating to firebase
-  Future updateData(
-      BuildContext context,
-      id,
-      eventName,
-      eventDescription,
-      eventVenue,
-      eventAmount,
-      eventDate,
-      eventDeadline,
-      eventTime,
-      eventType) async {
-    String fileName = basename(_image!.path);
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
-
-    uploadTask.whenComplete(() {
-      print("uploaded");
-    });
-    // reference to the firestore of the image
-    var imageUrl = await (await uploadTask).ref.getDownloadURL();
-    var url = imageUrl.toString();
-    print("Image URL=" + url);
-
-    print('event_name');
-    print(eventName);
-    print('event time');
-    print(eventDate);
-    print('event deadline');
-    print(eventDeadline);
-    TimeOfDay selectedTime = eventTime;
-    final now = DateTime.now();
-    DateTime newTime = DateTime(
-        now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
-
-    print("Updating record on firestore");
-    FirebaseFirestore.instance.collection('events').doc(id).update({
-      'eventName': eventName,
-      'eventDescription': eventDescription,
-      'eventVenue': eventVenue,
-      'eventAmount': eventAmount,
-      'eventDate': eventDate,
-      'eventImageUrl': url,
-      'eventTime': newTime,
-      'eventDeadline': eventDeadline,
-      'eventType': eventType
-    });
-    print("updated on firestore");
-
-    //   this.setState(() {
-    //     Navigator.pop(context);
-    //   });
-  }
 }
 
-gotoLastScreen(BuildContext context) {
+goToEditEventImage(BuildContext context, String id, String eventImageUrl) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => AdminEvents()),
+    MaterialPageRoute(
+        builder: (context) => AdminEditEventImage(
+              id: id,
+              eventImageUrl: eventImageUrl,
+            )),
   );
-}
-
-goBackToPreviousScreen(BuildContext context) {
-  Navigator.pop(context);
 }
