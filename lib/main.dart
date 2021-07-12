@@ -34,13 +34,13 @@ void main() async {
           '/register': (BuildContext context) => RegisterScreen(),
           '/login': (BuildContext context) => LoginScreen(),
           "/events": (context) => Events(),
-          "/admin": (context) => AdminEvents(),
+          "/admin_events": (context) => AdminEvents(),
           "/initiatives": (context) => Initiatives(),
           "/success_stories": (context) => SuccessStories(),
           "/about_us": (context) => AboutUs(),
           "/contact_us": (context) => ContactUs(),
           "/analytics": (context) => AnalyticsScreen(),
-          "/Approval": (context) => ApprovalScreen(),
+          "/approval": (context) => ApprovalScreen(),
         },
       ),
     ),
@@ -64,8 +64,8 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
-    // return Events();
-    return LoginScreen();
+    return Events();
+    // return LoginScreen();
     // return AdminEvents();
     // return HomeController();
   }
