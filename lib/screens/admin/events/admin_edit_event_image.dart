@@ -23,14 +23,11 @@ class AdminEditEventImage extends StatefulWidget {
 }
 
 class _AdminEditEventImageState extends State<AdminEditEventImage> {
-  CollectionReference collectionUser =
-      FirebaseFirestore.instance.collection('events');
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _formkey = GlobalKey<FormState>();
 
-  // choosing the image
+  // image path variable
   File? _image;
-
+  // display the select iamge
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
@@ -51,7 +48,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     }
   }
 
- // displaying image
+  // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
@@ -132,7 +129,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                   fit: BoxFit.cover,
                   width: 120.0,
                 ),
-                // selected image
+                // selected new image
                 Text(
                   'New Image',
                   style: TextStyle(
@@ -222,6 +219,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
+                                // alertbox for saving the new/changed image
                                 bool result = await showDialog(
                                   context: context,
                                   builder: (context) {
@@ -255,12 +253,6 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                     );
                                   },
                                 );
-                                // print("title");
-                                // updateData(
-                                //     context,
-                                //     id);
-                                // Navigator.pop(context);
-                                // Navigator.pop(context);
                               },
                             ),
                           ),

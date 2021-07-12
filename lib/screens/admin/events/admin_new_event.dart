@@ -25,11 +25,19 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventAmount,
       eventImageUrl;
   String eventType = "Everyone";
+  // Time picker variables
   String _valueChanged4 = '';
   String _valueToValidate4 = '';
   String _valueSaved4 = '';
+  // image path variable
+  File? _image;
 
+  DateTime selectedDate = DateTime.now();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController deadlineController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
   late TextEditingController _controller4;
+
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
 
@@ -41,14 +49,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       });
     });
   }
-
-  // choose the image
-  File? _image;
-
-  DateTime selectedDate = DateTime.now();
-  TextEditingController dateController = TextEditingController();
-  TextEditingController deadlineController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
 
   DateTime eventDate = DateTime.now().subtract(Duration(days: 4380));
   Future _selectDate(context) async {
@@ -128,7 +128,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     }
   }
 
-  // // Image
+  // Image
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
@@ -146,7 +146,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     }
   }
 
- // displaying image
+  // displaying image
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
@@ -172,22 +172,11 @@ class _AdminNewEventState extends State<AdminNewEvent> {
         FirebaseStorage.instance.ref().child(fileName);
     UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
-    uploadTask.whenComplete(() {
-      // print("uploaded");
-    });
+    uploadTask.whenComplete(() {});
     // reference to the firestore of the image
     var imageUrl = await (await uploadTask).ref.getDownloadURL();
     var url = imageUrl.toString();
     print("Image URL=" + url);
-
-    // print("Creating record on firestore");
-    // print("time");
-    // print(eventTime);
-
-    // TimeOfDay selectedTime = eventTime;
-    // final now = DateTime.now();
-    // DateTime newTime = DateTime(
-    //     now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
 
     final document = FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
@@ -195,7 +184,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventVenue': eventVenue,
       'eventAmount': eventAmount,
       'eventDate': eventDate,
-      'eventImageUrl' : url,
+      'eventImageUrl': url,
       'eventDeadline': eventDeadline,
       'eventTime': eventTime,
       'eventType': eventType
@@ -226,11 +215,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     });
   }
 
-  // @override
-  // void initState() {
-
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -249,20 +233,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventType = "Everyone";
     });
     // super.initState();
-  }
-
-  // Time picker
-  TimeOfDay? eventTime;
-
-  String getText() {
-    if (eventTime == null) {
-      return 'Select Time';
-    } else {
-      final hours = eventTime!.hour.toString().padLeft(2, '0');
-      final minutes = eventTime!.minute.toString().padLeft(2, '0');
-
-      return '$hours:$minutes';
-    }
   }
 
   @override
@@ -340,8 +310,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () => 
-                      captureImage(ImageSource.gallery),
+                      onPressed: () => captureImage(ImageSource.gallery),
                     ),
                   ),
                 ),
@@ -541,37 +510,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           onSaved: (val) =>
                               setState(() => _valueSaved4 = val ?? ''),
                         ),
-
-                        // Time
-                        // TextFormField(
-                        //   controller: timeController,
-                        //   onChanged: (value) {
-                        //     setState(() {});
-                        //   },
-                        //   decoration: InputDecoration(
-                        //     prefixIcon: Icon(
-                        //       Icons.timer,
-                        //       color: secondaryColor,
-                        //     ),
-                        //     labelText: getText(),
-                        //   ),
-                        //   style: TextStyle(
-                        //     fontFamily: 'Montserrat',
-                        //     fontSize: 16,
-                        //   ),
-                        //   onTap: () async {
-                        //     // pickTime(context);
-                        //     final initialTime = TimeOfDay(hour: 9, minute: 0);
-                        //     final newTime = await showTimePicker(
-                        //       context: context,
-                        //       initialTime: eventTime ?? initialTime,
-                        //     );
-
-                        //     if (newTime == null) return;
-                        //     setState(() => eventTime = newTime);
-                        //   },
-                        // ),
-
                         SizedBox(height: _height * 0.015),
                         //Deadline of Event
                         TextFormField(
@@ -613,7 +551,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           },
                         ),
                         SizedBox(height: _height * 0.015),
-
                         // Event is for
                         Text(
                           'Event is for:',

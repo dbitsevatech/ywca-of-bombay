@@ -35,6 +35,17 @@ class DetailPageBlueBubbleDesign extends StatelessWidget {
   }
 }
 
+class AdminDetailPageBlueBubbleDesign extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: CustomPaint(
+        painter: AdminDetailPageBlueBubblePainter(),
+      ),
+    );
+  }
+}
+
 // Painter for MainPageBlueBubbleDesign Widget
 class MainPageBlueBubblePainter extends CustomPainter {
   @override
@@ -80,6 +91,23 @@ class DetailPageBlueBubblePainter extends CustomPainter {
     // main page circles
     canvas.drawCircle(Offset(-5, 30), 100, paint1); // top circle
     canvas.drawCircle(Offset(100, -40), 100, paint1); // left circle
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+// Painter for AdminDetailPageBlueBubbleDesign Widget
+class AdminDetailPageBlueBubblePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint1 = Paint()
+      ..color = primaryColor.withOpacity(0.5)
+      ..style = PaintingStyle.fill;
+
+    // main page circles
+    canvas.drawCircle(Offset(-180, -10), 100, paint1); // top circle
+    canvas.drawCircle(Offset(-100, -60), 100, paint1); // left circle
   }
 
   @override
