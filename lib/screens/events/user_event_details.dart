@@ -252,14 +252,10 @@ class _DetailPageState extends State<DetailPage> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
-                              child: Stack(
-                                children: <Widget>[
-                                  Image.network(
-                                    item,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                  ),
-                                ],
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
                               ),
                             ),
                           ),
