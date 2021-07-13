@@ -124,129 +124,104 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "YWCA Of Bombay",
+          style: TextStyle(
+            fontFamily: 'LobsterTwo',
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Colors.black87,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
+            tooltip: 'Comment Icon',
+            onPressed: () {},
+          ), //IconButton
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => {
+            goBackToPreviousScreen(context),
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.04),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                      onPressed: () => {
-                        //do something
-                        goBackToPreviousScreen(context),
-                      },
-                    ),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(_width * 0.3,
-                            _width * 0.03, _width * 0.1, _width * 0.1),
-                        // YWCA text
+                AdminDetailPageBlueBubbleDesign(),
+                // show it when the event is for everyone
+                if (eventType == 'Everyone')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
                         child: Text(
-                          "YWCA Of Bombay",
-                          style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,
-                          ),
-                          textAlign: TextAlign.center,
-                        )),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.85),
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {},
-                    ),
-                    // Event type displaying
-                    if (eventType == 'Everyone')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.3),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "Everyone",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (eventType == 'Members')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.195),
-                            child: RaisedButton(
-                              onPressed: () {
-                                goToBecomeMember(context);
-                              },
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "⭐ Members only",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (memberRole != 'Member')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.14, left: _height * 0.195),
-                            child: RaisedButton(
-                              onPressed: () {
-                                goToBecomeMember(context);
-                              },
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "Become a member",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.15),
+                          "Everyone",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                      )),
+                // show it when the event is for members only
+                if (eventType == 'Members')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          goToBecomeMember(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          "⭐ Members only",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
+                        ),
+                      )),
+                // show it when the event is for members and the user is not a member
+                // then become a member button is show
+                if (memberRole != 'Member')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          goToBecomeMember(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          "Become a member",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
+                        ),
+                      )),
                 // Carousel
                 CarouselSlider(
                   options: CarouselOptions(

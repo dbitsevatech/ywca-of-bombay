@@ -212,11 +212,15 @@ class _AdminEventsState extends State<AdminEvents> {
                   child: Card(
                     child: ListTile(
                       // Event image
-                      leading: Image.network(
-                        document['eventImageUrl'],
-                        fit: BoxFit.cover,
-                        width: 120.0,
-                      ),
+                      leading: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(10.0)), //add border radius here
+                          child: Image.network(
+                            document['eventImageUrl'],
+                            fit: BoxFit.cover,
+                            width: 120,
+                          ), //add image location here
+                        ),
                       // Event date and time
                       title: Text(
                         'Date:' +
