@@ -252,14 +252,10 @@ class _DetailPageState extends State<DetailPage> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
-                              child: Stack(
-                                children: <Widget>[
-                                  Image.network(
-                                    item,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                  ),
-                                ],
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
                               ),
                             ),
                           ),
@@ -274,8 +270,10 @@ class _DetailPageState extends State<DetailPage> {
                     return Container(
                       width: 10.0,
                       height: 10.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 2.0,
+                      ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentIndex == index
