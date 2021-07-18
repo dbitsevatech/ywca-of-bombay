@@ -62,7 +62,7 @@ class AuthService {
 
 // show dialog for logout press
 // Future<bool> _onLogoutPressed(BuildContext context, UserData userInfo) {
-_onLogoutPressed(context, userInfo) {
+onLogoutPressed(context, userInfo) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {

@@ -1,8 +1,9 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/constants.dart';
 import '../screens/view_profile.dart';
+import '../../../services/auth_service.dart';
+import '../widgets/constants.dart';
 
 List<MenuItem> items = [
   MenuItem<int>(
@@ -149,17 +150,16 @@ Widget header(BuildContext context, var userInfo) {
   );
 }
 
-Widget footer(BuildContext context, DrawerScaffoldController controller) {
+Widget footer(
+    BuildContext context, DrawerScaffoldController controller, var userInfo) {
   return Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,
     ),
     child: InkWell(
       onTap: () async => {
-        // TODO: log out function
-        // temporary. remove after implementing logout
-        controller.toggle(),
-        // _onLogoutPressed(context, userInfo),
+        // controller.toggle(),
+        onLogoutPressed(context, userInfo),
       },
       child: Container(
         padding: EdgeInsets.only(
