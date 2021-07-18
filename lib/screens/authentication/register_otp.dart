@@ -7,7 +7,6 @@ import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
 
 class RegisterOtp extends StatefulWidget {

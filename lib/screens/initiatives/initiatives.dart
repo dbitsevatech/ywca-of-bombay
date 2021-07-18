@@ -39,7 +39,7 @@ class _InitiativesState extends State<Initiatives> {
         SideDrawer(
           percentage: 0.75, // main screen height proportion
           headerView: header(context, userInfo),
-          footerView: footer(context, controller),
+          footerView: footer(context, controller, userInfo),
           color: successStoriesCardBgColor,
           selectorColor: Colors.red,
           menu: menuWithIcon,

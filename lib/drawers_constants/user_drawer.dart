@@ -133,7 +133,7 @@ Widget header(BuildContext context, var userInfo) {
   );
 }
 
-Widget footer(BuildContext context, DrawerScaffoldController controller) {
+Widget footer(BuildContext context, DrawerScaffoldController controller, var userInfo) {
   return Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,
