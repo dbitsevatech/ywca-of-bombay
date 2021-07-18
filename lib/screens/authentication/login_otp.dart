@@ -4,8 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+
+
 import '../../models/User.dart';
 import '../../screens/events/user_events.dart';
+
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
@@ -33,13 +37,13 @@ class _LoginOtpState extends State<LoginOtp>
   String otp = "";
   // Variables
   Size? _screenSize;
-  int? _currentDigit;
-  int? _firstDigit;
-  int? _secondDigit;
-  int? _thirdDigit;
-  int? _fourthDigit;
-  int? _fifthDigit;
-  int? _sixthDigit;
+  int _currentDigit = -1;
+  int _firstDigit = -1;
+  int _secondDigit = -1;
+  int _thirdDigit = -1;
+  int _fourthDigit = -1;
+  int _fifthDigit = -1;
+  int _sixthDigit = -1;
 
   Timer? timer;
   int? totalTimeInSeconds;
@@ -141,12 +145,12 @@ class _LoginOtpState extends State<LoginOtp>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _otpTextField(_firstDigit!),
-        _otpTextField(_secondDigit!),
-        _otpTextField(_thirdDigit!),
-        _otpTextField(_fourthDigit!),
-        _otpTextField(_fifthDigit!),
-        _otpTextField(_sixthDigit!),
+        _otpTextField(_firstDigit),
+        _otpTextField(_secondDigit),
+        _otpTextField(_thirdDigit),
+        _otpTextField(_fourthDigit),
+        _otpTextField(_fifthDigit),
+        _otpTextField(_sixthDigit),
       ],
     );
   }
@@ -393,18 +397,18 @@ class _LoginOtpState extends State<LoginOtp>
                       ),
                       onPressed: () {
                         setState(() {
-                          if (_sixthDigit != null) {
-                            _sixthDigit = null;
-                          } else if (_fifthDigit != null) {
-                            _fifthDigit = null;
-                          } else if (_fourthDigit != null) {
-                            _fourthDigit = null;
-                          } else if (_thirdDigit != null) {
-                            _thirdDigit = null;
-                          } else if (_secondDigit != null) {
-                            _secondDigit = null;
-                          } else if (_firstDigit != null) {
-                            _firstDigit = null;
+                          if (_sixthDigit > 0) {
+                            _sixthDigit = -1;
+                          } else if (_fifthDigit > 0) {
+                            _fifthDigit = -1;
+                          } else if (_fourthDigit > 0) {
+                            _fourthDigit = -1;
+                          } else if (_thirdDigit > 0) {
+                            _thirdDigit = -1;
+                          } else if (_secondDigit > 0) {
+                            _secondDigit = -1;
+                          } else if (_firstDigit > 0) {
+                            _firstDigit = -1;
                           }
                         });
                       }),
@@ -468,7 +472,7 @@ class _LoginOtpState extends State<LoginOtp>
       alignment: Alignment.center,
       child: Text(
         // ignore: unnecessary_null_comparison
-        digit != null ? digit.toString() : "",
+        digit != -1 ? digit.toString() : "",
         // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
@@ -536,17 +540,17 @@ class _LoginOtpState extends State<LoginOtp>
   void _setCurrentDigit(int i) {
     setState(() {
       _currentDigit = i;
-      if (_firstDigit == null) {
+      if (_firstDigit == -1) {
         _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
+      } else if (_secondDigit == -1) {
         _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
+      } else if (_thirdDigit == -1) {
         _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
+      } else if (_fourthDigit == -1) {
         _fourthDigit = _currentDigit;
-      } else if (_fifthDigit == null) {
+      } else if (_fifthDigit == -1) {
         _fifthDigit = _currentDigit;
-      } else if (_sixthDigit == null) {
+      } else if (_sixthDigit == -1) {
         _sixthDigit = _currentDigit;
 
         otp = _firstDigit.toString() +
@@ -571,12 +575,12 @@ class _LoginOtpState extends State<LoginOtp>
   }
 
   void clearOtp() {
-    _sixthDigit = null;
-    _fifthDigit = null;
-    _fourthDigit = null;
-    _thirdDigit = null;
-    _secondDigit = null;
-    _firstDigit = null;
+    _sixthDigit = -1;
+    _fifthDigit = -1;
+    _fourthDigit = -1;
+    _thirdDigit = -1;
+    _secondDigit = -1;
+    _firstDigit = -1;
     setState(() {});
   }
 }

@@ -91,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
           userdata['nearestCenter'],
           userdata['interestInMembership'],
           userdata['memberRole']);
-
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -261,6 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
+
                             _formKey.currentState!.save();
                             _onLoginButtonPressed(context, phoneNumber);
                           },
