@@ -3,13 +3,16 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ywcaofbombay/screens/events/user_events.dart';
 
+
+
+
+import '../../models/User.dart';
+import '../../screens/events/user_events.dart';
 
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
-import '../../models/User.dart';
 
 class LoginOtp extends StatefulWidget {
   final String phoneNumber;

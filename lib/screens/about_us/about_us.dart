@@ -1,7 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
-// import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,16 +20,25 @@ class AboutUs extends StatefulWidget {
 }
 
 class _AboutUsState extends State<AboutUs> {
-  final imageList = [
+  final imagePathList = [
     'assets/images/about_us/Ywca_spotlight_1.jpg',
     'assets/images/about_us/Ywca_spotlight_2.jpg',
     'assets/images/about_us/Ywca_spotlight_3.jpg',
     'assets/images/about_us/Ywca_spotlight_4.jpg',
     'assets/images/about_us/Ywca_spotlight_5.jpg',
   ];
+  final imageTitleList = [
+    'Empowering Women',
+    'Empowering through Vocations',
+    'Empowering through Education',
+    'Empowering the Underprivileged',
+    'Empowering the Forgotten',
+  ];
 
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+
+  int _currentIndex = 0;
 
   var userInfo;
 
@@ -126,47 +135,86 @@ class _AboutUsState extends State<AboutUs> {
                                 ],
                               ),
                             ),
-                            Container(
-                              height: 200,
-                              child: SizedBox(
-                                height: 80,
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                // height of whole carousel - including image and text
+                                // height: 290,
+                                height: _height * 0.28,
+                                autoPlay: true,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _currentIndex = index;
+                                  });
+                                },
                               ),
-                              // TODO: Replace with null safe carousel
-                              // child: Swiper(
-                              //   autoplay: false,
-                              //   itemCount: 5,
-                              //   itemBuilder: (BuildContext context, int index) {
-                              //     return Column(
-                              //       // To centralize the children.
-                              //       mainAxisAlignment: MainAxisAlignment.center,
-                              //       crossAxisAlignment: CrossAxisAlignment.center,
-                              //       children: <Widget>[
-                              //         ClipRRect(
-                              //           borderRadius: BorderRadius.circular(10),
-                              //           child: Image(
-                              //             image: AssetImage(imageList[index]),
-                              //             fit: BoxFit.contain,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     );
-                              //   },
-                              //   viewportFraction: 0.87,
-                              //   scale: 0.9,
-                              //   pagination: SwiperPagination(
-                              //     //changing the color of the pagination dots and that of
-                              //     //the active dot
-                              //     builder: DotSwiperPaginationBuilder(
-                              //       color: Colors.grey,
-                              //       activeColor: Color(0XFF80DEEA),
-                              //       //  DotsIndicator(
-                              //       // dotsCount: pageLength,
-                              //       // position: currentIndexPage,
-                              //       // dotsCount: pageLength,
-                              //       // decorator: DotsDecorator()
-                              //     ),
-                              //   ),
-                              // ),
+                              items: imagePathList.map((pathOfImage) {
+                                int index = imagePathList.indexOf(pathOfImage);
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Card(
+                                            margin: EdgeInsets.only(
+                                              top: 10.0,
+                                              bottom: 10.0,
+                                            ),
+                                            elevation: 6.0,
+                                            shadowColor: Colors.blueGrey,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                            ),
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(30.0),
+                                              ),
+                                              child: Image(
+                                                image: AssetImage(pathOfImage),
+                                                fit: BoxFit.cover,
+                                                width: double.infinity,
+                                                height: 160,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: _height * 0.01),
+                                        Text(
+                                          imageTitleList[index],
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: imagePathList.map((pathOfImage) {
+                                int index = imagePathList.indexOf(pathOfImage);
+                                return Container(
+                                  width: 10.0,
+                                  height: 10.0,
+                                  margin: EdgeInsets.symmetric(
+                                    vertical: 10.0,
+                                    horizontal: 2.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: _currentIndex == index
+                                        ? Color.fromRGBO(0, 0, 0, 0.8)
+                                        : Color.fromRGBO(0, 0, 0, 0.3),
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),

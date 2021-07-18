@@ -23,14 +23,11 @@ class AdminEditEventImage extends StatefulWidget {
 }
 
 class _AdminEditEventImageState extends State<AdminEditEventImage> {
-  CollectionReference collectionUser =
-      FirebaseFirestore.instance.collection('events');
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _formkey = GlobalKey<FormState>();
 
-  // choosing the image
-  late File _image;
-
+  // image path variable
+  File? _image;
+  // display the select iamge
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
@@ -55,9 +52,9 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (_image != null) {
-      return Image.file(_image);
+      return Image.file(_image!);
     } else {
-      return Text('Choose a image to show', style: TextStyle(fontSize: 18.0));
+      return Text('Choose an image to show', style: TextStyle(fontSize: 18.0));
     }
   }
 
@@ -132,7 +129,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                   fit: BoxFit.cover,
                   width: 120.0,
                 ),
-                // selected image
+                // selected new image
                 Text(
                   'New Image',
                   style: TextStyle(
@@ -222,6 +219,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 }
+                                // alertbox for saving the new/changed image
                                 bool result = await showDialog(
                                   context: context,
                                   builder: (context) {
@@ -255,12 +253,6 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                     );
                                   },
                                 );
-                                // print("title");
-                                // updateData(
-                                //     context,
-                                //     id);
-                                // Navigator.pop(context);
-                                // Navigator.pop(context);
                               },
                             ),
                           ),
@@ -279,10 +271,10 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
 
   // Updating to firebase
   Future updateData(BuildContext context, id) async {
-    String fileName = basename(_image.path);
+    String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    UploadTask uploadTask = firebaseStorageRef.putFile(_image!);
 
     uploadTask.whenComplete(() {
       print("uploaded");

@@ -1,8 +1,8 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/constants.dart';
-import '../../screens/view_profile.dart';
+import '../widgets/constants.dart';
+import '../screens/view_profile.dart';
 
 List<MenuItem> items = [
   MenuItem<int>(
@@ -58,7 +58,7 @@ void selectedItem(BuildContext context, int index) {
       Navigator.pushNamed(context, "/about_us");
       break;
     case 1:
-      Navigator.pushNamed(context, "/events");
+      Navigator.pushNamed(context, "/admin_events");
       break;
     case 2:
       Navigator.pushNamed(context, "/initiatives");

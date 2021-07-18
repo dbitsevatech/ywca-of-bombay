@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'user_events.dart';
 import '../about_us/become_member.dart';
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -23,7 +23,7 @@ class DetailPage extends StatefulWidget {
       eventType,
       memberRole;
   DateTime eventDate, eventDeadline;
-  Timestamp eventTime;
+  String eventTime;
 
   DetailPage({
     required this.id,
@@ -45,11 +45,13 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
-  late String memberRole;
-
+  String? memberRole;
   int _currentIndex = 0;
 
-  // onRegister for counting registration
+  final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(); // form key for validationGetText
+
+  // onRegister for counting registration by the user
   void insertIntoOnRegistration(String eventID, String eventName) async {
     final User? user = auth.currentUser;
     final userID = user?.uid;
@@ -74,9 +76,6 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationGetText
-
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
@@ -89,10 +88,14 @@ class _DetailPageState extends State<DetailPage> {
         eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
-
     DateTime eventDate = widget.eventDate;
     DateTime eventDeadline = widget.eventDeadline;
-    Timestamp eventTime = widget.eventTime;
+    String eventTime = widget.eventTime;
+    // event date
+    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
+    // event deadline
+    String formattedDeadlineDate =
+        DateFormat('dd-MM-yyyy').format(eventDeadline);
 
     // carousel images
     final List<String> imagesList = [
@@ -102,17 +105,6 @@ class _DetailPageState extends State<DetailPage> {
       'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     ];
-
-    // event date
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
-
-    // event deadline
-    String formattedDeadlineDate =
-        DateFormat('dd-MM-yyyy').format(eventDeadline);
-
-    // event time
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
 
     @override
     void initState() {
@@ -132,115 +124,104 @@ class _DetailPageState extends State<DetailPage> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "YWCA Of Bombay",
+          style: TextStyle(
+            fontFamily: 'LobsterTwo',
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+            color: Colors.black87,
+          ),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.black,
+            ),
+            tooltip: 'Comment Icon',
+            onPressed: () {},
+          ), //IconButton
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+            size: 30,
+          ),
+          onPressed: () => {
+            goBackToPreviousScreen(context),
+          },
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.04),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //do something
-                        goBackToPreviousScreen(context);
-                      },
-                    ),
-                    IconButton(
-                      padding: EdgeInsets.only(left: _width * 0.85),
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {},
-                    ),
-                    // Members only button
-                    // Members only button
-                    if (eventType == 'Everyone')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.3),
-                            child: RaisedButton(
-                              onPressed: () {},
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "Everyone",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (eventType == 'Members')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.07, left: _height * 0.195),
-                            child: RaisedButton(
-                              onPressed: () {
-                                goToBecomeMember(context);
-                              },
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "⭐ Members only",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    if (memberRole != 'Member')
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            // color: Colors.orange,
-                            padding: EdgeInsets.only(
-                                top: _height * 0.14, left: _height * 0.195),
-                            child: RaisedButton(
-                              onPressed: () {
-                                goToBecomeMember(context);
-                              },
-                              color: Color(0xFF00bbe4),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Text(
-                                "Become a member",
-                                style: new TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.15),
+                AdminDetailPageBlueBubbleDesign(),
+                // show it when the event is for everyone
+                if (eventType == 'Everyone')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          "Everyone",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
+                      )),
+                // show it when the event is for members only
+                if (eventType == 'Members')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          goToBecomeMember(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          "⭐ Members only",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
+                        ),
+                      )),
+                // show it when the event is for members and the user is not a member
+                // then become a member button is show
+                if (memberRole != 'Member')
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          goToBecomeMember(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Color(0xFF00bbe4),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: Text(
+                          "Become a member",
+                          style: new TextStyle(
+                              fontSize: 18.0, color: Colors.white),
+                        ),
+                      )),
                 // Carousel
                 CarouselSlider(
                   options: CarouselOptions(
@@ -271,14 +252,10 @@ class _DetailPageState extends State<DetailPage> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
-                              child: Stack(
-                                children: <Widget>[
-                                  Image.network(
-                                    item,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                  ),
-                                ],
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
                               ),
                             ),
                           ),
@@ -293,8 +270,10 @@ class _DetailPageState extends State<DetailPage> {
                     return Container(
                       width: 10.0,
                       height: 10.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                      margin: EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 2.0,
+                      ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentIndex == index
@@ -316,7 +295,7 @@ class _DetailPageState extends State<DetailPage> {
                     key: _formKey,
                     child: Column(
                       children: <Widget>[
-                        // Event title
+                        // Event Name
                         Text(
                           eventName,
                           style: TextStyle(
@@ -372,7 +351,16 @@ class _DetailPageState extends State<DetailPage> {
                         SizedBox(height: _height * 0.015),
                         // Time
                         Text(
-                          'Event Time: ' + formattedEventTime,
+                          'Event Time: ' + eventTime,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: _height * 0.015),
+                        // event type
+                        Text(
+                          'Event Type: ' + eventType,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -430,7 +418,11 @@ class _DetailPageState extends State<DetailPage> {
 }
 
 goBackToPreviousScreen(BuildContext context) {
-  Navigator.pop(context);
+  // Navigator.pop(context);
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Events()),
+  );
 }
 
 goToBecomeMember(BuildContext context) {

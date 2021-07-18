@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -26,6 +27,8 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
   final String _description;
   final List<String> _imagePathList;
   final List<String> _imageTitleList;
+
+  int _currentIndex = 0;
 
   _InitiativeDetailsState(
     this._title,
@@ -93,54 +96,88 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                   ),
                 ],
               ),
-              Padding(padding: const EdgeInsets.only(top: 10)),
-              // TODO: Replace with null safe carousel
-              // Container(
-              //   height: 420,
-              //   child: Swiper(
-              //     autoplay: false,
-              //     itemCount: this._imagePathList.length,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return Column(
-              //         // To centralize the children.
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         crossAxisAlignment: CrossAxisAlignment.center,
-              //         children: <Widget>[
-              //           ClipRRect(
-              //             borderRadius: BorderRadius.circular(10),
-              //             child: Image(
-              //               image: AssetImage(this._imagePathList[index]),
-              //               fit: BoxFit.contain,
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             height: _height * 0.01,
-              //           ),
-              //           Text(
-              //             this._imageTitleList[index],
-              //             style: TextStyle(
-              //               fontSize: 18,
-              //               color: Colors.black,
-              //               fontWeight: FontWeight.normal,
-              //               fontFamily: 'Monstserrat',
-              //             ),
-              //             textAlign: TextAlign.center,
-              //           ),
-              //         ],
-              //       );
-              //     },
-              //     viewportFraction: 0.85,
-              //     scale: 0.9,
-              //     pagination: SwiperPagination(
-              //       //changing the color of the pagination dots and that of
-              //       //the active dot
-              //       builder: DotSwiperPaginationBuilder(
-              //         color: Colors.grey,
-              //         activeColor: Color(0XFF80DEEA),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              SizedBox(height: _height * 0.1),
+              CarouselSlider(
+                options: CarouselOptions(
+                  // height of whole carousel - including image and text
+                  // height: 290,
+                  height: _height * 0.35,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: this._imagePathList.map((pathOfImage) {
+                  int index = this._imagePathList.indexOf(pathOfImage);
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              margin: EdgeInsets.only(
+                                top: 10.0,
+                                bottom: 10.0,
+                              ),
+                              elevation: 6.0,
+                              shadowColor: Colors.blueGrey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                                child: Image(
+                                  image: AssetImage(pathOfImage),
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 200,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.01),
+                          Text(
+                            this._imageTitleList[index],
+                            style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 1.1,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: this._imagePathList.map((pathOfImage) {
+                  int index = this._imagePathList.indexOf(pathOfImage);
+                  return Container(
+                    width: 10.0,
+                    height: 10.0,
+                    margin: EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 2.0,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndex == index
+                          ? Color.fromRGBO(0, 0, 0, 0.8)
+                          : Color.fromRGBO(0, 0, 0, 0.3),
+                    ),
+                  );
+                }).toList(),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: Column(

@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'admin_edit_event.dart';
 import 'admin_event_details.dart';
-import 'adminEditEvent.dart';
+import 'admin_edit_event.dart';
 import 'admin_new_event.dart';
-
 import '../../../drawers_constants/user_drawer.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
@@ -22,45 +19,11 @@ class _AdminEventsState extends State<AdminEvents> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
 
-  Future<bool?> _navigateToRoute(String name) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(name),
-          actions: <Widget>[
-            TextButton(
-              child: Text('NO'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-            TextButton(
-              child: Text('YES'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // conversion of event date
+  // conversion of event date to string for displaying
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
-    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-    String onlyTime = dateFormat.format(DateTime.now());
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
     return formattedEventDate;
-  }
-
-  // conversion of event time
-  String readEventTime(Timestamp eventTime) {
-    DateTime newEventTime = eventTime.toDate();
-    String formattedEventTime = DateFormat('kk:mm:a').format(newEventTime);
-    return formattedEventTime;
   }
 
   @override
@@ -212,6 +175,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           ),
                         ),
                         onPressed: () async {
+                          // when clicked on new event open Add Event page
                           gotoNewEvent(context);
                         },
                       ),
@@ -247,16 +211,22 @@ class _AdminEventsState extends State<AdminEvents> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      leading: Image.network(
-                        document['eventImageUrl'],
-                        fit: BoxFit.cover,
-                        width: 120.0,
-                      ),
+                      // Event image
+                      leading: ClipRRect(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(10.0)), //add border radius here
+                          child: Image.network(
+                            document['eventImageUrl'],
+                            fit: BoxFit.cover,
+                            width: 120,
+                          ), //add image location here
+                        ),
+                      // Event date and time
                       title: Text(
                         'Date:' +
                             (readEventDate(document['eventDate'])) +
                             '| Time:' +
-                            (readEventTime(document['eventTime'])),
+                            (document['eventTime']),
                         style: TextStyle(
                           color: Color(0xFF49DEE8),
                           fontSize: 14.0,
@@ -268,6 +238,7 @@ class _AdminEventsState extends State<AdminEvents> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 5),
+                          // Event name
                           Text(
                             document['eventName'],
                             style: TextStyle(
@@ -277,30 +248,33 @@ class _AdminEventsState extends State<AdminEvents> {
                             ),
                           ),
                           SizedBox(height: 5),
+                          // Resource person
                           Text(
-                            'Resource Person: ' + document['eventName'],
+                            'Resource Person: Sharon Pies',
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
                           SizedBox(height: 5),
+                          // Event Venue
                           Text(
-                            'Venue: ' + document['eventVenue'],
+                            'Venue: ' + document['eventName'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
                           SizedBox(height: 5),
+                          // Event Amount
                           Text(
-                            'Amount: ' + document['eventAmount'],
+                            'Amount: ' + document['eventName'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
-                          // start of edit and delete
+                          // start of edit and delete button
                           Row(
                             children: [
                               Spacer(),
@@ -311,6 +285,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                   bool result = await showDialog(
                                     context: context,
                                     builder: (context) {
+                                      // Alert box for edit event
                                       return AlertDialog(
                                         title: Text('Confirmation'),
                                         content: Text(
@@ -331,19 +306,6 @@ class _AdminEventsState extends State<AdminEvents> {
                                               Navigator.of(context,
                                                       rootNavigator: true)
                                                   .pop(true);
-                                              // gotoEditEvent(
-                                              // context,
-                                              // document.id,
-                                              // document['eventAmount'],
-                                              // document['eventDescription'],
-                                              // document['eventName'],
-                                              // document['eventImageUrl'],
-                                              // document['eventVenue'],
-                                              // document['eventType'],
-                                              // document['eventDate'],
-                                              // document['eventDeadline'],
-                                              // document['eventTime'],
-                                              // );
                                               gotoEditEvent2(
                                                 context,
                                                 document.id,
@@ -378,6 +340,7 @@ class _AdminEventsState extends State<AdminEvents> {
                               Spacer(),
                               ElevatedButton(
                                 onPressed: () async {
+                                  // Alert box for delete event
                                   bool result = await showDialog(
                                     context: context,
                                     builder: (context) {
@@ -441,7 +404,6 @@ class _AdminEventsState extends State<AdminEvents> {
                         ],
                       ),
                       onTap: () {
-                        print('ontap');
                         gotoDetailEvent(
                             context,
                             document.id,
@@ -488,6 +450,13 @@ class _AdminEventsState extends State<AdminEvents> {
   }
 }
 
+gotoNewEvent(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => AdminNewEvent()),
+  );
+}
+
 gotoDetailEvent(
     BuildContext context,
     String id,
@@ -499,12 +468,11 @@ gotoDetailEvent(
     String eventType,
     Timestamp eventDate,
     Timestamp eventDeadline,
-    Timestamp eventTime) {
-  // event date
+    String eventTime) {
+  // TimeStamp to DateTime conversion of event date for displaying
   DateTime newEventDate = eventDate.toDate();
-  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-  String onlyTime = dateFormat.format(DateTime.now());
-// // event deadline
+
+  // TimeStamp to DateTime conversion of event deadline for displaying
   DateTime newEventDeadline = eventDeadline.toDate();
   Navigator.push(
     context,
@@ -525,53 +493,6 @@ gotoDetailEvent(
   );
 }
 
-gotoEditEvent(
-    BuildContext context,
-    String id,
-    String eventAmount,
-    String eventDescription,
-    String eventName,
-    String eventImageUrl,
-    String eventVenue,
-    String eventType,
-    Timestamp eventDate,
-    Timestamp eventDeadline,
-    Timestamp eventTime) {
-// event date
-  DateTime newEventDate = eventDate.toDate();
-
-// event deadline
-  DateTime newEventDeadline = eventDeadline.toDate();
-
-// event time
-  DateTime newEventTime = eventTime.toDate();
-
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => AdminEditEvent(
-        id: id,
-        eventAmount: eventAmount,
-        eventDescription: eventDescription,
-        eventName: eventName,
-        eventImageUrl: eventImageUrl,
-        eventVenue: eventVenue,
-        eventType: eventType,
-        eventDate: newEventDate,
-        eventDeadline: newEventDeadline,
-        eventTime: newEventTime,
-      ),
-    ),
-  );
-}
-
-gotoNewEvent(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => AdminNewEvent()),
-  );
-}
-
 gotoEditEvent2(
     BuildContext context,
     String id,
@@ -583,15 +504,12 @@ gotoEditEvent2(
     String eventType,
     Timestamp eventDate,
     Timestamp eventDeadline,
-    Timestamp eventTime) {
-// event date
+    String eventTime) {
+  // TimeStamp to DateTime conversion of event date for displaying
   DateTime newEventDate = eventDate.toDate();
 
-// event deadline
+  // TimeStamp to DateTime conversion of event deadline for displaying
   DateTime newEventDeadline = eventDeadline.toDate();
-
-// event time
-  DateTime newEventTime = eventTime.toDate();
 
   Navigator.push(
     context,
@@ -606,7 +524,7 @@ gotoEditEvent2(
         eventType: eventType,
         eventDate: newEventDate,
         eventDeadline: newEventDeadline,
-        eventTime: newEventTime,
+        eventTime: eventTime,
       ),
     ),
   );
