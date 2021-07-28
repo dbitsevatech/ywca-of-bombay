@@ -80,6 +80,7 @@ void selectedItem(BuildContext context, int index) {
 }
 
 Widget header(BuildContext context, var userInfo) {
+  // final DrawerScaffoldController controller = DrawerScaffoldController();
   return Container(
     width: MediaQuery.of(context).size.width * 0.7,
     child: Padding(
@@ -136,6 +137,8 @@ Widget header(BuildContext context, var userInfo) {
               ),
             ),
             onPressed: () {
+              // TODO: Close drawer before opening this page OR after closing this page
+              // controller.toggle();
               Navigator.push(
                 context,
                 MaterialPageRoute(

@@ -143,6 +143,8 @@ Widget footer(
     child: InkWell(
       onTap: () async => {
         // controller.toggle(),
+
+        // function from auth_service.dart
         onLogoutPressed(context, userInfo),
       },
       child: Container(

@@ -1,3 +1,4 @@
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,8 @@ class ViewProfileScreen extends StatefulWidget {
 
 class _ViewProfileScreenState extends State<ViewProfileScreen> {
   var userInfo;
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
@@ -70,7 +73,11 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+
+                        controller.toggle();
+                      },
                     ),
                   ),
                 ),
