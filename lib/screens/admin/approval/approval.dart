@@ -1,10 +1,15 @@
+// import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../drawers_constants/user_drawer.dart';
+import '../../../widgets/constants.dart';
+import '../../../drawers_constants/admin_drawer.dart';
+import '../../../models/User.dart';
 
 // ignore: must_be_immutable
 class ApprovalScreen extends StatefulWidget {
@@ -15,6 +20,7 @@ class ApprovalScreen extends StatefulWidget {
 class _ApprovalScreenState extends State<ApprovalScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+  var userInfo;
 
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
@@ -22,13 +28,13 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   List<Widget> itemsData = [];
 
-  void getPostsData() async {
-    var snapShot =
-        await FirebaseFirestore.instance.collection('approval').get();
-
-    List<dynamic> responseList = snapShot.docs;
+  Future getPostsData(List<dynamic> responseList) async {
+    // void getPostsData() async {
+    print("get posts method called");
+    // var snapShot = await FirebaseFirestore.instance.collection('approval').get();
+    // List<dynamic> responseList = snapShot.docs;
     List<Widget> listItems = [];
-    responseList.forEach((post) {
+    responseList.forEach((item) {
       listItems.add(
         Container(
           height: 182,
@@ -59,7 +65,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Name: ${post["firstName"]} ${post["lastName"]}",
+                      "\Name: ${item["firstName"]} ${item["lastName"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -75,7 +81,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Contact Number: ${post["phoneNumber"]}",
+                      "\Contact Number: ${item["phoneNumber"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -91,7 +97,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Email ID: ${post["emailId"]}",
+                      "\Email ID: ${item["emailId"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -107,7 +113,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Nearest YWCA center: ${post["nearestCenter"]}",
+                      "\Nearest YWCA center: ${item["nearestCenter"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -123,7 +129,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Institute/Organisation: ${post["placeOfWork"]}",
+                      "\Institute/Organisation: ${item["placeOfWork"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -139,7 +145,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Profession: ${post["profession"]}",
+                      "\Profession: ${item["profession"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -153,26 +159,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Container(
-                      //   margin: const EdgeInsets.only(left: 28, top: 20),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(2000.0),
-                      //     ),
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //           color: Colors.black.withAlpha(100),
-                      //           blurRadius: 10.0),
-                      //     ],
-                      //   ),
-                      //   width: 120,
-                      //   height: 30,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(
-                      //       horizontal: 0.0,
-                      //       vertical: 0,
-                      //     ),
-                      //     // child:
                       Spacer(),
                       ConstrainedBox(
                         constraints:
@@ -181,25 +167,25 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           onPressed: () async {
                             await FirebaseFirestore.instance
                                 .collection('users')
-                                .doc(post["uid"])
+                                .doc(item["uid"])
                                 .update({
-                              "firstName": post["firstName"],
-                              "lastName": post["lastName"],
-                              "dateOfBirth": post["dateOfBirth"],
-                              "emailId": post["emailId"],
-                              "gender": post["gender"],
-                              "profession": post["profession"],
-                              "placeOfWork": post["placeOfWork"],
-                              "nearestCenter": post["nearestCenter"],
+                              "firstName": item["firstName"],
+                              "lastName": item["lastName"],
+                              "dateOfBirth": item["dateOfBirth"],
+                              "emailId": item["emailId"],
+                              "gender": item["gender"],
+                              "profession": item["profession"],
+                              "placeOfWork": item["placeOfWork"],
+                              "nearestCenter": item["nearestCenter"],
                               "interestInMembership":
-                                  post["interestInMembership"],
-                              "uid": post["uid"],
-                              "phoneNumber": post["phoneNumber"],
-                              "memberRole": post["memberRole"],
+                                  item["interestInMembership"],
+                              "uid": item["uid"],
+                              "phoneNumber": item["phoneNumber"],
+                              "memberRole": item["memberRole"],
                             }).then((value) => print("Approved"));
                             await FirebaseFirestore.instance
                                 .collection('approval')
-                                .doc(post["uid"])
+                                .doc(item["uid"])
                                 .delete();
                           },
                           icon: Icon(
@@ -225,33 +211,13 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           label: Text(
                             "Approve",
                             style: TextStyle(
-                                fontFamily: 'montserrat', color: Colors.white),
+                              fontFamily: 'montserrat',
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                       Spacer(flex: 3),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(left: 21, top: 20),
-                      //   decoration: BoxDecoration(
-                      //       borderRadius:
-                      //           BorderRadius.all(Radius.circular(200.0)),
-                      //       boxShadow: [
-                      //         BoxShadow(
-                      //           color: Colors.black.withAlpha(100),
-                      //           blurRadius: 10.0,
-                      //         ),
-                      //       ],
-                      //       color: Colors.white),
-                      //   width: 120,
-                      //   height: 30,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(
-                      //       horizontal: 0.0,
-                      //       vertical: 0.0,
-                      //     ),
-                      //     child:
                       ConstrainedBox(
                         constraints:
                             BoxConstraints.tightFor(width: 120, height: 35),
@@ -259,14 +225,11 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           onPressed: () async {
                             await FirebaseFirestore.instance
                                 .collection('approval')
-                                .doc(post["uid"])
+                                .doc(item["uid"])
                                 .delete()
-                                .then((value) => print("Rejected"));
-                            // Navigator.pop(context);
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => ApprovalScreen()));
+                                .then(
+                                  (value) => print("Rejected"),
+                                );
                           },
                           icon: Icon(
                             Icons.close,
@@ -315,8 +278,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   void initState() {
     super.initState();
-    getPostsData();
-    // List<dynamic> responseList = await DATA;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    selectedMenuItemId = menuWithIcon.items[6].id;
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
       setState(() {
@@ -329,16 +292,17 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // final double categoryHeight = size.height * 0.30;
-    print("item: $selectedMenuItemId");
+
     return DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         SideDrawer(
-          percentage: 0.75,
-          menu: menuWithIcon,
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller, userInfo),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red, menu: menuWithIcon,
           animation: true,
-          color: Theme.of(context).primaryColor,
           selectedItemId: selectedMenuItemId,
           onMenuItemSelected: (itemId) {
             setState(() {
@@ -346,7 +310,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               selectedItem(context, itemId);
             });
           },
-        )
+        ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(
@@ -450,32 +414,53 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   ],
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: itemsData.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      double scale = 1.0;
-                      if (topContainer > 0) {
-                        scale = index + 2 - topContainer / 1.3;
-                        if (scale < 0) {
-                          scale = 0;
-                        } else if (scale > 1) {
-                          scale = 1;
-                        }
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('approval')
+                        .snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        print(snapshot);
+                        List<dynamic> responseList = snapshot.data.docs;
+                        print(responseList);
+
+                        responseList.forEach((post) {
+                          print(post["firstName"]);
+                        });
+                        getPostsData(responseList);
+
+                        return ListView.builder(
+                          controller: scrollController,
+                          itemCount: itemsData.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            double scale = 1.0;
+                            if (topContainer > 0) {
+                              scale = index + 2 - topContainer / 1.3;
+                              if (scale < 0) {
+                                scale = 0;
+                              } else if (scale > 1) {
+                                scale = 1;
+                              }
+                            }
+                            return Opacity(
+                              opacity: scale,
+                              child: Transform(
+                                transform: Matrix4.identity()
+                                  ..scale(scale, scale),
+                                alignment: Alignment.bottomCenter,
+                                child: Align(
+                                  heightFactor: 0.8,
+                                  alignment: Alignment.topCenter,
+                                  child: itemsData[index],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       }
-                      return Opacity(
-                        opacity: scale,
-                        child: Transform(
-                          transform: Matrix4.identity()..scale(scale, scale),
-                          alignment: Alignment.bottomCenter,
-                          child: Align(
-                            heightFactor: 0.8,
-                            alignment: Alignment.topCenter,
-                            child: itemsData[index],
-                          ),
-                        ),
-                      );
                     },
                   ),
                 ),

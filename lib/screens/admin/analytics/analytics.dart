@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'constants.dart';
 
-import '../../../drawers_constants/user_drawer.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
+import '../../../drawers_constants/admin_drawer.dart';
+import '../../../models/User.dart';
 
 // ignore: must_be_immutable
 class AnalyticsScreen extends StatefulWidget {
@@ -135,6 +137,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   void initState() {
     super.initState();
+    userInfo = Provider.of<UserData>(context, listen: false);
+    selectedMenuItemId = menuWithIcon.items[5].id;
     getPostsData();
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
@@ -157,8 +161,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           headerView: header(context, userInfo),
           footerView: footer(context, controller, userInfo),
           color: successStoriesCardBgColor,
-          selectorColor: Colors.red,
-          menu: menuWithIcon,
+          selectorColor: Colors.red, menu: menuWithIcon,
           animation: true,
           selectedItemId: selectedMenuItemId,
           onMenuItemSelected: (itemId) {
@@ -167,7 +170,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               selectedItem(context, itemId);
             });
           },
-        )
+        ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(

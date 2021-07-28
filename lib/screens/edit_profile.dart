@@ -802,10 +802,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              if (_formKey.currentState!.validate()) {
-                                return;
-                              }
+                              print(userInfo.getmemberRole);
+                              // TODO: validate function not working, hence the code after it does not execute
+                              // if (_formKey.currentState!.validate()) {
+                              //   return;
+                              // }
                               _formKey.currentState!.save();
+                              _formKey.currentState?.save();
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
@@ -830,6 +833,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         print("Failed to update user: $error"));
                                 await savePressed();
                               } else {
+                                print("helo");
                                 await FirebaseFirestore.instance
                                     .collection("users")
                                     .doc(uid)

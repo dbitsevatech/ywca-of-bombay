@@ -58,7 +58,7 @@ class _AdminEventsState extends State<AdminEvents> {
               selectedItem(context, itemId);
             });
           },
-        )
+        ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(

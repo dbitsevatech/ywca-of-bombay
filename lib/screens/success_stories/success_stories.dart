@@ -32,6 +32,8 @@ class _SuccessStoriesState extends State<SuccessStories> {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
     print("item: $selectedMenuItemId");
+    print(_height);
+    print(_width);
     return DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
@@ -231,7 +233,8 @@ class ColorDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? color = this.color;
-    Color? borderColor = this.borderColor;
+    // Color? borderColor = this.borderColor;
+    Color borderColor = this.borderColor!;
     double? radius = this.radius;
 
     return Padding(
@@ -244,7 +247,8 @@ class ColorDot extends StatelessWidget {
           color: color,
           border: Border.all(
             width: 0.8,
-            color: borderColor!,
+            // color: borderColor!,
+            color: borderColor,
           ),
         ),
       ),
