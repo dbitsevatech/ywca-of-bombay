@@ -1,98 +1,184 @@
 import 'dart:ui';
 
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
-import 'package:kf_drawer/kf_drawer.dart';
+import 'package:provider/provider.dart';
 
 import 'constants.dart';
+import '../../drawers_constants/user_drawer.dart' as UserDrawer;
+import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
+import '../../models/User.dart';
 import '../../widgets/constants.dart';
 
 // ignore: must_be_immutable
-class SuccessStories extends KFDrawerContent {
+class SuccessStories extends StatefulWidget {
   @override
   _SuccessStoriesState createState() => _SuccessStoriesState();
 }
 
 class _SuccessStoriesState extends State<SuccessStories> {
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+  var userInfo;
+
+  @override
+  void initState() {
+    // REDUNDANT
+    // if (userInfo.getmemberRole == "Admin") {
+    //   selectedMenuItemId = AdminDrawer.menuWithIcon.items[3].id;
+    // } else {
+    //   selectedMenuItemId = UserDrawer.menuWithIcon.items[3].id;
+    // }
+    selectedMenuItemId = UserDrawer.menuWithIcon.items[3].id;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var role =
+        userInfo.getmemberRole; // to identify if user is admin or other role
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    return SafeArea(
-      child: Center(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              // circle design
-              children: <Widget>[
-                Positioned(
-                  child: Image.asset("assets/images/circle-design.png"),
-                ),
-                Positioned(
-                  child: AppBar(
-                    centerTitle: true,
-                    title: Text("YWCA Of Bombay",
+    print("item: $selectedMenuItemId");
+    print(_height);
+    print(_width);
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        (role == "Admin")
+            ? // ADMIN DRAWER
+            SideDrawer(
+                percentage: 0.75, // main screen height proportion
+                headerView: AdminDrawer.header(context, userInfo),
+                footerView: AdminDrawer.footer(context, controller, userInfo),
+                color: successStoriesCardBgColor,
+                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                animation: true,
+                selectedItemId: selectedMenuItemId,
+                onMenuItemSelected: (itemId) {
+                  setState(() {
+                    selectedMenuItemId = itemId;
+                    AdminDrawer.selectedItem(context, itemId);
+                  });
+                },
+              )
+            : // DRAWER FOR OTHER ROLES
+            SideDrawer(
+                percentage: 0.75, // main screen height proportion
+                headerView: UserDrawer.header(context, userInfo),
+                footerView: UserDrawer.footer(context, controller, userInfo),
+                color: successStoriesCardBgColor,
+                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                animation: true,
+                selectedItemId: selectedMenuItemId,
+                onMenuItemSelected: (itemId) {
+                  setState(() {
+                    selectedMenuItemId = itemId;
+                    UserDrawer.selectedItem(context, itemId);
+                  });
+                },
+              ),
+      ],
+
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Stack(
+                // circle design
+                children: <Widget>[
+                  Positioned(
+                    child: Image.asset("assets/images/circle-design.png"),
+                  ),
+                  Positioned(
+                    child: AppBar(
+                      centerTitle: true,
+                      title: Text(
+                        "YWCA Of Bombay",
                         style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
-                            fontSize: 18.0,
-                            color: Colors.black87)),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    leading: IconButton(
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.black,
-                        size: 30,
+                          fontFamily: 'LobsterTwo',
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                          color: Colors.black87,
+                        ),
                       ),
-                      onPressed: widget.onMenuPressed,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () => {
+                          // widget.onMenuPressed,
+                          controller.toggle(Direction.left),
+                          // OR
+                          // controller.open()
+                        },
+                      ),
                     ),
                   ),
-                ),
-                //Title start
-                Padding(
-                  padding: EdgeInsets.only(top: _height * 0.12),
-                  child: Container(
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'Success Stories',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          color: Color(0xff333647),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 26,
+                  //Title start
+                  Padding(
+                    padding: EdgeInsets.only(top: _height * 0.12),
+                    child: Container(
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          'Success Stories',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            color: Color(0xff333647),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 26,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                //Title end
-              ],
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    height: _height * 0.7,
-                    child: DotPaginationSwiper.builder(
-                      itemCount: 8,
-                      itemBuilder: (context, i) => Center(
-                        child:
-                            cardWid(titles[i], detailText[i], _height, _width),
-                      ),
-                    ),
-                  ),
+                  //Title end
                 ],
               ),
-            ),
-          ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: _height * 0.7,
+                      child: DotPaginationSwiper.builder(
+                        itemCount: titles.length,
+                        itemBuilder: (context, i) => Center(
+                          child: cardWid(
+                            images[i],
+                            titles[i],
+                            detailText[i],
+                            _height,
+                            _width,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Container cardWid(
-      String title, String detailText, double _height, double _width) {
+    String image,
+    String title,
+    String detailText,
+    double _height,
+    double _width,
+  ) {
     print(_height);
     print(_width);
     //  card start
@@ -112,12 +198,12 @@ class _SuccessStoriesState extends State<SuccessStories> {
           Container(
             margin: EdgeInsets.all(_height * 0.025),
             child: ClipRRect(
-              // borderRadius: BorderRadius.circular(120.0),
               borderRadius: BorderRadius.circular(120.0),
-              child: Image.network(
-                'https://picsum.photos/250?image=9',
-                height: 150.0,
-                width: 150.0,
+              child: Image(
+                image: AssetImage(image),
+                fit: BoxFit.contain,
+                height: 200,
+                width: 200,
               ),
             ),
           ),
@@ -128,7 +214,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
             // 'A Slice Of Support',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.grey[800],
+              fontFamily: "Montserrat",
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
@@ -146,9 +232,9 @@ class _SuccessStoriesState extends State<SuccessStories> {
               detailText,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.grey[800],
-                fontWeight: FontWeight.normal,
-                fontSize: 16,
+                fontFamily: "Montserrat",
+                height: 1.3,
+                fontSize: 15,
               ),
             ),
           ),
@@ -161,18 +247,23 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
 @immutable
 class ColorDot extends StatelessWidget {
-  const ColorDot({Key key, this.color, this.borderColor, this.radius})
-      : super(key: key);
+  const ColorDot({
+    Key? key,
+    this.color,
+    this.borderColor,
+    this.radius,
+  }) : super(key: key);
 
-  final Color color;
-  final Color borderColor;
-  final double radius;
+  final Color? color;
+  final Color? borderColor;
+  final double? radius;
 
   @override
   Widget build(BuildContext context) {
-    Color color = this.color ?? Colors.grey;
-    Color borderColor = this.borderColor ?? Theme.of(context).primaryColor;
-    double radius = this.radius ?? 8;
+    Color? color = this.color;
+    // Color? borderColor = this.borderColor;
+    Color borderColor = this.borderColor!;
+    double? radius = this.radius;
 
     return Padding(
       padding: const EdgeInsets.all(1),
@@ -184,6 +275,7 @@ class ColorDot extends StatelessWidget {
           color: color,
           border: Border.all(
             width: 0.8,
+            // color: borderColor!,
             color: borderColor,
           ),
         ),
@@ -195,10 +287,8 @@ class ColorDot extends StatelessWidget {
 @immutable
 class DotPagination extends StatelessWidget {
   const DotPagination(
-      {Key key, @required this.itemCount, @required this.activeIndex})
-      : assert(itemCount != null),
-        assert(activeIndex != null),
-        assert(activeIndex >= 0),
+      {Key? key, required this.itemCount, required this.activeIndex})
+      : assert(activeIndex >= 0),
         assert(activeIndex < itemCount),
         super(key: key);
 
@@ -219,6 +309,7 @@ class DotPagination extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(8),
+      // TODO: Renderflex error
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: list,
@@ -230,33 +321,33 @@ class DotPagination extends StatelessWidget {
 @immutable
 class DotPaginationSwiper extends StatefulWidget {
   DotPaginationSwiper({
-    Key key,
-    this.onPageChanged,
+    Key? key,
+    required this.onPageChanged,
     List<Widget> children = const <Widget>[],
   })  : childrenDelegate = SliverChildListDelegate(children),
         itemCount = children.length,
         super(key: key);
 
   DotPaginationSwiper.builder({
-    Key key,
+    Key? key,
     this.onPageChanged,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    IndexedWidgetBuilder? itemBuilder,
+    int? itemCount,
   })  : childrenDelegate =
-            SliverChildBuilderDelegate(itemBuilder, childCount: itemCount),
-        itemCount = itemCount,
+            SliverChildBuilderDelegate(itemBuilder!, childCount: itemCount),
+        itemCount = itemCount!,
         super(key: key);
 
   final SliverChildDelegate childrenDelegate;
   final int itemCount;
-  final ValueChanged<int> onPageChanged;
+  final ValueChanged<int>? onPageChanged;
 
   @override
   _DotPaginationSwiperState createState() => _DotPaginationSwiperState();
 }
 
 class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
-  int _index;
+  int _index = 0;
 
   @override
   void initState() {
@@ -273,7 +364,7 @@ class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
             onPageChanged: (i) {
               setState(() {
                 _index = i;
-                widget.onPageChanged?.call(i);
+                widget.onPageChanged!.call(i);
               });
             }),
         Align(

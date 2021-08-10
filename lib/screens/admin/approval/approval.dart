@@ -1,28 +1,43 @@
-import 'package:flutter/cupertino.dart';
-import 'package:kf_drawer/kf_drawer.dart';
-import 'package:flutter/material.dart';
+// import 'dart:html';
 
-import 'constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
+import '../../../widgets/constants.dart';
+import '../../../drawers_constants/admin_drawer.dart';
+import '../../../models/User.dart';
 
 // ignore: must_be_immutable
-class ApprovalScreen extends KFDrawerContent {
+class ApprovalScreen extends StatefulWidget {
   @override
   _ApprovalScreenState createState() => _ApprovalScreenState();
 }
 
 class _ApprovalScreenState extends State<ApprovalScreen> {
-  ScrollController controller = ScrollController();
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+  late int selectedMenuItemId;
+  var userInfo;
+  String searchValue = '';
+
+  ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
 
   List<Widget> itemsData = [];
+  List filteredItemsSData = [];
+  bool isSearching = false;
 
-  void getPostsData() {
-    List<dynamic> responseList = DATA;
+  Future getPostsData(List<dynamic> responseList) async {
+    // void getPostsData() async {
+    print("get posts method called");
+    // var snapShot = await FirebaseFirestore.instance.collection('approval').get();
+    // List<dynamic> responseList = snapShot.docs;
     List<Widget> listItems = [];
-    responseList.forEach((post) {
+    responseList.forEach((item) {
       listItems.add(
         Container(
           height: 182,
@@ -53,7 +68,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Name: ${post["firstName"]} ${post["lastName"]}",
+                      "\Name: ${item["firstName"]} ${item["lastName"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -69,7 +84,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Contact Number: ${post["phoneNumber"]}",
+                      "\Contact Number: ${item["phoneNumber"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -85,7 +100,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Email ID: ${post["emailId"]}",
+                      "\Email ID: ${item["emailId"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -101,7 +116,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Nearest YWCA center: ${post["nearestCenter"]}",
+                      "\Nearest YWCA center: ${item["nearestCenter"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -117,7 +132,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Institute/Organisation: ${post["placeOfWork"]}",
+                      "\Institute/Organisation: ${item["placeOfWork"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -133,7 +148,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                      "\Profession: ${post["profession"]}",
+                      "\Profession: ${item["profession"]}",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
@@ -147,32 +162,35 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Container(
-                      //   margin: const EdgeInsets.only(left: 28, top: 20),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(2000.0),
-                      //     ),
-                      //     boxShadow: [
-                      //       BoxShadow(
-                      //           color: Colors.black.withAlpha(100),
-                      //           blurRadius: 10.0),
-                      //     ],
-                      //   ),
-                      //   width: 120,
-                      //   height: 30,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(
-                      //       horizontal: 0.0,
-                      //       vertical: 0,
-                      //     ),
-                      //     // child:
                       Spacer(),
                       ConstrainedBox(
                         constraints:
                             BoxConstraints.tightFor(width: 120, height: 35),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(item["uid"])
+                                .update({
+                              "firstName": item["firstName"],
+                              "lastName": item["lastName"],
+                              "dateOfBirth": item["dateOfBirth"],
+                              "emailId": item["emailId"],
+                              "gender": item["gender"],
+                              "profession": item["profession"],
+                              "placeOfWork": item["placeOfWork"],
+                              "nearestCenter": item["nearestCenter"],
+                              "interestInMembership":
+                                  item["interestInMembership"],
+                              "uid": item["uid"],
+                              "phoneNumber": item["phoneNumber"],
+                              "memberRole": item["memberRole"],
+                            }).then((value) => print("Approved"));
+                            await FirebaseFirestore.instance
+                                .collection('approval')
+                                .doc(item["uid"])
+                                .delete();
+                          },
                           icon: Icon(
                             Icons.check,
                             color: Colors.white,
@@ -196,38 +214,26 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           label: Text(
                             "Approve",
                             style: TextStyle(
-                                fontFamily: 'montserrat', color: Colors.white),
+                              fontFamily: 'montserrat',
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                       Spacer(flex: 3),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(left: 21, top: 20),
-                      //   decoration: BoxDecoration(
-                      //       borderRadius:
-                      //           BorderRadius.all(Radius.circular(200.0)),
-                      //       boxShadow: [
-                      //         BoxShadow(
-                      //           color: Colors.black.withAlpha(100),
-                      //           blurRadius: 10.0,
-                      //         ),
-                      //       ],
-                      //       color: Colors.white),
-                      //   width: 120,
-                      //   height: 30,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.symmetric(
-                      //       horizontal: 0.0,
-                      //       vertical: 0.0,
-                      //     ),
-                      //     child:
                       ConstrainedBox(
                         constraints:
                             BoxConstraints.tightFor(width: 120, height: 35),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await FirebaseFirestore.instance
+                                .collection('approval')
+                                .doc(item["uid"])
+                                .delete()
+                                .then(
+                                  (value) => print("Rejected"),
+                                );
+                          },
                           icon: Icon(
                             Icons.close,
                             color: Colors.white,
@@ -275,13 +281,13 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   void initState() {
     super.initState();
-    getPostsData();
-    controller.addListener(() {
-      double value = controller.offset / 119;
-
+    userInfo = Provider.of<UserData>(context, listen: false);
+    selectedMenuItemId = menuWithIcon.items[6].id;
+    scrollController.addListener(() {
+      double value = scrollController.offset / 119;
       setState(() {
         topContainer = value;
-        closeTopContainer = controller.offset > 50;
+        closeTopContainer = scrollController.offset > 50;
       });
     });
   }
@@ -289,132 +295,207 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    // final double categoryHeight = size.height * 0.30;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          height: size.height,
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  // top-left corner intersecting circles design
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LilyScriptOne',
-                          fontSize: 18.0,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: widget.onMenuPressed,
-                      ),
-                    ),
-                  ),
-                  PreferredSize(
-                    preferredSize: Size.fromHeight(80),
-                    child: Column(
-                      children: <Widget>[
-                        // Distance from ywca
-                        // or else it will overlap
-                        SizedBox(height: 80),
-                        RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                text: 'Approval ',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  color: Color(0xff333333),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
-                              WidgetSpan(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 2.0,
-                                  ),
-                                  child: Icon(
-                                    Icons.notification_important,
-                                    size: 28,
-                                  ),
-                                ),
-                              ),
-                            ],
+
+    return DrawerScaffold(
+      // appBar: AppBar(), // green app bar
+      drawers: [
+        SideDrawer(
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller, userInfo),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red, menu: menuWithIcon,
+          animation: true,
+          selectedItemId: selectedMenuItemId,
+          onMenuItemSelected: (itemId) {
+            setState(() {
+              selectedMenuItemId = itemId;
+              selectedItem(context, itemId);
+            });
+          },
+        ),
+      ],
+      controller: controller,
+      builder: (context, id) => SafeArea(
+        child: Scaffold(
+          body: Container(
+            height: size.height,
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    // top-left corner intersecting circles design
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: "Search by name",
-                            hintStyle: TextStyle(fontFamily: 'Montserrat'),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.mic,
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: EdgeInsets.zero,
-                            filled: true,
-                            fillColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  controller: controller,
-                  itemCount: itemsData.length,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    double scale = 1.0;
-                    if (topContainer > 0) {
-                      scale = index + 2 - topContainer / 1.3;
-                      if (scale < 0) {
-                        scale = 0;
-                      } else if (scale > 1) {
-                        scale = 1;
-                      }
-                    }
-                    return Opacity(
-                      opacity: scale,
-                      child: Transform(
-                        transform: Matrix4.identity()..scale(scale, scale),
-                        alignment: Alignment.bottomCenter,
-                        child: Align(
-                          heightFactor: 0.8,
-                          alignment: Alignment.topCenter,
-                          child: itemsData[index],
+                          onPressed: () => {
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    PreferredSize(
+                      preferredSize: Size.fromHeight(80),
+                      child: Column(
+                        children: <Widget>[
+                          // Distance from ywca
+                          // or else it will overlap
+                          SizedBox(height: 80),
+                          RichText(
+                            text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyText2,
+                              children: [
+                                TextSpan(
+                                  text: 'Approval ',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    color: Color(0xff333333),
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0,
+                                    ),
+                                    child: Icon(
+                                      Icons.notification_important,
+                                      size: 28,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                searchValue = value;
+                                print("search value: " + searchValue);
+                              });
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Search by name",
+                              hintStyle: TextStyle(fontFamily: 'Montserrat'),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.grey,
+                              ),
+                              suffixIcon: Icon(
+                                Icons.mic,
+                                color: Colors.grey,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: EdgeInsets.zero,
+                              filled: true,
+                              fillColor: Colors.transparent,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: StreamBuilder(
+                    // StreamBuilder is used to get a continuous stream of data from the database
+                    // so any change made to DB is immediately reflected without refreshing the page
+                    stream: FirebaseFirestore.instance
+                        .collection('approval')
+                        .snapshots(),
+
+                    // stream: (searchValue != "")
+                    //     ? FirebaseFirestore.instance
+                    //         .collection('approval')
+                    //         .where(
+                    //           "firstName",
+                    //           isEqualTo: searchValue,
+                    //           // isGreaterThanOrEqualTo: searchValue,
+                    //           // isLessThan: searchValue.substring(
+                    //           //         0, searchValue.length - 1) +
+                    //           //     String.fromCharCode(searchValue
+                    //           //             .codeUnitAt(searchValue.length - 1) +
+                    //           //         1),
+                    //         )
+                    //         .snapshots()
+                    //     : FirebaseFirestore.instance
+                    //         .collection("approval")
+                    //         .snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData) {
+                        return CircularProgressIndicator();
+                      } else {
+                        print(snapshot);
+                        List<dynamic> responseList = snapshot.data.docs;
+                        print(responseList);
+                        // print("search value: " + searchValue);
+
+                        responseList.forEach((post) {
+                          print(post["firstName"]);
+                        });
+                        getPostsData(responseList);
+
+                        return ListView.builder(
+                          controller: scrollController,
+                          itemCount: itemsData.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            double scale = 1.0;
+                            if (topContainer > 0) {
+                              scale = index + 2 - topContainer / 1.3;
+                              if (scale < 0) {
+                                scale = 0;
+                              } else if (scale > 1) {
+                                scale = 1;
+                              }
+                            }
+                            return Opacity(
+                              opacity: scale,
+                              child: Transform(
+                                transform: Matrix4.identity()
+                                  ..scale(scale, scale),
+                                alignment: Alignment.bottomCenter,
+                                child: Align(
+                                  heightFactor: 0.8,
+                                  alignment: Alignment.topCenter,
+                                  child: itemsData[index],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

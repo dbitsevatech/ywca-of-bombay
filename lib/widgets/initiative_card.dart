@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import '../models/initiative.dart';
-import '../screens/initiatives/piya.dart';
+import '../models/Initiative.dart';
+// import '../screens/initiatives/piya.dart';
+import '../screens/initiatives/initiative_details.dart';
 
 final List<Initiative> _allInitiatives = Initiative.allInitiatives();
 
@@ -22,9 +23,16 @@ Widget buildInitiativeCard(BuildContext context, int index) {
       child: InkWell(
         onTap: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Piya()),
-          );
+              context,
+              // MaterialPageRoute(builder: (context) => Piya()),
+              MaterialPageRoute(
+                builder: (context) => InitiativeDetails(
+                  _allInitiatives[index].title,
+                  _allInitiatives[index].description,
+                  _allInitiatives[index].imagePathList,
+                  _allInitiatives[index].imageTitleList,
+                ),
+              ));
         },
         child: Container(
           padding: EdgeInsets.only(right: 100.0),
@@ -70,8 +78,7 @@ Widget buildInitiativeCard(BuildContext context, int index) {
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                  'assets/images/initiatives/' + _allInitiatives[index].image),
+              image: AssetImage(_allInitiatives[index].image),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -95,8 +102,8 @@ class CustomClipPath extends CustomClipper<Path> {
   double screenWidth;
 
   CustomClipPath({
-    @required this.screenHeight,
-    @required this.screenWidth,
+    required this.screenHeight,
+    required this.screenWidth,
   });
   // TODO: make customclippath responsive
   @override

@@ -9,12 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 
 import './authentication/login.dart';
-import '../widgets/admin_drawer.dart';
-import '../widgets/drawer.dart';
-
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/gradient_button.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -35,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       images.forEach((imageUrl) {
         precacheImage(NetworkImage(imageUrl), context);
       });
@@ -68,7 +65,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       title: Text(
                         "YWCA Of Bombay",
                         style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
                             fontSize: 24.0,
                             color: Colors.black87),
                       ),
@@ -81,6 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // TODO: Make the carousel responsive
               // https://pub.dev/packages/introduction_screen
               // https://pub.dev/packages/gooey_carousel
+              // https://pub.dev/packages/intro_slider ***
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
@@ -154,7 +154,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: GradientButton(
                     buttonText: "Let's Go!",
                     screenHeight: _height,
-                    route: 'register',
                     onPressedFunction: () async {
                       var user = await FirebaseAuth.instance.currentUser;
 
@@ -167,7 +166,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         // print(checkuser.data());
                         final userdata = checkuser.data();
                         userInfo.updateAfterAuth(
-                            userdata['uid'],
+                            userdata!['uid'],
                             userdata['firstName'],
                             userdata['lastName'],
                             userdata['dateOfBirth'].toDate(),
@@ -179,13 +178,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             userdata['nearestCenter'],
                             userdata['interestInMembership'],
                             userdata['memberRole']);
-                        if (userdata['memberRole'] == 'none') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MainWidget()));
-                        } else if (userdata['memberRole'] == 'Admin') {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AdminMainWidget()));
-                        }
+                        // if (userdata['memberRole'] == 'none') {
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) => MainWidget()));
+                        // } else if (userdata['memberRole'] == 'Admin') {
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) => AdminMainWidget()));
+                        // }
                       } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(

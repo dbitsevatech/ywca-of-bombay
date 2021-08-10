@@ -1,3 +1,4 @@
+import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +8,7 @@ import './edit_profile.dart';
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
 import '../widgets/gradient_button.dart';
-import '../models/user.dart';
+import '../models/User.dart';
 
 class ViewProfileScreen extends StatefulWidget {
   @override
@@ -16,6 +17,8 @@ class ViewProfileScreen extends StatefulWidget {
 
 class _ViewProfileScreenState extends State<ViewProfileScreen> {
   var userInfo;
+  final DrawerScaffoldController controller = DrawerScaffoldController();
+
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
@@ -39,6 +42,8 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
     var profession = userInfo.getprofession;
     var interestInMembership = userInfo.getinterestInMembership;
 
+    var role = userInfo.getmemberRole;
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -53,7 +58,9 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     title: Text(
                       "YWCA Of Bombay",
                       style: TextStyle(
-                        fontFamily: 'LilyScriptOne',
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
                         fontSize: 18.0,
                         color: Colors.black87,
                       ),
@@ -66,7 +73,11 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                         color: Colors.black,
                         size: 30,
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+
+                        controller.toggle();
+                      },
                     ),
                   ),
                 ),
@@ -118,16 +129,25 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                     children: <Widget>[
                       SizedBox(height: _height * 0.03),
                       //greetings
-                      Container(
-                        child: Text(
-                          'Hello, thank you for submitting your information. You can choose to edit it by clicking below.',
+                      Text(
+                        'Hello $firstName, thanks for submitting your info!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.02),
+                      if (role != "Staff") ...[
+                        Text(
+                          'You can choose to edit this information by clicking the button at the bottom.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontFamily: 'Montserrat',
                           ),
                         ),
-                      ),
+                      ],
                       SizedBox(height: _height * 0.04),
                       //main_body
                       Container(
@@ -172,27 +192,42 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                           color: Color(0x1A49DEE8),
                         ),
                       ),
-                      SizedBox(height: _height * 0.04),
-                      GradientButton(
-                        buttonText: 'Edit Profile',
-                        screenHeight: _height,
-                        route: 'edit_profile',
-                        onPressedFunction: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfileScreen()));
-                        },
-                      ),
                       SizedBox(height: _height * 0.02),
-                      Text(
-                        'Contact the admin if you wish to make changes to your profile',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'Montserrat',
+                      if (role == "Staff") ...[
+                        Text(
+                          'Kindly contact the admin if you wish to make changes to your profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
                         ),
-                      ),
+                      ],
+                      if (role == "Member") ...[
+                        Text(
+                          'Kindly contact the admin for approval AFTER you make changes to your profile',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                          ),
+                        ),
+                      ],
+                      SizedBox(height: _height * 0.02),
+                      if (role != "Staff") ...[
+                        GradientButton(
+                          buttonText: 'Edit Profile',
+                          screenHeight: _height,
+                          onPressedFunction: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditProfileScreen()));
+                          },
+                        )
+                      ],
                       SizedBox(height: _height * 0.02),
                     ],
                   ),
@@ -208,7 +243,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
 
 class DetailText extends StatelessWidget {
   final String text;
-  DetailText({this.text});
+  DetailText({required this.text});
   @override
   Widget build(BuildContext context) {
     return Text(

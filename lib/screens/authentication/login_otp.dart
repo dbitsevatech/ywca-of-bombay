@@ -4,17 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/admin_drawer.dart';
+import '../../models/User.dart';
+import '../../screens/events/user_events.dart';
+import '../../screens/admin/events/admin_events.dart';
+
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
-import '../../models/user.dart';
 
 class LoginOtp extends StatefulWidget {
   final String phoneNumber;
-  final String user;
-  const LoginOtp({this.phoneNumber, this.user});
+  const LoginOtp({required this.phoneNumber});
 
   @override
   _LoginOtpState createState() => _LoginOtpState(phoneNumber);
@@ -29,23 +29,23 @@ class _LoginOtpState extends State<LoginOtp>
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   final String _phoneNumber;
 
-  String _verificationCode;
+  String _verificationCode = "";
   _LoginOtpState(this._phoneNumber);
-  AnimationController _controller;
-  String otp;
+  AnimationController? _controller;
+  String otp = "";
   // Variables
-  Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
-  int _fifthDigit;
-  int _sixthDigit;
+  Size? _screenSize;
+  int _currentDigit = -1;
+  int _firstDigit = -1;
+  int _secondDigit = -1;
+  int _thirdDigit = -1;
+  int _fourthDigit = -1;
+  int _fifthDigit = -1;
+  int _sixthDigit = -1;
 
-  Timer timer;
-  int totalTimeInSeconds;
-  bool _hideResendButton;
+  Timer? timer;
+  int? totalTimeInSeconds;
+  bool? _hideResendButton;
 
   String userName = "";
   bool didReadNotifications = false;
@@ -80,15 +80,20 @@ class _LoginOtpState extends State<LoginOtp>
         (value) async {
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
-            if (userInfo.getmemberRole == 'none') {
+            if (userInfo.getmemberRole == 'Admin') {
+              // TODO: Add Admin events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => AdminEvents()),
                   (route) => false);
-            } else if (userInfo.getmemberRole == 'Admin') {
+            } else {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
           }
@@ -110,7 +115,7 @@ class _LoginOtpState extends State<LoginOtp>
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
     return Padding(
-      padding: EdgeInsets.only(top: _screenSize.height * 0.12),
+      padding: EdgeInsets.only(top: _screenSize!.height * 0.12),
       child: Text(
         "Verification Code",
         textAlign: TextAlign.center,
@@ -168,7 +173,9 @@ class _LoginOtpState extends State<LoginOtp>
                 title: Text(
                   "YWCA Of Bombay",
                   style: TextStyle(
-                    fontFamily: 'LilyScriptOne',
+                    fontFamily: 'LobsterTwo',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                     color: Colors.black87,
                   ),
@@ -194,7 +201,7 @@ class _LoginOtpState extends State<LoginOtp>
         ),
         _getPleaseEnterLabel,
         _getInputField,
-        _hideResendButton ? _getTimerText : _getResendButton,
+        _hideResendButton! ? _getTimerText : _getResendButton,
         _logInButton,
         _getOtpKeyboard
       ],
@@ -206,7 +213,7 @@ class _LoginOtpState extends State<LoginOtp>
     return Container(
       height: 32,
       child: Offstage(
-        offstage: !_hideResendButton,
+        offstage: _hideResendButton!,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -214,7 +221,7 @@ class _LoginOtpState extends State<LoginOtp>
             SizedBox(
               width: 5.0,
             ),
-            OtpTimer(_controller, 15.0, Colors.black)
+            OtpTimer(_controller!, 15.0, Colors.black)
           ],
         ),
       ),
@@ -241,6 +248,8 @@ class _LoginOtpState extends State<LoginOtp>
       ),
       onTap: () {
         // Resend you OTP via API or anything
+        print("resend button pressed!");
+        _verifyPhoneNumber();
       },
     );
   }
@@ -252,8 +261,7 @@ class _LoginOtpState extends State<LoginOtp>
       // Log In Button
       child: GradientButton(
         buttonText: 'Log In',
-        screenHeight: _screenSize.height,
-        route: 'home',
+        screenHeight: _screenSize!.height,
         onPressedFunction: () => _onLoginButtonPressed(),
       ),
     );
@@ -262,6 +270,7 @@ class _LoginOtpState extends State<LoginOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$_phoneNumber',
+      timeout: const Duration(seconds: 120),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await FirebaseAuth.instance
             .signInWithCredential(credential)
@@ -270,13 +279,14 @@ class _LoginOtpState extends State<LoginOtp>
             if (userInfo.getmemberRole == 'none') {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => AdminMainWidget()),
-                  (route) => false);
+              // TODO: Add Admin Events navigation
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
+              //     (route) => false);
             }
           }
         });
@@ -284,7 +294,7 @@ class _LoginOtpState extends State<LoginOtp>
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
       },
-      codeSent: (String verficationID, int resendToken) {
+      codeSent: (String verficationID, int? resendToken) {
         setState(() {
           _verificationCode = verficationID;
         });
@@ -295,14 +305,13 @@ class _LoginOtpState extends State<LoginOtp>
           _verificationCode = verificationID;
         });
       },
-      timeout: Duration(seconds: 120),
     );
   }
 
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
     return Container(
-        height: _screenSize.width - 180,
+        height: _screenSize!.width - 180,
         child: Column(
           children: <Widget>[
             Expanded(
@@ -390,18 +399,18 @@ class _LoginOtpState extends State<LoginOtp>
                       ),
                       onPressed: () {
                         setState(() {
-                          if (_sixthDigit != null) {
-                            _sixthDigit = null;
-                          } else if (_fifthDigit != null) {
-                            _fifthDigit = null;
-                          } else if (_fourthDigit != null) {
-                            _fourthDigit = null;
-                          } else if (_thirdDigit != null) {
-                            _thirdDigit = null;
-                          } else if (_secondDigit != null) {
-                            _secondDigit = null;
-                          } else if (_firstDigit != null) {
-                            _firstDigit = null;
+                          if (_sixthDigit > 0) {
+                            _sixthDigit = -1;
+                          } else if (_fifthDigit > 0) {
+                            _fifthDigit = -1;
+                          } else if (_fourthDigit > 0) {
+                            _fourthDigit = -1;
+                          } else if (_thirdDigit > 0) {
+                            _thirdDigit = -1;
+                          } else if (_secondDigit > 0) {
+                            _secondDigit = -1;
+                          } else if (_firstDigit > 0) {
+                            _firstDigit = -1;
                           }
                         });
                       }),
@@ -425,18 +434,18 @@ class _LoginOtpState extends State<LoginOtp>
           ..addStatusListener((status) {
             if (status == AnimationStatus.dismissed) {
               setState(() {
-                _hideResendButton = !_hideResendButton;
+                _hideResendButton = _hideResendButton;
               });
             }
           });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -449,7 +458,7 @@ class _LoginOtpState extends State<LoginOtp>
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-          width: _screenSize.width,
+          width: _screenSize!.width,
 //        padding:  EdgeInsets.only(bottom: 16.0),
           child: _getInputPart,
         ),
@@ -464,7 +473,9 @@ class _LoginOtpState extends State<LoginOtp>
       height: 45.0,
       alignment: Alignment.center,
       child: Text(
-        digit != null ? digit.toString() : "",
+        // ignore: unnecessary_null_comparison
+        digit != -1 ? digit.toString() : "",
+        // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
           color: Colors.black,
@@ -481,7 +492,8 @@ class _LoginOtpState extends State<LoginOtp>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton(
+      {required String label, required VoidCallback onPressed}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -508,7 +520,8 @@ class _LoginOtpState extends State<LoginOtp>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton(
+      {required Widget label, required VoidCallback onPressed}) {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(40.0),
@@ -529,17 +542,17 @@ class _LoginOtpState extends State<LoginOtp>
   void _setCurrentDigit(int i) {
     setState(() {
       _currentDigit = i;
-      if (_firstDigit == null) {
+      if (_firstDigit == -1) {
         _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
+      } else if (_secondDigit == -1) {
         _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
+      } else if (_thirdDigit == -1) {
         _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
+      } else if (_fourthDigit == -1) {
         _fourthDigit = _currentDigit;
-      } else if (_fifthDigit == null) {
+      } else if (_fifthDigit == -1) {
         _fifthDigit = _currentDigit;
-      } else if (_sixthDigit == null) {
+      } else if (_sixthDigit == -1) {
         _sixthDigit = _currentDigit;
 
         otp = _firstDigit.toString() +
@@ -559,17 +572,17 @@ class _LoginOtpState extends State<LoginOtp>
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {
-    _sixthDigit = null;
-    _fifthDigit = null;
-    _fourthDigit = null;
-    _thirdDigit = null;
-    _secondDigit = null;
-    _firstDigit = null;
+    _sixthDigit = -1;
+    _fifthDigit = -1;
+    _fourthDigit = -1;
+    _thirdDigit = -1;
+    _secondDigit = -1;
+    _firstDigit = -1;
     setState(() {});
   }
 }
@@ -583,7 +596,7 @@ class OtpTimer extends StatelessWidget {
   OtpTimer(this.controller, this.fontSize, this.timeColor);
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     if (duration.inHours > 0) {
       return '${duration.inHours}:${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     }
@@ -591,7 +604,7 @@ class OtpTimer extends StatelessWidget {
   }
 
   Duration get duration {
-    Duration duration = controller.duration;
+    Duration duration = controller.duration!;
     return duration;
   }
 
@@ -599,7 +612,7 @@ class OtpTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
         animation: controller,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Text(
             timerString,
             style: TextStyle(

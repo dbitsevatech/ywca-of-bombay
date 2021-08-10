@@ -18,30 +18,45 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   cupertino_icons: ^1.0.0
-#  firebase_core: ^1.3.0
-#  firebase_auth: ^1.1.2
-#  cloud_firestore: ^1.0.7#
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.1
-  cloud_firestore: ^0.16.0+1
-  pinput: ^0.2.6
-  kf_drawer: ^1.1.1
-  carousel_slider: ^3.0.0
-  flutter_swiper: ^1.1.6
-  search_widget: ^1.0.2
+  firebase_core: ^1.3.0
+  firebase_auth: ^1.4.1
+  cloud_firestore: ^2.2.2
+  #  cloud_firestore: ^1.0.7
+  #  firebase_core: ^0.7.0
+  #  firebase_auth: ^0.20.1
+  #  cloud_firestore: ^0.16.0+1
+  kf_drawer: ^1.1.2
+  drawerbehavior: ^2.1.2
+  carousel_slider: ^4.0.0
   provider: ^5.0.0
-  auto_size_text: ^2.1.0
+  auto_size_text: ^3.0.0-nullsafety.0
+  #  search_widget: ^1.0.2
+  #  pinput: ^1.2.0
+
+  image_picker: ^0.7.4
+  firebase_storage: ^8.0.5
+  flutter_easyloading: ^3.0.0
+  date_time_picker: "^2.1.0"
+
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.9.0
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -65,18 +80,79 @@ flutter:
     - assets/images/contact_us/hostel.png
     - assets/images/contact_us/office.png
     - assets/images/events/christmas.jpg
-    - assets/images/initiatives/img1.jpg
-    - assets/images/initiatives/img2.jpg
-    - assets/images/initiatives/img3.jpg
-    - assets/images/initiatives/img4.jpg
-    - assets/images/initiatives/img5.jpg
-    - assets/images/initiatives/img6.jpg
-    - assets/images/initiatives/img7.jpg
-    - assets/images/initiatives/img8.jpg
-    - assets/images/initiatives/img9.jpg
-    - assets/images/initiatives/img10.jpg
-    - assets/images/initiatives/img11.jpg
-    - assets/images/initiatives/img12.jpg
+    - assets/images/about_us/membership.png
+    - assets/images/about_us/Ywca_spotlight_1.jpg
+    - assets/images/about_us/Ywca_spotlight_2.jpg
+    - assets/images/about_us/Ywca_spotlight_3.jpg
+    - assets/images/about_us/Ywca_spotlight_4.jpg
+    - assets/images/about_us/Ywca_spotlight_5.jpg
+    - assets/images/initiatives/piya/1-walk-for-freedom.jpeg
+    - assets/images/initiatives/piya/2-walkathon.jpg
+    - assets/images/initiatives/piya/3-a-trek-to-kaldurg-fort.jpg
+    - assets/images/initiatives/piya/4-interschool-competition.jpeg
+    - assets/images/initiatives/piya/5-dance-therapy-by-piya.jpeg
+    - assets/images/initiatives/piya/6-piya.jpeg
+    - assets/images/initiatives/asha_kiran/1-annual-day.jpg
+    - assets/images/initiatives/asha_kiran/2-sports-day.jpg
+    - assets/images/initiatives/asha_kiran/3-training-of-puppeteers.png
+    - assets/images/initiatives/asha_kiran/4-workshop-on-muslim-legal-rights.png
+    - assets/images/initiatives/asha_kiran/5-cartoon-making-workshop.png
+    - assets/images/initiatives/asha_kiran/6-self-defence-training.jpg
+    - assets/images/initiatives/asha_kiran/7-annual-day-celebration.jpeg
+    - assets/images/initiatives/pasi/1-panel-discussion-on-women-and-social-media.jpg
+    - assets/images/initiatives/pasi/2-paralegal-training.png
+    - assets/images/initiatives/pasi/3-session-on-rti.jpg
+    - assets/images/initiatives/pasi/4-life-and-struggle-of-transgender.png
+    - assets/images/initiatives/pasi/5-childrens-day-celebration.jpg
+    - assets/images/initiatives/wdu/1-nutritious-food-competition.jpeg
+    - assets/images/initiatives/wdu/2-childrens-programme.jpeg
+    - assets/images/initiatives/wdu/3-bakery-certificate-competition.jpeg
+    - assets/images/initiatives/wdu/4-debate-competition.png
+    - assets/images/initiatives/wdu/5-bakery-practical.jpg
+    - assets/images/initiatives/wdu/6-rally-on-human-rights-awareness.jpg
+    - assets/images/initiatives/wdu/7-annual-sports-day.jpg
+    - assets/images/initiatives/wdu/8-bunny-tamtola.jpg
+    - assets/images/initiatives/wdu/9-peace-march.jpg
+    - assets/images/initiatives/wdu/10-childrens-camp.jpeg
+    - assets/images/initiatives/wdu/11-disaster-management-training.jpeg
+    - assets/images/initiatives/wdu/12-anand-mela.jpeg
+    - assets/images/initiatives/ywca_hostels/1-abh-in-night.jpg
+    - assets/images/initiatives/ywca_hostels/2-ddh.jpg
+    - assets/images/initiatives/ywca_hostels/3-national-festival-celebration.jpg
+    - assets/images/initiatives/ywca_hostels/4-dining-room-lwh.png
+    - assets/images/initiatives/ywca_hostels/5-ddh-lounge.jpg
+    - assets/images/initiatives/ywca_hostels/6-lwh-building.jpeg
+    - assets/images/initiatives/public_relations/1-staff-training.jpeg
+    - assets/images/initiatives/public_relations/2-music-around-the-world.jpg
+    - assets/images/initiatives/public_relations/3-training-on-gst.jpg
+    - assets/images/initiatives/shelter_homes/1-inauguration-of-ummeed-shelter-home.jpeg
+    - assets/images/initiatives/shelter_homes/2-inauguration-of-ummeed-shelter-home.jpg
+    - assets/images/initiatives/shelter_homes/3-ashraya.jpeg
+    - assets/images/initiatives/memberships/1-ekta.jpeg
+    - assets/images/initiatives/memberships/2-evening-of-carols.jpg
+    - assets/images/initiatives/memberships/3-sacred-music.jpg
+    - assets/images/initiatives/memberships/4-world-membership-day.jpg
+    - assets/images/initiatives/memberships/5-christmas-programme.jpeg
+    - assets/images/initiatives/international_centre/1-ic-review.jpg
+    - assets/images/initiatives/international_centre/2-family-room.png
+    - assets/images/initiatives/international_centre/3-waiting-room.png
+    - assets/images/initiatives/international_centre/4-reception.png
+    - assets/images/initiatives/spiritual_emphasis/1-world-day-of-prayer.jpg
+    - assets/images/initiatives/spiritual_emphasis/2-ywca-n-ymca-week-of-prayer.jpg
+    - assets/images/initiatives/spiritual_emphasis/3-week-of-prayer.jpeg
+    - assets/images/initiatives/general/1-paralegal-training.jpg
+    - assets/images/initiatives/general/2-agm.jpg
+    - assets/images/initiatives/general/3-best-ngo-award.jpg
+    - assets/images/initiatives/general/4-best-ngo-award.jpg
+    - assets/images/success_stories/1-success-stories.png
+    - assets/images/success_stories/2-a-slice-of-support.png
+    - assets/images/success_stories/3-a-stitch-in-time.png
+    - assets/images/success_stories/4-beauty-with-brains.png
+    - assets/images/success_stories/5-food-for-thought.png
+    - assets/images/success_stories/6-hair-tales.png
+    - assets/images/success_stories/7-nursing-aid.png
+    - assets/images/success_stories/8-promoting-education.png
+    - assets/images/success_stories/9-aasra.png
 
   fonts:
     - family: Montserrat
@@ -87,9 +163,9 @@ flutter:
     - family: RacingSansOne
       fonts:
         - asset: assets/fonts/RacingSansOne-Regular.ttf
-    - family: LilyScriptOne
+    - family: LobsterTwo
       fonts:
-        - asset: assets/fonts/LilyScriptOne-Regular.ttf
+        - asset: assets/fonts/LobsterTwo-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

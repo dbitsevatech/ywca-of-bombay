@@ -1,12 +1,14 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../models/user.dart';
 import 'package:provider/provider.dart';
+
+import '../../models/User.dart';
+import '../../screens/events/user_events.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/drawer.dart';
 import '../../widgets/gradient_button.dart';
 
 class RegisterOtp extends StatefulWidget {
@@ -22,16 +24,16 @@ class RegisterOtp extends StatefulWidget {
   final String interestInMembership;
 
   const RegisterOtp({
-    this.firstName,
-    this.lastName,
-    this.dateOfBirth,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.profession,
-    this.placeOfWork,
-    this.nearestCenter,
-    this.interestInMembership,
+    required this.firstName,
+    required this.lastName,
+    required this.dateOfBirth,
+    required this.emailId,
+    required this.phoneNumber,
+    required this.gender,
+    required this.profession,
+    required this.placeOfWork,
+    required this.nearestCenter,
+    required this.interestInMembership,
   });
 
   @override
@@ -65,33 +67,34 @@ class _RegisterOtpState extends State<RegisterOtp>
   final String nearestCenter;
   final String interestInMembership;
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
-  String _verificationCode;
+  String _verificationCode = "";
   _RegisterOtpState(
-      this.firstName,
-      this.lastName,
-      this.dateOfBirth,
-      this.emailId,
-      this.phoneNumber,
-      this.gender,
-      this.profession,
-      this.placeOfWork,
-      this.nearestCenter,
-      this.interestInMembership);
-  AnimationController _controller;
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.profession,
+    this.placeOfWork,
+    this.nearestCenter,
+    this.interestInMembership,
+  );
+  AnimationController? _controller;
   var otp;
   // Variables
-  Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
-  int _fifthDigit;
-  int _sixthDigit;
+  Size? _screenSize;
+  int? _currentDigit;
+  int? _firstDigit;
+  int? _secondDigit;
+  int? _thirdDigit;
+  int? _fourthDigit;
+  int? _fifthDigit;
+  int? _sixthDigit;
 
-  Timer timer;
-  int totalTimeInSeconds;
-  bool _hideResendButton;
+  Timer? timer;
+  int? totalTimeInSeconds;
+  bool? _hideResendButton;
 
   String userName = "";
   bool didReadNotifications = false;
@@ -119,20 +122,34 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   void _onRegisterButtonPressed() async {
     try {
+      print("register button pressed");
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
               verificationId: _verificationCode, smsCode: otp))
           .then((value) async {
         final snapShot = await FirebaseFirestore.instance
             .collection('users')
-            .doc(value.user.uid)
+            .doc(value.user!.uid)
             .get();
+        print("line 131");
+        print("register OTP page: ");
+        print(firstName);
+        print(lastName);
+        print(dateOfBirth);
+        print(emailId);
+        print(phoneNumber);
+        print(gender);
+        print(profession);
+        print(placeOfWork);
+        print(nearestCenter);
+        print(interestInMembership);
 
-        if (snapShot == null || !snapShot.exists) {
+        if (!snapShot.exists) {
+          // if (snapShot == null || !snapShot.exists) {
           print(value.user);
-          print(value.user.uid);
+          print(value.user!.uid);
           Map<String, dynamic> data = {
-            "uid": value.user.uid,
+            "uid": value.user!.uid,
             "firstName": firstName,
             "lastName": lastName,
             "dateOfBirth": dateOfBirth,
@@ -143,10 +160,11 @@ class _RegisterOtpState extends State<RegisterOtp>
             "placeOfWork": placeOfWork,
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
-            "memberRole": "none"
+            "memberRole": "NonMember"
           };
+          print("data map: " + data.toString());
           userInfo.updateAfterAuth(
-              value.user.uid,
+              value.user!.uid,
               firstName,
               lastName,
               dateOfBirth,
@@ -157,10 +175,10 @@ class _RegisterOtpState extends State<RegisterOtp>
               placeOfWork,
               nearestCenter,
               interestInMembership,
-              "none");
-          CollectionReference users =
+              "NonMember");
+          CollectionReference<Map<String, dynamic>> users =
               FirebaseFirestore.instance.collection('users');
-          users.doc(value.user.uid).set(data);
+          users.doc(value.user!.uid).set(data);
 
           FirebaseFirestore.instance.collection("users").get().then(
             (querySnapshot) {
@@ -171,7 +189,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           );
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => MainWidget()),
+              MaterialPageRoute(builder: (context) => Events()),
               (route) => false);
         } else {
           print("user already registered with this number");
@@ -189,7 +207,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
     return Padding(
-      padding: EdgeInsets.only(top: _screenSize.height * 0.12),
+      padding: EdgeInsets.only(top: _screenSize!.height * 0.12),
       child: Text(
         "Verification Code",
         textAlign: TextAlign.center,
@@ -221,12 +239,12 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _otpTextField(_firstDigit),
-        _otpTextField(_secondDigit),
-        _otpTextField(_thirdDigit),
-        _otpTextField(_fourthDigit),
-        _otpTextField(_fifthDigit),
-        _otpTextField(_sixthDigit),
+        _otpTextField(_firstDigit!),
+        _otpTextField(_secondDigit!),
+        _otpTextField(_thirdDigit!),
+        _otpTextField(_fourthDigit!),
+        _otpTextField(_fifthDigit!),
+        _otpTextField(_sixthDigit!),
       ],
     );
   }
@@ -247,7 +265,9 @@ class _RegisterOtpState extends State<RegisterOtp>
                 title: Text(
                   "YWCA Of Bombay",
                   style: TextStyle(
-                    fontFamily: 'LilyScriptOne',
+                    fontFamily: 'LobsterTwo',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                     fontSize: 18.0,
                     color: Colors.black87,
                   ),
@@ -274,7 +294,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         // _getVerificationCodeLabel,
         _getPleaseEnterLabel,
         _getInputField,
-        _hideResendButton ? _getTimerText : _getResendButton,
+        _hideResendButton! ? _getTimerText : _getResendButton,
         _registerButton,
         _getOtpKeyboard
       ],
@@ -286,7 +306,7 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Container(
       height: 32,
       child: Offstage(
-        offstage: !_hideResendButton,
+        offstage: _hideResendButton!,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -294,7 +314,7 @@ class _RegisterOtpState extends State<RegisterOtp>
             SizedBox(
               width: 5.0,
             ),
-            OtpTimer(_controller, 15.0, Colors.black)
+            OtpTimer(_controller!, 15.0, Colors.black)
           ],
         ),
       ),
@@ -320,6 +340,8 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
       onTap: () {
         // Resend you OTP via API or anything
+        print("resend button pressed!");
+        _verifyPhoneNumber();
       },
     );
   }
@@ -331,8 +353,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       // Register Button
       child: GradientButton(
         buttonText: 'Register',
-        screenHeight: _screenSize.height,
-        route: 'register_otp',
+        screenHeight: _screenSize!.height,
         onPressedFunction: () {
           _onRegisterButtonPressed();
         },
@@ -343,40 +364,96 @@ class _RegisterOtpState extends State<RegisterOtp>
   _verifyPhoneNumber() async {
     print(phoneNumber);
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91$phoneNumber',
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
-            if (value.user != null) {
+      phoneNumber: '+91$phoneNumber',
+      timeout: const Duration(seconds: 120),
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) async {
+          if (value.user != null) {
+            final snapShot = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(value.user!.uid)
+                .get();
+            print("line 131");
+            print("register OTP page: ");
+            print(firstName);
+            print(lastName);
+            print(dateOfBirth);
+            print(emailId);
+            print(phoneNumber);
+            print(gender);
+            print(profession);
+            print(placeOfWork);
+            print(nearestCenter);
+            print(interestInMembership);
+
+            if (!snapShot.exists) {
+              // if (snapShot == null || !snapShot.exists) {
+              print(value.user);
+              print(value.user!.uid);
+              Map<String, dynamic> data = {
+                "uid": value.user!.uid,
+                "firstName": firstName,
+                "lastName": lastName,
+                "dateOfBirth": dateOfBirth,
+                "emailId": emailId,
+                "phoneNumber": phoneNumber,
+                "gender": gender,
+                "profession": profession,
+                "placeOfWork": placeOfWork,
+                "nearestCenter": nearestCenter,
+                "interestInMembership": interestInMembership,
+                "memberRole": "NonMember"
+              };
+              print("data map: " + data.toString());
+              userInfo.updateAfterAuth(
+                value.user!.uid,
+                firstName,
+                lastName,
+                dateOfBirth,
+                emailId,
+                phoneNumber,
+                gender,
+                profession,
+                placeOfWork,
+                nearestCenter,
+                interestInMembership,
+                "NonMember",
+              );
+              CollectionReference<Map<String, dynamic>> users =
+                  FirebaseFirestore.instance.collection('users');
+              users.doc(value.user!.uid).set(data);
+
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MainWidget()),
+                  MaterialPageRoute(builder: (context) => Events()),
                   (route) => false);
             }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print(e.message);
-        },
-        codeSent: (String verficationID, int resendToken) {
-          setState(() {
-            _verificationCode = verficationID;
-          });
-          print("code sent. verification id = $_verificationCode");
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 120));
+          }
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print(e.message);
+      },
+      codeSent: (String verficationID, int? resendToken) {
+        setState(() {
+          _verificationCode = verficationID;
+        });
+        print("code sent. verification id = $_verificationCode");
+      },
+      codeAutoRetrievalTimeout: (String verificationID) {
+        setState(() {
+          _verificationCode = verificationID;
+        });
+      },
+    );
   }
 
   // Returns "Otp" keyboard
   get _getOtpKeyboard {
     return Container(
-      height: _screenSize.width - 180,
+      height: _screenSize!.width - 180,
       child: Column(
         children: <Widget>[
           Expanded(
@@ -512,18 +589,18 @@ class _RegisterOtpState extends State<RegisterOtp>
           ..addStatusListener((status) {
             if (status == AnimationStatus.dismissed) {
               setState(() {
-                _hideResendButton = !_hideResendButton;
+                _hideResendButton = _hideResendButton;
               });
             }
           });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -536,7 +613,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-          width: _screenSize.width,
+          width: _screenSize!.width,
 //        padding:  EdgeInsets.only(bottom: 16.0),
           child: _getInputPart,
         ),
@@ -551,7 +628,9 @@ class _RegisterOtpState extends State<RegisterOtp>
       height: 45.0,
       alignment: Alignment.center,
       child: Text(
+        // ignore: unnecessary_null_comparison
         digit != null ? digit.toString() : "",
+        // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
           color: Colors.black,
@@ -568,7 +647,8 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton(
+      {required String label, required VoidCallback onPressed}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -595,7 +675,8 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton(
+      {required Widget label, required VoidCallback onPressed}) {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(40.0),
@@ -646,8 +727,8 @@ class _RegisterOtpState extends State<RegisterOtp>
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!
+        .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {
@@ -670,7 +751,7 @@ class OtpTimer extends StatelessWidget {
   OtpTimer(this.controller, this.fontSize, this.timeColor);
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller.duration! * controller.value;
     if (duration.inHours > 0) {
       return '${duration.inHours}:${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     }
@@ -678,7 +759,7 @@ class OtpTimer extends StatelessWidget {
   }
 
   Duration get duration {
-    Duration duration = controller.duration;
+    Duration duration = controller.duration!;
     return duration;
   }
 
@@ -686,7 +767,7 @@ class OtpTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: controller,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Text(
           timerString,
           style: TextStyle(

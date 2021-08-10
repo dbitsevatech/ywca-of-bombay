@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../models/user.dart';
+import '../../models/User.dart';
 import 'package:provider/provider.dart';
 import 'login_otp.dart';
 import 'register.dart';
@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   var userInfo;
-  String phoneNumber;
+  String phoneNumber = "";
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
@@ -91,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
           userdata['nearestCenter'],
           userdata['interestInMembership'],
           userdata['memberRole']);
-
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -127,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         title: Text(
                           "YWCA Of Bombay",
                           style: TextStyle(
-                            fontFamily: 'LilyScriptOne',
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
                             fontSize: 18.0,
                             color: Colors.black87,
                           ),
@@ -218,8 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 16,
                             letterSpacing: 2,
                           ),
-                          validator: (String value) {
-                            if (value.isEmpty)
+                          validator: ( value) {
+                            if (value!.isEmpty)
                               return 'Mobile number is required';
                             else if (!RegExp(r"^\d{10}$").hasMatch(value))
                               return 'Please enter a valid mobile number';
@@ -255,12 +256,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         GradientButton(
                           buttonText: 'Login',
                           screenHeight: _height,
-                          route: 'login_otp',
                           onPressedFunction: () async {
-                            if (!_formKey.currentState.validate()) {
+                            if (!_formKey.currentState!.validate()) {
                               return;
                             }
-                            _formKey.currentState.save();
+
+                            _formKey.currentState!.save();
                             _onLoginButtonPressed(context, phoneNumber);
                           },
                         ),
