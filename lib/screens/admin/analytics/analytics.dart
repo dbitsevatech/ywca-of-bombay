@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   List<Widget> itemsData = [];
 
+  // void getPostsData(List<dynamic> responseList) {
   void getPostsData() {
     List<dynamic> responseList = DATA;
     List<Widget> listItems = [];
@@ -288,7 +290,26 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
+                  child:
+                      // StreamBuilder(
+                      //   stream: FirebaseFirestore.instance
+                      //       .collection("approval")
+                      //       .snapshots(),
+                      //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      //     if (!snapshot.hasData) {
+                      //       return CircularProgressIndicator();
+                      //     } else {
+                      //       print(snapshot);
+                      //       List<dynamic> responseList = snapshot.data.docs;
+                      //       print(responseList);
+                      //       // print("search value: " + searchValue);
+
+                      //       responseList.forEach((post) {
+                      //         print(post["firstName"]);
+                      //       });
+                      //       getPostsData(responseList);
+                      //       return
+                      ListView.builder(
                     controller: scrollController,
                     itemCount: itemsData.length,
                     physics: BouncingScrollPhysics(),
@@ -316,6 +337,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       );
                     },
                   ),
+                  //     ;}
+                  //   },
+                  // ),
                 ),
               ],
             ),

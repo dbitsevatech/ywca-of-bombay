@@ -21,12 +21,15 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
+  String searchValue = '';
 
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
 
   List<Widget> itemsData = [];
+  List filteredItemsSData = [];
+  bool isSearching = false;
 
   Future getPostsData(List<dynamic> responseList) async {
     // void getPostsData() async {
@@ -388,6 +391,12 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           ),
                           SizedBox(height: 5),
                           TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                searchValue = value;
+                                print("search value: " + searchValue);
+                              });
+                            },
                             decoration: InputDecoration(
                               hintText: "Search by name",
                               hintStyle: TextStyle(fontFamily: 'Montserrat'),
@@ -415,9 +424,29 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 ),
                 Expanded(
                   child: StreamBuilder(
+                    // StreamBuilder is used to get a continuous stream of data from the database
+                    // so any change made to DB is immediately reflected without refreshing the page
                     stream: FirebaseFirestore.instance
                         .collection('approval')
                         .snapshots(),
+
+                    // stream: (searchValue != "")
+                    //     ? FirebaseFirestore.instance
+                    //         .collection('approval')
+                    //         .where(
+                    //           "firstName",
+                    //           isEqualTo: searchValue,
+                    //           // isGreaterThanOrEqualTo: searchValue,
+                    //           // isLessThan: searchValue.substring(
+                    //           //         0, searchValue.length - 1) +
+                    //           //     String.fromCharCode(searchValue
+                    //           //             .codeUnitAt(searchValue.length - 1) +
+                    //           //         1),
+                    //         )
+                    //         .snapshots()
+                    //     : FirebaseFirestore.instance
+                    //         .collection("approval")
+                    //         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
@@ -425,6 +454,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         print(snapshot);
                         List<dynamic> responseList = snapshot.data.docs;
                         print(responseList);
+                        // print("search value: " + searchValue);
 
                         responseList.forEach((post) {
                           print(post["firstName"]);
