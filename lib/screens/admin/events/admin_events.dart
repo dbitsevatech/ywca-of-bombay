@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'admin_event_details.dart';
 import 'admin_edit_event.dart';
 import 'admin_new_event.dart';
-import '../../../drawers_constants/user_drawer.dart';
+
+import '../../../drawers_constants/admin_drawer.dart';
+import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
 
@@ -18,6 +22,7 @@ class AdminEvents extends StatefulWidget {
 class _AdminEventsState extends State<AdminEvents> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+  var userInfo;
 
   // conversion of event date to string for displaying
   String readEventDate(Timestamp eventDate) {
@@ -29,6 +34,7 @@ class _AdminEventsState extends State<AdminEvents> {
   @override
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
+    userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
   }
 
@@ -39,18 +45,20 @@ class _AdminEventsState extends State<AdminEvents> {
       // appBar: AppBar(), // green app bar
       drawers: [
         SideDrawer(
-          percentage: 0.75,
-          menu: menuWithIcon,
+          percentage: 0.75, // main screen height proportion
+          headerView: header(context, userInfo),
+          footerView: footer(context, controller, userInfo),
+          color: successStoriesCardBgColor,
+          selectorColor: Colors.red, menu: menuWithIcon,
           animation: true,
-          color: Theme.of(context).primaryColor,
           selectedItemId: selectedMenuItemId,
           onMenuItemSelected: (itemId) {
             setState(() {
               selectedMenuItemId = itemId;
-              selectedItem(itemId);
+              selectedItem(context, itemId);
             });
           },
-        )
+        ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(
@@ -213,14 +221,14 @@ class _AdminEventsState extends State<AdminEvents> {
                     child: ListTile(
                       // Event image
                       leading: ClipRRect(
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(10.0)), //add border radius here
-                          child: Image.network(
-                            document['eventImageUrl'],
-                            fit: BoxFit.cover,
-                            width: 120,
-                          ), //add image location here
-                        ),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(10.0)), //add border radius here
+                        child: Image.network(
+                          document['eventImageUrl'],
+                          fit: BoxFit.cover,
+                          width: 120,
+                        ), //add image location here
+                      ),
                       // Event date and time
                       title: Text(
                         'Date:' +
@@ -425,28 +433,6 @@ class _AdminEventsState extends State<AdminEvents> {
         }
       },
     );
-  }
-
-  void selectedItem(int index) {
-    Navigator.of(context).pop();
-
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, "/about_us");
-        break;
-      case 1:
-        Navigator.pushNamed(context, "/events");
-        break;
-      case 2:
-        Navigator.pushNamed(context, "/initiatives");
-        break;
-      case 3:
-        Navigator.pushNamed(context, "/success_stories");
-        break;
-      case 4:
-        Navigator.pushNamed(context, "/contact_us");
-        break;
-    }
   }
 }
 

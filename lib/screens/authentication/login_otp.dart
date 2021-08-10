@@ -4,11 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 import '../../models/User.dart';
 import '../../screens/events/user_events.dart';
+import '../../screens/admin/events/admin_events.dart';
 
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
@@ -88,6 +86,10 @@ class _LoginOtpState extends State<LoginOtp>
               //     context,
               //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
               //     (route) => false);
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => AdminEvents()),
+                  (route) => false);
             } else {
               Navigator.pushAndRemoveUntil(
                   context,

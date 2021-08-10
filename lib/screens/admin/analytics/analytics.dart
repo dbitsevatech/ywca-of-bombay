@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'constants.dart';
 
-import '../../../drawers_constants/user_drawer.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
+import '../../../drawers_constants/admin_drawer.dart';
+import '../../../models/User.dart';
 
 // ignore: must_be_immutable
 class AnalyticsScreen extends StatefulWidget {
@@ -26,6 +29,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   List<Widget> itemsData = [];
 
+  // void getPostsData(List<dynamic> responseList) {
   void getPostsData() {
     List<dynamic> responseList = DATA;
     List<Widget> listItems = [];
@@ -135,6 +139,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   void initState() {
     super.initState();
+    userInfo = Provider.of<UserData>(context, listen: false);
+    selectedMenuItemId = menuWithIcon.items[5].id;
     getPostsData();
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
@@ -157,8 +163,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           headerView: header(context, userInfo),
           footerView: footer(context, controller, userInfo),
           color: successStoriesCardBgColor,
-          selectorColor: Colors.red,
-          menu: menuWithIcon,
+          selectorColor: Colors.red, menu: menuWithIcon,
           animation: true,
           selectedItemId: selectedMenuItemId,
           onMenuItemSelected: (itemId) {
@@ -167,7 +172,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               selectedItem(context, itemId);
             });
           },
-        )
+        ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(
@@ -285,7 +290,26 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
+                  child:
+                      // StreamBuilder(
+                      //   stream: FirebaseFirestore.instance
+                      //       .collection("approval")
+                      //       .snapshots(),
+                      //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      //     if (!snapshot.hasData) {
+                      //       return CircularProgressIndicator();
+                      //     } else {
+                      //       print(snapshot);
+                      //       List<dynamic> responseList = snapshot.data.docs;
+                      //       print(responseList);
+                      //       // print("search value: " + searchValue);
+
+                      //       responseList.forEach((post) {
+                      //         print(post["firstName"]);
+                      //       });
+                      //       getPostsData(responseList);
+                      //       return
+                      ListView.builder(
                     controller: scrollController,
                     itemCount: itemsData.length,
                     physics: BouncingScrollPhysics(),
@@ -313,6 +337,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       );
                     },
                   ),
+                  //     ;}
+                  //   },
+                  // ),
                 ),
               ],
             ),

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
-import '../../drawers_constants/user_drawer.dart';
+import '../../drawers_constants/user_drawer.dart' as UserDrawer;
+import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
@@ -25,34 +26,54 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   void initState() {
-    selectedMenuItemId = menuWithIcon.items[4].id;
+    selectedMenuItemId = UserDrawer.menuWithIcon.items[4].id;
     userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var role =
+        userInfo.getmemberRole; // to identify if user is admin or other role
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     print("item: $selectedMenuItemId");
     return DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
-        SideDrawer(
-          percentage: 0.75, // main screen height proportion
-          headerView: header(context, userInfo),
-          footerView: footer(context, controller, userInfo),
-          color: successStoriesCardBgColor,
-          selectorColor: Colors.red, menu: menuWithIcon,
-          animation: true,
-          selectedItemId: selectedMenuItemId,
-          onMenuItemSelected: (itemId) {
-            setState(() {
-              selectedMenuItemId = itemId;
-              selectedItem(context, itemId);
-            });
-          },
-        )
+        (role == "Admin")
+            ? // ADMIN DRAWER
+            SideDrawer(
+                percentage: 0.75, // main screen height proportion
+                headerView: AdminDrawer.header(context, userInfo),
+                footerView: AdminDrawer.footer(context, controller, userInfo),
+                color: successStoriesCardBgColor,
+                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                animation: true,
+                selectedItemId: selectedMenuItemId,
+                onMenuItemSelected: (itemId) {
+                  setState(() {
+                    selectedMenuItemId = itemId;
+                    AdminDrawer.selectedItem(context, itemId);
+                  });
+                },
+              )
+            : // DRAWER FOR OTHER ROLES
+            SideDrawer(
+                percentage: 0.75, // main screen height proportion
+                headerView: UserDrawer.header(context, userInfo),
+                footerView: UserDrawer.footer(context, controller, userInfo),
+                color: successStoriesCardBgColor,
+                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                animation: true,
+                selectedItemId: selectedMenuItemId,
+                onMenuItemSelected: (itemId) {
+                  setState(() {
+                    selectedMenuItemId = itemId;
+                    UserDrawer.selectedItem(context, itemId);
+                  });
+                },
+              ),
       ],
       controller: controller,
       builder: (context, id) => SafeArea(
