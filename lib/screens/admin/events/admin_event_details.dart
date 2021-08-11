@@ -166,26 +166,27 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
-                              child: Stack(
-                                children: <Widget>[
+                              child:
+                                  // Stack(
+                                  //   children: <Widget>[
                                   GestureDetector(
-                                    child: Image.network(
-                                      item,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
+                                child: Image.network(
+                                  item,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ZoomImageNetwork(item),
                                     ),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ZoomImageNetwork(item),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
+                                  );
+                                },
                               ),
+                              //   ],
+                              // ),
                             ),
                           ),
                         ),

@@ -11,7 +11,7 @@ class ZoomImageAsset extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        backgroundColor: Colors.white.withOpacity(0.05),
+        backgroundColor: Colors.white.withOpacity(0.00),
       ),
       body: Container(
         child: PhotoView(
