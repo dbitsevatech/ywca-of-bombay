@@ -13,6 +13,7 @@ import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
+import '../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class AboutUs extends StatefulWidget {
@@ -189,11 +190,24 @@ class _AboutUsState extends State<AboutUs> {
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(30.0),
                                               ),
-                                              child: Image(
-                                                image: AssetImage(pathOfImage),
-                                                fit: BoxFit.cover,
-                                                width: double.infinity,
-                                                height: 160,
+                                              child: GestureDetector(
+                                                child: Image(
+                                                  image:
+                                                      AssetImage(pathOfImage),
+                                                  fit: BoxFit.cover,
+                                                  width: double.infinity,
+                                                  height: 160,
+                                                ),
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ZoomImageAsset(
+                                                              pathOfImage),
+                                                    ),
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),

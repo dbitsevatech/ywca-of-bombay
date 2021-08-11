@@ -1,11 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import '../../../widgets/blue_bubble_design.dart';
-import 'package:intl/intl.dart';
 import '../../../widgets/constants.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class AdminEventDetailPage extends StatefulWidget {
@@ -166,10 +168,21 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                               ),
                               child: Stack(
                                 children: <Widget>[
-                                  Image.network(
-                                    item,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
+                                  GestureDetector(
+                                    child: Image.network(
+                                      item,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ZoomImageNetwork(item),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),

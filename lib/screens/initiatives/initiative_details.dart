@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../../widgets/blue_bubble_design.dart';
+import '../../widgets/zoom_image.dart';
 
 class InitiativeDetails extends StatefulWidget {
   final String title;
@@ -131,11 +131,22 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(30.0),
                                 ),
-                                child: Image(
-                                  image: AssetImage(pathOfImage),
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  height: 200,
+                                child: GestureDetector(
+                                  child: Image(
+                                    image: AssetImage(pathOfImage),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: 200,
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ZoomImageAsset(pathOfImage),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
