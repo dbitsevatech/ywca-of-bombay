@@ -202,9 +202,10 @@ class _AboutUsState extends State<AboutUs> {
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ZoomImageAsset(
-                                                                pathOfImage)),
+                                                      builder: (context) =>
+                                                          ZoomImageAsset(
+                                                              pathOfImage),
+                                                    ),
                                                   );
                                                 },
                                               ),
