@@ -148,6 +148,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
+                      // height: _height * 0.7,
                       height: _height * 0.7,
                       child: DotPaginationSwiper.builder(
                         itemCount: titles.length,
@@ -261,8 +262,8 @@ class ColorDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? color = this.color;
-    // Color? borderColor = this.borderColor;
-    Color borderColor = this.borderColor!;
+    // // Color? borderColor = this.borderColor;
+    // Color borderColor = this.borderColor!;
     double? radius = this.radius;
 
     return Padding(
@@ -274,10 +275,10 @@ class ColorDot extends StatelessWidget {
           shape: BoxShape.circle,
           color: color,
           border: Border.all(
-            width: 0.8,
-            // color: borderColor!,
-            color: borderColor,
-          ),
+              // width: 0.8,
+              // // color: borderColor!,
+              // color: borderColor,
+              ),
         ),
       ),
     );
@@ -286,9 +287,11 @@ class ColorDot extends StatelessWidget {
 
 @immutable
 class DotPagination extends StatelessWidget {
-  const DotPagination(
-      {Key? key, required this.itemCount, required this.activeIndex})
-      : assert(activeIndex >= 0),
+  const DotPagination({
+    Key? key,
+    required this.itemCount,
+    required this.activeIndex,
+  })  : assert(activeIndex >= 0),
         assert(activeIndex < itemCount),
         super(key: key);
 
@@ -308,7 +311,7 @@ class DotPagination extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(2), // initially 2
       // TODO: Renderflex error
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -364,6 +367,7 @@ class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
             onPageChanged: (i) {
               setState(() {
                 _index = i;
+                // TODO: null check error
                 widget.onPageChanged!.call(i);
               });
             }),

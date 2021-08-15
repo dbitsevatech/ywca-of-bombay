@@ -426,27 +426,27 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: StreamBuilder(
                     // StreamBuilder is used to get a continuous stream of data from the database
                     // so any change made to DB is immediately reflected without refreshing the page
-                    stream: FirebaseFirestore.instance
-                        .collection('approval')
-                        .snapshots(),
+                    // stream: FirebaseFirestore.instance
+                    // .collection('approval')
+                    // .snapshots(),
 
-                    // stream: (searchValue != "")
-                    //     ? FirebaseFirestore.instance
-                    //         .collection('approval')
-                    //         .where(
-                    //           "firstName",
-                    //           isEqualTo: searchValue,
-                    //           // isGreaterThanOrEqualTo: searchValue,
-                    //           // isLessThan: searchValue.substring(
-                    //           //         0, searchValue.length - 1) +
-                    //           //     String.fromCharCode(searchValue
-                    //           //             .codeUnitAt(searchValue.length - 1) +
-                    //           //         1),
-                    //         )
-                    //         .snapshots()
-                    //     : FirebaseFirestore.instance
-                    //         .collection("approval")
-                    //         .snapshots(),
+                    stream: (searchValue != "")
+                        ? FirebaseFirestore.instance
+                            .collection('approval')
+                            .where(
+                              "firstName",
+                              isEqualTo: searchValue,
+                              // isGreaterThanOrEqualTo: searchValue,
+                              // isLessThan: searchValue.substring(
+                              //         0, searchValue.length - 1) +
+                              //     String.fromCharCode(searchValue
+                              //             .codeUnitAt(searchValue.length - 1) +
+                              //         1),
+                            )
+                            .snapshots()
+                        : FirebaseFirestore.instance
+                            .collection("approval")
+                            .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
