@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import 'user_events.dart';
+
 import '../about_us/become_member.dart';
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class DetailPage extends StatefulWidget {
@@ -252,10 +255,21 @@ class _DetailPageState extends State<DetailPage> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
-                              child: Image.network(
-                                item,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
+                              child: GestureDetector(
+                                child: Image.network(
+                                  item,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ZoomImageNetwork(item),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
