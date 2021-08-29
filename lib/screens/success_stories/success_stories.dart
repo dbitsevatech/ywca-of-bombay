@@ -197,14 +197,17 @@ class _SuccessStoriesState extends State<SuccessStories> {
         children: <Widget>[
           //    image
           Container(
-            margin: EdgeInsets.all(_height * 0.025),
+            margin: EdgeInsets.only(
+              top: _height * 0.020,
+              bottom: _height * 0.010,
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(120.0),
               child: Image(
                 image: AssetImage(image),
                 fit: BoxFit.contain,
-                height: 200,
-                width: 200,
+                height: 175,
+                width: 175,
               ),
             ),
           ),
@@ -226,7 +229,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
             padding: EdgeInsets.only(
               left: _width * 0.05,
               right: _width * 0.05,
-              top: _height * 0.01,
+              top: _height * 0.005,
               // bottom: 5,
             ),
             child: Text(
