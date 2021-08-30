@@ -597,11 +597,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           buttonText: 'Next',
                           screenHeight: _height,
                           onPressedFunction: () async {
-                            if (_formKey.currentState!.validate()) {
+                            if (!_formKey.currentState!.validate()) {
                               return;
                             }
                             _formKey.currentState!.save();
-
+                            print("hello");
                             _onNextButtonPressed();
                           },
                         ),

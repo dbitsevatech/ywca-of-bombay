@@ -229,10 +229,31 @@ class _AboutUsState extends State<AboutUs> {
                                 );
                               }).toList(),
                             ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: imagePathList.map((pathOfImage) {
+                            //     int index = imagePathList.indexOf(pathOfImage);
+                            //     return Container(
+                            //       width: 10.0,
+                            //       height: 10.0,
+                            //       margin: EdgeInsets.symmetric(
+                            //         vertical: 10.0,
+                            //         horizontal: 2.0,
+                            //       ),
+                            //       decoration: BoxDecoration(
+                            //         shape: BoxShape.circle,
+                            //         color: _currentIndex == index
+                            //             ? Color.fromRGBO(0, 0, 0, 0.8)
+                            //             : Color.fromRGBO(0, 0, 0, 0.3),
+                            //       ),
+                            //     );
+                            //   }).toList(),
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: imagePathList.map((pathOfImage) {
-                                int index = imagePathList.indexOf(pathOfImage);
+                              children: this.imagePathList.map((pathOfImage) {
+                                int index =
+                                    this.imagePathList.indexOf(pathOfImage);
                                 return Container(
                                   width: 10.0,
                                   height: 10.0,
