@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'constants.dart';
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -18,6 +19,7 @@ class SuccessStories extends StatefulWidget {
 
 class _SuccessStoriesState extends State<SuccessStories> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
+  final pageController = PageController(viewportFraction: 0.95, keepPage: true);
   late int selectedMenuItemId;
   var userInfo;
 
@@ -43,6 +45,18 @@ class _SuccessStoriesState extends State<SuccessStories> {
     print("item: $selectedMenuItemId");
     print(_height);
     print(_width);
+
+    final pages = List.generate(
+      titles.length,
+      (i) => cardWid(
+        images[i],
+        titles[i],
+        detailText[i],
+        _height,
+        _width,
+      ),
+    );
+
     return DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
@@ -147,19 +161,32 @@ class _SuccessStoriesState extends State<SuccessStories> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Container(
-                      // height: _height * 0.7,
+                    SizedBox(
+                      // height: 540,
                       height: _height * 0.7,
-                      child: DotPaginationSwiper.builder(
-                        itemCount: titles.length,
-                        itemBuilder: (context, i) => Center(
-                          child: cardWid(
-                            images[i],
-                            titles[i],
-                            detailText[i],
-                            _height,
-                            _width,
-                          ),
+                      child: PageView.builder(
+                        controller: pageController,
+                        // itemCount: pages.length,
+                        itemBuilder: (_, index) {
+                          return pages[index % pages.length];
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: pages.length,
+                        effect: ScrollingDotsEffect(
+                          activeStrokeWidth: 2,
+                          activeDotScale: 1.3,
+                          maxVisibleDots: 7,
+                          radius: 8,
+                          spacing: 10,
+                          dotHeight: 12,
+                          dotWidth: 12,
+                          activeDotColor: Color.fromRGBO(0, 0, 0, 0.8),
+                          dotColor: Color.fromRGBO(0, 0, 0, 0.3),
                         ),
                       ),
                     ),
@@ -190,21 +217,24 @@ class _SuccessStoriesState extends State<SuccessStories> {
         color: successStoriesCardBgColor,
         borderRadius: BorderRadius.all(Radius.circular(40)),
       ),
-      height: 540,
+      height: 540, //540 init
       width: 360,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           //    image
           Container(
-            margin: EdgeInsets.all(_height * 0.025),
+            margin: EdgeInsets.only(
+              top: _height * 0.020,
+              bottom: _height * 0.010,
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(120.0),
               child: Image(
                 image: AssetImage(image),
                 fit: BoxFit.contain,
-                height: 200,
-                width: 200,
+                height: 175,
+                width: 175,
               ),
             ),
           ),
@@ -220,165 +250,35 @@ class _SuccessStoriesState extends State<SuccessStories> {
               fontSize: 20,
             ),
           ),
-          //  card Title
-          //card info
-          Padding(
-            padding: EdgeInsets.only(
-              left: _width * 0.05,
-              right: _width * 0.05,
-              top: _height * 0.01,
-              // bottom: 5,
-            ),
-            child: Text(
-              detailText,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "Montserrat",
-                height: 1.3,
-                fontSize: 15,
+          //  card Title end
+
+          // card info
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: _width * 0.05,
+                right: _width * 0.05,
+                top: _height * 0.005,
+                // bottom: 5,
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Text(
+                  detailText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    height: 1.3,
+                    fontSize: 15,
+                  ),
+                ),
               ),
             ),
           ),
           //  end card info
         ],
       ),
-    );
-  }
-}
-
-@immutable
-class ColorDot extends StatelessWidget {
-  const ColorDot({
-    Key? key,
-    this.color,
-    this.borderColor,
-    this.radius,
-  }) : super(key: key);
-
-  final Color? color;
-  final Color? borderColor;
-  final double? radius;
-
-  @override
-  Widget build(BuildContext context) {
-    Color? color = this.color;
-    // // Color? borderColor = this.borderColor;
-    // Color borderColor = this.borderColor!;
-    double? radius = this.radius;
-
-    return Padding(
-      padding: const EdgeInsets.all(1),
-      child: Container(
-        height: radius,
-        width: radius,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-          border: Border.all(
-              // width: 0.8,
-              // // color: borderColor!,
-              // color: borderColor,
-              ),
-        ),
-      ),
-    );
-  }
-}
-
-@immutable
-class DotPagination extends StatelessWidget {
-  const DotPagination({
-    Key? key,
-    required this.itemCount,
-    required this.activeIndex,
-  })  : assert(activeIndex >= 0),
-        assert(activeIndex < itemCount),
-        super(key: key);
-
-  final int itemCount;
-  final int activeIndex;
-
-  @override
-  Widget build(BuildContext context) {
-    final inactiveDot = ColorDot();
-    final activeDot = ColorDot(
-      color: Theme.of(context).primaryColor,
-    );
-
-    final list = List<ColorDot>.generate(
-      itemCount,
-      (index) => (index == activeIndex) ? activeDot : inactiveDot,
-    );
-
-    return Padding(
-      padding: const EdgeInsets.all(2), // initially 2
-      // TODO: Renderflex error
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: list,
-      ),
-    );
-  }
-}
-
-@immutable
-class DotPaginationSwiper extends StatefulWidget {
-  DotPaginationSwiper({
-    Key? key,
-    required this.onPageChanged,
-    List<Widget> children = const <Widget>[],
-  })  : childrenDelegate = SliverChildListDelegate(children),
-        itemCount = children.length,
-        super(key: key);
-
-  DotPaginationSwiper.builder({
-    Key? key,
-    this.onPageChanged,
-    IndexedWidgetBuilder? itemBuilder,
-    int? itemCount,
-  })  : childrenDelegate =
-            SliverChildBuilderDelegate(itemBuilder!, childCount: itemCount),
-        itemCount = itemCount!,
-        super(key: key);
-
-  final SliverChildDelegate childrenDelegate;
-  final int itemCount;
-  final ValueChanged<int>? onPageChanged;
-
-  @override
-  _DotPaginationSwiperState createState() => _DotPaginationSwiperState();
-}
-
-class _DotPaginationSwiperState extends State<DotPaginationSwiper> {
-  int _index = 0;
-
-  @override
-  void initState() {
-    _index = 0;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        PageView.custom(
-            childrenDelegate: widget.childrenDelegate,
-            onPageChanged: (i) {
-              setState(() {
-                _index = i;
-                // TODO: null check error
-                widget.onPageChanged!.call(i);
-              });
-            }),
-        Align(
-          child: DotPagination(
-            itemCount: widget.itemCount,
-            activeIndex: _index,
-          ),
-          alignment: Alignment.bottomCenter,
-        ),
-      ],
     );
   }
 }

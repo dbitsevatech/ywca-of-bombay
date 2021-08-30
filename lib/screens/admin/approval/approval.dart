@@ -1,5 +1,3 @@
-// import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
@@ -21,261 +19,43 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
-  String searchValue = '';
+  var searchValue = '';
 
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
-
   List<Widget> itemsData = [];
-  List filteredItemsSData = [];
-  bool isSearching = false;
+  // ignore: non_constant_identifier_names
+  List<Widget> DuplicateitemsData = [];
+  List<Widget> listItems = [];
+  List<dynamic> responseList = [];
+  List<dynamic> duplicateresponseList = [];
 
-  Future getPostsData(List<dynamic> responseList) async {
-    // void getPostsData() async {
-    print("get posts method called");
-    // var snapShot = await FirebaseFirestore.instance.collection('approval').get();
-    // List<dynamic> responseList = snapShot.docs;
-    List<Widget> listItems = [];
-    responseList.forEach((item) {
-      listItems.add(
-        Container(
-          height: 182,
-          width: 336,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF49DEE8),
-                Colors.white,
-              ],
-            ),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.only(left: 0, top: 10),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Name: ${item["firstName"]} ${item["lastName"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 0),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Contact Number: ${item["phoneNumber"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 0),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Email ID: ${item["emailId"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 0),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Nearest YWCA center: ${item["nearestCenter"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 0),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Institute/Organisation: ${item["placeOfWork"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 0),
-                  width: 298,
-                  height: 17,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      "\Profession: ${item["profession"]}",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 12, top: 18),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Spacer(),
-                      ConstrainedBox(
-                        constraints:
-                            BoxConstraints.tightFor(width: 120, height: 35),
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            await FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(item["uid"])
-                                .update({
-                              "firstName": item["firstName"],
-                              "lastName": item["lastName"],
-                              "dateOfBirth": item["dateOfBirth"],
-                              "emailId": item["emailId"],
-                              "gender": item["gender"],
-                              "profession": item["profession"],
-                              "placeOfWork": item["placeOfWork"],
-                              "nearestCenter": item["nearestCenter"],
-                              "interestInMembership":
-                                  item["interestInMembership"],
-                              "uid": item["uid"],
-                              "phoneNumber": item["phoneNumber"],
-                              "memberRole": item["memberRole"],
-                            }).then((value) => print("Approved"));
-                            await FirebaseFirestore.instance
-                                .collection('approval')
-                                .doc(item["uid"])
-                                .delete();
-                          },
-                          icon: Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white,
-                            ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.green,
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          label: Text(
-                            "Approve",
-                            style: TextStyle(
-                              fontFamily: 'montserrat',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Spacer(flex: 3),
-                      ConstrainedBox(
-                        constraints:
-                            BoxConstraints.tightFor(width: 120, height: 35),
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            await FirebaseFirestore.instance
-                                .collection('approval')
-                                .doc(item["uid"])
-                                .delete()
-                                .then(
-                                  (value) => print("Rejected"),
-                                );
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                          style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.red),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: BorderSide(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          label: Text(
-                            "Reject",
-                            style: TextStyle(
-                              fontFamily: 'montserrat',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Spacer(flex: 2),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    });
-    setState(() {
-      itemsData = listItems;
-    });
+  Future filter(String searchValue) async {
+    print("filter method called");
+    if (searchValue.isNotEmpty) {
+      List<Widget> loopitemsData = [];
+
+      duplicateresponseList.forEach((item) {
+        if (item['firstName'].contains(searchValue)) {
+          print(item['firstName']);
+          loopitemsData.add(singleitem(context, item));
+          print(loopitemsData);
+        }
+      });
+      setState(() {
+        itemsData.clear();
+        itemsData.addAll(loopitemsData);
+      });
+      return;
+    } else {
+      setState(() {
+        itemsData.clear();
+        itemsData.addAll(DuplicateitemsData);
+      });
+      print(itemsData);
+      return;
+    }
   }
 
   @override
@@ -290,6 +70,242 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
         closeTopContainer = scrollController.offset > 50;
       });
     });
+  }
+
+  @override
+  Widget singleitem(BuildContext context, var item) {
+    print("single");
+    return Container(
+      height: 182,
+      width: 336,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF49DEE8),
+            Colors.white,
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(left: 0, top: 10),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Name: ${item["firstName"]} ${item["lastName"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 0),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Contact Number: ${item["phoneNumber"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 0),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Email ID: ${item["emailId"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 0),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Nearest YWCA center: ${item["nearestCenter"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 0),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Institute/Organisation: ${item["placeOfWork"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 0),
+              width: 298,
+              height: 17,
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  "\Profession: ${item["profession"]}",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 12, top: 18),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Spacer(),
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints.tightFor(width: 120, height: 35),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(item["uid"])
+                            .update({
+                          "firstName": item["firstName"],
+                          "lastName": item["lastName"],
+                          "dateOfBirth": item["dateOfBirth"],
+                          "emailId": item["emailId"],
+                          "gender": item["gender"],
+                          "profession": item["profession"],
+                          "placeOfWork": item["placeOfWork"],
+                          "nearestCenter": item["nearestCenter"],
+                          "interestInMembership": item["interestInMembership"],
+                          "uid": item["uid"],
+                          "phoneNumber": item["phoneNumber"],
+                          "memberRole": item["memberRole"],
+                        }).then((value) => print("Approved"));
+                        await FirebaseFirestore.instance
+                            .collection('approval')
+                            .doc(item["uid"])
+                            .delete();
+                      },
+                      icon: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 24.0,
+                      ),
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                          Colors.white,
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.green,
+                        ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      label: Text(
+                        "Approve",
+                        style: TextStyle(
+                          fontFamily: 'montserrat',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 3),
+                  ConstrainedBox(
+                    constraints:
+                        BoxConstraints.tightFor(width: 120, height: 35),
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('approval')
+                            .doc(item["uid"])
+                            .delete()
+                            .then(
+                              (value) => print("Rejected"),
+                            );
+                      },
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 24.0,
+                      ),
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      label: Text(
+                        "Reject",
+                        style: TextStyle(
+                          fontFamily: 'montserrat',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(flex: 2),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -396,6 +412,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                 searchValue = value;
                                 print("search value: " + searchValue);
                               });
+                              filter(searchValue);
                             },
                             decoration: InputDecoration(
                               hintText: "Search by name",
@@ -426,47 +443,48 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   child: StreamBuilder(
                     // StreamBuilder is used to get a continuous stream of data from the database
                     // so any change made to DB is immediately reflected without refreshing the page
-                    // stream: FirebaseFirestore.instance
-                    // .collection('approval')
-                    // .snapshots(),
+                    stream: FirebaseFirestore.instance
+                        .collection('approval')
+                        .snapshots(),
 
-                    stream: (searchValue != "")
-                        ? FirebaseFirestore.instance
-                            .collection('approval')
-                            .where(
-                              "firstName",
-                              isEqualTo: searchValue,
-                              // isGreaterThanOrEqualTo: searchValue,
-                              // isLessThan: searchValue.substring(
-                              //         0, searchValue.length - 1) +
-                              //     String.fromCharCode(searchValue
-                              //             .codeUnitAt(searchValue.length - 1) +
-                              //         1),
-                            )
-                            .snapshots()
-                        : FirebaseFirestore.instance
-                            .collection("approval")
-                            .snapshots(),
+                    // stream: (searchValue != "")
+                    //     ? FirebaseFirestore.instance
+                    //         .collection('approval')
+                    //         .where(
+                    //           "firstName",
+                    //           isEqualTo: searchValue,
+                    //           // isGreaterThanOrEqualTo: searchValue,
+                    //           // isLessThan: searchValue.substring(
+                    //           //         0, searchValue.length - 1) +
+                    //           //     String.fromCharCode(searchValue
+                    //           //             .codeUnitAt(searchValue.length - 1) +
+                    //           //         1),
+                    //         )
+                    //         .snapshots()
+                    //     : FirebaseFirestore.instance
+                    //         .collection("approval")
+                    //         .snapshots(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (!snapshot.hasData) {
                         return CircularProgressIndicator();
                       } else {
-                        print(snapshot);
-                        List<dynamic> responseList = snapshot.data.docs;
-                        print(responseList);
-                        // print("search value: " + searchValue);
+                        responseList = snapshot.data.docs;
+                        duplicateresponseList = snapshot.data.docs;
 
-                        responseList.forEach((post) {
-                          print(post["firstName"]);
+                        responseList.forEach((item) {
+                          listItems.add(singleitem(context, item));
                         });
-                        getPostsData(responseList);
-
+                        DuplicateitemsData = listItems;
+                        itemsData.addAll(DuplicateitemsData);
+                        print(itemsData);
                         return ListView.builder(
+                          shrinkWrap: true,
                           controller: scrollController,
                           itemCount: itemsData.length,
                           physics: BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
                             double scale = 1.0;
+
                             if (topContainer > 0) {
                               scale = index + 2 - topContainer / 1.3;
                               if (scale < 0) {

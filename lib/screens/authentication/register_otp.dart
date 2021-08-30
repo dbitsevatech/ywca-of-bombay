@@ -131,7 +131,6 @@ class _RegisterOtpState extends State<RegisterOtp>
             .collection('users')
             .doc(value.user!.uid)
             .get();
-        print("line 131");
         print("register OTP page: ");
         print(firstName);
         print(lastName);
@@ -295,7 +294,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         _getPleaseEnterLabel,
         _getInputField,
         _hideResendButton! ? _getTimerText : _getResendButton,
-        _registerButton,
+        // _registerButton,
         _getOtpKeyboard
       ],
     );
@@ -347,14 +346,17 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Register button
+  // TODO: Register button on OTP page not working
   get _registerButton {
     return FractionallySizedBox(
       widthFactor: 0.92, // button width wrt screen width
       // Register Button
       child: GradientButton(
-        buttonText: 'Register',
+        buttonText: 'Why dont you work?',
+        // buttonText: 'Register',
         screenHeight: _screenSize!.height,
-        onPressedFunction: () {
+        onPressedFunction: () async {
+          print("height");
           _onRegisterButtonPressed();
         },
       ),
@@ -436,9 +438,9 @@ class _RegisterOtpState extends State<RegisterOtp>
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
       },
-      codeSent: (String verficationID, int? resendToken) {
+      codeSent: (String verificationID, int? resendToken) {
         setState(() {
-          _verificationCode = verficationID;
+          _verificationCode = verificationID;
         });
         print("code sent. verification id = $_verificationCode");
       },
