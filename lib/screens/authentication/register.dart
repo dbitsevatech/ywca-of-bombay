@@ -1115,9 +1115,9 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           buttonText: 'Register',
                           screenHeight: _height,
                           onPressedFunction: () {
-                            if (_formKey.currentState!.validate()) {
-                              return;
-                            }
+                            // if (_formKey.currentState!.validate()) {
+                            //   return;
+                            // }
                             _formKey.currentState!.save();
                             _onRegisterButtonPressed();
                           },

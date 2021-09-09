@@ -84,17 +84,17 @@ class _RegisterOtpState extends State<RegisterOtp>
   var otp;
   // Variables
   Size? _screenSize;
-  int? _currentDigit;
-  int? _firstDigit;
-  int? _secondDigit;
-  int? _thirdDigit;
-  int? _fourthDigit;
-  int? _fifthDigit;
-  int? _sixthDigit;
+  int _currentDigit = -1;
+  int _firstDigit = -1;
+  int _secondDigit = -1;
+  int _thirdDigit = -1;
+  int _fourthDigit = -1;
+  int _fifthDigit = -1;
+  int _sixthDigit = -1;
 
   Timer? timer;
-  int? totalTimeInSeconds;
-  bool? _hideResendButton;
+  int totalTimeInSeconds = 60;
+  bool _hideResendButton =false;
 
   String userName = "";
   bool didReadNotifications = false;
@@ -238,12 +238,12 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _otpTextField(_firstDigit!),
-        _otpTextField(_secondDigit!),
-        _otpTextField(_thirdDigit!),
-        _otpTextField(_fourthDigit!),
-        _otpTextField(_fifthDigit!),
-        _otpTextField(_sixthDigit!),
+        _otpTextField(_firstDigit),
+        _otpTextField(_secondDigit),
+        _otpTextField(_thirdDigit),
+        _otpTextField(_fourthDigit),
+        _otpTextField(_fifthDigit),
+        _otpTextField(_sixthDigit),
       ],
     );
   }
@@ -293,8 +293,8 @@ class _RegisterOtpState extends State<RegisterOtp>
         // _getVerificationCodeLabel,
         _getPleaseEnterLabel,
         _getInputField,
-        _hideResendButton! ? _getTimerText : _getResendButton,
-        // _registerButton,
+        _hideResendButton ? _getTimerText : _getResendButton,
+        _registerButton,
         _getOtpKeyboard
       ],
     );
@@ -305,7 +305,7 @@ class _RegisterOtpState extends State<RegisterOtp>
     return Container(
       height: 32,
       child: Offstage(
-        offstage: _hideResendButton!,
+        offstage: _hideResendButton,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -352,7 +352,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       widthFactor: 0.92, // button width wrt screen width
       // Register Button
       child: GradientButton(
-        buttonText: 'Why dont you work?',
+        buttonText: 'Submit',
         // buttonText: 'Register',
         screenHeight: _screenSize!.height,
         onPressedFunction: () async {
@@ -553,18 +553,18 @@ class _RegisterOtpState extends State<RegisterOtp>
                   ),
                   onPressed: () {
                     setState(() {
-                      if (_sixthDigit != null) {
-                        _sixthDigit = null;
-                      } else if (_fifthDigit != null) {
-                        _fifthDigit = null;
-                      } else if (_fourthDigit != null) {
-                        _fourthDigit = null;
-                      } else if (_thirdDigit != null) {
-                        _thirdDigit = null;
-                      } else if (_secondDigit != null) {
-                        _secondDigit = null;
-                      } else if (_firstDigit != null) {
-                        _firstDigit = null;
+                      if (_sixthDigit != -1) {
+                        _sixthDigit = -1;
+                      } else if (_fifthDigit != -1) {
+                        _fifthDigit = -1;
+                      } else if (_fourthDigit != -1) {
+                        _fourthDigit = -1;
+                      } else if (_thirdDigit != -1) {
+                        _thirdDigit = -1;
+                      } else if (_secondDigit != -1) {
+                        _secondDigit = -1;
+                      } else if (_firstDigit != -1) {
+                        _firstDigit = -1;
                       }
                     });
                   },
@@ -591,7 +591,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           ..addStatusListener((status) {
             if (status == AnimationStatus.dismissed) {
               setState(() {
-                _hideResendButton = _hideResendButton;
+                _hideResendButton = false;
               });
             }
           });
@@ -631,7 +631,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       alignment: Alignment.center,
       child: Text(
         // ignore: unnecessary_null_comparison
-        digit != null ? digit.toString() : "",
+        digit != -1 ? digit.toString() : "",
         // digit != null ? digit.toString() : "",
         style: TextStyle(
           fontSize: 30.0,
@@ -699,17 +699,17 @@ class _RegisterOtpState extends State<RegisterOtp>
   void _setCurrentDigit(int i) {
     setState(() {
       _currentDigit = i;
-      if (_firstDigit == null) {
+      if (_firstDigit == -1) {
         _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
+      } else if (_secondDigit == -1) {
         _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
+      } else if (_thirdDigit == -1) {
         _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
+      } else if (_fourthDigit == -1) {
         _fourthDigit = _currentDigit;
-      } else if (_fifthDigit == null) {
+      } else if (_fifthDigit == -1) {
         _fifthDigit = _currentDigit;
-      } else if (_sixthDigit == null) {
+      } else if (_sixthDigit == -1) {
         _sixthDigit = _currentDigit;
 
         otp = _firstDigit.toString() +
@@ -734,12 +734,12 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   void clearOtp() {
-    _sixthDigit = null;
-    _fifthDigit = null;
-    _fourthDigit = null;
-    _thirdDigit = null;
-    _secondDigit = null;
-    _firstDigit = null;
+    _sixthDigit = -1;
+    _fifthDigit = -1;
+    _fourthDigit = -1;
+    _thirdDigit = -1;
+    _secondDigit = -1;
+    _firstDigit = -1;
     setState(() {});
   }
 }
