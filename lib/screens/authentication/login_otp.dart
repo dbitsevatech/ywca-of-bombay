@@ -301,6 +301,7 @@ class _LoginOtpState extends State<LoginOtp>
         print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
+        if (!mounted) return;
         setState(() {
           _verificationCode = verificationID;
         });
