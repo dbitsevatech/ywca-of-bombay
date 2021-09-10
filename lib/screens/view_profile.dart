@@ -76,7 +76,6 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                       onPressed: () {
                         Navigator.pop(context);
 
-                        controller.toggle();
                       },
                     ),
                   ),

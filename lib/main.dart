@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+import 'package:ywcaofbombay/screens/edit_profile.dart';
 
 import 'screens/about_us/about_us.dart';
 import 'screens/admin/events/admin_events.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
     // return OnboardingScreen();
     // return Events();
     // return LoginScreen();
-    return AboutUs();
+    return LoginScreen();
     // return HomeController();
   }
 }

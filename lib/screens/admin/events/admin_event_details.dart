@@ -296,40 +296,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                         ),
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
-                        // Register button
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: _height * 0.015,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                firstButtonGradientColor,
-                                firstButtonGradientColor,
-                                secondButtonGradientColor
-                              ],
-                              begin: FractionalOffset.centerLeft,
-                              end: FractionalOffset.centerRight,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: FractionallySizedBox(
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Register',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),

@@ -338,7 +338,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     future: downloadData(), // function where you call your api
     builder: (BuildContext context, AsyncSnapshot snapshot) {  // AsyncSnapshot<Your object type>
     if( snapshot.connectionState == ConnectionState.waiting){
-    return  Center(child: Text('Please wait its loading...'));
+    return  Center(child: Text('Please wait its loading...', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),));
     }else {
       if (!snapshot.hasData) {
         return CircularProgressIndicator();

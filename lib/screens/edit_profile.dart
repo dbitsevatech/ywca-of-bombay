@@ -7,7 +7,7 @@ import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
 import '../widgets/gradient_button.dart';
 import '../models/User.dart';
-
+import 'package:intl/date_symbol_data_local.dart';
 // enum GenderChoices { female, male, declineToState }
 // enum MemberChoices { yes, no, maybe }
 
@@ -29,6 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   String uid = '';
+  String role = "";
   var userInfo;
 
   final GlobalKey<FormState> _formKey =
@@ -75,14 +76,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
-  Future _selectDate() async {
-    final DateTime picked = (await showDatePicker(
+  Future _selectDate(context) async {
+    initializeDateFormatting();
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: dateOfBirth,
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
-      helpText: 'Select Date of Birth',
-      fieldLabelText: 'Enter date of birth',
+      helpText: 'Select Date of Event',
+      fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
@@ -102,15 +104,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: child!,
         );
       },
-    ))!;
-    if (picked != dateOfBirth) {
+    );
+    if (picked != null && picked != dateOfBirth) {
       setState(() {
         dateOfBirth = picked;
-        // print(picked);
-        print(dateOfBirth);
+        // print(eventDate);
       });
     }
   }
+
 
   // Future<bool> _onBackPressed() {
   _onBackPressed() {
@@ -120,10 +122,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         return AlertDialog(
           title: Text('Do you want to exit without saving changes?'),
           content:
-              Text('Please press the SAVE button at the bottom of the page'),
+              Text('Press the SAVE button if you wish to save changes'),
           actions: <Widget>[
             TextButton(
-              child: Text('NO'),
+              child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
@@ -175,6 +177,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     placeOfWork = userInfo.getplaceOfWork;
     profession = userInfo.getprofession;
     interestInMembership = userInfo.getinterestInMembership;
+    role = userInfo.getmemberRole;
     if (gender == "Male") {
       _genderRadioValue = 1;
     } else if (gender == "Female") {
@@ -390,7 +393,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             onTap: () async {
                               FocusScope.of(context).requestFocus(FocusNode());
-                              await _selectDate();
+                              await _selectDate(context);
                               dateController.text =
                                   "${dateOfBirth.toLocal()}".split(' ')[0];
                             },
@@ -877,6 +880,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           SizedBox(
                             height: _height * 0.020,
                           ),
+                        if (role != "Admin") ...[
                           Center(
                             child: Text(
                               'Your details will be verified by the admin and then updated within a few days',
@@ -888,6 +892,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               textAlign: TextAlign.center,
                             ),
                           ),
+                        ],
                         ],
                       ),
                     ),

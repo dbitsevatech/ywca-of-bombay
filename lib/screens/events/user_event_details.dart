@@ -170,41 +170,41 @@ class _DetailPageState extends State<DetailPage> {
               children: <Widget>[
                 AdminDetailPageBlueBubbleDesign(),
                 // show it when the event is for everyone
-                if (eventType == 'Everyone')
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF00bbe4),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "Everyone",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
-                      )),
+                // if (eventType == 'Everyone')
+                //   Padding(
+                //       padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
+                //       child: ElevatedButton(
+                //         onPressed: () {},
+                //         style: ElevatedButton.styleFrom(
+                //             primary: Color(0xFF00bbe4),
+                //             elevation: 0,
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(20))),
+                //         child: Text(
+                //           "Everyone",
+                //           style: new TextStyle(
+                //               fontSize: 18.0, color: Colors.white),
+                //         ),
+                //       )),
                 // show it when the event is for members only
-                if (eventType == 'Members')
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          goToBecomeMember(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF00bbe4),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "⭐ Members only",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
-                      )),
+                // if (eventType == 'Members')
+                //   Padding(
+                //       padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
+                //       child: ElevatedButton(
+                //         onPressed: () {
+                //           goToBecomeMember(context);
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //             primary: Color(0xFF00bbe4),
+                //             elevation: 0,
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(20))),
+                //         child: Text(
+                //           "⭐ Members only",
+                //           style: new TextStyle(
+                //               fontSize: 18.0, color: Colors.white),
+                //         ),
+                //       )),
                 // show it when the event is for members and the user is not a member
                 // then become a member button is show
                 if (memberRole != 'Member')
@@ -413,6 +413,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
+                                print("register");
                                 insertIntoOnRegistration(id, eventName);
                               },
                             ),

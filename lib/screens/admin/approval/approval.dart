@@ -203,28 +203,51 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                     constraints:
                         BoxConstraints.tightFor(width: 120, height: 35),
                     child: ElevatedButton.icon(
-                      onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(item["uid"])
-                            .update({
-                          "firstName": item["firstName"],
-                          "lastName": item["lastName"],
-                          "dateOfBirth": item["dateOfBirth"],
-                          "emailId": item["emailId"],
-                          "gender": item["gender"],
-                          "profession": item["profession"],
-                          "placeOfWork": item["placeOfWork"],
-                          "nearestCenter": item["nearestCenter"],
-                          "interestInMembership": item["interestInMembership"],
-                          "uid": item["uid"],
-                          "phoneNumber": item["phoneNumber"],
-                          "memberRole": item["memberRole"],
-                        }).then((value) => print("Approved"));
-                        await FirebaseFirestore.instance
-                            .collection('approval')
-                            .doc(item["uid"])
-                            .delete();
+                      onPressed: ()  {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Do you wish accept the changes?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('YES'),
+                                  onPressed: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(item["uid"])
+                                        .update({
+                                      "firstName": item["firstName"],
+                                      "lastName": item["lastName"],
+                                      "dateOfBirth": item["dateOfBirth"],
+                                      "emailId": item["emailId"],
+                                      "gender": item["gender"],
+                                      "profession": item["profession"],
+                                      "placeOfWork": item["placeOfWork"],
+                                      "nearestCenter": item["nearestCenter"],
+                                      "interestInMembership": item["interestInMembership"],
+                                      "uid": item["uid"],
+                                      "phoneNumber": item["phoneNumber"],
+                                      "memberRole": item["memberRole"],
+                                    }).then((value) => print("Approved"));
+                                    await FirebaseFirestore.instance
+                                        .collection('approval')
+                                        .doc(item["uid"])
+                                        .delete();
+                                    Navigator.of(context).pop(true);
+                                    // Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       icon: Icon(
                         Icons.check,
@@ -261,13 +284,37 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         BoxConstraints.tightFor(width: 120, height: 35),
                     child: ElevatedButton.icon(
                       onPressed: () async {
-                        await FirebaseFirestore.instance
-                            .collection('approval')
-                            .doc(item["uid"])
-                            .delete()
-                            .then(
-                              (value) => print("Rejected"),
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Do you wish accept the changes?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('YES'),
+                                  onPressed: () async {
+                                    await FirebaseFirestore.instance
+                                        .collection('approval')
+                                        .doc(item["uid"])
+                                        .delete()
+                                        .then(
+                                          (value) => print("Rejected"),
+                                    );
+                                    Navigator.of(context).pop(true);
+                                    // Navigator.of(context).pop(true);
+                                  },
+                                ),
+                              ],
                             );
+                          },
+                        );
+
                       },
                       icon: Icon(
                         Icons.close,
