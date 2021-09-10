@@ -74,7 +74,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   @override
   Widget singleitem(BuildContext context, var item) {
-    print("single");
+    // print("single");
     return Container(
       height: 182,
       width: 336,
@@ -476,7 +476,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         });
                         DuplicateitemsData = listItems;
                         itemsData.addAll(DuplicateitemsData);
-                        print(itemsData);
+                        // print(itemsData);
                         return ListView.builder(
                           shrinkWrap: true,
                           controller: scrollController,

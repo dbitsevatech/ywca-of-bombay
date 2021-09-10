@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,17 +24,52 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
-
+  var responseList = [];
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
 
   List<Widget> itemsData = [];
 
-  // void getPostsData(List<dynamic> responseList) {
-  void getPostsData() {
-    List<dynamic> responseList = DATA;
+  Future downloadData()async {
+    await FirebaseFirestore.instance
+        .collection("eventsBackup")
+        .get()
+        .then((querySnapshot) async {
+      querySnapshot.docs.forEach((result) {
+        // print(result.id);
+        responseList.add({'eventName': result.data()["eventName"], 'clicks': 0, 'registrations' : 0, 'eventID': result.id, 'date':result.data()["eventDate"].toDate().toString()});
+      });
+      responseList.forEach((event) {
+        FirebaseFirestore.instance
+            .collection('eventRegistration')
+            .where('eventID', isEqualTo: event["eventID"])
+            .get()
+            .then((querySnapshot) {
+          event["registrations"] += querySnapshot.size;
+        });
+        FirebaseFirestore.instance
+            .collection('eventClick')
+            .where('eventID', isEqualTo: event["eventID"])
+            .get()
+            .then((querySnapshot) {
+          event["clicks"] += querySnapshot.size;
+        });
+      });
+
+    });
+
+
+    await Future.delayed(const Duration(seconds: 2));
+    getPostsData();
+    await Future.delayed(const Duration(seconds: 2));
+    return responseList; // return your response
+  }
+
+  Future<void> getPostsData() async {
+
     List<Widget> listItems = [];
+     // print(responseList);
     responseList.forEach((post) {
       listItems.add(
         Container(
@@ -60,7 +97,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Text(
-                          post["name"],
+                          "${post["eventName"]}",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Montserrat'),
@@ -77,6 +114,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         fit: BoxFit.fitHeight,
                         child: Text(
                           "${post["registrations"]}",
+                          // "reg",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
@@ -95,6 +133,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         fit: BoxFit.fitHeight,
                         child: Text(
                           "${post["clicks"]}",
+                          // "click",
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Montserrat',
@@ -116,6 +155,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         fit: BoxFit.fitHeight,
                         child: Text(
                           post["date"],
+                          // "date",
                           style: const TextStyle(
                             fontFamily: 'Montserrat',
                             color: Color(0xFF555555),
@@ -131,17 +171,20 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         ),
       );
     });
+    if (!mounted) return;
     setState(() {
       itemsData = listItems;
     });
   }
 
   @override
-  void initState() {
+  void initState()  {
     super.initState();
     userInfo = Provider.of<UserData>(context, listen: false);
     selectedMenuItemId = menuWithIcon.items[5].id;
-    getPostsData();
+
+
+
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
 
@@ -155,7 +198,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    print("item: $selectedMenuItemId");
+
     return DrawerScaffold(
       drawers: [
         SideDrawer(
@@ -291,55 +334,51 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 ),
                 Expanded(
                   child:
-                      // StreamBuilder(
-                      //   stream: FirebaseFirestore.instance
-                      //       .collection("approval")
-                      //       .snapshots(),
-                      //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      //     if (!snapshot.hasData) {
-                      //       return CircularProgressIndicator();
-                      //     } else {
-                      //       print(snapshot);
-                      //       List<dynamic> responseList = snapshot.data.docs;
-                      //       print(responseList);
-                      //       // print("search value: " + searchValue);
+    FutureBuilder(
+    future: downloadData(), // function where you call your api
+    builder: (BuildContext context, AsyncSnapshot snapshot) {  // AsyncSnapshot<Your object type>
+    if( snapshot.connectionState == ConnectionState.waiting){
+    return  Center(child: Text('Please wait its loading...'));
+    }else {
+      if (!snapshot.hasData) {
+        return CircularProgressIndicator();
+      } else {
+         // getPostsData();
 
-                      //       responseList.forEach((post) {
-                      //         print(post["firstName"]);
-                      //       });
-                      //       getPostsData(responseList);
-                      //       return
-                      ListView.builder(
-                    controller: scrollController,
-                    itemCount: itemsData.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      double scale = 1.0;
-                      if (topContainer > 0.5) {
-                        scale = index + 0.5 - topContainer;
-                        if (scale < 0) {
-                          scale = 0;
-                        } else if (scale > 1) {
-                          scale = 1;
-                        }
-                      }
-                      return Opacity(
-                        opacity: scale,
-                        child: Transform(
-                          transform: Matrix4.identity()..scale(scale, scale),
-                          alignment: Alignment.bottomCenter,
-                          child: Align(
-                            heightFactor: 0.7,
-                            alignment: Alignment.topCenter,
-                            child: itemsData[index],
-                          ),
-                        ),
-                      );
+        return
+          ListView.builder(
+            controller: scrollController,
+            itemCount: itemsData.length,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              double scale = 1.0;
+              if (topContainer > 0.5) {
+                scale = index + 0.5 - topContainer;
+                if (scale < 0) {
+                  scale = 0;
+                } else if (scale > 1) {
+                  scale = 1;
+                }
+              }
+              return Opacity(
+                opacity: scale,
+                child: Transform(
+                  transform: Matrix4.identity()
+                    ..scale(scale, scale),
+                  alignment: Alignment.bottomCenter,
+                  child: Align(
+                    heightFactor: 0.7,
+                    alignment: Alignment.topCenter,
+                    child: itemsData[index],
+                  ),
+                ),
+              );
+            },
+          );
+      }
+    }
                     },
                   ),
-                  //     ;}
-                  //   },
-                  // ),
                 ),
               ],
             ),
@@ -349,3 +388,4 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 }
+
