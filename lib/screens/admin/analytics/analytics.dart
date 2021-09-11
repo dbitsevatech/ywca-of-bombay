@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,6 +28,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+  double _height = 0;
+  double _width = 0;
 
   List<Widget> itemsData = [];
 
@@ -74,13 +77,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Future<void> getPostsData() async {
     List<Widget> listItems = [];
-    // print(responseList);
     responseList.forEach((post) {
       listItems.add(
         Container(
-          height: 90,
-          width: 310,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
+          // height: 90,
+          height: _height * 0.13,
+          // width: 310,
+          width: _width * 0.85,
+          margin: EdgeInsets.symmetric(
+            horizontal: 20,
+            // vertical: 34,
+            vertical: _height * 0.035,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             color: Colors.white,
@@ -89,88 +97,83 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: 146,
-                      height: 39,
-                      // child: FittedBox(
-                      //   fit: BoxFit.fitWidth,
-                      child: Text(
-                        "${post["eventName"]}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                      // ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      width: 42,
-                      height: 41,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          "${post["registrations"]}",
-                          // "reg",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFF31326F),
+                Expanded(
+                  flex: 3,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 9,
+                        child: Container(
+                          padding: EdgeInsets.only(right: 10, bottom: 5),
+                          child: AutoSizeText(
+                            "${post["eventName"]}",
+                            maxLines: 2,
+                            minFontSize: 12,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 38,
-                    ),
-                    Container(
-                      width: 42,
-                      height: 41,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          "${post["clicks"]}",
-                          // "click",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFFE05297),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          child: Text(
+                            "${post["registrations"]}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xFF31326F),
+                            ),
                           ),
                         ),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          child: Text(
+                            "${post["clicks"]}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xFFE05297),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(left: 30),
-                      width: 110,
-                      height: 16,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          post["date"],
-                          // "date",
-                          style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFF555555),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text(
+                            post["date"],
+                            style: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                              color: Color(0xFF333333),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
@@ -203,9 +206,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    _height = size.height;
+    _width = size.width;
 
     print(responseList);
-    print(responseList.runtimeType);
 
     return DrawerScaffold(
       drawers: [
