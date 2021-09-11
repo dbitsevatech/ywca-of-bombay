@@ -1,15 +1,16 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
-import 'package:ywcaofbombay/screens/edit_profile.dart';
-import 'package:ywcaofbombay/screens/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/about_us/about_us.dart';
 import 'screens/admin/events/admin_events.dart';
 import 'screens/admin/analytics/analytics.dart';
 import 'screens/admin/approval/approval.dart';
 import 'screens/authentication/login.dart';
+import 'screens/onboarding.dart';
 import 'screens/authentication/register.dart';
 import 'screens/contact_us/contact_us.dart';
 import 'screens/events/user_events.dart';
@@ -18,10 +19,6 @@ import 'screens/success_stories/success_stories.dart';
 import 'services/auth_service.dart';
 import 'services/class_builder.dart';
 import 'models/User.dart';
-import 'dart:async';
-
-import 'package:after_layout/after_layout.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -70,6 +67,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return OnboardingScreen();
+    // return AdminEvents();
     // return Events();
     // return LoginScreen();
     return Splash();
