@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'constants.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
@@ -28,17 +28,28 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   ScrollController scrollController = ScrollController();
   bool closeTopContainer = false;
   double topContainer = 0;
+  double _height = 0;
+  double _width = 0;
 
   List<Widget> itemsData = [];
 
-  Future downloadData()async {
+  Future downloadData() async {
     await FirebaseFirestore.instance
         .collection("eventsBackup")
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
         // print(result.id);
-        responseList.add({'eventName': result.data()["eventName"], 'clicks': 0, 'registrations' : 0, 'eventID': result.id, 'date':result.data()["eventDate"].toDate().toString()});
+        responseList.add({
+          'eventName': result.data()["eventName"],
+          'clicks': 0,
+          'registrations': 0,
+          'eventID': result.id,
+          // 'date': result.data()["eventDate"].toDate().toString(),
+          'date': DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
+              .format(result.data()["eventDate"].toDate()),
+          // 'date': DateFormat.yMEd().add_jm().format(result.data()["eventDate"].toDate()),
+        });
       });
       responseList.forEach((event) {
         FirebaseFirestore.instance
@@ -56,9 +67,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           event["clicks"] += querySnapshot.size;
         });
       });
-
     });
-
 
     await Future.delayed(const Duration(seconds: 2));
     getPostsData();
@@ -67,15 +76,19 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Future<void> getPostsData() async {
-
     List<Widget> listItems = [];
-     // print(responseList);
     responseList.forEach((post) {
       listItems.add(
         Container(
-          height: 85,
-          width: 310,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
+          // height: 90,
+          height: _height * 0.13,
+          // width: 310,
+          width: _width * 0.85,
+          margin: EdgeInsets.symmetric(
+            horizontal: 20,
+            // vertical: 34,
+            vertical: _height * 0.035,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             color: Colors.white,
@@ -84,86 +97,83 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: 146,
-                      height: 39,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          "${post["eventName"]}",
-                          style: const TextStyle(
+                Expanded(
+                  flex: 3,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 9,
+                        child: Container(
+                          padding: EdgeInsets.only(right: 10, bottom: 5),
+                          child: AutoSizeText(
+                            "${post["eventName"]}",
+                            maxLines: 2,
+                            minFontSize: 12,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Container(
-                      width: 42,
-                      height: 41,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          "${post["registrations"]}",
-                          // "reg",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFF31326F),
+                              fontFamily: 'Montserrat',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 38,
-                    ),
-                    Container(
-                      width: 42,
-                      height: 41,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          "${post["clicks"]}",
-                          // "click",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFFE05297),
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          child: Text(
+                            "${post["registrations"]}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xFF31326F),
+                            ),
                           ),
                         ),
                       ),
-                    )
-                  ],
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          child: Text(
+                            "${post["clicks"]}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 28,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xFFE05297),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.only(left: 0),
-                      width: 101,
-                      height: 13,
-                      child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: Text(
-                          post["date"],
-                          // "date",
-                          style: const TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Color(0xFF555555),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Text(
+                            post["date"],
+                            style: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                              color: Color(0xFF333333),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
@@ -178,12 +188,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     userInfo = Provider.of<UserData>(context, listen: false);
     selectedMenuItemId = menuWithIcon.items[5].id;
-
-
 
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
@@ -198,6 +206,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    _height = size.height;
+    _width = size.width;
+
+    print(responseList);
 
     return DrawerScaffold(
       drawers: [
@@ -333,50 +345,56 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                 ),
                 Expanded(
-                  child:
-    FutureBuilder(
-    future: downloadData(), // function where you call your api
-    builder: (BuildContext context, AsyncSnapshot snapshot) {  // AsyncSnapshot<Your object type>
-    if( snapshot.connectionState == ConnectionState.waiting){
-    return  Center(child: Text('Please wait its loading...', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),));
-    }else {
-      if (!snapshot.hasData) {
-        return CircularProgressIndicator();
-      } else {
-         // getPostsData();
+                  child: FutureBuilder(
+                    future: downloadData(), // function where you call your api
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      // AsyncSnapshot<Your object type>
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: Text(
+                            'Please wait its loading...',
+                            style: DefaultTextStyle.of(context)
+                                .style
+                                .apply(fontSizeFactor: 1.5),
+                          ),
+                        );
+                      } else {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        } else {
+                          // getPostsData();
 
-        return
-          ListView.builder(
-            controller: scrollController,
-            itemCount: itemsData.length,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              double scale = 1.0;
-              if (topContainer > 0.5) {
-                scale = index + 0.5 - topContainer;
-                if (scale < 0) {
-                  scale = 0;
-                } else if (scale > 1) {
-                  scale = 1;
-                }
-              }
-              return Opacity(
-                opacity: scale,
-                child: Transform(
-                  transform: Matrix4.identity()
-                    ..scale(scale, scale),
-                  alignment: Alignment.bottomCenter,
-                  child: Align(
-                    heightFactor: 0.7,
-                    alignment: Alignment.topCenter,
-                    child: itemsData[index],
-                  ),
-                ),
-              );
-            },
-          );
-      }
-    }
+                          return ListView.builder(
+                            controller: scrollController,
+                            itemCount: itemsData.length,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              double scale = 1.0;
+                              if (topContainer > 0.5) {
+                                scale = index + 0.5 - topContainer;
+                                if (scale < 0) {
+                                  scale = 0;
+                                } else if (scale > 1) {
+                                  scale = 1;
+                                }
+                              }
+                              return Opacity(
+                                opacity: scale,
+                                child: Transform(
+                                  transform: Matrix4.identity()
+                                    ..scale(scale, scale),
+                                  alignment: Alignment.bottomCenter,
+                                  child: Align(
+                                    heightFactor: 0.7,
+                                    alignment: Alignment.topCenter,
+                                    child: itemsData[index],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }
                     },
                   ),
                 ),
@@ -388,4 +406,3 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 }
-
