@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../exit-popup.dart';
 
 import 'admin_event_details.dart';
 import 'admin_edit_event.dart';
@@ -42,7 +43,9 @@ class _AdminEventsState extends State<AdminEvents> {
   @override
   Widget build(BuildContext context) {
     print("item: $selectedMenuItemId");
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         SideDrawer(
@@ -198,6 +201,7 @@ class _AdminEventsState extends State<AdminEvents> {
           ),
         ),
       ),
+    ),
     );
   }
 

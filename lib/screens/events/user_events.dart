@@ -9,6 +9,7 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
+import '../exit-popup.dart';
 
 // ignore: must_be_immutable
 class Events extends StatefulWidget {
@@ -63,8 +64,10 @@ class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
     // final _height = MediaQuery.of(context).size.height;
-    print("item: $selectedMenuItemId");
-    return DrawerScaffold(
+    // print("item: $selectedMenuItemId");
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         SideDrawer(
@@ -182,6 +185,7 @@ class _EventsState extends State<Events> {
           ),
         ),
       ),
+    ),
     );
   }
 

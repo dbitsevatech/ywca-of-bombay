@@ -10,6 +10,7 @@ import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/constants.dart';
+import '../exit-popup.dart';
 
 // ignore: must_be_immutable
 class SuccessStories extends StatefulWidget {
@@ -57,7 +58,9 @@ class _SuccessStoriesState extends State<SuccessStories> {
       ),
     );
 
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child:  DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         (role == "Admin")
@@ -216,6 +219,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
           ),
         ),
       ),
+    ),
     );
   }
 

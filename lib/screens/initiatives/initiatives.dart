@@ -1,6 +1,7 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../exit-popup.dart';
 
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
@@ -36,7 +37,9 @@ class _InitiativesState extends State<Initiatives> {
         userInfo.getmemberRole; // to identify if user is admin or other role
     print("item: $selectedMenuItemId");
     final _height = MediaQuery.of(context).size.height;
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         (role == "Admin")
@@ -141,6 +144,7 @@ class _InitiativesState extends State<Initiatives> {
           ),
         ),
       ),
+    ),
     );
   }
 

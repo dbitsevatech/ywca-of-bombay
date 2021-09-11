@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../exit-popup.dart';
 import 'become_member.dart';
 
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -56,7 +56,9 @@ class _AboutUsState extends State<AboutUs> {
     var role = userInfo.getmemberRole;
     final _height = MediaQuery.of(context).size.height;
     print("item: $selectedMenuItemId");
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         (role == "Admin")
@@ -386,6 +388,7 @@ class _AboutUsState extends State<AboutUs> {
           ),
         ),
       ),
+    ),
     );
   }
 }

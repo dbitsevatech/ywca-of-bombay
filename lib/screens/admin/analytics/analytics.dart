@@ -5,6 +5,7 @@ import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../exit-popup.dart';
 
 import 'constants.dart';
 
@@ -199,7 +200,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       drawers: [
         SideDrawer(
           percentage: 0.75, // main screen height proportion
@@ -385,6 +388,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

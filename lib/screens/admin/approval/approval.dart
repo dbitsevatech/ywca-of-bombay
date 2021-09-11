@@ -9,6 +9,7 @@ import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
+import '../../exit-popup.dart';
 
 // ignore: must_be_immutable
 class ApprovalScreen extends StatefulWidget {
@@ -38,7 +39,9 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   Widget build(BuildContext context) {
     print("item: $selectedMenuItemId");
-    return DrawerScaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
         SideDrawer(
@@ -152,6 +155,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -177,7 +181,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       // Event date and time
                       title: Text(
                         'Name: ' +
-                            (document['firstName']) +
+                            (document['firstName']) + " " +
                             (document['lastName']),
                         style: TextStyle(
                           color: Colors.black,
