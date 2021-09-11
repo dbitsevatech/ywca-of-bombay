@@ -173,41 +173,43 @@ class _AboutUsState extends State<AboutUs> {
                                   builder: (BuildContext context) {
                                     return Column(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Card(
-                                            margin: EdgeInsets.only(
-                                              top: 10.0,
-                                              bottom: 10.0,
-                                            ),
-                                            elevation: 6.0,
-                                            shadowColor: Colors.blueGrey,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30.0),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(30.0),
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Card(
+                                              margin: EdgeInsets.only(
+                                                top: 10.0,
+                                                bottom: 10.0,
                                               ),
-                                              child: GestureDetector(
-                                                child: Image(
-                                                  image:
-                                                      AssetImage(pathOfImage),
-                                                  fit: BoxFit.cover,
-                                                  width: double.infinity,
-                                                  height: 160,
+                                              elevation: 6.0,
+                                              shadowColor: Colors.blueGrey,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30.0),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(30.0),
                                                 ),
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ZoomImageAsset(
-                                                              pathOfImage),
-                                                    ),
-                                                  );
-                                                },
+                                                child: GestureDetector(
+                                                  child: Image(
+                                                    image:
+                                                        AssetImage(pathOfImage),
+                                                    fit: BoxFit.cover,
+                                                    width: double.infinity,
+                                                    height: 160,
+                                                  ),
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ZoomImageAsset(
+                                                                pathOfImage),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -229,38 +231,15 @@ class _AboutUsState extends State<AboutUs> {
                                 );
                               }).toList(),
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: imagePathList.map((pathOfImage) {
-                            //     int index = imagePathList.indexOf(pathOfImage);
-                            //     return Container(
-                            //       width: 10.0,
-                            //       height: 10.0,
-                            //       margin: EdgeInsets.symmetric(
-                            //         vertical: 10.0,
-                            //         horizontal: 2.0,
-                            //       ),
-                            //       decoration: BoxDecoration(
-                            //         shape: BoxShape.circle,
-                            //         color: _currentIndex == index
-                            //             ? Color.fromRGBO(0, 0, 0, 0.8)
-                            //             : Color.fromRGBO(0, 0, 0, 0.3),
-                            //       ),
-                            //     );
-                            //   }).toList(),
-                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: this.imagePathList.map((pathOfImage) {
-                                int index =
-                                    this.imagePathList.indexOf(pathOfImage);
+                              children: imagePathList.map((pathOfImage) {
+                                int index = imagePathList.indexOf(pathOfImage);
                                 return Container(
                                   width: 10.0,
                                   height: 10.0,
                                   margin: EdgeInsets.symmetric(
-                                    vertical: 10.0,
-                                    horizontal: 2.0,
-                                  ),
+                                      vertical: 10.0, horizontal: 2.0),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: _currentIndex == index

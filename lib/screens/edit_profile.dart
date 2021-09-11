@@ -830,13 +830,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "uid": uid,
                                       "phoneNumber": userInfo.getphoneNumber,
                                       "memberRole": userInfo.getmemberRole,
+                                      "approvalStatus": "pending"
                                     })
                                     .then((value) => print("Request Sent"))
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
                                 await savePressed();
                               } else {
-                                print("helo");
+                                print("updating as it is non-member");
                                 await FirebaseFirestore.instance
                                     .collection("users")
                                     .doc(uid)

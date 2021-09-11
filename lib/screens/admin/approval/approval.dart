@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/blue_bubble_design.dart';
-import '../../../widgets/constants.dart';
 import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
+import '../../../widgets/constants.dart';
+import '../../../widgets/blue_bubble_design.dart';
 
 // ignore: must_be_immutable
 class ApprovalScreen extends StatefulWidget {
@@ -19,346 +20,24 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
-  var searchValue = '';
 
-  ScrollController scrollController = ScrollController();
-  bool closeTopContainer = false;
-  double topContainer = 0;
-  List<Widget> itemsData = [];
-  // ignore: non_constant_identifier_names
-  List<Widget> DuplicateitemsData = [];
-  List<Widget> listItems = [];
-  List<dynamic> responseList = [];
-  List<dynamic> duplicateresponseList = [];
-
-  Future filter(String searchValue) async {
-    print("filter method called");
-    if (searchValue.isNotEmpty) {
-      List<Widget> loopitemsData = [];
-
-      duplicateresponseList.forEach((item) {
-        if (item['firstName'].contains(searchValue)) {
-          print(item['firstName']);
-          loopitemsData.add(singleitem(context, item));
-          print(loopitemsData);
-        }
-      });
-      setState(() {
-        itemsData.clear();
-        itemsData.addAll(loopitemsData);
-      });
-      return;
-    } else {
-      setState(() {
-        itemsData.clear();
-        itemsData.addAll(DuplicateitemsData);
-      });
-      print(itemsData);
-      return;
-    }
+  // conversion of event date to string for displaying
+  String readEventDate(Timestamp eventDate) {
+    DateTime newEventDate = eventDate.toDate();
+    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
+    return formattedEventDate;
   }
 
   @override
   void initState() {
-    super.initState();
-    userInfo = Provider.of<UserData>(context, listen: false);
     selectedMenuItemId = menuWithIcon.items[6].id;
-    scrollController.addListener(() {
-      double value = scrollController.offset / 119;
-      setState(() {
-        topContainer = value;
-        closeTopContainer = scrollController.offset > 50;
-      });
-    });
-  }
-
-  @override
-  Widget singleitem(BuildContext context, var item) {
-    // print("single");
-    return Container(
-      height: 182,
-      width: 336,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF49DEE8),
-            Colors.white,
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(left: 0, top: 10),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Name: ${item["firstName"]} ${item["lastName"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 0),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Contact Number: ${item["phoneNumber"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 0),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Email ID: ${item["emailId"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 0),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Nearest YWCA center: ${item["nearestCenter"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 0),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Institute/Organisation: ${item["placeOfWork"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 0),
-              width: 298,
-              height: 17,
-              child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  "\Profession: ${item["profession"]}",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 12, top: 18),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Spacer(),
-                  ConstrainedBox(
-                    constraints:
-                        BoxConstraints.tightFor(width: 120, height: 35),
-                    child: ElevatedButton.icon(
-                      onPressed: ()  {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Do you wish accept the changes?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('Cancel'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('YES'),
-                                  onPressed: () async {
-                                    await FirebaseFirestore.instance
-                                        .collection('users')
-                                        .doc(item["uid"])
-                                        .update({
-                                      "firstName": item["firstName"],
-                                      "lastName": item["lastName"],
-                                      "dateOfBirth": item["dateOfBirth"],
-                                      "emailId": item["emailId"],
-                                      "gender": item["gender"],
-                                      "profession": item["profession"],
-                                      "placeOfWork": item["placeOfWork"],
-                                      "nearestCenter": item["nearestCenter"],
-                                      "interestInMembership": item["interestInMembership"],
-                                      "uid": item["uid"],
-                                      "phoneNumber": item["phoneNumber"],
-                                      "memberRole": item["memberRole"],
-                                    }).then((value) => print("Approved"));
-                                    await FirebaseFirestore.instance
-                                        .collection('approval')
-                                        .doc(item["uid"])
-                                        .delete();
-                                    Navigator.of(context).pop(true);
-                                    // Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      icon: Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                          Colors.white,
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.green,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      label: Text(
-                        "Approve",
-                        style: TextStyle(
-                          fontFamily: 'montserrat',
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 3),
-                  ConstrainedBox(
-                    constraints:
-                        BoxConstraints.tightFor(width: 120, height: 35),
-                    child: ElevatedButton.icon(
-                      onPressed: () async {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Do you wish accept the changes?'),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('Cancel'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-                                ),
-                                TextButton(
-                                  child: Text('YES'),
-                                  onPressed: () async {
-                                    await FirebaseFirestore.instance
-                                        .collection('approval')
-                                        .doc(item["uid"])
-                                        .delete()
-                                        .then(
-                                          (value) => print("Rejected"),
-                                    );
-                                    Navigator.of(context).pop(true);
-                                    // Navigator.of(context).pop(true);
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-
-                      },
-                      icon: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 24.0,
-                      ),
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      label: Text(
-                        "Reject",
-                        style: TextStyle(
-                          fontFamily: 'montserrat',
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 2),
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+    userInfo = Provider.of<UserData>(context, listen: false);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
+    print("item: $selectedMenuItemId");
     return DrawerScaffold(
       // appBar: AppBar(), // green app bar
       drawers: [
@@ -380,190 +59,362 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
       ],
       controller: controller,
       builder: (context, id) => SafeArea(
-        child: Scaffold(
-          body: Container(
-            height: size.height,
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    // top-left corner intersecting circles design
-                    MainPageBlueBubbleDesign(),
-                    Positioned(
-                      child: AppBar(
-                        centerTitle: true,
-                        title: Text(
-                          "YWCA Of Bombay",
-                          style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        leading: IconButton(
-                          icon: Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          onPressed: () => {
-                            controller.toggle(Direction.left),
-                            // OR
-                            // controller.open()
-                          },
-                        ),
-                      ),
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              EventPageBlueBubbleDesign(),
+              Positioned(
+                child: AppBar(
+                  centerTitle: true,
+                  title: Text(
+                    "YWCA Of Bombay",
+                    style: TextStyle(
+                      fontFamily: 'LobsterTwo',
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                      color: Colors.black87,
                     ),
-                    PreferredSize(
-                      preferredSize: Size.fromHeight(80),
-                      child: Column(
-                        children: <Widget>[
-                          // Distance from ywca
-                          // or else it will overlap
-                          SizedBox(height: 80),
-                          RichText(
-                            text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyText2,
-                              children: [
-                                TextSpan(
-                                  text: 'Approval ',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    color: Color(0xff333333),
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
-                                WidgetSpan(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0,
-                                    ),
-                                    child: Icon(
-                                      Icons.notification_important,
-                                      size: 28,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          TextField(
-                            onChanged: (value) {
-                              setState(() {
-                                searchValue = value;
-                                print("search value: " + searchValue);
-                              });
-                              filter(searchValue);
-                            },
-                            decoration: InputDecoration(
-                              hintText: "Search by name",
-                              hintStyle: TextStyle(fontFamily: 'Montserrat'),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.grey,
-                              ),
-                              suffixIcon: Icon(
-                                Icons.mic,
-                                color: Colors.grey,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide.none,
-                              ),
-                              contentPadding: EdgeInsets.zero,
-                              filled: true,
-                              fillColor: Colors.transparent,
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    onPressed: () => {
+                      controller.toggle(Direction.left),
+                      // OR
+                      // controller.open()
+                    },
+                  ),
+                ),
+              ),
+              // Events & Search bar Starts
+              PreferredSize(
+                preferredSize: Size.fromHeight(80),
+                child: Column(
+                  children: <Widget>[
+                    // Distance from ywca
+                    // or else it will overlap
+                    SizedBox(height: 80),
+                    RichText(
+                      text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyText2,
+                        children: [
+                          TextSpan(
+                              text: 'Approval ',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold)),
+                          WidgetSpan(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                              child: Icon(Icons.notification_important),
                             ),
                           ),
                         ],
                       ),
                     ),
+                    SizedBox(height: 5),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search by name",
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                        suffixIcon: Icon(
+                          Icons.mic,
+                          color: Colors.grey,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        contentPadding: EdgeInsets.zero,
+                        filled: true,
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
                   ],
                 ),
-                Expanded(
-                  child: StreamBuilder(
-                    // StreamBuilder is used to get a continuous stream of data from the database
-                    // so any change made to DB is immediately reflected without refreshing the page
-                    stream: FirebaseFirestore.instance
-                        .collection('approval')
-                        .snapshots(),
-
-                    // stream: (searchValue != "")
-                    //     ? FirebaseFirestore.instance
-                    //         .collection('approval')
-                    //         .where(
-                    //           "firstName",
-                    //           isEqualTo: searchValue,
-                    //           // isGreaterThanOrEqualTo: searchValue,
-                    //           // isLessThan: searchValue.substring(
-                    //           //         0, searchValue.length - 1) +
-                    //           //     String.fromCharCode(searchValue
-                    //           //             .codeUnitAt(searchValue.length - 1) +
-                    //           //         1),
-                    //         )
-                    //         .snapshots()
-                    //     : FirebaseFirestore.instance
-                    //         .collection("approval")
-                    //         .snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (!snapshot.hasData) {
-                        return CircularProgressIndicator();
-                      } else {
-                        responseList = snapshot.data.docs;
-                        duplicateresponseList = snapshot.data.docs;
-
-                        responseList.forEach((item) {
-                          listItems.add(singleitem(context, item));
-                        });
-                        DuplicateitemsData = listItems;
-                        itemsData.addAll(DuplicateitemsData);
-                        // print(itemsData);
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          controller: scrollController,
-                          itemCount: itemsData.length,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            double scale = 1.0;
-
-                            if (topContainer > 0) {
-                              scale = index + 2 - topContainer / 1.3;
-                              if (scale < 0) {
-                                scale = 0;
-                              } else if (scale > 1) {
-                                scale = 1;
-                              }
-                            }
-                            return Opacity(
-                              opacity: scale,
-                              child: Transform(
-                                transform: Matrix4.identity()
-                                  ..scale(scale, scale),
-                                alignment: Alignment.bottomCenter,
-                                child: Align(
-                                  heightFactor: 0.8,
-                                  alignment: Alignment.topCenter,
-                                  child: itemsData[index],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+              // card view for the events
+              Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                  child: getHomePageBody(context)),
+            ],
           ),
         ),
       ),
     );
   }
+
+  Widget getHomePageBody(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('approval').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError)
+          return Text('Error: ${snapshot.error}' + 'something');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          default:
+            return ListView(
+              padding: EdgeInsets.only(bottom: 80),
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                  child: Card(
+                    child: ListTile(
+                      // Event date and time
+                      title: Text(
+                        'Name: ' +
+                            (document['firstName']) +
+                            (document['lastName']),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 5),
+                          // Event name
+                          Text(
+                            'Contact Number: ' + (document['phoneNumber']),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          // Resource person
+                          Text(
+                            'Email Id: ' + (document['emailId']),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          // Event Venue
+                          Text(
+                            'Nearest YWCA Center: ' +
+                                (document['nearestCenter']),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          // Event Amount
+                          Text(
+                            'Institute/Organisation: ' +
+                                (document['placeOfWork']),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          // Event Amount
+                          Text(
+                            'Profession: ' + (document['profession']),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          // start of edit and delete button
+                          Row(
+                            children: [
+                              Spacer(),
+                              Spacer(),
+                              Spacer(),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  bool result = await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      // Alert box for edit event
+                                      return AlertDialog(
+                                        title: Text('Confirmation'),
+                                        content: Text(
+                                            'Are you sure you want to approve?'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(
+                                                context,
+                                                rootNavigator: true,
+                                              ).pop(
+                                                  false); // dismisses only the dialog and returns false
+                                            },
+                                            child: Text('No'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop(true);
+                                              // change approvalStatus
+                                              // FirebaseFirestore.instance
+                                              //     .collection('approval')
+                                              //     .doc(document.id)
+                                              //     .update({
+                                              //   'approvalStatus': 'approved'
+                                              // });
+                                              // update user table
+                                              await FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(document.id)
+                                                  .update({
+                                                "firstName":
+                                                    document["firstName"],
+                                                "lastName":
+                                                    document["lastName"],
+                                                "dateOfBirth":
+                                                    document["dateOfBirth"],
+                                                "emailId": document["emailId"],
+                                                "gender": document["gender"],
+                                                "profession":
+                                                    document["profession"],
+                                                "placeOfWork":
+                                                    document["placeOfWork"],
+                                                "nearestCenter":
+                                                    document["nearestCenter"],
+                                                "interestInMembership":
+                                                    document[
+                                                        "interestInMembership"],
+                                                "uid": document["uid"],
+                                                "phoneNumber":
+                                                    document["phoneNumber"],
+                                                "memberRole":
+                                                    document["memberRole"],
+                                              }).then((value) =>
+                                                      print("Approved"));
+                                              // delete from approval
+                                              FirebaseFirestore.instance
+                                                  .collection('approval')
+                                                  .doc(document.id)
+                                                  .delete();
+                                              // Navigator.of(context).pop(true);
+                                            },
+                                            child: Text('Yes'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.green),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.all(5)),
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                ),
+                              ),
+                              Spacer(),
+                              ElevatedButton(
+                                onPressed: () async {
+                                  // Alert box for delete event
+                                  bool result = await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text('Confirmation'),
+                                        content: Text(
+                                          'Are you sure you want to disapprove?',
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(
+                                                context,
+                                                rootNavigator: true,
+                                              ).pop(
+                                                  false); // dismisses only the dialog and returns false
+                                            },
+                                            child: Text('No'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop(true);
+                                              // not approved
+                                              // change approvalStatus
+                                              FirebaseFirestore.instance
+                                                  .collection('approval')
+                                                  .doc(document.id)
+                                                  .update({
+                                                'approvalStatus': 'notapproved'
+                                              });
+                                              setState(() {});
+                                            },
+                                            child: Text('Yes'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.red),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.all(5)),
+                                ),
+                                child: Icon(
+                                  Icons.cancel,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // end of edit and delete
+                        ],
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                );
+              }).toList(),
+            );
+        }
+      },
+    );
+  }
+}
+
+gotoApproveUser(BuildContext context, String id) async {
+  await FirebaseFirestore.instance
+      .collection("approval")
+      .where('uid', isEqualTo: id)
+      .get()
+      .then((querySnapshot) {
+    querySnapshot.docs.forEach(
+      (doc) {
+        doc.reference.delete();
+      },
+    );
+  });
 }
