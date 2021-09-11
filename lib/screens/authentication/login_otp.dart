@@ -81,11 +81,6 @@ class _LoginOtpState extends State<LoginOtp>
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
             if (userInfo.getmemberRole == 'Admin') {
-              // TODO: Add Admin events navigation
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
-              //     (route) => false);
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminEvents()),
@@ -400,17 +395,17 @@ class _LoginOtpState extends State<LoginOtp>
                       ),
                       onPressed: () {
                         setState(() {
-                          if (_sixthDigit > 0) {
+                          if (_sixthDigit != -1) {
                             _sixthDigit = -1;
-                          } else if (_fifthDigit > 0) {
+                          } else if (_fifthDigit != -1) {
                             _fifthDigit = -1;
-                          } else if (_fourthDigit > 0) {
+                          } else if (_fourthDigit != -1) {
                             _fourthDigit = -1;
-                          } else if (_thirdDigit > 0) {
+                          } else if (_thirdDigit != -1) {
                             _thirdDigit = -1;
-                          } else if (_secondDigit > 0) {
+                          } else if (_secondDigit != -1) {
                             _secondDigit = -1;
-                          } else if (_firstDigit > 0) {
+                          } else if (_firstDigit != -1) {
                             _firstDigit = -1;
                           }
                         });

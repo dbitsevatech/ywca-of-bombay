@@ -346,7 +346,6 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Register button
-  // TODO: Register button on OTP page not working
   get _registerButton {
     return FractionallySizedBox(
       widthFactor: 0.92, // button width wrt screen width
