@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,14 +32,23 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   List<Widget> itemsData = [];
 
-  Future downloadData()async {
+  Future downloadData() async {
     await FirebaseFirestore.instance
         .collection("eventsBackup")
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
         // print(result.id);
-        responseList.add({'eventName': result.data()["eventName"], 'clicks': 0, 'registrations' : 0, 'eventID': result.id, 'date':result.data()["eventDate"].toDate().toString()});
+        responseList.add({
+          'eventName': result.data()["eventName"],
+          'clicks': 0,
+          'registrations': 0,
+          'eventID': result.id,
+          // 'date': result.data()["eventDate"].toDate().toString(),
+          'date': DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
+              .format(result.data()["eventDate"].toDate()),
+          // 'date': DateFormat.yMEd().add_jm().format(result.data()["eventDate"].toDate()),
+        });
       });
       responseList.forEach((event) {
         FirebaseFirestore.instance
@@ -56,9 +66,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           event["clicks"] += querySnapshot.size;
         });
       });
-
     });
-
 
     await Future.delayed(const Duration(seconds: 2));
     getPostsData();
@@ -67,13 +75,12 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Future<void> getPostsData() async {
-
     List<Widget> listItems = [];
-     // print(responseList);
+    // print(responseList);
     responseList.forEach((post) {
       listItems.add(
         Container(
-          height: 85,
+          height: 90,
           width: 310,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 34),
           decoration: BoxDecoration(
@@ -94,15 +101,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     Container(
                       width: 146,
                       height: 39,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          "${post["eventName"]}",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat'),
+                      // child: FittedBox(
+                      //   fit: BoxFit.fitWidth,
+                      child: Text(
+                        "${post["eventName"]}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
                         ),
                       ),
+                      // ),
                     ),
                     SizedBox(
                       width: 10,
@@ -148,9 +157,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: const EdgeInsets.only(left: 0),
-                      width: 101,
-                      height: 13,
+                      margin: const EdgeInsets.only(left: 30),
+                      width: 110,
+                      height: 16,
                       child: FittedBox(
                         fit: BoxFit.fitHeight,
                         child: Text(
@@ -178,12 +187,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
     userInfo = Provider.of<UserData>(context, listen: false);
     selectedMenuItemId = menuWithIcon.items[5].id;
-
-
 
     scrollController.addListener(() {
       double value = scrollController.offset / 119;
@@ -198,6 +205,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    print(responseList);
+    print(responseList.runtimeType);
 
     return DrawerScaffold(
       drawers: [
@@ -333,50 +343,50 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   ),
                 ),
                 Expanded(
-                  child:
-    FutureBuilder(
-    future: downloadData(), // function where you call your api
-    builder: (BuildContext context, AsyncSnapshot snapshot) {  // AsyncSnapshot<Your object type>
-    if( snapshot.connectionState == ConnectionState.waiting){
-    return  Center(child: Text('Please wait its loading...'));
-    }else {
-      if (!snapshot.hasData) {
-        return CircularProgressIndicator();
-      } else {
-         // getPostsData();
+                  child: FutureBuilder(
+                    future: downloadData(), // function where you call your api
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      // AsyncSnapshot<Your object type>
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                            child: Text('Please wait its loading...'));
+                      } else {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator();
+                        } else {
+                          // getPostsData();
 
-        return
-          ListView.builder(
-            controller: scrollController,
-            itemCount: itemsData.length,
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              double scale = 1.0;
-              if (topContainer > 0.5) {
-                scale = index + 0.5 - topContainer;
-                if (scale < 0) {
-                  scale = 0;
-                } else if (scale > 1) {
-                  scale = 1;
-                }
-              }
-              return Opacity(
-                opacity: scale,
-                child: Transform(
-                  transform: Matrix4.identity()
-                    ..scale(scale, scale),
-                  alignment: Alignment.bottomCenter,
-                  child: Align(
-                    heightFactor: 0.7,
-                    alignment: Alignment.topCenter,
-                    child: itemsData[index],
-                  ),
-                ),
-              );
-            },
-          );
-      }
-    }
+                          return ListView.builder(
+                            controller: scrollController,
+                            itemCount: itemsData.length,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              double scale = 1.0;
+                              if (topContainer > 0.5) {
+                                scale = index + 0.5 - topContainer;
+                                if (scale < 0) {
+                                  scale = 0;
+                                } else if (scale > 1) {
+                                  scale = 1;
+                                }
+                              }
+                              return Opacity(
+                                opacity: scale,
+                                child: Transform(
+                                  transform: Matrix4.identity()
+                                    ..scale(scale, scale),
+                                  alignment: Alignment.bottomCenter,
+                                  child: Align(
+                                    heightFactor: 0.7,
+                                    alignment: Alignment.topCenter,
+                                    child: itemsData[index],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }
                     },
                   ),
                 ),
@@ -388,4 +398,3 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 }
-
