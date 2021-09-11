@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:ywcaofbombay/screens/edit_profile.dart';
+import 'package:ywcaofbombay/screens/onboarding.dart';
 
 import 'screens/about_us/about_us.dart';
 import 'screens/admin/events/admin_events.dart';
@@ -17,6 +18,10 @@ import 'screens/success_stories/success_stories.dart';
 import 'services/auth_service.dart';
 import 'services/class_builder.dart';
 import 'models/User.dart';
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -67,8 +72,41 @@ class MyApp extends StatelessWidget {
     // return OnboardingScreen();
     // return Events();
     // return LoginScreen();
-    return LoginScreen();
+    return Splash();
     // return HomeController();
+  }
+}
+
+class Splash extends StatefulWidget {
+  @override
+  SplashState createState() => new SplashState();
+}
+
+class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new LoginScreen()));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new OnboardingScreen()));
+    }
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) => checkFirstSeen();
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: new Center(
+        child: new Text('Loading...'),
+      ),
+    );
   }
 }
 
