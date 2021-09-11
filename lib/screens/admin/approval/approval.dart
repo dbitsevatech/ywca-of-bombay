@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -253,7 +252,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               Spacer(),
                               ElevatedButton(
                                 onPressed: () async {
-                                  bool result = await showDialog(
+                                   await showDialog(
                                     context: context,
                                     builder: (context) {
                                       // Alert box for edit event
@@ -341,7 +340,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               ElevatedButton(
                                 onPressed: () async {
                                   // Alert box for delete event
-                                  bool result = await showDialog(
+                                       await showDialog(
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(

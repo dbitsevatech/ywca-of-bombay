@@ -178,7 +178,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     var url = imageUrl.toString();
     print("Image URL=" + url);
 
-    final document = FirebaseFirestore.instance.collection('events').add({
+     FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
       'eventDescription': eventDescription,
       'eventVenue': eventVenue,

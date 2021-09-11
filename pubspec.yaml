@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.0.3
   shared_preferences: ^2.0.7
   after_layout: ^1.1.0
+  vibration: ^1.7.4-nullsafety.0
 
 dev_dependencies:
   flutter_test:

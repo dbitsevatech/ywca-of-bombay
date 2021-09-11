@@ -51,6 +51,7 @@ class _DetailPageState extends State<DetailPage> {
   String memberRole = "";
   int _currentIndex = 0;
   String role = "";
+  var now = new DateTime.now();
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
@@ -66,12 +67,12 @@ class _DetailPageState extends State<DetailPage> {
         .get()
         .then(
       (checkSnapshot) {
-        print('snapshot size');
-        print(checkSnapshot.size);
+        // print('snapshot size');
+        // print(checkSnapshot.size);
         if (checkSnapshot.size > 0) {
           print("Already Exists");
         } else {
-          print("adding");
+          // print("adding");
           FirebaseFirestore.instance
               .collection('eventRegistration')
               .add({'eventID': eventID, 'userID': userID});
@@ -127,6 +128,7 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
 
     }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -386,7 +388,7 @@ class _DetailPageState extends State<DetailPage> {
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
-                      if (role == 'Member' && eventType == 'Members only') ...[
+                      if (role == 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -423,7 +425,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                        if (role != 'Member' && eventType == 'Members only') ...[
+                        if (role != 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -460,7 +462,7 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                         ],
-                        if (eventType == 'Everyone') ...[
+                        if (eventType == 'Everyone' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -497,6 +499,23 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                         ],
+                        SizedBox(height: _height * 0.015),
+                        if(eventDeadline.compareTo(now)<0) ...[
+                          Center(
+                            child: Text(
+                              'Event Date has passed\n'
+                                  'Contact ********** for more details',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+
                       ],
                     ),
                   ),

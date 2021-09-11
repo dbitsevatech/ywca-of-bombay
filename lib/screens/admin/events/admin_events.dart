@@ -272,7 +272,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           SizedBox(height: 5),
                           // Event Venue
                           Text(
-                            'Venue: ' + document['eventName'],
+                            'Venue: ' + document['eventVenue'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
@@ -281,7 +281,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           SizedBox(height: 5),
                           // Event Amount
                           Text(
-                            'Amount: ' + document['eventName'],
+                            'Amount: ' + document['eventAmount'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,

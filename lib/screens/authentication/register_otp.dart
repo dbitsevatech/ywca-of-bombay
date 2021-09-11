@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:vibration/vibration.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -551,6 +552,8 @@ class _RegisterOtpState extends State<RegisterOtp>
                     color: Colors.black,
                   ),
                   onPressed: () {
+                    Vibration.vibrate(duration: 50);
+
                     setState(() {
                       if (_sixthDigit != -1) {
                         _sixthDigit = -1;
@@ -696,6 +699,8 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 50);
+
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {

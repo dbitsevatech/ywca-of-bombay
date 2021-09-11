@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../widgets/constants.dart';
 import '../../../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable

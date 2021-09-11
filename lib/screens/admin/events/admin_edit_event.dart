@@ -357,7 +357,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                           ),
                           onPressed: () async {
                             // Edit event image alertbox
-                            bool? result = await showDialog(
+                             await showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -707,7 +707,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                              bool? result = await showDialog(
+                               await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
