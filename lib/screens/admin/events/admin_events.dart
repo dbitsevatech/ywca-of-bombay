@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -387,6 +388,29 @@ class _AdminEventsState extends State<AdminEvents> {
                                               await eventsBackup
                                                   .doc(document.id)
                                                   .delete();
+                                              await FirebaseStorage.instance
+                                                  .refFromURL(document['eventImageUrl'])
+                                                  .delete();
+                                              await FirebaseFirestore
+                                                  .instance
+                                                  .collection("eventClick")
+                                                  .where('eventID', isEqualTo: document.id)
+                                              .get()
+                                                  .then((querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
+                                              doc.reference.delete();
+                                              });
+                                              });
+                                              await FirebaseFirestore
+                                                  .instance
+                                                  .collection("eventRegistration")
+                                                  .where('eventID', isEqualTo: document.id)
+                                                  .get()
+                                                  .then((querySnapshot) {
+                                                querySnapshot.docs.forEach((doc) {
+                                                  doc.reference.delete();
+                                                });
+                                              });
                                               setState(() {});
                                             },
                                             child: Text('Yes'),

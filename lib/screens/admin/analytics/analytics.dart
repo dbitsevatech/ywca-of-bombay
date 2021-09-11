@@ -7,8 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'constants.dart';
-
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../drawers_constants/admin_drawer.dart';
@@ -349,7 +347,13 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       // AsyncSnapshot<Your object type>
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(
-                            child: Text('Please wait its loading...'));
+                          child: Text(
+                            'Please wait its loading...',
+                            style: DefaultTextStyle.of(context)
+                                .style
+                                .apply(fontSizeFactor: 1.5),
+                          ),
+                        );
                       } else {
                         if (!snapshot.hasData) {
                           return CircularProgressIndicator();

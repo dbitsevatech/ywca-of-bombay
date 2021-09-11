@@ -6,7 +6,6 @@ import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 import 'admin_edit_event_image.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
