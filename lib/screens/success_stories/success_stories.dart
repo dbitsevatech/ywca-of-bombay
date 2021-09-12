@@ -10,7 +10,7 @@ import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/constants.dart';
-import '../exit-popup.dart';
+import '../../widgets/exit_popup.dart';
 
 // ignore: must_be_immutable
 class SuccessStories extends StatefulWidget {
@@ -59,148 +59,148 @@ class _SuccessStoriesState extends State<SuccessStories> {
     );
 
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child:  DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        (role == "Admin")
-            ? // ADMIN DRAWER
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: AdminDrawer.header(context, userInfo),
-                footerView: AdminDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    AdminDrawer.selectedItem(context, itemId);
-                  });
-                },
-              )
-            : // DRAWER FOR OTHER ROLES
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: UserDrawer.header(context, userInfo),
-                footerView: UserDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    UserDrawer.selectedItem(context, itemId);
-                  });
-                },
-              ),
-      ],
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          (role == "Admin")
+              ? // ADMIN DRAWER
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
+              : // DRAWER FOR OTHER ROLES
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
+        ],
 
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                // circle design
-                children: <Widget>[
-                  Positioned(
-                    child: Image.asset("assets/images/circle-design.png"),
-                  ),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          color: Colors.black87,
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  // circle design
+                  children: <Widget>[
+                    Positioned(
+                      child: Image.asset("assets/images/circle-design.png"),
+                    ),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => {
+                            // widget.onMenuPressed,
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
-                        onPressed: () => {
-                          // widget.onMenuPressed,
-                          controller.toggle(Direction.left),
-                          // OR
-                          // controller.open()
-                        },
                       ),
                     ),
-                  ),
-                  //Title start
-                  Padding(
-                    padding: EdgeInsets.only(top: _height * 0.12),
-                    child: Container(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text(
-                          'Success Stories',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Color(0xff333647),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26,
+                    //Title start
+                    Padding(
+                      padding: EdgeInsets.only(top: _height * 0.12),
+                      child: Container(
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            'Success Stories',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color(0xff333647),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  //Title end
-                ],
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      // height: 540,
-                      height: _height * 0.7,
-                      child: PageView.builder(
-                        controller: pageController,
-                        // itemCount: pages.length,
-                        itemBuilder: (_, index) {
-                          return pages[index % pages.length];
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: SmoothPageIndicator(
-                        controller: pageController,
-                        count: pages.length,
-                        effect: ScrollingDotsEffect(
-                          activeStrokeWidth: 2,
-                          activeDotScale: 1.3,
-                          maxVisibleDots: 7,
-                          radius: 8,
-                          spacing: 10,
-                          dotHeight: 12,
-                          dotWidth: 12,
-                          activeDotColor: Color.fromRGBO(0, 0, 0, 0.8),
-                          dotColor: Color.fromRGBO(0, 0, 0, 0.3),
-                        ),
-                      ),
-                    ),
+                    //Title end
                   ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        // height: 540,
+                        height: _height * 0.7,
+                        child: PageView.builder(
+                          controller: pageController,
+                          // itemCount: pages.length,
+                          itemBuilder: (_, index) {
+                            return pages[index % pages.length];
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: SmoothPageIndicator(
+                          controller: pageController,
+                          count: pages.length,
+                          effect: ScrollingDotsEffect(
+                            activeStrokeWidth: 2,
+                            activeDotScale: 1.3,
+                            maxVisibleDots: 7,
+                            radius: 8,
+                            spacing: 10,
+                            dotHeight: 12,
+                            dotWidth: 12,
+                            activeDotColor: Color.fromRGBO(0, 0, 0, 0.8),
+                            dotColor: Color.fromRGBO(0, 0, 0, 0.3),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 

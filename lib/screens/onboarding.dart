@@ -77,10 +77,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ],
               ),
-              // TODO: Make the carousel responsive
-              // https://pub.dev/packages/introduction_screen
-              // https://pub.dev/packages/gooey_carousel
-              // https://pub.dev/packages/intro_slider ***
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(

@@ -1,7 +1,7 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../exit-popup.dart';
+import '../../widgets/exit_popup.dart';
 
 import 'constants.dart';
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -40,174 +40,174 @@ class _ContactUsState extends State<ContactUs> {
     _width = MediaQuery.of(context).size.width;
     print("item: $selectedMenuItemId");
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child: DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        (role == "Admin")
-            ? // ADMIN DRAWER
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: AdminDrawer.header(context, userInfo),
-                footerView: AdminDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    AdminDrawer.selectedItem(context, itemId);
-                  });
-                },
-              )
-            : // DRAWER FOR OTHER ROLES
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: UserDrawer.header(context, userInfo),
-                footerView: UserDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    UserDrawer.selectedItem(context, itemId);
-                  });
-                },
-              ),
-      ],
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  // top-left corner intersecting circles design
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          (role == "Admin")
+              ? // ADMIN DRAWER
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
+              : // DRAWER FOR OTHER ROLES
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    // top-left corner intersecting circles design
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => {
+                            // widget.onMenuPressed,
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
-                        onPressed: () => {
-                          // widget.onMenuPressed,
-                          controller.toggle(Direction.left),
-                          // OR
-                          // controller.open()
-                        },
                       ),
                     ),
-                  ),
-                  PreferredSize(
-                    preferredSize: Size.fromHeight(100),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          // Distance from ywca
-                          // or else it will overlap
-                          SizedBox(height: 70),
-                          RichText(
-                            text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyText2,
-                              children: [
-                                TextSpan(
-                                  text: 'Contact Us',
-                                  style: TextStyle(
-                                    fontSize: 26,
-                                    color: Color(0xff333333),
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    letterSpacing: 1.5,
+                    PreferredSize(
+                      preferredSize: Size.fromHeight(100),
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            // Distance from ywca
+                            // or else it will overlap
+                            SizedBox(height: 70),
+                            RichText(
+                              text: TextSpan(
+                                style: Theme.of(context).textTheme.bodyText2,
+                                children: [
+                                  TextSpan(
+                                    text: 'Contact Us',
+                                    style: TextStyle(
+                                      fontSize: 26,
+                                      color: Color(0xff333333),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat',
+                                      letterSpacing: 1.5,
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      appBar: AppBar(
+                        // title: Text(''),
+                        automaticallyImplyLeading: false,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0.0,
+                        bottom: PreferredSize(
+                          preferredSize: const Size.fromHeight(10),
+                          child: Container(
+                            child: TabBar(
+                              labelPadding:
+                                  EdgeInsets.symmetric(horizontal: 10.0),
+                              labelStyle: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                              ),
+                              unselectedLabelColor: Colors.black54,
+                              labelColor: Colors.black,
+                              indicatorColor: secondaryColor,
+                              indicatorWeight: 2.5,
+                              tabs: [
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'OFFICES'),
+                                ),
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'HOSTELS'),
+                                ),
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'GUEST HOUSES'),
                                 ),
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                      body: TabBarView(
+                        children: <Widget>[
+                          officesTab(),
+                          hostelsTab(),
+                          guestHousesTab(),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
-              Expanded(
-                child: DefaultTabController(
-                  length: 3,
-                  child: Scaffold(
-                    backgroundColor: Colors.transparent,
-                    appBar: AppBar(
-                      // title: Text(''),
-                      automaticallyImplyLeading: false,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0.0,
-                      bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(10),
-                        child: Container(
-                          child: TabBar(
-                            labelPadding:
-                                EdgeInsets.symmetric(horizontal: 10.0),
-                            labelStyle: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            unselectedLabelColor: Colors.black54,
-                            labelColor: Colors.black,
-                            indicatorColor: secondaryColor,
-                            indicatorWeight: 2.5,
-                            tabs: [
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'OFFICES'),
-                              ),
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'HOSTELS'),
-                              ),
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'GUEST HOUSES'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    body: TabBarView(
-                      children: <Widget>[
-                        officesTab(),
-                        hostelsTab(),
-                        guestHousesTab(),
-                      ],
-                    ),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 

@@ -126,7 +126,6 @@ class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
                               ..onTap = () async {
                                 // ContactUs();
                                 print("contact us pressed");
-                                // TODO: Add contact us navigator
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,

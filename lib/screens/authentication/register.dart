@@ -68,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // https://github.com/flutter/flutter/issues/67909
       // https://github.com/flutter/flutter/pull/67926
       //
-      // TODO: Check if above line UX issue is solved
+      // TOD: Check if above line UX issue is solved
       // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',

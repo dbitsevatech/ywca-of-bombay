@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../exit-popup.dart';
+import '../../../widgets/exit_popup.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
@@ -213,200 +213,202 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     print(responseList);
 
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child: DrawerScaffold(
-      drawers: [
-        SideDrawer(
-          percentage: 0.75, // main screen height proportion
-          headerView: header(context, userInfo),
-          footerView: footer(context, controller, userInfo),
-          color: successStoriesCardBgColor,
-          selectorColor: Colors.red, menu: menuWithIcon,
-          animation: true,
-          selectedItemId: selectedMenuItemId,
-          onMenuItemSelected: (itemId) {
-            setState(() {
-              selectedMenuItemId = itemId;
-              selectedItem(context, itemId);
-            });
-          },
-        ),
-      ],
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Scaffold(
-          backgroundColor: Color(0xFFFFDADA),
-          body: Container(
-            height: size.height,
-            child: Column(
-              children: <Widget>[
-                Stack(
-                  children: <Widget>[
-                    // top-left corner intersecting circles design
-                    MainPageBlueBubbleDesign(),
-                    Positioned(
-                      child: AppBar(
-                        centerTitle: true,
-                        title: Text(
-                          "YWCA Of Bombay",
-                          style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                        leading: IconButton(
-                          icon: Icon(
-                            Icons.menu,
-                            color: Colors.black,
-                            size: 30,
-                          ),
-                          onPressed: () => {
-                            controller.toggle(Direction.left),
-                            // OR
-                            // controller.open()
-                          },
-                        ),
-                      ),
-                    ),
-                    PreferredSize(
-                      preferredSize: Size.fromHeight(100),
-                      child: Center(
-                        child: Column(
-                          children: <Widget>[
-                            // Distance from ywca
-                            // or else it will overlap
-                            SizedBox(height: 70),
-                            RichText(
-                              text: TextSpan(
-                                style: Theme.of(context).textTheme.bodyText2,
-                                children: [
-                                  TextSpan(
-                                    text: 'Analytics',
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      color: Color(0xff333333),
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Montserrat',
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        drawers: [
+          SideDrawer(
+            percentage: 0.75, // main screen height proportion
+            headerView: header(context, userInfo),
+            footerView: footer(context, controller, userInfo),
+            color: successStoriesCardBgColor,
+            selectorColor: Colors.red, menu: menuWithIcon,
+            animation: true,
+            selectedItemId: selectedMenuItemId,
+            onMenuItemSelected: (itemId) {
+              setState(() {
+                selectedMenuItemId = itemId;
+                selectedItem(context, itemId);
+              });
+            },
+          ),
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Scaffold(
+            backgroundColor: Color(0xFFFFDADA),
+            body: Container(
+              height: size.height,
+              child: Column(
+                children: <Widget>[
+                  Stack(
                     children: <Widget>[
-                      Spacer(flex: 3),
-                      Container(
-                        child: Text(
-                          "Title",
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
+                      // top-left corner intersecting circles design
+                      MainPageBlueBubbleDesign(),
+                      Positioned(
+                        child: AppBar(
+                          centerTitle: true,
+                          title: Text(
+                            "YWCA Of Bombay",
+                            style: TextStyle(
+                              fontFamily: 'LobsterTwo',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          leading: IconButton(
+                            icon: Icon(
+                              Icons.menu,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            onPressed: () => {
+                              controller.toggle(Direction.left),
+                              // OR
+                              // controller.open()
+                            },
                           ),
                         ),
                       ),
-                      Spacer(flex: 4),
-                      Container(
-                        child: Text(
-                          "Registered",
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
+                      PreferredSize(
+                        preferredSize: Size.fromHeight(100),
+                        child: Center(
+                          child: Column(
+                            children: <Widget>[
+                              // Distance from ywca
+                              // or else it will overlap
+                              SizedBox(height: 70),
+                              RichText(
+                                text: TextSpan(
+                                  style: Theme.of(context).textTheme.bodyText2,
+                                  children: [
+                                    TextSpan(
+                                      text: 'Analytics',
+                                      style: TextStyle(
+                                        fontSize: 32,
+                                        color: Color(0xff333333),
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Spacer(flex: 1),
-                      Container(
-                        child: Text(
-                          "Clicked",
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ),
-                      Spacer(flex: 2),
                     ],
                   ),
-                ),
-                Expanded(
-                  child: FutureBuilder(
-                    future: downloadData(), // function where you call your api
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      // AsyncSnapshot<Your object type>
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Spacer(flex: 3),
+                        Container(
                           child: Text(
-                            'Please wait its loading...',
-                            style: DefaultTextStyle.of(context)
-                                .style
-                                .apply(fontSizeFactor: 1.5),
+                            "Title",
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
                           ),
-                        );
-                      } else {
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
-                        } else {
-                          // getPostsData();
-
-                          return ListView.builder(
-                            controller: scrollController,
-                            itemCount: itemsData.length,
-                            physics: BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              double scale = 1.0;
-                              if (topContainer > 0.5) {
-                                scale = index + 0.5 - topContainer;
-                                if (scale < 0) {
-                                  scale = 0;
-                                } else if (scale > 1) {
-                                  scale = 1;
-                                }
-                              }
-                              return Opacity(
-                                opacity: scale,
-                                child: Transform(
-                                  transform: Matrix4.identity()
-                                    ..scale(scale, scale),
-                                  alignment: Alignment.bottomCenter,
-                                  child: Align(
-                                    heightFactor: 0.7,
-                                    alignment: Alignment.topCenter,
-                                    child: itemsData[index],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }
-                      }
-                    },
+                        ),
+                        Spacer(flex: 4),
+                        Container(
+                          child: Text(
+                            "Registered",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        ),
+                        Spacer(flex: 1),
+                        Container(
+                          child: Text(
+                            "Clicked",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        ),
+                        Spacer(flex: 2),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: FutureBuilder(
+                      future:
+                          downloadData(), // function where you call your api
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        // AsyncSnapshot<Your object type>
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Text(
+                              'Please wait its loading...',
+                              style: DefaultTextStyle.of(context)
+                                  .style
+                                  .apply(fontSizeFactor: 1.5),
+                            ),
+                          );
+                        } else {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator();
+                          } else {
+                            // getPostsData();
+
+                            return ListView.builder(
+                              controller: scrollController,
+                              itemCount: itemsData.length,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                double scale = 1.0;
+                                if (topContainer > 0.5) {
+                                  scale = index + 0.5 - topContainer;
+                                  if (scale < 0) {
+                                    scale = 0;
+                                  } else if (scale > 1) {
+                                    scale = 1;
+                                  }
+                                }
+                                return Opacity(
+                                  opacity: scale,
+                                  child: Transform(
+                                    transform: Matrix4.identity()
+                                      ..scale(scale, scale),
+                                    alignment: Alignment.bottomCenter,
+                                    child: Align(
+                                      heightFactor: 0.7,
+                                      alignment: Alignment.topCenter,
+                                      child: itemsData[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }
