@@ -625,6 +625,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               errorBorder: InputBorder.none,
                             ),
                             onTap: () async {
+                              print(eventDeadline);
                               FocusScope.of(context).requestFocus(FocusNode());
                               await _selectDeadline();
                               deadlineController.text =

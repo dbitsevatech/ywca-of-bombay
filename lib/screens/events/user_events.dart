@@ -93,9 +93,6 @@ class _EventsState extends State<Events> {
 
   @override
   Widget build(BuildContext context) {
-    // final _height = MediaQuery.of(context).size.height;
-    // print("item: $selectedMenuItemId");
-    // _openPopup(context);
     return WillPopScope(
         onWillPop: () => showExitPopup(context),
     child: DrawerScaffold(

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share/share.dart';
 import 'user_events.dart';
 
 import '../about_us/become_member.dart';
@@ -129,7 +129,6 @@ class _DetailPageState extends State<DetailPage> {
 
     }
 
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -150,7 +149,12 @@ class _DetailPageState extends State<DetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,
@@ -216,7 +220,7 @@ class _DetailPageState extends State<DetailPage> {
                       padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
                       child: ElevatedButton(
                         onPressed: () {
-
+                          goToBecomeMember(context);
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFF00bbe4),
@@ -425,7 +429,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                        if ((role != 'Member' && role != 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                        if (role == 'NonMember' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,

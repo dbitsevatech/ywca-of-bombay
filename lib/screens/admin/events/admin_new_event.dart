@@ -32,6 +32,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   String _valueSaved4 = '';
   // image path variable
   File? _image;
+  DateTime eventDate = DateTime.now();
+  DateTime eventDeadline = DateTime.now();
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -49,7 +51,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     });
   }
 
-  DateTime eventDate = DateTime.now().subtract(Duration(days: 4380));
   Future _selectDate(context) async {
     initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
@@ -85,9 +86,44 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       });
     }
   }
+  Future _selectDeadline(context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1940),
+      lastDate: DateTime(2040),
+      helpText: 'Select Date of Birth',
+      fieldLabelText: 'Enter date of birth',
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor, // highlighed date color
+              onPrimary: Colors.black, // highlighted date text color
+              surface: primaryColor, // header color
+              onSurface: Colors.grey[800]!, // header text & calendar text color
+            ),
+            dialogBackgroundColor: Colors.white, // calendar bg color
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: secondaryColor, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != eventDeadline) {
+      setState(() {
+        eventDeadline = picked;
+        // print(picked);
+        print(eventDeadline);
+      });
+    }
+  }
 
-  // Deadline of Event
-  DateTime eventDeadline = DateTime.now().subtract(Duration(days: 4380));
+
 
   // Image
   Future<void> captureImage(ImageSource imageSource) async {
@@ -498,7 +534,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDate(context);
+                            await _selectDeadline(context);
                             deadlineController.text =
                                 "${DateFormat('dd-MM-yyyy').format(eventDeadline.toLocal())}"
                                     .split(' ')[0];
