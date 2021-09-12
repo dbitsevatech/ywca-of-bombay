@@ -294,7 +294,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 firstName = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty)
                                 return 'First name is required.';
                               else
@@ -807,9 +807,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onPressedFunction: () async {
                               print(userInfo.getmemberRole);
                               // TODO: validate function not working, hence the code after it does not execute
-                              // if (_formKey.currentState!.validate()) {
-                              //   return;
-                              // }
+                              if (_formKey.currentState!.validate()) {
+                                return;
+                              }
                               _formKey.currentState!.save();
                               _formKey.currentState?.save();
                               if (userInfo.getmemberRole == "Member") {
