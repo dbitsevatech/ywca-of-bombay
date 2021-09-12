@@ -32,10 +32,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   //     null, null, null, null, null, null, null);
 
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validation
+  GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
-      GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+  GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -117,7 +117,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-              (route) => false);
+                  (route) => false);
         },
       ),
     );
@@ -239,6 +239,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
+                    // Have an account, LOG IN
+                    Padding(
+                      padding: EdgeInsets.only(top: _height * 0.15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Already have an account? ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                        (route) => false);
+                              },
+                              child: Text(
+                                'Log In',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  color: primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -374,8 +412,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDate();
                             dateController.text =
-                                "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
-                                    .split(' ')[0];
+                            "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
+                                .split(' ')[0];
                           },
                         ),
                         SizedBox(height: _height * 0.015),
@@ -391,7 +429,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return 'Email is required';
                             }
                             if (!RegExp(
-                                    "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                                "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
                                 .hasMatch(value)) {
                               return 'Enter a valid email address';
                             }
@@ -591,7 +629,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen()),
-                              (route) => false);
+                                  (route) => false);
                         },
                         child: Text(
                           'Log In',
@@ -640,14 +678,14 @@ class RegisterScreen2 extends StatefulWidget {
   });
   @override
   _RegisterScreen2State createState() => _RegisterScreen2State(
-        // userData,
-        firstName,
-        lastName,
-        emailId,
-        phoneNumber,
-        gender,
-        dateOfBirth,
-      );
+    // userData,
+    firstName,
+    lastName,
+    emailId,
+    phoneNumber,
+    gender,
+    dateOfBirth,
+  );
 }
 
 class _RegisterScreen2State extends State<RegisterScreen2> {
@@ -666,18 +704,18 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   _RegisterScreen2State(
-    // this.userData,
-    this.firstName,
-    this.lastName,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.dateOfBirth,
-  );
+      // this.userData,
+      this.firstName,
+      this.lastName,
+      this.emailId,
+      this.phoneNumber,
+      this.gender,
+      this.dateOfBirth,
+      );
   // MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validation
+  GlobalKey<FormState>(); // form key for validation
 
   void _onRegisterButtonPressed() async {
     print("register page: ");
@@ -990,7 +1028,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 0,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
+                              _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
@@ -1018,7 +1056,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 1,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
+                              _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
@@ -1046,7 +1084,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 2,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                                  _handleInterestInMembershipRadioValueChange,
+                              _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,

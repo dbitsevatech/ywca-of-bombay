@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var userInfo;
   String phoneNumber = "";
   final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validation
+  GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
 
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => RegisterScreen()),
-              (route) => false);
+                  (route) => false);
         },
       ),
     );
@@ -288,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => RegisterScreen()),
-                              (route) => false);
+                                  (route) => false);
                         },
                         child: Text(
                           'Register',
