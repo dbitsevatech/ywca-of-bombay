@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +33,28 @@ class _EventsState extends State<Events> {
     return formattedEventDate;
   }
 
+  _openPopup(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Hey there, interested in being a member?'),
+            content: Text('For Membership details go to the About us page of the app or get in touch with your nearest YWCA now'),
+            actions: <Widget>[
+              Center(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK!',),
+                ),
+              ),
+
+            ],
+          );
+        });
+  }
+
   // onClick for counting number of clicks by the user
   void insertIntoOnClick(String eventID, String eventName) async {
     final User? user = auth.currentUser;
@@ -58,6 +82,12 @@ class _EventsState extends State<Events> {
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     userInfo = Provider.of<UserData>(context, listen: false);
+    if(userInfo.getmemberRole == "NonMember"){
+      Timer(Duration(seconds: 3), () {
+        _openPopup(context);
+      });
+    }
+
     super.initState();
   }
 
@@ -65,6 +95,7 @@ class _EventsState extends State<Events> {
   Widget build(BuildContext context) {
     // final _height = MediaQuery.of(context).size.height;
     // print("item: $selectedMenuItemId");
+    // _openPopup(context);
     return WillPopScope(
         onWillPop: () => showExitPopup(context),
     child: DrawerScaffold(

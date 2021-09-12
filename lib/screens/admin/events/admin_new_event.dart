@@ -55,9 +55,9 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: eventDate,
+      initialDate: DateTime.now(),
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Event',
       fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
@@ -95,9 +95,9 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: eventDeadline,
-      firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2040),
       helpText: 'Select Deadline of Event',
       fieldLabelText: 'Enter Deadline of Event',
       builder: (context, child) {

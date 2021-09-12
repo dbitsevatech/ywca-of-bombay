@@ -94,7 +94,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
       context: context,
       initialDate: eventDate,
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
@@ -131,7 +131,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
       context: context,
       initialDate: eventDeadline,
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {

@@ -1,4 +1,6 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,6 @@ import 'screens/contact_us/contact_us.dart';
 import 'screens/events/user_events.dart';
 import 'screens/initiatives/initiatives.dart';
 import 'screens/success_stories/success_stories.dart';
-import 'services/auth_service.dart';
 import 'services/class_builder.dart';
 import 'models/User.dart';
 
@@ -82,12 +83,50 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Future checkFirstSeen() async {
+    var userInfo = await Provider.of<UserData>(context, listen: false);
+    var userdata;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _seen = (prefs.getBool('seen') ?? false);
 
     if (_seen) {
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new LoginScreen()));
+      var currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null) {
+        print(currentUser.uid);
+        var checkuser = await FirebaseFirestore.instance
+            .collection('users')
+            .where("uid", isEqualTo: currentUser.uid)
+            .get();
+        if (checkuser.docs.length == 1) {
+           userdata = checkuser.docs[0].data();
+          userInfo.updateAfterAuth(
+              userdata['uid'],
+              userdata['firstName'],
+              userdata['lastName'],
+              userdata['dateOfBirth'].toDate(),
+              userdata['emailId'],
+              userdata['phoneNumber'],
+              userdata['gender'],
+              userdata['profession'],
+              userdata['placeOfWork'],
+              userdata['nearestCenter'],
+              userdata['interestInMembership'],
+              userdata['memberRole']);
+        }
+        if(userdata['memberRole'] == "Admin"){
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => new AdminEvents()));
+        }
+        else{
+          Navigator.of(context).pushReplacement(
+              new MaterialPageRoute(builder: (context) => new Events()));
+        }
+
+      }
+      else{
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new LoginScreen()));
+      }
+
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
@@ -107,20 +146,20 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     );
   }
 }
-
-class HomeController extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final AuthService auth = Provider.of(context).auth;
-    return StreamBuilder<String>(
-      stream: auth.authStateChanges,
-      builder: (context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          final bool signedIn = snapshot.hasData;
-          return signedIn ? Events() : LoginScreen();
-        }
-        return CircularProgressIndicator();
-      },
-    );
-  }
-}
+//
+// class HomeController extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final AuthService auth = Provider.of(context).auth;
+//     return StreamBuilder<String>(
+//       stream: auth.authStateChanges,
+//       builder: (context, AsyncSnapshot<String> snapshot) {
+//         if (snapshot.connectionState == ConnectionState.active) {
+//           final bool signedIn = snapshot.hasData;
+//           return signedIn ? Events() : LoginScreen();
+//         }
+//         return CircularProgressIndicator();
+//       },
+//     );
+//   }
+// }
