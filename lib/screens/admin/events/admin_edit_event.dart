@@ -746,6 +746,20 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDeadline': eventDeadline,
                                             'eventType': eventType
                                           });
+                                          FirebaseFirestore.instance
+                                              .collection('eventsBackup')
+                                              .doc(id)
+                                              .update({
+                                            'eventName': eventName,
+                                            'eventDescription':
+                                            eventDescription,
+                                            'eventVenue': eventVenue,
+                                            'eventAmount': eventAmount,
+                                            'eventDate': eventDate,
+                                            'eventTime': _valueChanged4,
+                                            'eventDeadline': eventDeadline,
+                                            'eventType': eventType
+                                          });
                                           print("updated on firestore");
                                           Navigator.pop(context);
                                         },

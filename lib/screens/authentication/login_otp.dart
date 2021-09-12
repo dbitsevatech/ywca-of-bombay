@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:vibration/vibration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -417,6 +417,7 @@ class _LoginOtpState extends State<LoginOtp>
                         color: Colors.black,
                       ),
                       onPressed: () {
+                        Vibration.vibrate(duration: 40);
                         setState(() {
                           if (_sixthDigit > 0) {
                             _sixthDigit = -1;
@@ -559,6 +560,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 40);
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {

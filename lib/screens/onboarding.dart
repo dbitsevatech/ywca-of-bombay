@@ -1,13 +1,9 @@
 import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
-
 import './authentication/login.dart';
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/gradient_button.dart';
@@ -55,9 +51,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // circle design and Appbar
               Stack(
                 children: <Widget>[
-                  // Positioned(
-                  //   child: Image.asset("assets/images/circle-design.png"),
-                  // ),
+
                   DetailPageBlueBubbleDesign(),
                   Positioned(
                     child: AppBar(
@@ -78,18 +72,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ],
               ),
               // TODO: Make the carousel responsive
-              // https://pub.dev/packages/introduction_screen
-              // https://pub.dev/packages/gooey_carousel
-              // https://pub.dev/packages/intro_slider ***
+
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
-                  // Changes the size of the carousel (and also messes up the blue bubble design
-                  //
-                  // https://medium.com/flutter-community/flutter-web-getting-started-with-responsive-design-231511ef15d3
-                  // https://stackoverflow.com/questions/61207980/create-a-flutter-carousel-slider-with-dynamic-heigth-for-each-page
-                  //
-                  // aspectRatio: 1.4, // Pixel 2 and Moto G5s plus
+
                   aspectRatio: 1, // Redmi 8 and pixel 4xl
                   // aspectRatio: 1.1, // Nokia 7 plus
                   autoPlay: true,
@@ -155,41 +142,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     buttonText: "Let's Go!",
                     screenHeight: _height,
                     onPressedFunction: () async {
-                      var user = await FirebaseAuth.instance.currentUser;
 
-                      if (user != null) {
-                        print(user.phoneNumber);
-                        var checkuser = await FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user.uid)
-                            .get();
-                        // print(checkuser.data());
-                        final userdata = checkuser.data();
-                        userInfo.updateAfterAuth(
-                            userdata!['uid'],
-                            userdata['firstName'],
-                            userdata['lastName'],
-                            userdata['dateOfBirth'].toDate(),
-                            userdata['emailId'],
-                            userdata['phoneNumber'],
-                            userdata['gender'],
-                            userdata['profession'],
-                            userdata['placeOfWork'],
-                            userdata['nearestCenter'],
-                            userdata['interestInMembership'],
-                            userdata['memberRole']);
-                        // if (userdata['memberRole'] == 'none') {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //       builder: (context) => MainWidget()));
-                        // } else if (userdata['memberRole'] == 'Admin') {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //       builder: (context) => AdminMainWidget()));
-                        // }
-                      } else {
                         Navigator.of(context).pop();
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => LoginScreen()));
-                      }
+
                     },
                   ),
                 ),

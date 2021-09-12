@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../exit-popup.dart';
 import 'login.dart';
 import 'register_otp.dart';
 
@@ -11,7 +12,6 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
 
-// enum GenderChoices { female, male, declineToState }
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
@@ -28,8 +28,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String gender = "Female";
   var userInfo;
 
-  // final _user = User(null, null, DateTime.now().subtract(Duration(days: 4380)),
-  //     null, null, null, null, null, null, null);
+
 
   final GlobalKey<FormState> _formKey =
   GlobalKey<FormState>(); // form key for validation
@@ -40,7 +39,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
-  // GenderChoices selectedGender = GenderChoices.female;
 
   // female-0, male-1, decline to state-2
   int _genderRadioValue = 0;
@@ -92,12 +90,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
       },
     ))!;
-    // if (picked != null && picked != dateOfBirth) {
     if (picked != dateOfBirth) {
       setState(() {
         dateOfBirth = picked;
-        // print(picked);
-        print(dateOfBirth);
       });
     }
   }
@@ -106,9 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final snackBar = SnackBar(
       content: Text(
         'Your phone number is already registered! Proceed to Log In',
-        // style: TextStyle(fontSize: 15),
       ),
-      // backgroundColor: Colors.red,
       backgroundColor: Colors.red[400],
       action: SnackBarAction(
         label: 'Log In',
@@ -122,9 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -154,7 +145,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => RegisterScreen2(
-            // userData: _user,
             firstName: firstName,
             lastName: lastName,
             emailId: emailId,
@@ -175,8 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
-      // dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
-      // selectedGender = GenderChoices.female;
+
       gender = "Female";
     });
     super.initState();
@@ -188,7 +177,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: Scaffold(
       key: _scaffoldkey,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -375,12 +366,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(height: _height * 0.015),
                         TextFormField(
-                          // keyboardType: TextInputType.datetime,
                           onChanged: (value) {
-                            setState(() {
-                              // dateOfBirth = DateTime.parse(value);
-                              // dateOfBirth\ = value;
-                            });
+
                           },
                           controller: dateController,
                           style: TextStyle(
@@ -651,16 +638,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }
 
-// enum MemberChoices { yes, no, maybe }
 
 // ignore: must_be_immutable
 class RegisterScreen2 extends StatefulWidget {
-  // final User userData;
-  // var userData = User();
+
   final String firstName;
   final String lastName;
   final String emailId;
@@ -668,7 +654,6 @@ class RegisterScreen2 extends StatefulWidget {
   final String gender;
   final DateTime dateOfBirth;
   RegisterScreen2({
-    // this.userData,
     required this.firstName,
     required this.lastName,
     required this.emailId,
@@ -678,7 +663,6 @@ class RegisterScreen2 extends StatefulWidget {
   });
   @override
   _RegisterScreen2State createState() => _RegisterScreen2State(
-    // userData,
     firstName,
     lastName,
     emailId,
@@ -689,8 +673,7 @@ class RegisterScreen2 extends StatefulWidget {
 }
 
 class _RegisterScreen2State extends State<RegisterScreen2> {
-  // final User userData;
-  // var userData = User();
+
   String firstName;
   final String lastName;
   final String emailId;
@@ -704,7 +687,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   _RegisterScreen2State(
-      // this.userData,
       this.firstName,
       this.lastName,
       this.emailId,
@@ -712,7 +694,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
       this.gender,
       this.dateOfBirth,
       );
-  // MemberChoices _selectedMembershipInterest = MemberChoices.yes;
 
   final GlobalKey<FormState> _formKey =
   GlobalKey<FormState>(); // form key for validation
@@ -826,7 +807,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     child: Column(
                       children: <Widget>[
                         TextFormField(
-                          // initialValue: Provider.of<User>(context, listen: false).getfirstName,
                           keyboardType: TextInputType.text,
                           onSaved: (String? value) {
                             setState(() {
@@ -975,15 +955,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 print(nearestCenter);
                               });
                             },
-                            // hint: Text(
-                            //   "Nearest YWCA Center",
-                            //   style: TextStyle(
-                            //     fontFamily: 'Montserrat',
-                            //     color: Colors.black,
-                            //     fontSize: 14,
-                            //     letterSpacing: 1.5,
-                            //   ),
-                            // ),
+
                             items: <String>[
                               'Andheri',
                               'Bandra',

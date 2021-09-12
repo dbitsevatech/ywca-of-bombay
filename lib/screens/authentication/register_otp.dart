@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:vibration/vibration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -115,9 +115,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
     );
 
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -145,9 +143,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         print(interestInMembership);
 
         if (!snapShot.exists) {
-          // if (snapShot == null || !snapShot.exists) {
-          print(value.user);
-          print(value.user!.uid);
+
           Map<String, dynamic> data = {
             "uid": value.user!.uid,
             "firstName": firstName,
@@ -593,6 +589,7 @@ class _RegisterOtpState extends State<RegisterOtp>
                     color: Colors.black,
                   ),
                   onPressed: () {
+                    Vibration.vibrate(duration: 40);
                     setState(() {
                       if (_sixthDigit != -1) {
                         _sixthDigit = -1;
@@ -738,6 +735,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 40);
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {

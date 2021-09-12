@@ -388,7 +388,7 @@ class _DetailPageState extends State<DetailPage> {
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
-                      if (role == 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                      if ((role == 'Member' || role == 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -425,7 +425,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                        if (role != 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                        if ((role != 'Member' && role != 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -504,7 +504,7 @@ class _DetailPageState extends State<DetailPage> {
                           Center(
                             child: Text(
                               'Event Date has passed\n'
-                                  'Contact ********** for more details',
+                                  'Contact 8828024246 for more details',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,

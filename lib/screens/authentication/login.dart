@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/User.dart';
 import 'package:provider/provider.dart';
+import '../exit-popup.dart';
 import 'login_otp.dart';
 import 'register.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -50,28 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
     ScaffoldMessenger.of(context).showSnackBar(registerSnackBar);
   }
 
   void _onLoginButtonPressed(BuildContext context, String phoneNumber) async {
-    print("submit function called");
-    // final auth = Provider.of(context).auth;
-    // if (await auth.userExists(phoneNumber)) {
-    //   print("User found");
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => LoginOtp(phoneNumber: phoneNumber),
-    //     ),
-    //   );
-    // } else {
-    //   FocusScope.of(context).unfocus();
-    //   print("No user found");
-    //   _showNumberNotRegisteredSnackBar(); // context needed to be passed?
-    // }
     var checkuser = await FirebaseFirestore.instance
         .collection('users')
         .where("phoneNumber", isEqualTo: phoneNumber)
@@ -108,7 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () => showExitPopup(context),
+    child: Scaffold(
       key: _scaffoldkey,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -311,6 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }
