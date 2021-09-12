@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -160,41 +161,39 @@ class _SuccessStoriesState extends State<SuccessStories> {
                     //Title end
                   ],
                 ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        // height: 540,
-                        height: _height * 0.7,
-                        child: PageView.builder(
-                          controller: pageController,
-                          // itemCount: pages.length,
-                          itemBuilder: (_, index) {
-                            return pages[index % pages.length];
-                          },
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      // height: 540,
+                      height: _height * 0.69,
+                      child: PageView.builder(
+                        controller: pageController,
+                        // itemCount: pages.length,
+                        itemBuilder: (_, index) {
+                          return pages[index % pages.length];
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: pages.length,
+                        effect: ScrollingDotsEffect(
+                          activeStrokeWidth: 2,
+                          activeDotScale: 1.3,
+                          maxVisibleDots: 7,
+                          radius: 8,
+                          spacing: 10,
+                          dotHeight: 12,
+                          dotWidth: 12,
+                          activeDotColor: Color.fromRGBO(0, 0, 0, 0.8),
+                          dotColor: Color.fromRGBO(0, 0, 0, 0.3),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
-                        child: SmoothPageIndicator(
-                          controller: pageController,
-                          count: pages.length,
-                          effect: ScrollingDotsEffect(
-                            activeStrokeWidth: 2,
-                            activeDotScale: 1.3,
-                            maxVisibleDots: 7,
-                            radius: 8,
-                            spacing: 10,
-                            dotHeight: 12,
-                            dotWidth: 12,
-                            activeDotColor: Color.fromRGBO(0, 0, 0, 0.8),
-                            dotColor: Color.fromRGBO(0, 0, 0, 0.3),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -204,7 +203,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
     );
   }
 
-  Container cardWid(
+  Widget cardWid(
     String image,
     String title,
     String detailText,
@@ -215,30 +214,37 @@ class _SuccessStoriesState extends State<SuccessStories> {
     print(_width);
     //  card start
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: _width * 0.07),
+      margin: EdgeInsets.only(
+        left: _width * 0.07,
+        right: _width * 0.07,
+        bottom: _height * 0.005,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xFFCDF1EF)),
         color: successStoriesCardBgColor,
         borderRadius: BorderRadius.all(Radius.circular(40)),
       ),
-      height: 540, //540 init
-      width: 360,
+      // height: 540, //540 init
+      // width: 360,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           //    image
-          Container(
-            margin: EdgeInsets.only(
-              top: _height * 0.020,
-              bottom: _height * 0.010,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(120.0),
-              child: Image(
-                image: AssetImage(image),
-                fit: BoxFit.contain,
-                height: 175,
-                width: 175,
+          Expanded(
+            flex: 3,
+            child: Container(
+              margin: EdgeInsets.only(
+                top: _height * 0.020,
+                bottom: _height * 0.010,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(120.0),
+                child: Image(
+                  image: AssetImage(image),
+                  // fit: BoxFit.contain,
+                  // height: 175,
+                  // width: 175,
+                ),
               ),
             ),
           ),
@@ -258,23 +264,26 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
           // card info
           Expanded(
-            flex: 1,
+            flex: 6,
             child: Padding(
               padding: EdgeInsets.only(
                 left: _width * 0.05,
                 right: _width * 0.05,
                 top: _height * 0.005,
-                // bottom: 5,
+                bottom: _height * 0.015,
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Text(
+                  // child: AutoSizeText(
                   detailText,
-                  textAlign: TextAlign.center,
+                  // minFontSize: 12,
+                  // maxFontSize: 18,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontFamily: "Montserrat",
+                    fontSize: 18,
                     height: 1.3,
-                    fontSize: 15,
                   ),
                 ),
               ),

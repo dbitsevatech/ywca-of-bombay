@@ -70,7 +70,8 @@ class MyApp extends StatelessWidget {
     // return AdminEvents();
     // return Events();
     // return LoginScreen();
-    return Splash();
+    // return Splash();
+    return SuccessStories();
     // return HomeController();
   }
 }
