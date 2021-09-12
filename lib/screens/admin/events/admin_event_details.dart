@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:share/share.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../../widgets/zoom_image.dart';
+import '../../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class AdminEventDetailPage extends StatefulWidget {

@@ -103,7 +103,7 @@ class _EventsState extends State<Events> {
           headerView: header(context, userInfo),
           footerView: footer(context, controller, userInfo),
           color: successStoriesCardBgColor,
-          selectorColor: Colors.red,
+          selectorColor: Colors.indigo[600],
           menu: menuWithIcon,
           animation: true,
           // color: Theme.of(context).primaryColorLight,
