@@ -87,13 +87,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: primaryColor, // highlighed date color
-              onPrimary: Colors.black, // highlighted date text color
-              surface: primaryColor, // header color
-              onSurface: Colors.grey[800]!, // header text & calendar text color
-            ),
+          data: ThemeData.light().copyWith(
+
+            primaryColor: const Color(0xFF49dee8),
+            accentColor: const Color(0xFF49dee8),
+            colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(

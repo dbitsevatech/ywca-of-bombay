@@ -221,7 +221,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           headerView: header(context, userInfo),
           footerView: footer(context, controller, userInfo),
           color: successStoriesCardBgColor,
-          selectorColor: Colors.red, menu: menuWithIcon,
+          selectorColor: Colors.indigo[600], menu: menuWithIcon,
           animation: true,
           selectedItemId: selectedMenuItemId,
           onMenuItemSelected: (itemId) {
