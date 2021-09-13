@@ -177,6 +177,9 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                             // Email id
                             DetailText(text: 'Email ID: $emailId'),
                             SizedBox(height: 15),
+                            // Address
+                            DetailText(text: 'Address: $emailId'),
+                            SizedBox(height: 15),
                             // Date of birth
                             DetailText(text: 'Date Of Birth: $dateOfBirth'),
                             SizedBox(height: 15),

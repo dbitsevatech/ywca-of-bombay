@@ -437,6 +437,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ),
                           SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            initialValue: lastName,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                lastName = value!;
+                              });
+                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty)
+                            //     return 'Last name is required.';
+                            //   else
+                            //     return null;
+                            // },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Address',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
                           Text(
                             'Gender',
                             style: TextStyle(
