@@ -127,7 +127,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(
-          source: ImageSource.gallery, maxHeight: 300, maxWidth: 300);
+          source: ImageSource.gallery, maxHeight: 300, maxWidth: 300, imageQuality: 100);
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);

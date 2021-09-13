@@ -35,6 +35,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
         source: ImageSource.gallery,
         maxHeight: 300,
         maxWidth: 300,
+
       );
       setState(() {
         if (pickedFile != null) {
@@ -64,13 +65,6 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
     String id = widget.id, eventImageUrl = widget.eventImageUrl;
-
-    @override
-    void initState() {
-      super.initState();
-      id = widget.id;
-      eventImageUrl = widget.eventImageUrl;
-    }
 
     return Scaffold(
       body: SafeArea(
@@ -243,7 +237,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pop(true);
-                                            updateData(context, id);
+                                            updateData(context, id,eventImageUrl);
                                             Navigator.pop(context);
                                             Navigator.pop(context);
                                           },
@@ -270,7 +264,10 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   }
 
   // Updating to firebase
-  Future updateData(BuildContext context, id) async {
+  Future updateData(BuildContext context, id, eventImageUrl) async {
+    await FirebaseStorage.instance
+        .refFromURL(eventImageUrl)
+        .delete();
     String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
