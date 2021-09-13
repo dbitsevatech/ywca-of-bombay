@@ -133,7 +133,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.getImage(
-          source: ImageSource.gallery, maxHeight: 300, maxWidth: 300);
+          source: ImageSource.gallery, maxHeight: 2000, maxWidth: 2000);
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
@@ -237,6 +237,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   @override
   Widget build(BuildContext context) {
+    bool _enabled=true;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -649,6 +650,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 ),
                               ),
                               onPressed: () async {
+                                setState(() => _enabled = false);
+                                // Enable it after 1s.
                                 // if (_formKey.currentState!.validate()) {
                                 //   return;
                                 // }
