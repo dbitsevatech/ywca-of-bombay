@@ -9,15 +9,15 @@ import 'package:date_time_picker/date_time_picker.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
-  String id,
-      eventAmount,
-      eventDescription,
-      eventName,
-      eventImageUrl,
-      eventVenue;
-  String eventType;
+  String id = "",
+      eventAmount = "",
+      eventDescription = "",
+      eventName = "",
+      eventImageUrl = "",
+      eventVenue = "";
+  String eventType = "";
   DateTime eventDate, eventDeadline;
-  String eventTime;
+  String eventTime = "";
 
   EditEventScreen({
     required this.id,
@@ -36,15 +36,15 @@ class EditEventScreen extends StatefulWidget {
 }
 
 class _EditEventScreenState extends State<EditEventScreen> {
-  String id = '';
-  String eventAmount = '';
-  String eventDescription = '';
-  String eventName = '';
-  String eventImageUrl = '';
-  String eventVenue = '';
+  String id = "";
+  String eventAmount = "";
+  String eventDescription = "";
+  String eventName = "";
+  String eventImageUrl = "";
+  String eventVenue = "";
   String eventType = "Everyone";
   late DateTime eventDate, eventDeadline;
-  String eventTime = '';
+  String eventTime = "";
 
   // Variables for TimePicker
   String _valueChanged4 = '';
@@ -60,8 +60,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   DateTime selectedDateOfDeadline = DateTime.now();
   TextEditingController deadlineController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validation
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); 
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
@@ -410,8 +409,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 eventName = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value == null)
+                            validator: (value) {
+                              if (value!.isEmpty)
                                 return 'Event name is required.';
                               else
                                 return null;
@@ -448,8 +447,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 eventDescription = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value == null)
+                            validator: (value) {
+                              if (value!.isEmpty)
                                 return 'Event Description is required.';
                               else
                                 return null;
@@ -482,8 +481,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 eventVenue = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value == null)
+                            validator: (value) {
+                              if (value!.isEmpty)
                                 return 'Event Venue is required.';
                               else
                                 return null;
@@ -516,8 +515,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 eventAmount = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value == null)
+                            validator: (value) {
+                              if (value!.isEmpty)
                                 return 'Event Amount is required.';
                               else
                                 return null;
