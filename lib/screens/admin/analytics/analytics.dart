@@ -94,9 +94,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             // color: Colors.white,
-            color: Color(0xFFFFE8E8),
+            color: Color(0xFFDFFDFF),
             boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              BoxShadow(
+                color: Colors.black.withAlpha(100),
+                blurRadius: 3.0,
+                spreadRadius: 2.0,
+                offset: Offset(
+                  2.0, // Move to right
+                  2.0, // Move to bottom
+                ),
+              ),
             ],
           ),
           child: Padding(
@@ -211,7 +219,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     final Size size = MediaQuery.of(context).size;
     _height = size.height;
     _width = size.width;
-
 
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
@@ -351,7 +358,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   Expanded(
                     child: FutureBuilder(
                       future:
-                      downloadData(), // function where you call your api
+                          downloadData(), // function where you call your api
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         // AsyncSnapshot<Your object type>
                         if (snapshot.connectionState ==
