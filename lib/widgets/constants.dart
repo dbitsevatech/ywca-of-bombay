@@ -13,5 +13,6 @@ final formFieldFillColor = const Color(0xffF3F4F6);
 
 final successStoriesCardBgColor = const Color(0xffcdf1ef);
 
-final contactUsBgColor = const Color(0xfffdcfdf);
-final contactUsCardColor = const Color(0xffbce6eb);
+final contactUsBgColor = const Color(0xffb5f4f7);
+final contactUsCardColor = const Color(0xffffffff);
+final contactUsBorderColor = const Color(0xff888888);

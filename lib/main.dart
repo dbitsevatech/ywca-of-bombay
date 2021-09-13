@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       ),
     );
     // return Splash();
-    return AdminEvents();
+    return ContactUs();
     // return Splash();
   }
 }

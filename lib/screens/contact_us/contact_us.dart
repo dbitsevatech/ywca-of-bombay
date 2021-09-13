@@ -251,65 +251,92 @@ class _ContactUsState extends State<ContactUs> {
     return Center(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xffFCA3CC)),
+          border: Border.all(color: contactUsBorderColor),
           color: contactUsCardColor,
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        height: _height * 0.16,
-        width: _width * 0.75,
+        height: _height * 0.18,
+        width: _width * 0.80,
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 5,
+            horizontal: 10,
           ),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              // text: "ANDHERI \n ",
-              text: title,
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'CM Sans Serif',
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+          child: FittedBox(
+            fit: BoxFit.fitHeight,
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                // text: "ANDHERI \n ",
+                text: title,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'CM Sans Serif',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: address,
+                    // ' Asha Kiran,\n 53,J.P. Road,\nAndheri (W)\n Mumbai-400058\n Email:ywcaandheri@rediffmail.com\n Ph:022-26702831 / 022-26702872',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Email ID: ',
+                    recognizer: new TapGestureRecognizer()
+                      ..onTap = () => {
+                            print(emailId),
+                            sendEmail(context, emailId),
+                          },
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: emailId,
+                    recognizer: new TapGestureRecognizer()
+                      ..onTap = () => {
+                            print(emailId),
+                            sendEmail(context, emailId),
+                          },
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Phone No: ',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                  TextSpan(
+                    text: phoneNo,
+                    recognizer: new TapGestureRecognizer()
+                      ..onTap =
+                          () => {FlutterPhoneDirectCaller.callNumber(phoneNo)},
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.5,
+                    ),
+                  ),
+                ],
               ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: address,
-                  // ' Asha Kiran,\n 53,J.P. Road,\nAndheri (W)\n Mumbai-400058\n Email:ywcaandheri@rediffmail.com\n Ph:022-26702831 / 022-26702872',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.5,
-                  ),
-                ),
-                TextSpan(
-                  text: 'Email Id: ' + emailId,
-                  recognizer: new TapGestureRecognizer()
-                    ..onTap = () => {
-                          print(emailId),
-                          sendEmail(context, emailId),
-                        },
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.5,
-                  ),
-                ),
-                TextSpan(
-                  text: 'Phone No: ' + phoneNo,
-                  recognizer: new TapGestureRecognizer()
-                    ..onTap =
-                        () => {FlutterPhoneDirectCaller.callNumber(phoneNo)},
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    color: Colors.blue,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.5,
-                  ),
-                ),
-              ],
             ),
           ),
         ),
@@ -327,6 +354,7 @@ class _ContactUsState extends State<ContactUs> {
             horizontal: _width * 0.05,
           ),
           decoration: BoxDecoration(
+            border: Border.all(color: contactUsBorderColor),
             color: contactUsBgColor,
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
@@ -387,6 +415,7 @@ class _ContactUsState extends State<ContactUs> {
             horizontal: _width * 0.05,
           ),
           decoration: BoxDecoration(
+            border: Border.all(color: contactUsBorderColor),
             color: contactUsBgColor,
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
@@ -447,6 +476,7 @@ class _ContactUsState extends State<ContactUs> {
             horizontal: _width * 0.05,
           ),
           decoration: BoxDecoration(
+            border: Border.all(color: contactUsBorderColor),
             color: contactUsBgColor,
             borderRadius: BorderRadius.all(Radius.circular(30)),
           ),
