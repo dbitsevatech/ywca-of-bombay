@@ -93,7 +93,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            color: Colors.white,
+            // color: Colors.white,
+            color: Color(0xFFFFE8E8),
             boxShadow: [
               BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
             ],
@@ -236,7 +237,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         controller: controller,
         builder: (context, id) => SafeArea(
           child: Scaffold(
-            backgroundColor: Color(0xFFFFDADA),
+            // backgroundColor: Color(0xFFFFDADA),
             body: Container(
               height: size.height,
               child: Column(
