@@ -67,12 +67,9 @@ class _DetailPageState extends State<DetailPage> {
         .get()
         .then(
       (checkSnapshot) {
-        // print('snapshot size');
-        // print(checkSnapshot.size);
+
         if (checkSnapshot.size > 0) {
-          print("Already Exists");
         } else {
-          // print("adding");
           FirebaseFirestore.instance
               .collection('eventRegistration')
               .add({'eventID': eventID, 'userID': userID});
@@ -113,21 +110,7 @@ class _DetailPageState extends State<DetailPage> {
       'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     ];
 
-    @override
-    void initState() {
 
-      id = widget.id;
-      eventName = widget.eventName;
-      eventAmount = widget.eventAmount;
-      eventDescription = widget.eventDescription;
-      eventVenue = widget.eventVenue;
-      eventImageUrl = widget.eventImageUrl;
-      eventDate = widget.eventDate;
-      eventType = widget.eventType;
-      // event_deadline = widget.event_deadline;
-    super.initState();
-
-    }
 
     return Scaffold(
       appBar: AppBar(

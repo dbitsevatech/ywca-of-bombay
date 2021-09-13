@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("item: $selectedMenuItemId");
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
@@ -87,11 +87,13 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 // Approval & Search bar Starts
                 PreferredSize(
                   preferredSize: Size.fromHeight(80),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       // Distance from ywca
                       // or else it will overlap
-                      SizedBox(height: 80),
+                      SizedBox(height: 150),
                       RichText(
                         text: TextSpan(
                           style: Theme.of(context).textTheme.bodyText2,
@@ -112,27 +114,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 5),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search by name",
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.mic,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
+
                     ],
                   ),
                 ),
@@ -160,232 +142,242 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               child: CircularProgressIndicator(),
             );
           default:
-            return ListView(
-              padding: EdgeInsets.only(bottom: 80),
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-                  child: Card(
-                    child: ListTile(
-                      // name
-                      title: Text(
-                        'Name: ' +
-                            (document['firstName']) +
-                            " " +
-                            (document['lastName']),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 5),
-                          // contact number
-                          Text(
-                            'Contact Number: ' + (document['phoneNumber']),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // email id
-                          Text(
-                            'Email Id: ' + (document['emailId']),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // nearest ywca center
-                          Text(
-                            'Nearest YWCA Center: ' +
-                                (document['nearestCenter']),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // place of work
-                          Text(
-                            'Institute/Organisation: ' +
-                                (document['placeOfWork']),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // profession
-                          Text(
-                            'Profession: ' + (document['profession']),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          // start of approve and disapprove button
-                          Row(
-                            children: [
-                              Spacer(),
-                              Spacer(),
-                              Spacer(),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      // Alert box for approve
-                                      return AlertDialog(
-                                        title: Text('Confirmation'),
-                                        content: Text(
-                                            'Are you sure you want to approve?'),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(
-                                                context,
-                                                rootNavigator: true,
-                                              ).pop(
-                                                  false); // dismisses only the dialog and returns false
-                                            },
-                                            child: Text('No'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop(true);
-                                              // update user table
-                                              await FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(document.id)
-                                                  .update({
-                                                "firstName":
-                                                    document["firstName"],
-                                                "lastName":
-                                                    document["lastName"],
-                                                "dateOfBirth":
-                                                    document["dateOfBirth"],
-                                                "emailId": document["emailId"],
-                                                "gender": document["gender"],
-                                                "profession":
-                                                    document["profession"],
-                                                "placeOfWork":
-                                                    document["placeOfWork"],
-                                                "nearestCenter":
-                                                    document["nearestCenter"],
-                                                "interestInMembership":
-                                                    document[
-                                                        "interestInMembership"],
-                                                "uid": document["uid"],
-                                                "phoneNumber":
-                                                    document["phoneNumber"],
-                                                "memberRole":
-                                                    document["memberRole"],
-                                              }).then((value) =>
-                                                      print("Approved"));
-                                              // delete from approval
-                                              FirebaseFirestore.instance
-                                                  .collection('approval')
-                                                  .doc(document.id)
-                                                  .delete();
-                                              // Navigator.of(context).pop(true);
-                                            },
-                                            child: Text('Yes'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.green),
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.all(5)),
-                                ),
-                                child: Icon(
-                                  Icons.check,
-                                ),
-                              ),
-                              Spacer(),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  // Alert box for disapprove approval
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: Text('Confirmation'),
-                                        content: Text(
-                                          'Are you sure you want to disapprove?',
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(
-                                                context,
-                                                rootNavigator: true,
-                                              ).pop(
-                                                  false); // dismisses only the dialog and returns false
-                                            },
-                                            child: Text('No'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop(true);
-                                              // not approved
-                                              // change approvalStatus
-                                              FirebaseFirestore.instance
-                                                  .collection('approval')
-                                                  .doc(document.id)
-                                                  .update({
-                                                'approvalStatus': 'notapproved'
-                                              });
-                                              setState(() {});
-                                            },
-                                            child: Text('Yes'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.red),
-                                  padding: MaterialStateProperty.all(
-                                      EdgeInsets.all(5)),
-                                ),
-                                child: Icon(
-                                  Icons.cancel,
-                                ),
-                              ),
-                            ],
-                          ),
-                          // end of approve and disapprove
-                        ],
-                      ),
-                      onTap: () {},
-                    ),
+            if(snapshot.data!.docs != [])
+              {
+                return Center(
+                  child: Text(
+                    'No new requests yet!!!!',
                   ),
                 );
-              }).toList(),
-            );
+              }
+            else{
+              return ListView(
+                padding: EdgeInsets.only(bottom: 80),
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                    child: Card(
+                      child: ListTile(
+                        // name
+                        title: Text(
+                          'Name: ' +
+                              (document['firstName']) +
+                              " " +
+                              (document['lastName']),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(height: 5),
+                            // contact number
+                            Text(
+                              'Contact Number: ' + (document['phoneNumber']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            // email id
+                            Text(
+                              'Email Id: ' + (document['emailId']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            // nearest ywca center
+                            Text(
+                              'YWCA Center: ' +
+                                  (document['nearestCenter']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            // place of work
+                            Text(
+                              'Institute/Organisation: ' +
+                                  (document['placeOfWork']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            // profession
+                            Text(
+                              'Profession: ' + (document['profession']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            // start of approve and disapprove button
+                            Row(
+                              children: [
+                                Spacer(),
+                                Spacer(),
+                                Spacer(),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        // Alert box for approve
+                                        return AlertDialog(
+                                          title: Text('Confirmation'),
+                                          content: Text(
+                                              'Are you sure you want to approve?'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(
+                                                  context,
+                                                  rootNavigator: true,
+                                                ).pop(
+                                                    false); // dismisses only the dialog and returns false
+                                              },
+                                              child: Text('No'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.of(context,
+                                                    rootNavigator: true)
+                                                    .pop(true);
+                                                // update user table
+                                                await FirebaseFirestore.instance
+                                                    .collection('users')
+                                                    .doc(document.id)
+                                                    .update({
+                                                  "firstName":
+                                                  document["firstName"],
+                                                  "lastName":
+                                                  document["lastName"],
+                                                  "dateOfBirth":
+                                                  document["dateOfBirth"],
+                                                  "emailId": document["emailId"],
+                                                  "gender": document["gender"],
+                                                  "profession":
+                                                  document["profession"],
+                                                  "placeOfWork":
+                                                  document["placeOfWork"],
+                                                  "nearestCenter":
+                                                  document["nearestCenter"],
+                                                  "interestInMembership":
+                                                  document[
+                                                  "interestInMembership"],
+                                                  "uid": document["uid"],
+                                                  "phoneNumber":
+                                                  document["phoneNumber"],
+                                                  "memberRole":
+                                                  document["memberRole"],
+                                                }).then((value) =>
+                                                    print("Approved"));
+                                                // delete from approval
+                                                FirebaseFirestore.instance
+                                                    .collection('approval')
+                                                    .doc(document.id)
+                                                    .delete();
+                                              },
+                                              child: Text('Yes'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                    MaterialStateProperty.all(Colors.green),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(5)),
+                                  ),
+                                  child: Icon(
+                                    Icons.check,
+                                  ),
+                                ),
+                                Spacer(),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    // Alert box for disapprove approval
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text('Confirmation'),
+                                          content: Text(
+                                            'Are you sure you want to disapprove?',
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(
+                                                  context,
+                                                  rootNavigator: true,
+                                                ).pop(
+                                                    false); // dismisses only the dialog and returns false
+                                              },
+                                              child: Text('No'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                Navigator.of(context,
+                                                    rootNavigator: true)
+                                                    .pop(true);
+                                                // not approved
+                                                // change approvalStatus
+                                                FirebaseFirestore.instance
+                                                    .collection('approval')
+                                                    .doc(document.id)
+                                                    .update({
+                                                  'approvalStatus': 'notapproved'
+                                                });
+                                                setState(() {});
+                                              },
+                                              child: Text('Yes'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                    MaterialStateProperty.all(Colors.red),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(5)),
+                                  ),
+                                  child: Icon(
+                                    Icons.cancel,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // end of approve and disapprove
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                  );
+                }).toList(),
+              );
+            }
+
         }
       },
     );

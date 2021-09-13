@@ -42,9 +42,6 @@ class _SuccessStoriesState extends State<SuccessStories> {
         userInfo.getmemberRole; // to identify if user is admin or other role
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    print("item: $selectedMenuItemId");
-    print(_height);
-    print(_width);
 
     final pages = List.generate(
       titles.length,
@@ -211,8 +208,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
     double _height,
     double _width,
   ) {
-    print(_height);
-    print(_width);
+
     //  card start
     return Container(
       margin: EdgeInsets.only(

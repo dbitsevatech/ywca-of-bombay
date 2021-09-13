@@ -212,7 +212,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     _height = size.height;
     _width = size.width;
 
-    print(responseList);
 
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
@@ -360,9 +359,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                           return Center(
                             child: Text(
                               'Please wait its loading...',
-                              style: DefaultTextStyle.of(context)
-                                  .style
-                                  .apply(fontSizeFactor: 1.5),
                             ),
                           );
                         } else {

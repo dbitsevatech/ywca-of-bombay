@@ -41,10 +41,7 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
 
-    print("title: " + this._title);
-    print("description: " + this._description);
-    print("image list: " + this._imagePathList.toString());
-    print("image list: " + this._imageTitleList.toString());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -67,18 +64,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
             color: Colors.black87,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.share,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              //do something
-              // gotoSecondActivity(context);
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -88,10 +73,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                 children: [
                   Container(
                     color: Colors.orange,
-                    // margin: EdgeInsets.all(0.0),
-                    // child: CustomPaint(
-                    //   painter: BlueBubbleDesign(),
-                    // ),
                     child: DetailPageBlueBubbleDesign(),
                   ),
                 ],

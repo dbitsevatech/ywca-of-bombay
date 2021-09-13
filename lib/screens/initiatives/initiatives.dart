@@ -35,7 +35,6 @@ class _InitiativesState extends State<Initiatives> {
   Widget build(BuildContext context) {
     var role =
         userInfo.getmemberRole; // to identify if user is admin or other role
-    print("item: $selectedMenuItemId");
     final _height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () => showExitPopup(context),

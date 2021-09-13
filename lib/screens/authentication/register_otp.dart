@@ -393,7 +393,6 @@ class _RegisterOtpState extends State<RegisterOtp>
         // buttonText: 'Register',
         screenHeight: _screenSize!.height,
         onPressedFunction: () async {
-          print("height");
           _onRegisterButtonPressed();
         },
       ),
@@ -401,7 +400,6 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   _verifyPhoneNumber() async {
-    print(phoneNumber);
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$phoneNumber',
       timeout: const Duration(seconds: 120),

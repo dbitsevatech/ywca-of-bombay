@@ -67,10 +67,7 @@ class _EventsState extends State<Events> {
         .where('userID', isEqualTo: userID)
         .get()
         .then((checkSnapshot) {
-      // print('snapshot size');
-      print(checkSnapshot.size);
       if (checkSnapshot.size > 0) {
-        // print("Already Exists");
       } else {
         print("adding");
         FirebaseFirestore.instance

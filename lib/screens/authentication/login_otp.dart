@@ -108,10 +108,7 @@ class _LoginOtpState extends State<LoginOtp>
 
       _showInvalidOTPSnackBar();
     }
-    // on FirebaseAuthException catch (e) {
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
+
   }
 
   // Return "Verification Code" label
@@ -164,8 +161,7 @@ class _LoginOtpState extends State<LoginOtp>
     if(_controller!.value == 0.00){
       _hideResendButton = false;
     }
-    print(_controller!.value );
-    print(_hideResendButton!);
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -316,7 +312,6 @@ class _LoginOtpState extends State<LoginOtp>
         setState(() {
           _verificationCode = verficationID;
         });
-        print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
         if (!mounted) return;

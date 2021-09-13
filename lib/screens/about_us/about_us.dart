@@ -56,7 +56,6 @@ class _AboutUsState extends State<AboutUs> {
   Widget build(BuildContext context) {
     var role = userInfo.getmemberRole;
     final _height = MediaQuery.of(context).size.height;
-    print("item: $selectedMenuItemId");
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
