@@ -43,7 +43,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
     var placeOfWork = userInfo.getplaceOfWork;
     var profession = userInfo.getprofession;
     var interestInMembership = userInfo.getinterestInMembership;
-
+    var address = userInfo.getaddress;
     var role = userInfo.getmemberRole;
 
     return Scaffold(
@@ -178,7 +178,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                             DetailText(text: 'Email ID: $emailId'),
                             SizedBox(height: 15),
                             // Address
-                            DetailText(text: 'Address: $emailId'),
+                            DetailText(text: 'Address: $address'),
                             SizedBox(height: 15),
                             // Date of birth
                             DetailText(text: 'Date Of Birth: $dateOfBirth'),

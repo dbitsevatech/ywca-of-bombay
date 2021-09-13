@@ -156,7 +156,8 @@ class _RegisterOtpState extends State<RegisterOtp>
             "placeOfWork": placeOfWork,
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
-            "memberRole": "NonMember"
+            "memberRole": "NonMember",
+            "address" : "",
           };
           print("data map: " + data.toString());
           userInfo.updateAfterAuth(
@@ -171,7 +172,8 @@ class _RegisterOtpState extends State<RegisterOtp>
               placeOfWork,
               nearestCenter,
               interestInMembership,
-              "NonMember");
+              "NonMember",
+              "");
           CollectionReference<Map<String, dynamic>> users =
           FirebaseFirestore.instance.collection('users');
           users.doc(value.user!.uid).set(data);
@@ -480,6 +482,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
+        if (!mounted) return;
         setState(() {
           _verificationCode = verificationID;
         });

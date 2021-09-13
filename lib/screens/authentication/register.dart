@@ -278,7 +278,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           TextFormField(
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
-                              userInfo.updateName(value);
                               print(userInfo.getfirstName);
                               setState(() {
                                 firstName = value!;

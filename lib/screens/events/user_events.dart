@@ -189,10 +189,6 @@ class _EventsState extends State<Events> {
                               Icons.search,
                               color: Colors.grey,
                             ),
-                            suffixIcon: Icon(
-                              Icons.mic,
-                              color: Colors.grey,
-                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide: BorderSide.none,
