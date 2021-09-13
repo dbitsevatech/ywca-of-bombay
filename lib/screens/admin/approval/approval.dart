@@ -7,7 +7,7 @@ import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
-import '../../exit-popup.dart';
+import '../../../widgets/exit_popup.dart';
 
 // ignore: must_be_immutable
 class ApprovalScreen extends StatefulWidget {
@@ -33,6 +33,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
         drawers: [
           SideDrawer(
             percentage: 0.75, // main screen height proportion

@@ -1,7 +1,7 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../exit-popup.dart';
+import '../../widgets/exit_popup.dart';
 
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
@@ -38,136 +38,117 @@ class _InitiativesState extends State<Initiatives> {
     print("item: $selectedMenuItemId");
     final _height = MediaQuery.of(context).size.height;
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child: DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        (role == "Admin")
-            ? // ADMIN DRAWER
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: AdminDrawer.header(context, userInfo),
-                footerView: AdminDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.indigo[600], menu: AdminDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    AdminDrawer.selectedItem(context, itemId);
-                  });
-                },
-              )
-            : // DRAWER FOR OTHER ROLES
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: UserDrawer.header(context, userInfo),
-                footerView: UserDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.indigo[600], menu: UserDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    UserDrawer.selectedItem(context, itemId);
-                  });
-                },
-              ),
-      ],
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                // circle design
-                children: <Widget>[
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () => {
-                          // widget.onMenuPressed,
-                          controller.toggle(Direction.left),
-                          // OR
-                          // controller.open()
-                        },
-                      ),
-                    ),
-                  ),
-                  PreferredSize(
-                    preferredSize: Size.fromHeight(100),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          // Distance from ywca
-                          // or else it will overlap
-                          SizedBox(height: _height * 0.1),
-                          Text(
-                            'Initiatives ',
-                            style: TextStyle(
-                              fontSize: 26,
-                              color: Color(0xff333333),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                            ),
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          (role == "Admin")
+              ? // ADMIN DRAWER
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
+              : // DRAWER FOR OTHER ROLES
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  // circle design
+                  children: <Widget>[
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
                           ),
-                          SizedBox(height: _height * 0.02),
-                        ],
+                        ),
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => {
+                            // widget.onMenuPressed,
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              getAllInitiatives(context),
-            ],
+                    PreferredSize(
+                      preferredSize: Size.fromHeight(100),
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            // Distance from ywca
+                            // or else it will overlap
+                            SizedBox(height: _height * 0.1),
+                            Text(
+                              'Initiatives ',
+                              style: TextStyle(
+                                fontSize: 26,
+                                color: Color(0xff333333),
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                            SizedBox(height: _height * 0.02),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                getAllInitiatives(context),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
-
-  // TODO: Initiatives on Firebase? add firebase code?
-
-  // Stream<QuerySnapshot> getInitiativesStreamSnapshots(
-  //     BuildContext context) async* {
-  //   yield* FirebaseFirestore.instance.collection('userData').doc(uid).collection('trips').orderBy('startDate').snapshots();
-  // }
-
-  // Widget getAllInitiatives(BuildContext context) {
-  //   return Expanded(
-  //     child: StreamBuilder(
-  //       stream: getInitiativesStreamSnapshots(context),
-  //       builder: (context, snapshot) {
-  //         if (!snapshot.hasData) return const Text("Loading...");
-  //         return ListView.builder(
-  //           itemCount: _allInitiatives.length,
-  //           // itemCount: snapshot.data.documents.length + 1,
-  //           itemBuilder: (BuildContext context, int index) {
-  //             return _buildInitiativeCard(context, index);
-  //           },);},),);
-  // }
 
   Widget getAllInitiatives(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
