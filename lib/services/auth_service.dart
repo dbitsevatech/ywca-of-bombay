@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/material.dart';
 
 import '../screens/authentication/login.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -14,7 +14,6 @@ class AuthService {
 
   Stream<String> get authStateChanges =>
       _firebaseAuth.authStateChanges().map((User? user) => user!.uid);
-
 
   // check if user already registered or not
   Future<bool> userExists(String phoneNumber) async {
@@ -51,8 +50,12 @@ onLogoutPressed(context, userInfo) {
           TextButton(
             child: Text('YES'),
             onPressed: () async {
-              userInfo.updateAfterAuth(
-                  "", "", "", DateTime.now(), "", "", "", "", "", "", "", "","");
+              userInfo.updateAfterAuth("", "", "", DateTime.now(), "", "", "",
+                  "", "", "", "", "", "");
+              // sharepreferences instance
+              final prefsMember = await SharedPreferences.getInstance();
+              // setting the value of member_popup = false after logout
+              await prefsMember.setBool('member_popup', false);
               await FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
                   context,
