@@ -38,8 +38,6 @@ class _ContactUsState extends State<ContactUs> {
   }
 
   void sendEmail(BuildContext context, String emailId) async {
-    print('in send email');
-    print(emailId);
     var apps = await OpenMailApp.getMailApps();
     emailId = emailId;
     if (apps.isEmpty) {
@@ -71,7 +69,6 @@ class _ContactUsState extends State<ContactUs> {
         userInfo.getmemberRole; // to identify if user is admin or other role
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
-    print("item: $selectedMenuItemId");
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
@@ -287,7 +284,6 @@ class _ContactUsState extends State<ContactUs> {
                   text: 'Email Id: ' + emailId,
                   recognizer: new TapGestureRecognizer()
                     ..onTap = () => {
-                          print(emailId),
                           sendEmail(context, emailId),
                         },
                   style: TextStyle(

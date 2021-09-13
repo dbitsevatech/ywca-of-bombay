@@ -45,6 +45,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   Future<void> _getValue() async {
     await Future.delayed(const Duration(seconds: 3), () {
+      if (!mounted) return;
       setState(() {
         _controller4.text = '17:01';
       });
@@ -114,7 +115,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     if (picked != null && picked != eventDeadline) {
       setState(() {
         eventDeadline = picked;
-        // print(picked);
         print(eventDeadline);
       });
     }

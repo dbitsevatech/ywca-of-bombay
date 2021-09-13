@@ -42,7 +42,6 @@ class _AdminEventsState extends State<AdminEvents> {
 
   @override
   Widget build(BuildContext context) {
-    print("item: $selectedMenuItemId");
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
@@ -133,10 +132,6 @@ class _AdminEventsState extends State<AdminEvents> {
                           hintText: "Search by venue",
                           prefixIcon: Icon(
                             Icons.search,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.mic,
                             color: Colors.grey,
                           ),
                           border: OutlineInputBorder(

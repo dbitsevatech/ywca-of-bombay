@@ -32,10 +32,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.getImage(
-        source: ImageSource.gallery,
-        maxHeight: 300,
-        maxWidth: 300,
-      );
+          source: ImageSource.gallery, maxHeight: 2000, maxWidth: 2000);
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
