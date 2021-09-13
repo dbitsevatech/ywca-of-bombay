@@ -138,32 +138,41 @@ Widget footer(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,
     ),
-    child: InkWell(
-      onTap: () async => {
-        // controller.toggle(),
-
-        // function from auth_service.dart
-        onLogoutPressed(context, userInfo),
-      },
-      child: Container(
-        padding: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.11,
-          top: MediaQuery.of(context).size.height * 0.02,
-          bottom: MediaQuery.of(context).size.height * 0.02,
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.logout, size: 20),
-            SizedBox(
-              width: 10,
+    child: Column(
+      children: [
+        InkWell(
+          onTap: () async => {
+            // controller.toggle(),
+            onLogoutPressed(context, userInfo),
+          },
+          child: Container(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.11,
+              top: MediaQuery.of(context).size.height * 0.02,
+              bottom: MediaQuery.of(context).size.height * 0.02,
             ),
-            Text(
-              'Logout',
-              style: TextStyle(fontSize: 18),
+            child: Row(
+              children: [
+                Icon(Icons.logout, size: 20),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  'Logout',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Developed by DBIT',
+          style: TextStyle(fontSize: 18),
+        ),
+      ],
     ),
   );
 }
