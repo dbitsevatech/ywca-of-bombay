@@ -19,6 +19,7 @@ import 'screens/initiatives/initiatives.dart';
 import 'screens/success_stories/success_stories.dart';
 import 'services/class_builder.dart';
 import 'models/User.dart';
+import 'package:intl/intl.dart';
 
 void main() async {
   ClassBuilder.registerClasses();

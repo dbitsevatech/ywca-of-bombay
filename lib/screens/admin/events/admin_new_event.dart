@@ -126,8 +126,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(
-          source: ImageSource.gallery, maxHeight: 300, maxWidth: 300, imageQuality: 100);
+      final pickedFile = await picker.getImage(
+          source: ImageSource.gallery, maxHeight: 2000, maxWidth: 2000);
       setState(() {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
@@ -161,6 +161,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
+        goBackToPreviousScreen(context);
     String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -197,7 +198,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventTime': eventTime,
           'eventType': eventType
         }));
-        goBackToPreviousScreen(context);
   }
 
   // everyone-0, members-1
@@ -230,6 +230,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   @override
   Widget build(BuildContext context) {
+    bool _enabled=true;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
