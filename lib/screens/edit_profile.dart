@@ -326,7 +326,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 lastName = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty)
                                 return 'Last name is required.';
                               else
@@ -402,7 +402,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 email = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email is required';
                               }
@@ -805,7 +805,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                              _formKey.currentState?.save();
+                              // _formKey.currentState?.save();
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
@@ -826,10 +826,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "memberRole": userInfo.getmemberRole,
                                       "approvalStatus": "pending"
                                     })
-                                    .then((value) => print("Request Sent"))
+                                    .then((value) => {
+                                      print("Request Sent"),
+                                      savePressed()})
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
-                                await savePressed();
+                                // await savePressed();
                               } else {
                                 print("updating as it is non-member");
                                 await FirebaseFirestore.instance
@@ -868,8 +870,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     userInfo.getmemberRole);
                               }
 
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              // Navigator.pop(context);
                             },
                           ),
                           SizedBox(
