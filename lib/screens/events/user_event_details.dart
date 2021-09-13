@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share/share.dart';
 import 'user_events.dart';
 
 import '../about_us/become_member.dart';
@@ -42,7 +42,7 @@ class DetailPage extends StatefulWidget {
     required this.memberRole,
   });
   @override
-  _DetailPageState createState() => _DetailPageState();
+  _DetailPageState createState() => _DetailPageState(eventImageUrl);
 }
 
 class _DetailPageState extends State<DetailPage> {
@@ -52,6 +52,8 @@ class _DetailPageState extends State<DetailPage> {
   int _currentIndex = 0;
   String role = "";
   var now = new DateTime.now();
+  late String eventImageUrl;
+  _DetailPageState(this.eventImageUrl);
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
@@ -67,12 +69,9 @@ class _DetailPageState extends State<DetailPage> {
         .get()
         .then(
       (checkSnapshot) {
-        // print('snapshot size');
-        // print(checkSnapshot.size);
+
         if (checkSnapshot.size > 0) {
-          print("Already Exists");
         } else {
-          // print("adding");
           FirebaseFirestore.instance
               .collection('eventRegistration')
               .add({'eventID': eventID, 'userID': userID});
@@ -80,6 +79,35 @@ class _DetailPageState extends State<DetailPage> {
       },
     );
   }
+
+
+  Widget _buildImage() {
+    // ignore: unnecessary_null_comparison
+    if (eventImageUrl != "") {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: GestureDetector(
+          child: Image.network(
+            eventImageUrl,
+            height: 300,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ZoomImageNetwork(eventImageUrl),
+              ),
+            );
+          },
+        ),
+      );
+    }
+    else {
+      return SizedBox(height: 10,);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,29 +133,14 @@ class _DetailPageState extends State<DetailPage> {
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
     // carousel images
-    final List<String> imagesList = [
-      eventImageUrl,
-      'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-      'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-      'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-      'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
-    ];
+    // final List<String> imagesList = [
+    //   eventImageUrl,
+    //   'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+    //   'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+    //   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+    //   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
+    // ];
 
-    @override
-    void initState() {
-
-      id = widget.id;
-      eventName = widget.eventName;
-      eventAmount = widget.eventAmount;
-      eventDescription = widget.eventDescription;
-      eventVenue = widget.eventVenue;
-      eventImageUrl = widget.eventImageUrl;
-      eventDate = widget.eventDate;
-      eventType = widget.eventType;
-      // event_deadline = widget.event_deadline;
-    super.initState();
-
-    }
 
 
     return Scaffold(
@@ -150,7 +163,12 @@ class _DetailPageState extends State<DetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,
@@ -216,7 +234,7 @@ class _DetailPageState extends State<DetailPage> {
                       padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
                       child: ElevatedButton(
                         onPressed: () {
-
+                          goToBecomeMember(context);
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFF00bbe4),
@@ -230,78 +248,79 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       )),
                 ],
+                Center(child: _buildImage()),
                 // Carousel
-                CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    onPageChanged: (index, reason) {
-                      setState(
-                        () {
-                          _currentIndex = index;
-                        },
-                      );
-                    },
-                  ),
-                  items: imagesList
-                      .map(
-                        (item) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            margin: EdgeInsets.only(
-                              top: 10.0,
-                              bottom: 10.0,
-                            ),
-                            elevation: 6.0,
-                            shadowColor: Colors.redAccent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                              child: GestureDetector(
-                                child: Image.network(
-                                  item,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ZoomImageNetwork(item),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: imagesList.map((urlOfItem) {
-                    int index = imagesList.indexOf(urlOfItem);
-                    return Container(
-                      width: 10.0,
-                      height: 10.0,
-                      margin: EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 2.0,
-                      ),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _currentIndex == index
-                            ? Color.fromRGBO(0, 0, 0, 0.8)
-                            : Color.fromRGBO(0, 0, 0, 0.3),
-                      ),
-                    );
-                  }).toList(),
-                ),
+                // CarouselSlider(
+                //   options: CarouselOptions(
+                //     autoPlay: true,
+                //     onPageChanged: (index, reason) {
+                //       setState(
+                //         () {
+                //           _currentIndex = index;
+                //         },
+                //       );
+                //     },
+                //   ),
+                //   items: imagesList
+                //       .map(
+                //         (item) => Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: Card(
+                //             margin: EdgeInsets.only(
+                //               top: 10.0,
+                //               bottom: 10.0,
+                //             ),
+                //             elevation: 6.0,
+                //             shadowColor: Colors.redAccent,
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.circular(30.0),
+                //             ),
+                //             child: ClipRRect(
+                //               borderRadius: BorderRadius.all(
+                //                 Radius.circular(30.0),
+                //               ),
+                //               child: GestureDetector(
+                //                 child: Image.network(
+                //                   item,
+                //                   fit: BoxFit.cover,
+                //                   width: double.infinity,
+                //                 ),
+                //                 onTap: () {
+                //                   Navigator.push(
+                //                     context,
+                //                     MaterialPageRoute(
+                //                       builder: (context) =>
+                //                           ZoomImageNetwork(item),
+                //                     ),
+                //                   );
+                //                 },
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //       .toList(),
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: imagesList.map((urlOfItem) {
+                //     int index = imagesList.indexOf(urlOfItem);
+                //     return Container(
+                //       width: 10.0,
+                //       height: 10.0,
+                //       margin: EdgeInsets.symmetric(
+                //         vertical: 10.0,
+                //         horizontal: 2.0,
+                //       ),
+                //       decoration: BoxDecoration(
+                //         shape: BoxShape.circle,
+                //         color: _currentIndex == index
+                //             ? Color.fromRGBO(0, 0, 0, 0.8)
+                //             : Color.fromRGBO(0, 0, 0, 0.3),
+                //       ),
+                //     );
+                //   }).toList(),
+                // ),
                 SizedBox(
                   height: _height * 0.015,
                 ),
@@ -388,7 +407,7 @@ class _DetailPageState extends State<DetailPage> {
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
-                      if (role == 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                      if ((role == 'Member' || role == 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -425,7 +444,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                        if (role != 'Member' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                        if (role == 'NonMember' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -504,7 +523,7 @@ class _DetailPageState extends State<DetailPage> {
                           Center(
                             child: Text(
                               'Event Date has passed\n'
-                                  'Contact ********** for more details',
+                                  'Contact 8828024246 for more details',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,

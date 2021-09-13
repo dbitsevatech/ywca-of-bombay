@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'screens/about_us/about_us.dart';
 import 'screens/admin/events/admin_events.dart';
 import 'screens/admin/analytics/analytics.dart';
@@ -67,12 +66,9 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    // return OnboardingScreen();
-    // return AdminEvents();
-    // return Events();
-    // return LoginScreen();
     return Splash();
-    // return HomeController();
+    // return Events();
+    // return Splash();
   }
 }
 
@@ -97,7 +93,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
             .where("uid", isEqualTo: currentUser.uid)
             .get();
         if (checkuser.docs.length == 1) {
-           userdata = checkuser.docs[0].data();
+          userdata = checkuser.docs[0].data();
           userInfo.updateAfterAuth(
               userdata['uid'],
               userdata['firstName'],
@@ -112,21 +108,17 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
               userdata['interestInMembership'],
               userdata['memberRole']);
         }
-        if(userdata['memberRole'] == "Admin"){
+        if (userdata['memberRole'] == "Admin") {
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (context) => new AdminEvents()));
-        }
-        else{
+        } else {
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (context) => new Events()));
         }
-
-      }
-      else{
+      } else {
         Navigator.of(context).pushReplacement(
             new MaterialPageRoute(builder: (context) => new LoginScreen()));
       }
-
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
@@ -146,20 +138,3 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     );
   }
 }
-//
-// class HomeController extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final AuthService auth = Provider.of(context).auth;
-//     return StreamBuilder<String>(
-//       stream: auth.authStateChanges,
-//       builder: (context, AsyncSnapshot<String> snapshot) {
-//         if (snapshot.connectionState == ConnectionState.active) {
-//           final bool signedIn = snapshot.hasData;
-//           return signedIn ? Events() : LoginScreen();
-//         }
-//         return CircularProgressIndicator();
-//       },
-//     );
-//   }
-// }

@@ -2,7 +2,7 @@ import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/view_profile.dart';
-import '../../../services/auth_service.dart';
+import '../services/auth_service.dart';
 import '../widgets/constants.dart';
 
 List<MenuItem> items = [
@@ -113,9 +113,7 @@ Widget header(BuildContext context, var userInfo) {
           SizedBox(height: 5),
           CircleAvatar(
             radius: 50.0,
-            backgroundImage: NetworkImage(
-              "https://content.jdmagicbox.com/comp/mumbai/54/022p4700154/catalogue/ywca-of-bombay-andheri-west-mumbai-hostels-p2eb4p7v56.jpg?clr=666600",
-            ),
+            backgroundImage: AssetImage("assets/images/logo.png"),
           ),
           SizedBox(height: 5),
           Text(

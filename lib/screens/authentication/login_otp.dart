@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:vibration/vibration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -108,10 +108,7 @@ class _LoginOtpState extends State<LoginOtp>
 
       _showInvalidOTPSnackBar();
     }
-    // on FirebaseAuthException catch (e) {
-    //   print('Failed with error code: ${e.code}');
-    //   print(e.message);
-    // }
+
   }
 
   // Return "Verification Code" label
@@ -164,8 +161,7 @@ class _LoginOtpState extends State<LoginOtp>
     if(_controller!.value == 0.00){
       _hideResendButton = false;
     }
-    print(_controller!.value );
-    print(_hideResendButton!);
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,7 +296,7 @@ class _LoginOtpState extends State<LoginOtp>
                   MaterialPageRoute(builder: (context) => Events()),
                       (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              // TODO: Add Admin Events navigation
+              // TOD: Add Admin Events navigation
               // Navigator.pushAndRemoveUntil(
               //     context,
               //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
@@ -316,7 +312,6 @@ class _LoginOtpState extends State<LoginOtp>
         setState(() {
           _verificationCode = verficationID;
         });
-        print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
         if (!mounted) return;
@@ -417,6 +412,7 @@ class _LoginOtpState extends State<LoginOtp>
                         color: Colors.black,
                       ),
                       onPressed: () {
+                        Vibration.vibrate(duration: 40);
                         setState(() {
                           if (_sixthDigit > 0) {
                             _sixthDigit = -1;
@@ -559,6 +555,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 40);
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {

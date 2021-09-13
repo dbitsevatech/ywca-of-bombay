@@ -41,10 +41,7 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
 
-    print("title: " + this._title);
-    print("description: " + this._description);
-    print("image list: " + this._imagePathList.toString());
-    print("image list: " + this._imageTitleList.toString());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -67,18 +64,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
             color: Colors.black87,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.share,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              //do something
-              // gotoSecondActivity(context);
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: SafeArea(
@@ -88,10 +73,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                 children: [
                   Container(
                     color: Colors.orange,
-                    // margin: EdgeInsets.all(0.0),
-                    // child: CustomPaint(
-                    //   painter: BlueBubbleDesign(),
-                    // ),
                     child: DetailPageBlueBubbleDesign(),
                   ),
                 ],
@@ -115,38 +96,40 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                     builder: (BuildContext context) {
                       return Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              margin: EdgeInsets.only(
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              elevation: 6.0,
-                              shadowColor: Colors.blueGrey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                margin: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 10.0,
                                 ),
-                                child: GestureDetector(
-                                  child: Image(
-                                    image: AssetImage(pathOfImage),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 200,
+                                elevation: 6.0,
+                                shadowColor: Colors.blueGrey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ZoomImageAsset(pathOfImage),
-                                      ),
-                                    );
-                                  },
+                                  child: GestureDetector(
+                                    child: Image(
+                                      image: AssetImage(pathOfImage),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 200,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ZoomImageAsset(pathOfImage),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),

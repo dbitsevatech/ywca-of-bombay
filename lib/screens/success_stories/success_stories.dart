@@ -1,16 +1,15 @@
-import 'dart:ui';
-
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../widgets/blue_bubble_design.dart';
 import 'constants.dart';
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/constants.dart';
-import '../exit-popup.dart';
+import '../../widgets/exit_popup.dart';
 
 // ignore: must_be_immutable
 class SuccessStories extends StatefulWidget {
@@ -43,9 +42,6 @@ class _SuccessStoriesState extends State<SuccessStories> {
         userInfo.getmemberRole; // to identify if user is admin or other role
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    print("item: $selectedMenuItemId");
-    print(_height);
-    print(_width);
 
     final pages = List.generate(
       titles.length,
@@ -59,114 +55,116 @@ class _SuccessStoriesState extends State<SuccessStories> {
     );
 
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child:  DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        (role == "Admin")
-            ? // ADMIN DRAWER
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: AdminDrawer.header(context, userInfo),
-                footerView: AdminDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    AdminDrawer.selectedItem(context, itemId);
-                  });
-                },
-              )
-            : // DRAWER FOR OTHER ROLES
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: UserDrawer.header(context, userInfo),
-                footerView: UserDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    UserDrawer.selectedItem(context, itemId);
-                  });
-                },
-              ),
-      ],
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          (role == "Admin")
+              ? // ADMIN DRAWER
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
+              : // DRAWER FOR OTHER ROLES
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  // circle design
 
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                // circle design
-                children: <Widget>[
-                  Positioned(
-                    child: Image.asset("assets/images/circle-design.png"),
-                  ),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          color: Colors.black87,
+                  children: <Widget>[
+                     MainPageBlueBubbleDesign(),
+                    // Positioned(
+                    //   child: Image.asset("assets/images/circle-design.png"),
+                    // ),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => {
+                            // widget.onMenuPressed,
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
-                        onPressed: () => {
-                          // widget.onMenuPressed,
-                          controller.toggle(Direction.left),
-                          // OR
-                          // controller.open()
-                        },
                       ),
                     ),
-                  ),
-                  //Title start
-                  Padding(
-                    padding: EdgeInsets.only(top: _height * 0.12),
-                    child: Container(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text(
-                          'Success Stories',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            color: Color(0xff333647),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 26,
+                    //Title start
+                    Padding(
+                      padding: EdgeInsets.only(top: _height * 0.12),
+                      child: Container(
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            'Success Stories',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color(0xff333647),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  //Title end
-                ],
-              ),
-              Expanded(
-                child: Column(
+                    //Title end
+                  ],
+                ),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
                       // height: 540,
-                      height: _height * 0.7,
+                      height: _height * 0.69,
                       child: PageView.builder(
                         controller: pageController,
                         // itemCount: pages.length,
@@ -195,50 +193,55 @@ class _SuccessStoriesState extends State<SuccessStories> {
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 
-  Container cardWid(
+  Widget cardWid(
     String image,
     String title,
     String detailText,
     double _height,
     double _width,
   ) {
-    print(_height);
-    print(_width);
+
     //  card start
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: _width * 0.07),
+      margin: EdgeInsets.only(
+        left: _width * 0.07,
+        right: _width * 0.07,
+        bottom: _height * 0.005,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xFFCDF1EF)),
         color: successStoriesCardBgColor,
         borderRadius: BorderRadius.all(Radius.circular(40)),
       ),
-      height: 540, //540 init
-      width: 360,
+      // height: 540, //540 init
+      // width: 360,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           //    image
-          Container(
-            margin: EdgeInsets.only(
-              top: _height * 0.020,
-              bottom: _height * 0.010,
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(120.0),
-              child: Image(
-                image: AssetImage(image),
-                fit: BoxFit.contain,
-                height: 175,
-                width: 175,
+          Expanded(
+            flex: 3,
+            child: Container(
+              margin: EdgeInsets.only(
+                top: _height * 0.020,
+                bottom: _height * 0.010,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(120.0),
+                child: Image(
+                  image: AssetImage(image),
+                  // fit: BoxFit.contain,
+                  // height: 175,
+                  // width: 175,
+                ),
               ),
             ),
           ),
@@ -258,23 +261,26 @@ class _SuccessStoriesState extends State<SuccessStories> {
 
           // card info
           Expanded(
-            flex: 1,
+            flex: 6,
             child: Padding(
               padding: EdgeInsets.only(
                 left: _width * 0.05,
                 right: _width * 0.05,
                 top: _height * 0.005,
-                // bottom: 5,
+                bottom: _height * 0.015,
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Text(
+                  // child: AutoSizeText(
                   detailText,
-                  textAlign: TextAlign.center,
+                  // minFontSize: 12,
+                  // maxFontSize: 18,
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontFamily: "Montserrat",
+                    fontSize: 18,
                     height: 1.3,
-                    fontSize: 15,
                   ),
                 ),
               ),
