@@ -49,7 +49,8 @@ class _InitiativesState extends State<Initiatives> {
                   headerView: AdminDrawer.header(context, userInfo),
                   footerView: AdminDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {
@@ -65,7 +66,8 @@ class _InitiativesState extends State<Initiatives> {
                   headerView: UserDrawer.header(context, userInfo),
                   footerView: UserDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {

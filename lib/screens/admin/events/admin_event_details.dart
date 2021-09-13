@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:share/share.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../widgets/constants.dart';
-import '../../../../widgets/zoom_image.dart';
+import '../../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class AdminEventDetailPage extends StatefulWidget {
@@ -111,7 +111,12 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,

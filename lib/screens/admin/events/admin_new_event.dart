@@ -11,6 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import '../../../widgets/gradient_button.dart';
 
 // ignore: must_be_immutable
 class AdminNewEvent extends StatefulWidget {
@@ -19,18 +20,20 @@ class AdminNewEvent extends StatefulWidget {
 }
 
 class _AdminNewEventState extends State<AdminNewEvent> {
-  late String eventTitle,
-      eventDescription,
-      eventVenue,
-      eventAmount,
-      eventImageUrl;
+  String eventTitle = "";
+  String eventDescription = "";
+  String eventVenue = "";
+  String eventAmount = "";
+  String eventImageUrl = "";
   String eventType = "Everyone";
   // Time picker variables
-  String _valueChanged4 = '';
+  String _timeValue = '';
   String _valueToValidate4 = '';
   String _valueSaved4 = '';
   // image path variable
   File? _image;
+  DateTime eventDate = DateTime.now();
+  DateTime eventDeadline = DateTime.now();
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -38,37 +41,31 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   TextEditingController timeController = TextEditingController();
   late TextEditingController _controller4;
 
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationgetText
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> _getValue() async {
     await Future.delayed(const Duration(seconds: 3), () {
       setState(() {
-        //_initialValue = '2000-10-22 14:30';
         _controller4.text = '17:01';
       });
     });
   }
 
-  DateTime eventDate = DateTime.now().subtract(Duration(days: 4380));
   Future _selectDate(context) async {
     initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: eventDate,
+      initialDate: DateTime.now(),
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Event',
       fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: primaryColor, // highlighed date color
-              onPrimary: Colors.black, // highlighted date text color
-              surface: primaryColor, // header color
-              onSurface: Colors.grey[800]!, // header text & calendar text color
-            ),
+          data: ThemeData.light().copyWith(
+            primaryColor: const Color(0xFF49dee8),
+            accentColor: const Color(0xFF49dee8),
+            colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -83,23 +80,17 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     if (picked != null && picked != eventDate) {
       setState(() {
         eventDate = picked;
-        // print(eventDate);
       });
     }
   }
-
-  // Deadline of Event
-  DateTime eventDeadline = DateTime.now().subtract(Duration(days: 4380));
-
   Future _selectDeadline(context) async {
-    initializeDateFormatting();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: eventDeadline,
+      initialDate: DateTime.now(),
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
-      helpText: 'Select Deadline of Event',
-      fieldLabelText: 'Enter Deadline of Event',
+      lastDate: DateTime(2040),
+      helpText: 'Select Date of Birth',
+      fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
@@ -123,16 +114,19 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     if (picked != null && picked != eventDeadline) {
       setState(() {
         eventDeadline = picked;
-        // print(eventDeadline);
+        // print(picked);
+        print(eventDeadline);
       });
     }
   }
+
+
 
   // Image
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(
+      final pickedFile = await picker.pickImage(
           source: ImageSource.gallery, maxHeight: 300, maxWidth: 300);
       setState(() {
         if (pickedFile != null) {
@@ -178,7 +172,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     var url = imageUrl.toString();
     print("Image URL=" + url);
 
-    final document = FirebaseFirestore.instance.collection('events').add({
+    FirebaseFirestore.instance.collection('events').add({
       'eventName': eventName,
       'eventDescription': eventDescription,
       'eventVenue': eventVenue,
@@ -199,6 +193,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventImageUrl': url,
           'eventDate': eventDate,
         }));
+        goBackToPreviousScreen(context);
   }
 
   // everyone-0, members-1
@@ -217,22 +212,16 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   @override
   void initState() {
-    super.initState();
     Intl.defaultLocale = 'pt_BR';
-    //_initialValue = DateTime.now().toString();
     _controller4 = TextEditingController(text: DateTime.now().toString());
-
     String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
     String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
     _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
-    // _image = ;
-
     _getValue();
-
     setState(() {
       eventType = "Everyone";
     });
-    // super.initState();
+    super.initState();
   }
 
   @override
@@ -255,7 +244,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        //do something
                         goBackToPreviousScreen(context);
                       },
                     ),
@@ -338,8 +326,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventTitle = value;
                             });
                           },
-                          validator: (String? value) {
-                            if (value == null)
+                          validator: (value) {
+                            if (value!.isEmpty)
                               return 'Event name is required';
                             else
                               return null;
@@ -368,8 +356,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventDescription = value;
                             });
                           },
-                          validator: (String? value) {
-                            if (value == null)
+                          validator: (value) {
+                            if (value!.isEmpty)
                               return 'Event description is required';
                             else
                               return null;
@@ -398,8 +386,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventVenue = value;
                             });
                           },
-                          validator: (String? value) {
-                            if (value == null)
+                          validator: (value) {
+                            if (value!.isEmpty)
                               return 'Event venue is required';
                             else
                               return null;
@@ -428,8 +416,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               eventAmount = value;
                             });
                           },
-                          validator: (String? value) {
-                            if (value == null)
+                          validator: (value) {
+                            if (value!.isEmpty)
                               return 'Event amount is required';
                             else
                               return null;
@@ -495,14 +483,13 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                         DateTimePicker(
                           type: DateTimePickerType.time,
                           timePickerEntryModeInput: true,
-                          // controller: _controller4,
-                          initialValue: _controller4.text, //_initialValue,
+                          initialValue: _controller4.text, 
                           icon: Icon(Icons.access_time),
                           timeLabelText: "Select Time",
                           use24HourFormat: true,
                           locale: Locale('pt', 'BR'),
                           onChanged: (val) =>
-                              setState(() => _valueChanged4 = val),
+                              setState(() => _timeValue = val),
                           validator: (val) {
                             setState(() => _valueToValidate4 = val ?? '');
                             return null;
@@ -544,7 +531,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           ),
                           onTap: () async {
                             FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDate(context);
+                            await _selectDeadline(context);
                             deadlineController.text =
                                 "${DateFormat('dd-MM-yyyy').format(eventDeadline.toLocal())}"
                                     .split(' ')[0];
@@ -635,38 +622,25 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             ),
                             borderRadius: BorderRadius.all(Radius.circular(15)),
                           ),
-                          child: FractionallySizedBox(
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Upload',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () async {
-                                // if (_formKey.currentState!.validate()) {
-                                //   return;
-                                // }
-                                // print('printing time');
-                                // print(_valueChanged4);
-                                uploadData(
-                                    context,
-                                    eventTitle,
-                                    eventDescription,
-                                    eventVenue,
-                                    eventAmount,
-                                    eventDate,
-                                    eventDeadline,
-                                    _valueChanged4,
-                                    eventType);
-                                goBackToPreviousScreen(context);
-                              },
-                            ),
+                          child: GradientButton(
+                            buttonText: 'Submit',
+                            screenHeight: _height,
+                            onPressedFunction: () async {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState!.save();
+                              uploadData(
+                                  context,
+                                  eventTitle,
+                                  eventDescription,
+                                  eventVenue,
+                                  eventAmount,
+                                  eventDate,
+                                  eventDeadline,
+                                  _timeValue,
+                                  eventType);
+                            },
                           ),
                         ),
                       ],

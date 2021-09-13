@@ -1,4 +1,5 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/exit_popup.dart';
@@ -9,6 +10,8 @@ import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import 'package:open_mail_app/open_mail_app.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 late double _height;
 late double _width;
@@ -22,6 +25,8 @@ class ContactUs extends StatefulWidget {
 class _ContactUsState extends State<ContactUs> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+  String emailId = "";
+  String phoneNo = "8452930878";
 
   var userInfo;
 
@@ -30,6 +35,34 @@ class _ContactUsState extends State<ContactUs> {
     selectedMenuItemId = UserDrawer.menuWithIcon.items[4].id;
     userInfo = Provider.of<UserData>(context, listen: false);
     super.initState();
+  }
+
+  void sendEmail(BuildContext context, String emailId) async {
+    print('in send email');
+    print(emailId);
+    var apps = await OpenMailApp.getMailApps();
+    emailId = emailId;
+    if (apps.isEmpty) {
+      showNoMailAppsDialog(context);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return MailAppPickerDialog(
+            mailApps: apps,
+            emailContent: EmailContent(
+              to: [
+                emailId,
+              ],
+              // subject: 'Hello!',
+              // body: 'How are you doing?',
+              // cc: ['user2@domain.com', 'user3@domain.com'],
+              // bcc: ['boss@domain.com'],
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -51,7 +84,8 @@ class _ContactUsState extends State<ContactUs> {
                   headerView: AdminDrawer.header(context, userInfo),
                   footerView: AdminDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {
@@ -67,7 +101,8 @@ class _ContactUsState extends State<ContactUs> {
                   headerView: UserDrawer.header(context, userInfo),
                   footerView: UserDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {
@@ -211,7 +246,8 @@ class _ContactUsState extends State<ContactUs> {
     );
   }
 
-  Widget centerCard(String title, String address) {
+  Widget centerCard(
+      String title, String address, String emailId, String phoneNo) {
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -246,7 +282,33 @@ class _ContactUsState extends State<ContactUs> {
                     fontWeight: FontWeight.w400,
                     fontSize: 12.5,
                   ),
-                )
+                ),
+                TextSpan(
+                  text: 'Email Id: ' + emailId,
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () => {
+                          print(emailId),
+                          sendEmail(context, emailId),
+                        },
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.5,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Phone No: ' + phoneNo,
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap =
+                        () => {FlutterPhoneDirectCaller.callNumber(phoneNo)},
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.5,
+                  ),
+                ),
               ],
             ),
           ),
@@ -300,11 +362,14 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[0], officeAddresses[0]),
+              centerCard(officeTitles[0], officeAddresses[0], emailIdOffice[0],
+                  contactNoOffice[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[1], officeAddresses[1]),
+              centerCard(officeTitles[1], officeAddresses[1], emailIdOffice[1],
+                  contactNoOffice[1]),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[2], officeAddresses[2]),
+              centerCard(officeTitles[2], officeAddresses[2], emailIdOffice[2],
+                  contactNoOffice[2]),
             ],
           ),
         ),
@@ -357,11 +422,14 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[0], hostelAddresses[0]),
+              centerCard(hostelTitles[0], hostelAddresses[0], emailIdHostel[0],
+                  contactNoHostel[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[1], hostelAddresses[1]),
+              centerCard(hostelTitles[1], hostelAddresses[1], emailIdHostel[1],
+                  contactNoHostel[1]),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[2], hostelAddresses[2]),
+              centerCard(hostelTitles[2], hostelAddresses[2], emailIdHostel[2],
+                  contactNoHostel[2]),
             ],
           ),
         ),
@@ -414,13 +482,35 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[0], guestHouseAddresses[0]),
+              centerCard(guestHouseTitles[0], guestHouseAddresses[0],
+                  emailIdGuestHouse[0], contactNoGuestHouse[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[1], guestHouseAddresses[1]),
+              centerCard(guestHouseTitles[1], guestHouseAddresses[1],
+                  emailIdGuestHouse[1], contactNoGuestHouse[1]),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void showNoMailAppsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Open Mail App"),
+          content: Text("No mail apps installed"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }

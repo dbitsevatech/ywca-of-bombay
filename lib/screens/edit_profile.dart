@@ -87,13 +87,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: primaryColor, // highlighed date color
-              onPrimary: Colors.black, // highlighted date text color
-              surface: primaryColor, // header color
-              onSurface: Colors.grey[800]!, // header text & calendar text color
-            ),
+          data: ThemeData.light().copyWith(
+
+            primaryColor: const Color(0xFF49dee8),
+            accentColor: const Color(0xFF49dee8),
+            colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -291,7 +289,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 firstName = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty)
                                 return 'First name is required.';
                               else
@@ -803,9 +801,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onPressedFunction: () async {
                               print(userInfo.getmemberRole);
                               // TODO: validate function not working, hence the code after it does not execute
-                              // if (_formKey.currentState!.validate()) {
-                              //   return;
-                              // }
+                              if (_formKey.currentState!.validate()) {
+                                return;
+                              }
                               _formKey.currentState!.save();
                               _formKey.currentState?.save();
                               if (userInfo.getmemberRole == "Member") {

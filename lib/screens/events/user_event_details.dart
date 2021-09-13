@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share/share.dart';
 import 'user_events.dart';
 
 import '../about_us/become_member.dart';
@@ -51,6 +51,7 @@ class _DetailPageState extends State<DetailPage> {
   String memberRole = "";
   int _currentIndex = 0;
   String role = "";
+  var now = new DateTime.now();
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
@@ -66,12 +67,12 @@ class _DetailPageState extends State<DetailPage> {
         .get()
         .then(
       (checkSnapshot) {
-        print('snapshot size');
-        print(checkSnapshot.size);
+        // print('snapshot size');
+        // print(checkSnapshot.size);
         if (checkSnapshot.size > 0) {
           print("Already Exists");
         } else {
-          print("adding");
+          // print("adding");
           FirebaseFirestore.instance
               .collection('eventRegistration')
               .add({'eventID': eventID, 'userID': userID});
@@ -148,7 +149,12 @@ class _DetailPageState extends State<DetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,
@@ -214,7 +220,7 @@ class _DetailPageState extends State<DetailPage> {
                       padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
                       child: ElevatedButton(
                         onPressed: () {
-
+                          goToBecomeMember(context);
                         },
                         style: ElevatedButton.styleFrom(
                             primary: Color(0xFF00bbe4),
@@ -386,7 +392,7 @@ class _DetailPageState extends State<DetailPage> {
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
-                      if (role == 'Member' && eventType == 'Members only') ...[
+                      if ((role == 'Member' || role == 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -423,7 +429,7 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ],
-                        if (role != 'Member' && eventType == 'Members only') ...[
+                        if (role == 'NonMember' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -460,7 +466,7 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                         ],
-                        if (eventType == 'Everyone') ...[
+                        if (eventType == 'Everyone' && eventDeadline.compareTo(now)>0) ...[
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: _height * 0.015,
@@ -497,6 +503,23 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                         ],
+                        SizedBox(height: _height * 0.015),
+                        if(eventDeadline.compareTo(now)<0) ...[
+                          Center(
+                            child: Text(
+                              'Event Date has passed\n'
+                                  'Contact 8828024246 for more details',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+
                       ],
                     ),
                   ),

@@ -49,6 +49,10 @@ dependencies:
   url_launcher: ^6.0.3
   shared_preferences: ^2.0.7
   after_layout: ^1.1.0
+  vibration: ^1.7.4-nullsafety.0
+  share: ^2.0.4
+  open_mail_app: ^0.3.0
+  flutter_phone_direct_caller: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -79,7 +83,7 @@ flutter:
     - assets/images/circles.svg
     - assets/images/circles-encoded.svg
     - assets/images/circle-design.png
-    - assets/images/ywca-logo.png
+    - assets/images/logo.png
     - assets/images/contact_us/hostel.png
     - assets/images/contact_us/office.png
     - assets/images/events/christmas.jpg

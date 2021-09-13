@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../widgets/exit_popup.dart';
+
 import 'become_member.dart';
 
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -12,6 +12,7 @@ import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/exit_popup.dart';
 import '../../widgets/gradient_button.dart';
 import '../../widgets/zoom_image.dart';
 
@@ -68,7 +69,8 @@ class _AboutUsState extends State<AboutUs> {
                   headerView: AdminDrawer.header(context, userInfo),
                   footerView: AdminDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {
@@ -84,7 +86,8 @@ class _AboutUsState extends State<AboutUs> {
                   headerView: UserDrawer.header(context, userInfo),
                   footerView: UserDrawer.footer(context, controller, userInfo),
                   color: successStoriesCardBgColor,
-                  selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
                   animation: true,
                   selectedItemId: selectedMenuItemId,
                   onMenuItemSelected: (itemId) {
@@ -237,27 +240,25 @@ class _AboutUsState extends State<AboutUs> {
                                   );
                                 }).toList(),
                               ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: imagePathList.map((pathOfImage) {
-                              //     int index =
-                              //         imagePathList.indexOf(pathOfImage);
-                              //     return Container(
-                              //       width: 10.0,
-                              //       height: 10.0,
-                              //       margin: EdgeInsets.symmetric(
-                              //         vertical: 10.0,
-                              //         horizontal: 2.0,
-                              //       ),
-                              //       decoration: BoxDecoration(
-                              //         shape: BoxShape.circle,
-                              //         color: _currentIndex == index
-                              //             ? Color.fromRGBO(0, 0, 0, 0.8)
-                              //             : Color.fromRGBO(0, 0, 0, 0.3),
-                              //       ),
-                              //     );
-                              //   }).toList(),
-                              // ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: imagePathList.map((pathOfImage) {
+                                  int index =
+                                      imagePathList.indexOf(pathOfImage);
+                                  return Container(
+                                    width: 10.0,
+                                    height: 10.0,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: _currentIndex == index
+                                          ? Color.fromRGBO(0, 0, 0, 0.8)
+                                          : Color.fromRGBO(0, 0, 0, 0.3),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ],
                           ),
                         ),

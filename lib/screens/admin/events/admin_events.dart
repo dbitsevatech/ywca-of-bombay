@@ -53,7 +53,7 @@ class _AdminEventsState extends State<AdminEvents> {
             headerView: header(context, userInfo),
             footerView: footer(context, controller, userInfo),
             color: successStoriesCardBgColor,
-            selectorColor: Colors.red, menu: menuWithIcon,
+            selectorColor: Colors.indigo[600], menu: menuWithIcon,
             animation: true,
             selectedItemId: selectedMenuItemId,
             onMenuItemSelected: (itemId) {
@@ -207,7 +207,10 @@ class _AdminEventsState extends State<AdminEvents> {
 
   Widget getHomePageBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('events').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('events')
+          .orderBy('eventDate', descending: true)
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
           return Text('Error: ${snapshot.error}' + 'something');
@@ -272,7 +275,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           SizedBox(height: 5),
                           // Event Venue
                           Text(
-                            'Venue: ' + document['eventName'],
+                            'Venue: ' + document['eventVenue'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,
@@ -281,7 +284,7 @@ class _AdminEventsState extends State<AdminEvents> {
                           SizedBox(height: 5),
                           // Event Amount
                           Text(
-                            'Amount: ' + document['eventName'],
+                            'Amount: ' + document['eventAmount'],
                             style: TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.normal,

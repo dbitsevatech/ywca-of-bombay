@@ -220,7 +220,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                   return;
                                 }
                                 // alertbox for saving the new/changed image
-                                bool result = await showDialog(
+                                await showDialog(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(

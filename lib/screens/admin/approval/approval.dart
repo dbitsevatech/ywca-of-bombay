@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,13 +19,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
-
-  // conversion of event date to string for displaying
-  String readEventDate(Timestamp eventDate) {
-    DateTime newEventDate = eventDate.toDate();
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
-    return formattedEventDate;
-  }
 
   @override
   void initState() {
@@ -49,7 +40,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
             headerView: header(context, userInfo),
             footerView: footer(context, controller, userInfo),
             color: successStoriesCardBgColor,
-            selectorColor: Colors.red, menu: menuWithIcon,
+            selectorColor: Colors.indigo[600], menu: menuWithIcon,
             animation: true,
             selectedItemId: selectedMenuItemId,
             onMenuItemSelected: (itemId) {
@@ -89,17 +80,14 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       ),
                       onPressed: () => {
                         controller.toggle(Direction.left),
-                        // OR
-                        // controller.open()
                       },
                     ),
                   ),
                 ),
-                // Events & Search bar Starts
+                // Approval & Search bar Starts
                 PreferredSize(
                   preferredSize: Size.fromHeight(80),
                   child: Column(
-                    // crossAxisAlignment: crossAxisAlignment.center,
                     children: <Widget>[
                       // Distance from ywca
                       // or else it will overlap
@@ -124,7 +112,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           ],
                         ),
                       ),
-                      // TODO: Search bar for approval page
                       SizedBox(height: 5),
                       TextField(
                         decoration: InputDecoration(
@@ -149,7 +136,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                     ],
                   ),
                 ),
-                // card view for the events
+                // card view for approval
                 Padding(
                     padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
                     child: getHomePageBody(context)),
@@ -180,7 +167,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      // Event date and time
+                      // name
                       title: Text(
                         'Name: ' +
                             (document['firstName']) +
@@ -197,7 +184,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 5),
-                          // Event name
+                          // contact number
                           Text(
                             'Contact Number: ' + (document['phoneNumber']),
                             style: TextStyle(
@@ -207,7 +194,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             ),
                           ),
                           SizedBox(height: 5),
-                          // Resource person
+                          // email id
                           Text(
                             'Email Id: ' + (document['emailId']),
                             style: TextStyle(
@@ -217,7 +204,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             ),
                           ),
                           SizedBox(height: 5),
-                          // Event Venue
+                          // nearest ywca center
                           Text(
                             'Nearest YWCA Center: ' +
                                 (document['nearestCenter']),
@@ -228,7 +215,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             ),
                           ),
                           SizedBox(height: 5),
-                          // Event Amount
+                          // place of work
                           Text(
                             'Institute/Organisation: ' +
                                 (document['placeOfWork']),
@@ -239,7 +226,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             ),
                           ),
                           SizedBox(height: 5),
-                          // Event Amount
+                          // profession
                           Text(
                             'Profession: ' + (document['profession']),
                             style: TextStyle(
@@ -248,7 +235,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               fontWeight: FontWeight.normal,
                             ),
                           ),
-                          // start of edit and delete button
+                          // start of approve and disapprove button
                           Row(
                             children: [
                               Spacer(),
@@ -256,10 +243,10 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               Spacer(),
                               ElevatedButton(
                                 onPressed: () async {
-                                  bool result = await showDialog(
+                                  await showDialog(
                                     context: context,
                                     builder: (context) {
-                                      // Alert box for edit event
+                                      // Alert box for approve
                                       return AlertDialog(
                                         title: Text('Confirmation'),
                                         content: Text(
@@ -280,13 +267,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                               Navigator.of(context,
                                                       rootNavigator: true)
                                                   .pop(true);
-                                              // change approvalStatus
-                                              // FirebaseFirestore.instance
-                                              //     .collection('approval')
-                                              //     .doc(document.id)
-                                              //     .update({
-                                              //   'approvalStatus': 'approved'
-                                              // });
                                               // update user table
                                               await FirebaseFirestore.instance
                                                   .collection('users')
@@ -343,8 +323,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               Spacer(),
                               ElevatedButton(
                                 onPressed: () async {
-                                  // Alert box for delete event
-                                  bool result = await showDialog(
+                                  // Alert box for disapprove approval
+                                  await showDialog(
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
@@ -397,7 +377,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               ),
                             ],
                           ),
-                          // end of edit and delete
+                          // end of approve and disapprove
                         ],
                       ),
                       onTap: () {},

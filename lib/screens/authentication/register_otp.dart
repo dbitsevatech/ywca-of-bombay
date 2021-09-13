@@ -1,10 +1,11 @@
 import 'dart:async';
-
+import 'package:vibration/vibration.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'register.dart';
 import '../../models/User.dart';
 import '../../screens/events/user_events.dart';
 import '../../widgets/blue_bubble_design.dart';
@@ -38,17 +39,17 @@ class RegisterOtp extends StatefulWidget {
 
   @override
   _RegisterOtpState createState() => _RegisterOtpState(
-        firstName,
-        lastName,
-        dateOfBirth,
-        emailId,
-        phoneNumber,
-        gender,
-        profession,
-        placeOfWork,
-        nearestCenter,
-        interestInMembership,
-      );
+    firstName,
+    lastName,
+    dateOfBirth,
+    emailId,
+    phoneNumber,
+    gender,
+    profession,
+    placeOfWork,
+    nearestCenter,
+    interestInMembership,
+  );
 }
 
 class _RegisterOtpState extends State<RegisterOtp>
@@ -69,17 +70,17 @@ class _RegisterOtpState extends State<RegisterOtp>
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode = "";
   _RegisterOtpState(
-    this.firstName,
-    this.lastName,
-    this.dateOfBirth,
-    this.emailId,
-    this.phoneNumber,
-    this.gender,
-    this.profession,
-    this.placeOfWork,
-    this.nearestCenter,
-    this.interestInMembership,
-  );
+      this.firstName,
+      this.lastName,
+      this.dateOfBirth,
+      this.emailId,
+      this.phoneNumber,
+      this.gender,
+      this.profession,
+      this.placeOfWork,
+      this.nearestCenter,
+      this.interestInMembership,
+      );
   AnimationController? _controller;
   var otp;
   // Variables
@@ -114,9 +115,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
     );
 
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
+
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -125,7 +124,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       print("register button pressed");
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
-              verificationId: _verificationCode, smsCode: otp))
+          verificationId: _verificationCode, smsCode: otp))
           .then((value) async {
         final snapShot = await FirebaseFirestore.instance
             .collection('users')
@@ -144,9 +143,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         print(interestInMembership);
 
         if (!snapShot.exists) {
-          // if (snapShot == null || !snapShot.exists) {
-          print(value.user);
-          print(value.user!.uid);
+
           Map<String, dynamic> data = {
             "uid": value.user!.uid,
             "firstName": firstName,
@@ -176,11 +173,11 @@ class _RegisterOtpState extends State<RegisterOtp>
               interestInMembership,
               "NonMember");
           CollectionReference<Map<String, dynamic>> users =
-              FirebaseFirestore.instance.collection('users');
+          FirebaseFirestore.instance.collection('users');
           users.doc(value.user!.uid).set(data);
 
           FirebaseFirestore.instance.collection("users").get().then(
-            (querySnapshot) {
+                (querySnapshot) {
               querySnapshot.docs.forEach((result) {
                 print(result.id);
               });
@@ -189,7 +186,7 @@ class _RegisterOtpState extends State<RegisterOtp>
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Events()),
-              (route) => false);
+                  (route) => false);
         } else {
           print("user already registered with this number");
         }
@@ -277,7 +274,20 @@ class _RegisterOtpState extends State<RegisterOtp>
                     color: Colors.black,
                     size: 30,
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: (){  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegisterScreen2(
+                        // userData: _user,
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        emailId: this.emailId,
+                        phoneNumber: this.phoneNumber,
+                        gender: this.gender,
+                        dateOfBirth: this.dateOfBirth,
+                      ),
+                    ),
+                  );},
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -304,19 +314,19 @@ class _RegisterOtpState extends State<RegisterOtp>
   get _getTimerText {
     return Container(
       height: 32,
-      child: Offstage(
-        offstage: _hideResendButton,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.access_time),
-            SizedBox(
-              width: 5.0,
-            ),
-            OtpTimer(_controller!, 15.0, Colors.black)
-          ],
-        ),
+      //child: Offstage(
+      //offstage: _hideResendButton,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.access_time),
+          SizedBox(
+            width: 5.0,
+          ),
+          OtpTimer(_controller!, 15.0, Colors.black)
+        ],
       ),
+      //),
     );
   }
 
@@ -327,7 +337,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         height: 32,
         width: 120,
         decoration: BoxDecoration(
-            // color: Colors.black,
+          // color: Colors.black,
             color: secondaryColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(32)),
@@ -338,14 +348,42 @@ class _RegisterOtpState extends State<RegisterOtp>
         ),
       ),
       onTap: () {
-        // Resend you OTP via API or anything
         print("resend button pressed!");
-        _verifyPhoneNumber();
+        _hideResendButton = true;
+        print("register page: ");
+        print(firstName);
+        print(lastName);
+        print(dateOfBirth);
+        print(emailId);
+        print(phoneNumber);
+        print(gender);
+        print(profession);
+        print(placeOfWork);
+        print(nearestCenter);
+        print(interestInMembership);
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => RegisterOtp(
+              firstName: this.firstName,
+              lastName: this.lastName,
+              emailId: this.emailId,
+              placeOfWork: this.placeOfWork,
+              gender: this.gender,
+              dateOfBirth: this.dateOfBirth,
+              phoneNumber: this.phoneNumber,
+              profession: this.profession,
+              nearestCenter: this.nearestCenter,
+              interestInMembership: this.interestInMembership,
+            ),
+          ),
+        );
       },
     );
   }
 
   // Register button
+  // TODO: Register button on OTP page not working
   get _registerButton {
     return FractionallySizedBox(
       widthFactor: 0.92, // button width wrt screen width
@@ -423,13 +461,13 @@ class _RegisterOtpState extends State<RegisterOtp>
                 "NonMember",
               );
               CollectionReference<Map<String, dynamic>> users =
-                  FirebaseFirestore.instance.collection('users');
+              FirebaseFirestore.instance.collection('users');
               users.doc(value.user!.uid).set(data);
 
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => Events()),
-                  (route) => false);
+                      (route) => false);
             }
           }
         });
@@ -551,6 +589,7 @@ class _RegisterOtpState extends State<RegisterOtp>
                     color: Colors.black,
                   ),
                   onPressed: () {
+                    Vibration.vibrate(duration: 40);
                     setState(() {
                       if (_sixthDigit != -1) {
                         _sixthDigit = -1;
@@ -586,14 +625,14 @@ class _RegisterOtpState extends State<RegisterOtp>
     totalTimeInSeconds = time;
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: time))
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.dismissed) {
-              setState(() {
-                _hideResendButton = false;
-              });
-            }
+    AnimationController(vsync: this, duration: Duration(seconds: time))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) {
+          setState(() {
+            _hideResendButton = false;
           });
+        }
+      });
     _controller!
         .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
@@ -641,9 +680,9 @@ class _RegisterOtpState extends State<RegisterOtp>
 //            color: Colors.grey.withOpacity(0.4),
           border: Border(
               bottom: BorderSide(
-        width: 2.0,
-        color: Colors.black,
-      ))),
+                width: 2.0,
+                color: Colors.black,
+              ))),
     );
   }
 
@@ -696,6 +735,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 40);
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {
