@@ -34,7 +34,8 @@ class AdminEventDetailPage extends StatefulWidget {
     required this.eventTime,
   });
   @override
-  _AdminEventDetailPageState createState() => _AdminEventDetailPageState(id,eventImageUrl);
+  _AdminEventDetailPageState createState() =>
+      _AdminEventDetailPageState(id, eventImageUrl);
 }
 
 class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
@@ -47,29 +48,26 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
 
-  _AdminEventDetailPageState(
-      this.id,
-      this.eventImageUrl
-      );
+  _AdminEventDetailPageState(this.id, this.eventImageUrl);
 
-  void analyticsData () async {
+  void analyticsData() async {
     await FirebaseFirestore.instance
         .collection('eventRegistration')
         .where('eventID', isEqualTo: id)
         .get()
         .then((querySnapshot) {
-          setState(() {
-            registrations += querySnapshot.size;
-          });
+      setState(() {
+        registrations += querySnapshot.size;
+      });
     });
     await FirebaseFirestore.instance
         .collection('eventClick')
         .where('eventID', isEqualTo: id)
         .get()
         .then((querySnapshot) {
-          setState(() {
-            clicks += querySnapshot.size;
-          });
+      setState(() {
+        clicks += querySnapshot.size;
+      });
     });
   }
 
@@ -78,6 +76,7 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     super.initState();
     analyticsData();
   }
+
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (eventImageUrl != "") {
@@ -92,27 +91,26 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ZoomImageNetwork(eventImageUrl),
+                builder: (context) => ZoomImageNetwork(eventImageUrl),
               ),
             );
           },
         ),
       );
-    }
-    else {
-      return SizedBox(height: 10,);
+    } else {
+      return SizedBox(
+        height: 10,
+      );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
-         id = widget.id;
-        String eventAmount = widget.eventAmount,
+    id = widget.id;
+    String eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
         eventImageUrl = widget.eventImageUrl,
@@ -122,7 +120,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     DateTime eventDeadline = widget.eventDeadline;
     String eventTime = widget.eventTime;
 
-
     // event date conversion to string for displaying
     String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
 
@@ -130,10 +127,11 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: Text(
           "YWCA Of Bombay",
           style: TextStyle(
@@ -153,14 +151,17 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
             tooltip: 'Comment Icon',
             onPressed: () {
               final RenderBox box = context.findRenderObject() as RenderBox;
-              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
-                  + "Shoba balla \n+91 98333 93953",
-                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+              Share.share(
+                  eventName +
+                      '\n' +
+                      eventDescription +
+                      "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n" +
+                      "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin:
+                      box.localToGlobal(Offset.zero) & box.size);
             },
           ), //IconButton
         ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -182,7 +183,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                   height: _height * 0.05,
                 ),
                 Center(child: _buildImage()),
-
                 SizedBox(
                   height: _height * 0.015,
                 ),
@@ -276,7 +276,8 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                             fontFamily: 'Montserrat',
                             fontSize: 16,
                           ),
-                        ),SizedBox(
+                        ),
+                        SizedBox(
                           height: _height * 0.015,
                         ),
                         // Event venue
