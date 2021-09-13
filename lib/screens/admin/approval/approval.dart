@@ -99,6 +99,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 PreferredSize(
                   preferredSize: Size.fromHeight(80),
                   child: Column(
+                    // crossAxisAlignment: crossAxisAlignment.center,
                     children: <Widget>[
                       // Distance from ywca
                       // or else it will overlap
@@ -123,6 +124,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           ],
                         ),
                       ),
+                      // TODO: Search bar for approval page
                       SizedBox(height: 5),
                       TextField(
                         decoration: InputDecoration(

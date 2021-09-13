@@ -66,12 +66,9 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    // return OnboardingScreen();
     // return AdminEvents();
     // return Events();
-    // return LoginScreen();
-    // return Splash();
-    return SuccessStories();
+    return Splash();
     // return HomeController();
   }
 }

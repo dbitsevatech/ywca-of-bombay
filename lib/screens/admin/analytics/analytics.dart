@@ -370,7 +370,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                             // getPostsData();
 
                             return ListView.builder(
-                              controller: scrollController,
+                              // controller: scrollController,
                               itemCount: itemsData.length,
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context, index) {

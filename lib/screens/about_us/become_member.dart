@@ -1,14 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ywcaofbombay/screens/contact_us/contact_us.dart';
 
-import '../events/user_events.dart';
+import '../contact_us/contact_us.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
 import '../../widgets/blue_bubble_design.dart';
+import '../events/user_events.dart';
 
 class BecomeMemberScreen extends StatefulWidget {
   @override
