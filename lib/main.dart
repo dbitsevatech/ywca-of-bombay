@@ -67,7 +67,6 @@ class MyApp extends StatelessWidget {
       ),
     );
     return Splash();
-
   }
 }
 

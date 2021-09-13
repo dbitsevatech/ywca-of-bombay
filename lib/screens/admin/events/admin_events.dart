@@ -26,10 +26,13 @@ class _AdminEventsState extends State<AdminEvents> {
   late int selectedMenuItemId;
   var userInfo;
 
+  var screenSize;
+
   // conversion of event date to string for displaying
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
+    String formattedEventDate =
+        DateFormat('EEE | dd MMM, yyyy').format(newEventDate);
     return formattedEventDate;
   }
 
@@ -42,6 +45,7 @@ class _AdminEventsState extends State<AdminEvents> {
 
   @override
   Widget build(BuildContext context) {
+    screenSize = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () => showExitPopup(context),
       child: DrawerScaffold(
@@ -216,81 +220,98 @@ class _AdminEventsState extends State<AdminEvents> {
             );
           default:
             return ListView(
-              padding: EdgeInsets.only(bottom: 80),
+              padding: EdgeInsets.only(bottom: 100),
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Card(
                     child: ListTile(
-                      // Event image
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(10.0)), //add border radius here
-                        child: Image.network(
-                          document['eventImageUrl'],
-                          fit: BoxFit.cover,
-                          width: 120,
-                        ), //add image location here
-                      ),
-                      // Event date and time
-                      title: Text(
-                        'Date:' +
-                            (readEventDate(document['eventDate'])) +
-                            '| Time:' +
-                            (document['eventTime']),
-                        style: TextStyle(
-                          color: Color(0xFF49DEE8),
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                      minVerticalPadding: 10,
+                      title: Column(
+                        children: [
+                          // Event image
+                          ClipRRect(
+                            borderRadius: BorderRadius.all(
+                              // add border radius here
+                              Radius.circular(10.0),
+                            ),
+                            child: Image.network(
+                              // add image location here
+                              document['eventImageUrl'],
+                              fit: BoxFit.fitWidth,
+                              // // width: 200,
+                            ),
+                          ),
                           SizedBox(height: 5),
                           // Event name
                           Text(
                             document['eventName'],
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 16.0,
+                              fontSize: 20.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(height: 5),
                           // Resource person
                           Text(
-                            'Resource Person: Sharon Pies',
+                            // TODO: Resource person in DB
+                            'Resource Person: Sharon Pires',
                             style: TextStyle(
-                              fontSize: 11.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
                           SizedBox(height: 5),
-                          // Event Venue
-                          Text(
-                            'Venue: ' + document['eventVenue'],
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Event Venue
+                              Text(
+                                'Venue: ' + document['eventVenue'],
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              // Event time
+                              Text(
+                                // TODO: Time in 12 hr format (AM/PM)
+                                'Time: ' + (document['eventTime']),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 5),
-                          // Event Amount
-                          Text(
-                            'Amount: ' + document['eventAmount'],
-                            style: TextStyle(
-                              fontSize: 11.0,
-                              fontWeight: FontWeight.normal,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Event Amount
+                              Text(
+                                'Amount: ' + document['eventAmount'],
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              // Event date
+                              Text(
+                                'Date: ' +
+                                    (readEventDate(document['eventDate'])),
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
                           // start of edit and delete button
                           Row(
                             children: [
-                              Spacer(),
-                              Spacer(),
-                              Spacer(),
+                              Spacer(flex: 12),
                               ElevatedButton(
                                 onPressed: () async {
                                   bool result = await showDialog(
@@ -340,7 +361,7 @@ class _AdminEventsState extends State<AdminEvents> {
                                 },
                                 style: ButtonStyle(
                                   backgroundColor:
-                                      MaterialStateProperty.all(Colors.green),
+                                      MaterialStateProperty.all(secondaryColor),
                                   padding: MaterialStateProperty.all(
                                       EdgeInsets.all(5)),
                                 ),
