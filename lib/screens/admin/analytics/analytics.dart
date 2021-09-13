@@ -13,6 +13,7 @@ import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
+import 'analyticsdetails.dart';
 
 // ignore: must_be_immutable
 class AnalyticsScreen extends StatefulWidget {
@@ -41,16 +42,13 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
-        // print(result.id);
         responseList.add({
           'eventName': result.data()["eventName"],
           'clicks': 0,
           'registrations': 0,
           'eventID': result.id,
-          // 'date': result.data()["eventDate"].toDate().toString(),
           'date': DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
               .format(result.data()["eventDate"].toDate()),
-          // 'date': DateFormat.yMEd().add_jm().format(result.data()["eventDate"].toDate()),
         });
       });
       responseList.forEach((event) {
@@ -81,115 +79,133 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(
-        Container(
-          // height: 90,
-          height: _height * 0.13,
-          // width: 310,
-          width: _width * 0.85,
-          margin: EdgeInsets.symmetric(
-            horizontal: 20,
-            // vertical: 34,
-            vertical: _height * 0.035,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            // color: Colors.white,
-            color: Color(0xFFDFFDFF),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(100),
-                blurRadius: 3.0,
-                spreadRadius: 2.0,
-                offset: Offset(
-                  2.0, // Move to right
-                  2.0, // Move to bottom
-                ),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Expanded(
-                        flex: 9,
-                        child: Container(
-                          padding: EdgeInsets.only(right: 10, bottom: 5),
-                          child: AutoSizeText(
-                            "${post["eventName"]}",
-                            maxLines: 2,
-                            minFontSize: 12,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Montserrat',
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          child: Text(
-                            "${post["registrations"]}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
-                              fontFamily: 'Montserrat',
-                              color: Color(0xFF31326F),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          child: Text(
-                            "${post["clicks"]}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
-                              fontFamily: 'Montserrat',
-                              color: Color(0xFFE05297),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+        InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AnalyticsDetail(
+                    eventDate: post["date"],
+                    eventId: post["eventID"],
+                    eventClicks: post["clicks"],
+                    eventRegister: post["registrations"],
+                    eventName: post["eventName"],
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: Text(
-                            post["date"],
-                            style: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 16,
-                              color: Color(0xFF333333),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+
                 )
+            );
+          },
+          child: Container(
+            // height: 90,
+            height: _height * 0.13,
+            // width: 310,
+            width: _width * 0.85,
+            margin: EdgeInsets.symmetric(
+              horizontal: 20,
+              // vertical: 34,
+              vertical: _height * 0.035,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              // color: Colors.white,
+              color: Color(0xFFDFFDFF),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(100),
+                  blurRadius: 3.0,
+                  spreadRadius: 2.0,
+                  offset: Offset(
+                    2.0, // Move to right
+                    2.0, // Move to bottom
+                  ),
+                ),
               ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            padding: EdgeInsets.only(right: 10, bottom: 5),
+                            child: AutoSizeText(
+                              "${post["eventName"]}",
+                              maxLines: 2,
+                              minFontSize: 12,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Text(
+                              "${post["registrations"]}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28,
+                                fontFamily: 'Montserrat',
+                                color: Color(0xFF31326F),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            child: Text(
+                              "${post["clicks"]}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 28,
+                                fontFamily: 'Montserrat',
+                                color: Color(0xFFE05297),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Text(
+                              post["date"],
+                              style: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 16,
+                                color: Color(0xFF333333),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
+
       );
     });
     if (!mounted) return;
