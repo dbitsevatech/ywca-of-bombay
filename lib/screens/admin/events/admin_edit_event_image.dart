@@ -35,7 +35,6 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
         source: ImageSource.gallery,
         maxHeight: 300,
         maxWidth: 300,
-
       );
       setState(() {
         if (pickedFile != null) {
