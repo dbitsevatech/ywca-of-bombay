@@ -326,7 +326,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 lastName = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty)
                                 return 'Last name is required.';
                               else
@@ -402,7 +402,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 email = value!;
                               });
                             },
-                            validator: (String? value) {
+                            validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email is required';
                               }
@@ -420,6 +420,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 color: secondaryColor,
                               ),
                               labelText: 'Email Address',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              disabledBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: formFieldFillColor),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              errorBorder: InputBorder.none,
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            initialValue: lastName,
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                lastName = value!;
+                              });
+                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty)
+                            //     return 'Last name is required.';
+                            //   else
+                            //     return null;
+                            // },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Address',
                               filled: true,
                               fillColor: formFieldFillColor,
                               disabledBorder: InputBorder.none,
@@ -805,7 +842,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                              _formKey.currentState?.save();
+                              // _formKey.currentState?.save();
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
@@ -826,10 +863,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "memberRole": userInfo.getmemberRole,
                                       "approvalStatus": "pending"
                                     })
-                                    .then((value) => print("Request Sent"))
+                                    .then((value) => {
+                                      print("Request Sent"),
+                                      savePressed()})
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
-                                await savePressed();
+                                // await savePressed();
                               } else {
                                 print("updating as it is non-member");
                                 await FirebaseFirestore.instance
@@ -868,8 +907,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     userInfo.getmemberRole);
                               }
 
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              // Navigator.pop(context);
+                              // Navigator.pop(context);
                             },
                           ),
                           SizedBox(

@@ -161,6 +161,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
+        goBackToPreviousScreen(context);
     String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -197,7 +198,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventTime': eventTime,
           'eventType': eventType
         }));
-        goBackToPreviousScreen(context);
   }
 
   // everyone-0, members-1

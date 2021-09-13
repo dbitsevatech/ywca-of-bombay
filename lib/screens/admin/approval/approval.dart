@@ -195,6 +195,16 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                               ),
                             ),
                             SizedBox(height: 5),
+                            // address
+                            Text(
+                              'Address: ' + (document['emailId']),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            SizedBox(height: 5),
                             // nearest ywca center
                             Text(
                               'YWCA Center: ' +
