@@ -37,6 +37,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Future downloadData() async {
     await FirebaseFirestore.instance
         .collection("eventsBackup")
+        .orderBy('eventDate',descending: true)
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
