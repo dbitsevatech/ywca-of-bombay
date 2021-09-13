@@ -104,7 +104,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
                   // circle design
 
                   children: <Widget>[
-                     MainPageBlueBubbleDesign(),
+                    MainPageBlueBubbleDesign(),
                     // Positioned(
                     //   child: Image.asset("assets/images/circle-design.png"),
                     // ),
@@ -208,7 +208,6 @@ class _SuccessStoriesState extends State<SuccessStories> {
     double _height,
     double _width,
   ) {
-
     //  card start
     return Container(
       margin: EdgeInsets.only(
@@ -272,10 +271,7 @@ class _SuccessStoriesState extends State<SuccessStories> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Text(
-                  // child: AutoSizeText(
                   detailText,
-                  // minFontSize: 12,
-                  // maxFontSize: 18,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontFamily: "Montserrat",

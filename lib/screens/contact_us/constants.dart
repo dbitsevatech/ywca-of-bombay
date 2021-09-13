@@ -16,9 +16,9 @@ List<String> guestHouseTitles = [
 ];
 
 List<String> officeAddresses = [
-  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai-400058\n',
-  ' Anugraha Hostel,\n Sector 8 ,\n CBD-Belapur \n Navi Mumbai-400614\n',
-  ' 75 , Motlibai Street ,\n Near Maratha Mandir \n  Mumbai-400008\n',
+  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
+  ' Anugraha Hostel,\n Sector 8 ,\n CBD-Belapur \n Navi Mumbai - 400 614\n',
+  ' 75 ,\n Motlibai Street ,\n Near Maratha Mandir \n  Mumbai - 400 008\n',
 ];
 
 List<String> emailIdOffice = [
@@ -37,9 +37,9 @@ List<String> contactNoOffice = [
 ];
 
 List<String> hostelAddresses = [
-  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai-400058\n',
-  ' Anugraha Hostel,\n Sector 8 ,\n CBD-Belapur \n Navi Mumbai-400614\n',
-  ' 75 , Motlibai Street ,\n Near Maratha Mandir \n  Mumbai-400008\n',
+  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
+  ' Anugraha Hostel,\n Sector 8 ,\n CBD-Belapur \n Navi Mumbai - 400 614\n',
+  ' 75,\n Motlibai Street ,\n Near Maratha Mandir \n  Mumbai - 400 008\n',
 ];
 
 List<String> emailIdHostel = [
@@ -58,8 +58,8 @@ List<String> contactNoHostel = [
 ];
 
 List<String> guestHouseAddresses = [
-  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai-400058\n',
-  ' 18 , Madame Cama Road ,\n Dr Ambedkar Statue Chowk Area,\n Fort, Mumbai - 4000018\n',
+  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
+  ' 18,\n Madame Cama Road ,\n Dr Ambedkar Statue Chowk Area,\n Fort, Mumbai - 400 018\n',
 ];
 
 List<String> emailIdGuestHouse = [
