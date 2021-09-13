@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
@@ -34,23 +35,56 @@ class AdminEventDetailPage extends StatefulWidget {
     required this.eventTime,
   });
   @override
-  _AdminEventDetailPageState createState() => _AdminEventDetailPageState();
+  _AdminEventDetailPageState createState() => _AdminEventDetailPageState(id);
 }
 
 class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   int _currentIndex = 0;
-
+  late String id;
+  int clicks = 0;
+  int registrations = 0;
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationgetText
+
+  _AdminEventDetailPageState(
+      this.id,
+      );
+
+  void analyticsData () async {
+    await FirebaseFirestore.instance
+        .collection('eventRegistration')
+        .where('eventID', isEqualTo: id)
+        .get()
+        .then((querySnapshot) {
+          setState(() {
+            registrations += querySnapshot.size;
+          });
+    });
+    await FirebaseFirestore.instance
+        .collection('eventClick')
+        .where('eventID', isEqualTo: id)
+        .get()
+        .then((querySnapshot) {
+          setState(() {
+            clicks += querySnapshot.size;
+          });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    analyticsData();
+  }
 
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
-    String id = widget.id,
-        eventAmount = widget.eventAmount,
+         id = widget.id;
+        String eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
         eventImageUrl = widget.eventImageUrl,
@@ -76,20 +110,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String formattedDeadlineDate =
         DateFormat('dd-MM-yyyy').format(eventDeadline);
 
-    @override
-    void initState() {
-      super.initState();
-      id = widget.id;
-      eventName = widget.eventName;
-      eventAmount = widget.eventAmount;
-      eventDescription = widget.eventDescription;
-      eventVenue = widget.eventVenue;
-      eventImageUrl = widget.eventImageUrl;
-      eventDate = widget.eventDate;
-      eventType = widget.eventType;
-      eventTime = widget.eventTime;
-      // event_deadline = widget.event_deadline;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -294,6 +314,27 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                         // Type
                         Text(
                           'Event Type -' + eventType,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          height: _height * 0.015,
+                        ),
+                        // Event venue
+                        Text(
+                          'Clicks - ' + clicks.toString(),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),SizedBox(
+                          height: _height * 0.015,
+                        ),
+                        // Event venue
+                        Text(
+                          'Registrations - ' + registrations.toString(),
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,

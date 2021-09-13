@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../events/admin_event_details.dart';
 import '../../exit-popup.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
@@ -36,21 +37,24 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   Future downloadData() async {
     await FirebaseFirestore.instance
-        .collection("eventsBackup")
+        .collection("events")
         .orderBy('eventDate',descending: true)
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
-        // print(result.id);
         responseList.add({
           'eventName': result.data()["eventName"],
           'clicks': 0,
           'registrations': 0,
           'eventID': result.id,
-          // 'date': result.data()["eventDate"].toDate().toString(),
-          'date': DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
-              .format(result.data()["eventDate"].toDate()),
-          // 'date': DateFormat.yMEd().add_jm().format(result.data()["eventDate"].toDate()),
+          'eventAmount' : result.data()['eventAmount'],
+          'eventDeadline' : result.data()['eventDeadline'],
+          'eventTime' : result.data()['eventTime'],
+          'eventDate' : result.data()['eventDate'],
+          'eventDescription' : result.data()['eventDescription'],
+          'eventImageUrl' : result.data()['eventImageUrl'],
+          'eventVenue' : result.data()['eventVenue'],
+          'eventType' : result.data()['eventType'],
         });
       });
       responseList.forEach((event) {
@@ -81,7 +85,21 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     List<Widget> listItems = [];
     responseList.forEach((post) {
       listItems.add(
-        Container(
+        InkWell(
+          onTap: () {
+            gotoDetailEvent(context,
+                post['eventID'],
+                post['eventAmount'],
+                post['eventDescription'],
+                post['eventName'],
+                post['eventImageUrl'],
+                post['eventVenue'],
+                post['eventType'],
+                post['eventDate'],
+            post['eventDeadline'],
+                post['eventTime']);
+          },
+          child: Container(
           // height: 90,
           height: _height * 0.13,
           // width: 310,
@@ -165,7 +183,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         child: FittedBox(
                           fit: BoxFit.fitHeight,
                           child: Text(
-                            post["date"],
+                            DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
+                                .format(post["eventDate"].toDate()),
                             style: const TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 16,
@@ -181,6 +200,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             ),
           ),
         ),
+        )
       );
     });
     if (!mounted) return;
@@ -210,8 +230,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     final Size size = MediaQuery.of(context).size;
     _height = size.height;
     _width = size.width;
-
-    print(responseList);
 
     return WillPopScope(
         onWillPop: () => showExitPopup(context),
@@ -410,4 +428,39 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     ),
     );
   }
+}
+gotoDetailEvent(
+    BuildContext context,
+    String id,
+    String eventAmount,
+    String eventDescription,
+    String eventName,
+    String eventImageUrl,
+    String eventVenue,
+    String eventType,
+    Timestamp eventDate,
+    Timestamp eventDeadline,
+    String eventTime) {
+  // TimeStamp to DateTime conversion of event date for displaying
+  DateTime newEventDate = eventDate.toDate();
+
+  // TimeStamp to DateTime conversion of event deadline for displaying
+  DateTime newEventDeadline = eventDeadline.toDate();
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => AdminEventDetailPage(
+        id: id,
+        eventAmount: eventAmount,
+        eventDescription: eventDescription,
+        eventName: eventName,
+        eventImageUrl: eventImageUrl,
+        eventVenue: eventVenue,
+        eventType: eventType,
+        eventDate: newEventDate,
+        eventDeadline: newEventDeadline,
+        eventTime: eventTime,
+      ),
+    ),
+  );
 }
