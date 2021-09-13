@@ -110,43 +110,46 @@ class _AdminEventsState extends State<AdminEvents> {
                       // Distance from ywca
                       // or else it will overlap
                       SizedBox(height: 80),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          children: [
-                            TextSpan(
-                                text: 'Events ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold)),
-                            WidgetSpan(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(Icons.notification_important),
+                      Center(
+                        child:  RichText(
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyText2,
+                            children: [
+                              TextSpan(
+                                  text: 'Events ',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold)),
+                              WidgetSpan(
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                                  child: Icon(Icons.notification_important),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
+
                       SizedBox(height: 5),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "Search by venue",
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          filled: true,
-                          fillColor: Colors.transparent,
-                        ),
-                      ),
+                      // TextField(
+                      //   decoration: InputDecoration(
+                      //     hintText: "Search by venue",
+                      //     prefixIcon: Icon(
+                      //       Icons.search,
+                      //       color: Colors.grey,
+                      //     ),
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(15),
+                      //       borderSide: BorderSide.none,
+                      //     ),
+                      //     contentPadding: EdgeInsets.zero,
+                      //     filled: true,
+                      //     fillColor: Colors.transparent,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
