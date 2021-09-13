@@ -1,8 +1,10 @@
 import 'dart:async';
-
+import 'package:vibration/vibration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'login.dart';
 
 import '../../models/User.dart';
 import '../../screens/events/user_events.dart';
@@ -23,7 +25,7 @@ class LoginOtp extends StatefulWidget {
 class _LoginOtpState extends State<LoginOtp>
     with SingleTickerProviderStateMixin {
   // Constants
-  final int time = 59;
+  final int time = 90;
   var userInfo;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -75,9 +77,9 @@ class _LoginOtpState extends State<LoginOtp>
     try {
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
-              verificationId: _verificationCode, smsCode: otp))
+          verificationId: _verificationCode, smsCode: otp))
           .then(
-        (value) async {
+            (value) async {
           if (value.user != null) {
             // userInfo.updatefirstName(firstName);
             if (userInfo.getmemberRole == 'Admin') {
@@ -89,12 +91,12 @@ class _LoginOtpState extends State<LoginOtp>
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminEvents()),
-                  (route) => false);
+                      (route) => false);
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => Events()),
-                  (route) => false);
+                      (route) => false);
             }
           }
         },
@@ -159,6 +161,11 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Returns "OTP" input part
   get _getInputPart {
+    if(_controller!.value == 0.00){
+      _hideResendButton = false;
+    }
+    print(_controller!.value );
+    print(_hideResendButton!);
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,7 +193,13 @@ class _LoginOtpState extends State<LoginOtp>
                     color: Colors.black,
                     size: 30,
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginScreen()),
+                            (route) => false);
+                  },
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -212,19 +225,19 @@ class _LoginOtpState extends State<LoginOtp>
   get _getTimerText {
     return Container(
       height: 32,
-      child: Offstage(
-        offstage: _hideResendButton!,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.access_time),
-            SizedBox(
-              width: 5.0,
-            ),
-            OtpTimer(_controller!, 15.0, Colors.black)
-          ],
-        ),
+      //child: Offstage(
+      //offstage: _hideResendButton!,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(Icons.access_time),
+          SizedBox(
+            width: 5.0,
+          ),
+          OtpTimer(_controller!, 15.0, Colors.black)
+        ],
       ),
+      //),
     );
   }
 
@@ -247,9 +260,14 @@ class _LoginOtpState extends State<LoginOtp>
         ),
       ),
       onTap: () {
-        // Resend you OTP via API or anything
         print("resend button pressed!");
-        _verifyPhoneNumber();
+        _hideResendButton = true;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginOtp(phoneNumber: this._phoneNumber),
+          ),
+        );
       },
     );
   }
@@ -280,9 +298,9 @@ class _LoginOtpState extends State<LoginOtp>
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => Events()),
-                  (route) => false);
+                      (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              // TODO: Add Admin Events navigation
+              // TOD: Add Admin Events navigation
               // Navigator.pushAndRemoveUntil(
               //     context,
               //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
@@ -301,6 +319,7 @@ class _LoginOtpState extends State<LoginOtp>
         print("code sent. verification id = $_verificationCode");
       },
       codeAutoRetrievalTimeout: (String verificationID) {
+        if (!mounted) return;
         setState(() {
           _verificationCode = verificationID;
         });
@@ -398,6 +417,7 @@ class _LoginOtpState extends State<LoginOtp>
                         color: Colors.black,
                       ),
                       onPressed: () {
+                        Vibration.vibrate(duration: 40);
                         setState(() {
                           if (_sixthDigit > 0) {
                             _sixthDigit = -1;
@@ -430,14 +450,14 @@ class _LoginOtpState extends State<LoginOtp>
     totalTimeInSeconds = time;
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: time))
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.dismissed) {
-              setState(() {
-                _hideResendButton = _hideResendButton;
-              });
-            }
+    AnimationController(vsync: this, duration: Duration(seconds: time))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.dismissed) {
+          setState(() {
+            _hideResendButton = _hideResendButton;
           });
+        }
+      });
     _controller!
         .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
@@ -485,9 +505,9 @@ class _LoginOtpState extends State<LoginOtp>
 //            color: Colors.grey.withOpacity(0.4),
           border: Border(
               bottom: BorderSide(
-        width: 2.0,
-        color: Colors.black,
-      ))),
+                width: 2.0,
+                color: Colors.black,
+              ))),
     );
   }
 
@@ -540,6 +560,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Current digit
   void _setCurrentDigit(int i) {
+    Vibration.vibrate(duration: 40);
     setState(() {
       _currentDigit = i;
       if (_firstDigit == -1) {

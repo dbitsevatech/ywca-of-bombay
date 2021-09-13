@@ -2,6 +2,8 @@ import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ywcaofbombay/screens/admin/events/admin_events.dart';
+import 'package:ywcaofbombay/screens/events/user_events.dart';
 
 import './edit_profile.dart';
 
@@ -74,9 +76,20 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                         size: 30,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        if(role == "Admin"){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdminEvents()));
+                        }
+                       else{
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Events()));
 
-                        controller.toggle();
+                        }
+
                       },
                     ),
                   ),

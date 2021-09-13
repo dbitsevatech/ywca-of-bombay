@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:share/share.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../widgets/constants.dart';
-import '../../../../widgets/zoom_image.dart';
+import '../../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
 class AdminEventDetailPage extends StatefulWidget {
@@ -111,7 +111,12 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,
@@ -296,40 +301,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                         ),
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
-                        // Register button
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: _height * 0.015,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                firstButtonGradientColor,
-                                firstButtonGradientColor,
-                                secondButtonGradientColor
-                              ],
-                              begin: FractionalOffset.centerLeft,
-                              end: FractionalOffset.centerRight,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: FractionallySizedBox(
-                            widthFactor: 1,
-                            child: TextButton(
-                              child: Text(
-                                'Register',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),

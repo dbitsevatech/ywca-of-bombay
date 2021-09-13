@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share/share.dart';
 import 'user_events.dart';
 
 import '../about_us/become_member.dart';
@@ -48,8 +48,10 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
-  String? memberRole;
+  String memberRole = "";
   int _currentIndex = 0;
+  String role = "";
+  var now = new DateTime.now();
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
@@ -65,12 +67,12 @@ class _DetailPageState extends State<DetailPage> {
         .get()
         .then(
       (checkSnapshot) {
-        print('snapshot size');
-        print(checkSnapshot.size);
+        // print('snapshot size');
+        // print(checkSnapshot.size);
         if (checkSnapshot.size > 0) {
           print("Already Exists");
         } else {
-          print("adding");
+          // print("adding");
           FirebaseFirestore.instance
               .collection('eventRegistration')
               .add({'eventID': eventID, 'userID': userID});
@@ -81,6 +83,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    role = userInfo.getmemberRole;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
@@ -111,10 +115,7 @@ class _DetailPageState extends State<DetailPage> {
 
     @override
     void initState() {
-      userInfo = Provider.of<UserData>(context, listen: false);
-      memberRole = userInfo.getmemberRole;
-      print(memberRole);
-      super.initState();
+
       id = widget.id;
       eventName = widget.eventName;
       eventAmount = widget.eventAmount;
@@ -124,6 +125,8 @@ class _DetailPageState extends State<DetailPage> {
       eventDate = widget.eventDate;
       eventType = widget.eventType;
       // event_deadline = widget.event_deadline;
+    super.initState();
+
     }
 
     return Scaffold(
@@ -146,7 +149,12 @@ class _DetailPageState extends State<DetailPage> {
               color: Colors.black,
             ),
             tooltip: 'Comment Icon',
-            onPressed: () {},
+            onPressed: () {
+              final RenderBox box = context.findRenderObject() as RenderBox;
+              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
+                  + "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+            },
           ), //IconButton
         ],
         backgroundColor: Colors.transparent,
@@ -170,44 +178,44 @@ class _DetailPageState extends State<DetailPage> {
               children: <Widget>[
                 AdminDetailPageBlueBubbleDesign(),
                 // show it when the event is for everyone
-                if (eventType == 'Everyone')
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF00bbe4),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "Everyone",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
-                      )),
+                // if (eventType == 'Everyone')
+                //   Padding(
+                //       padding: EdgeInsets.fromLTRB(_width * 0.6, 0, 0, 0),
+                //       child: ElevatedButton(
+                //         onPressed: () {},
+                //         style: ElevatedButton.styleFrom(
+                //             primary: Color(0xFF00bbe4),
+                //             elevation: 0,
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(20))),
+                //         child: Text(
+                //           "Everyone",
+                //           style: new TextStyle(
+                //               fontSize: 18.0, color: Colors.white),
+                //         ),
+                //       )),
                 // show it when the event is for members only
-                if (eventType == 'Members')
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          goToBecomeMember(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF00bbe4),
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                        child: Text(
-                          "⭐ Members only",
-                          style: new TextStyle(
-                              fontSize: 18.0, color: Colors.white),
-                        ),
-                      )),
+                // if (eventType == 'Members')
+                //   Padding(
+                //       padding: EdgeInsets.fromLTRB(_width * 0.4, 0, 0, 0),
+                //       child: ElevatedButton(
+                //         onPressed: () {
+                //           goToBecomeMember(context);
+                //         },
+                //         style: ElevatedButton.styleFrom(
+                //             primary: Color(0xFF00bbe4),
+                //             elevation: 0,
+                //             shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(20))),
+                //         child: Text(
+                //           "⭐ Members only",
+                //           style: new TextStyle(
+                //               fontSize: 18.0, color: Colors.white),
+                //         ),
+                //       )),
                 // show it when the event is for members and the user is not a member
                 // then become a member button is show
-                if (memberRole != 'Member')
+                if (role != 'Member' && eventType != 'Members only') ...[
                   Padding(
                       padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
                       child: ElevatedButton(
@@ -225,6 +233,7 @@ class _DetailPageState extends State<DetailPage> {
                               fontSize: 18.0, color: Colors.white),
                         ),
                       )),
+                ],
                 // Carousel
                 CarouselSlider(
                   options: CarouselOptions(
@@ -383,6 +392,7 @@ class _DetailPageState extends State<DetailPage> {
                         //Deadline of Event
                         SizedBox(height: _height * 0.015),
                         // Register button
+                      if ((role == 'Member' || role == 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -418,6 +428,98 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                         ),
+                      ],
+                        if (role == 'NonMember' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: _height * 0.015,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  firstButtonGradientColor,
+                                  firstButtonGradientColor,
+                                  secondButtonGradientColor
+                                ],
+                                begin: FractionalOffset.centerLeft,
+                                end: FractionalOffset.centerRight,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: FractionallySizedBox(
+                              widthFactor: 1,
+                              child: TextButton(
+                                child: Text(
+                                  'Become a Member',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  goToBecomeMember(context);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                        if (eventType == 'Everyone' && eventDeadline.compareTo(now)>0) ...[
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: _height * 0.015,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  firstButtonGradientColor,
+                                  firstButtonGradientColor,
+                                  secondButtonGradientColor
+                                ],
+                                begin: FractionalOffset.centerLeft,
+                                end: FractionalOffset.centerRight,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: FractionallySizedBox(
+                              widthFactor: 1,
+                              child: TextButton(
+                                child: Text(
+                                  'Register',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Montserrat',
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  insertIntoOnRegistration(id, eventName);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                        SizedBox(height: _height * 0.015),
+                        if(eventDeadline.compareTo(now)<0) ...[
+                          Center(
+                            child: Text(
+                              'Event Date has passed\n'
+                                  'Contact 8828024246 for more details',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+
                       ],
                     ),
                   ),

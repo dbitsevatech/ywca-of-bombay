@@ -6,7 +6,6 @@ import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 import 'admin_edit_event_image.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
@@ -95,18 +94,16 @@ class _EditEventScreenState extends State<EditEventScreen> {
       context: context,
       initialDate: eventDate,
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.dark(
-              primary: primaryColor, // highlighed date color
-              onPrimary: Colors.black, // highlighted date text color
-              surface: primaryColor, // header color
-              onSurface: Colors.grey[800]!, // header text & calendar text color
-            ),
+          data: ThemeData.light().copyWith(
+
+            primaryColor: const Color(0xFF49dee8),
+            accentColor: const Color(0xFF49dee8),
+            colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
             dialogBackgroundColor: Colors.white, // calendar bg color
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
@@ -132,7 +129,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
       context: context,
       initialDate: eventDeadline,
       firstDate: DateTime(1940),
-      lastDate: DateTime.now().subtract(Duration(days: 4380)),
+      lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
@@ -358,7 +355,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                           ),
                           onPressed: () async {
                             // Edit event image alertbox
-                            bool? result = await showDialog(
+                             await showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -626,6 +623,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               errorBorder: InputBorder.none,
                             ),
                             onTap: () async {
+                              print(eventDeadline);
                               FocusScope.of(context).requestFocus(FocusNode());
                               await _selectDeadline();
                               deadlineController.text =
@@ -708,7 +706,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                              bool? result = await showDialog(
+                               await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
@@ -740,6 +738,20 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventName': eventName,
                                             'eventDescription':
                                                 eventDescription,
+                                            'eventVenue': eventVenue,
+                                            'eventAmount': eventAmount,
+                                            'eventDate': eventDate,
+                                            'eventTime': _valueChanged4,
+                                            'eventDeadline': eventDeadline,
+                                            'eventType': eventType
+                                          });
+                                          FirebaseFirestore.instance
+                                              .collection('eventsBackup')
+                                              .doc(id)
+                                              .update({
+                                            'eventName': eventName,
+                                            'eventDescription':
+                                            eventDescription,
                                             'eventVenue': eventVenue,
                                             'eventAmount': eventAmount,
                                             'eventDate': eventDate,

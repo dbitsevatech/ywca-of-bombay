@@ -1,6 +1,8 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/exit_popup.dart';
 
 import 'constants.dart';
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -8,6 +10,8 @@ import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import 'package:open_mail_app/open_mail_app.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 late double _height;
 late double _width;
@@ -21,6 +25,8 @@ class ContactUs extends StatefulWidget {
 class _ContactUsState extends State<ContactUs> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
+  String emailId = "";
+  String phoneNo = "8452930878";
 
   var userInfo;
 
@@ -31,6 +37,34 @@ class _ContactUsState extends State<ContactUs> {
     super.initState();
   }
 
+  void sendEmail(BuildContext context, String emailId) async {
+    print('in send email');
+    print(emailId);
+    var apps = await OpenMailApp.getMailApps();
+    emailId = emailId;
+    if (apps.isEmpty) {
+      showNoMailAppsDialog(context);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return MailAppPickerDialog(
+            mailApps: apps,
+            emailContent: EmailContent(
+              to: [
+                emailId,
+              ],
+              // subject: 'Hello!',
+              // body: 'How are you doing?',
+              // cc: ['user2@domain.com', 'user3@domain.com'],
+              // bcc: ['boss@domain.com'],
+            ),
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var role =
@@ -38,176 +72,182 @@ class _ContactUsState extends State<ContactUs> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     print("item: $selectedMenuItemId");
-    return DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        (role == "Admin")
-            ? // ADMIN DRAWER
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: AdminDrawer.header(context, userInfo),
-                footerView: AdminDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: AdminDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    AdminDrawer.selectedItem(context, itemId);
-                  });
-                },
-              )
-            : // DRAWER FOR OTHER ROLES
-            SideDrawer(
-                percentage: 0.75, // main screen height proportion
-                headerView: UserDrawer.header(context, userInfo),
-                footerView: UserDrawer.footer(context, controller, userInfo),
-                color: successStoriesCardBgColor,
-                selectorColor: Colors.red, menu: UserDrawer.menuWithIcon,
-                animation: true,
-                selectedItemId: selectedMenuItemId,
-                onMenuItemSelected: (itemId) {
-                  setState(() {
-                    selectedMenuItemId = itemId;
-                    UserDrawer.selectedItem(context, itemId);
-                  });
-                },
-              ),
-      ],
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  // top-left corner intersecting circles design
-                  MainPageBlueBubbleDesign(),
-                  Positioned(
-                    child: AppBar(
-                      centerTitle: true,
-                      title: Text(
-                        "YWCA Of Bombay",
-                        style: TextStyle(
-                          fontFamily: 'LobsterTwo',
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+    return WillPopScope(
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          (role == "Admin")
+              ? // ADMIN DRAWER
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
+              : // DRAWER FOR OTHER ROLES
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Stack(
+                  children: <Widget>[
+                    // top-left corner intersecting circles design
+                    MainPageBlueBubbleDesign(),
+                    Positioned(
+                      child: AppBar(
+                        centerTitle: true,
+                        title: Text(
+                          "YWCA Of Bombay",
+                          style: TextStyle(
+                            fontFamily: 'LobsterTwo',
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      leading: IconButton(
-                        icon: Icon(
-                          Icons.menu,
-                          color: Colors.black,
-                          size: 30,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.menu,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          onPressed: () => {
+                            // widget.onMenuPressed,
+                            controller.toggle(Direction.left),
+                            // OR
+                            // controller.open()
+                          },
                         ),
-                        onPressed: () => {
-                          // widget.onMenuPressed,
-                          controller.toggle(Direction.left),
-                          // OR
-                          // controller.open()
-                        },
                       ),
                     ),
-                  ),
-                  PreferredSize(
-                    preferredSize: Size.fromHeight(100),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          // Distance from ywca
-                          // or else it will overlap
-                          SizedBox(height: 70),
-                          RichText(
-                            text: TextSpan(
-                              style: Theme.of(context).textTheme.bodyText2,
-                              children: [
-                                TextSpan(
-                                  text: 'Contact Us',
-                                  style: TextStyle(
-                                    fontSize: 26,
-                                    color: Color(0xff333333),
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    letterSpacing: 1.5,
+                    PreferredSize(
+                      preferredSize: Size.fromHeight(100),
+                      child: Center(
+                        child: Column(
+                          children: <Widget>[
+                            // Distance from ywca
+                            // or else it will overlap
+                            SizedBox(height: 70),
+                            RichText(
+                              text: TextSpan(
+                                style: Theme.of(context).textTheme.bodyText2,
+                                children: [
+                                  TextSpan(
+                                    text: 'Contact Us',
+                                    style: TextStyle(
+                                      fontSize: 26,
+                                      color: Color(0xff333333),
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat',
+                                      letterSpacing: 1.5,
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: DefaultTabController(
+                    length: 3,
+                    child: Scaffold(
+                      backgroundColor: Colors.transparent,
+                      appBar: AppBar(
+                        // title: Text(''),
+                        automaticallyImplyLeading: false,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0.0,
+                        bottom: PreferredSize(
+                          preferredSize: const Size.fromHeight(10),
+                          child: Container(
+                            child: TabBar(
+                              labelPadding:
+                                  EdgeInsets.symmetric(horizontal: 10.0),
+                              labelStyle: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                              ),
+                              unselectedLabelColor: Colors.black54,
+                              labelColor: Colors.black,
+                              indicatorColor: secondaryColor,
+                              indicatorWeight: 2.5,
+                              tabs: [
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'OFFICES'),
+                                ),
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'HOSTELS'),
+                                ),
+                                Container(
+                                  height: 20.0,
+                                  width: 120.0,
+                                  child: Tab(text: 'GUEST HOUSES'),
                                 ),
                               ],
                             ),
                           ),
+                        ),
+                      ),
+                      body: TabBarView(
+                        children: <Widget>[
+                          officesTab(),
+                          hostelsTab(),
+                          guestHousesTab(),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
-              Expanded(
-                child: DefaultTabController(
-                  length: 3,
-                  child: Scaffold(
-                    backgroundColor: Colors.transparent,
-                    appBar: AppBar(
-                      // title: Text(''),
-                      automaticallyImplyLeading: false,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0.0,
-                      bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(10),
-                        child: Container(
-                          child: TabBar(
-                            labelPadding:
-                                EdgeInsets.symmetric(horizontal: 10.0),
-                            labelStyle: TextStyle(
-                              fontSize: 14.0,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                            ),
-                            unselectedLabelColor: Colors.black54,
-                            labelColor: Colors.black,
-                            indicatorColor: secondaryColor,
-                            indicatorWeight: 2.5,
-                            tabs: [
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'OFFICES'),
-                              ),
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'HOSTELS'),
-                              ),
-                              Container(
-                                height: 20.0,
-                                width: 120.0,
-                                child: Tab(text: 'GUEST HOUSES'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    body: TabBarView(
-                      children: <Widget>[
-                        officesTab(),
-                        hostelsTab(),
-                        guestHousesTab(),
-                      ],
-                    ),
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget centerCard(String title, String address) {
+  Widget centerCard(
+      String title, String address, String emailId, String phoneNo) {
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -242,7 +282,33 @@ class _ContactUsState extends State<ContactUs> {
                     fontWeight: FontWeight.w400,
                     fontSize: 12.5,
                   ),
-                )
+                ),
+                TextSpan(
+                  text: 'Email Id: ' + emailId,
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () => {
+                          print(emailId),
+                          sendEmail(context, emailId),
+                        },
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.5,
+                  ),
+                ),
+                TextSpan(
+                  text: 'Phone No: ' + phoneNo,
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap =
+                        () => {FlutterPhoneDirectCaller.callNumber(phoneNo)},
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.5,
+                  ),
+                ),
               ],
             ),
           ),
@@ -296,11 +362,14 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[0], officeAddresses[0]),
+              centerCard(officeTitles[0], officeAddresses[0], emailIdOffice[0],
+                  contactNoOffice[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[1], officeAddresses[1]),
+              centerCard(officeTitles[1], officeAddresses[1], emailIdOffice[1],
+                  contactNoOffice[1]),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[2], officeAddresses[2]),
+              centerCard(officeTitles[2], officeAddresses[2], emailIdOffice[2],
+                  contactNoOffice[2]),
             ],
           ),
         ),
@@ -353,11 +422,14 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[0], hostelAddresses[0]),
+              centerCard(hostelTitles[0], hostelAddresses[0], emailIdHostel[0],
+                  contactNoHostel[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[1], hostelAddresses[1]),
+              centerCard(hostelTitles[1], hostelAddresses[1], emailIdHostel[1],
+                  contactNoHostel[1]),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[2], hostelAddresses[2]),
+              centerCard(hostelTitles[2], hostelAddresses[2], emailIdHostel[2],
+                  contactNoHostel[2]),
             ],
           ),
         ),
@@ -410,13 +482,35 @@ class _ContactUsState extends State<ContactUs> {
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[0], guestHouseAddresses[0]),
+              centerCard(guestHouseTitles[0], guestHouseAddresses[0],
+                  emailIdGuestHouse[0], contactNoGuestHouse[0]),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[1], guestHouseAddresses[1]),
+              centerCard(guestHouseTitles[1], guestHouseAddresses[1],
+                  emailIdGuestHouse[1], contactNoGuestHouse[1]),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void showNoMailAppsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Open Mail App"),
+          content: Text("No mail apps installed"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }
