@@ -11,7 +11,7 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
-import '../exit-popup.dart';
+import '../../widgets/exit_popup.dart';
 
 // ignore: must_be_immutable
 class Events extends StatefulWidget {
@@ -39,17 +39,19 @@ class _EventsState extends State<Events> {
         builder: (context) {
           return AlertDialog(
             title: Text('Hey there, interested in being a member?'),
-            content: Text('For Membership details go to the About us page of the app or get in touch with your nearest YWCA now'),
+            content: Text(
+                'For Membership details go to the About us page of the app or get in touch with your nearest YWCA now'),
             actions: <Widget>[
               Center(
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK!',),
+                  child: Text(
+                    'OK!',
+                  ),
                 ),
               ),
-
             ],
           );
         });
@@ -82,7 +84,7 @@ class _EventsState extends State<Events> {
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     userInfo = Provider.of<UserData>(context, listen: false);
-    if(userInfo.getmemberRole == "NonMember"){
+    if (userInfo.getmemberRole == "NonMember") {
       Timer(Duration(seconds: 3), () {
         _openPopup(context);
       });
@@ -94,132 +96,135 @@ class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child: DrawerScaffold(
-      // appBar: AppBar(), // green app bar
-      drawers: [
-        SideDrawer(
-          percentage: 0.75, // main screen height proportion
-          headerView: header(context, userInfo),
-          footerView: footer(context, controller, userInfo),
-          color: successStoriesCardBgColor,
-          selectorColor: Colors.indigo[600],
-          menu: menuWithIcon,
-          animation: true,
-          // color: Theme.of(context).primaryColorLight,
-          selectedItemId: selectedMenuItemId,
-          onMenuItemSelected: (itemId) {
-            setState(() {
-              selectedMenuItemId = itemId;
-              selectedItem(context, itemId);
-            });
-          },
-        )
-      ],
-      controller: controller,
-      builder: (context, id) => SafeArea(
-        child: Center(
-          child: Stack(
-            children: <Widget>[
-              EventPageBlueBubbleDesign(),
-              Positioned(
-                child: AppBar(
-                  centerTitle: true,
-                  title: Text(
-                    "YWCA Of Bombay",
-                    style: TextStyle(
-                      fontFamily: 'LobsterTwo',
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    onPressed: () => {
-                      controller.toggle(Direction.left),
-                      // OR
-                      // controller.open()
-                    },
-                  ),
-                ),
-              ),
-              // Events & Search bar Starts
-              PreferredSize(
-                preferredSize: Size.fromHeight(80),
-                child: Column(
-                  children: <Widget>[
-                    // Distance from ywca
-                    // or else it will overlap
-                    SizedBox(height: 80),
-                    RichText(
-                      text: TextSpan(
-                        style: Theme.of(context).textTheme.bodyText2,
-                        children: [
-                          TextSpan(
-                            text: 'Events ',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          WidgetSpan(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 2.0,
-                              ),
-                              child: Icon(Icons.notification_important),
-                            ),
-                          ),
-                        ],
+      onWillPop: () => showExitPopup(context),
+      child: DrawerScaffold(
+        // appBar: AppBar(), // green app bar
+        drawers: [
+          SideDrawer(
+            percentage: 0.75, // main screen height proportion
+            headerView: header(context, userInfo),
+            footerView: footer(context, controller, userInfo),
+            color: successStoriesCardBgColor,
+            selectorColor: Colors.indigo[600],
+            menu: menuWithIcon,
+            animation: true,
+            // color: Theme.of(context).primaryColorLight,
+            selectedItemId: selectedMenuItemId,
+            onMenuItemSelected: (itemId) {
+              setState(() {
+                selectedMenuItemId = itemId;
+                selectedItem(context, itemId);
+              });
+            },
+          )
+        ],
+        controller: controller,
+        builder: (context, id) => SafeArea(
+          child: Center(
+            child: Stack(
+              children: <Widget>[
+                EventPageBlueBubbleDesign(),
+                Positioned(
+                  child: AppBar(
+                    centerTitle: true,
+                    title: Text(
+                      "YWCA Of Bombay",
+                      style: TextStyle(
+                        fontFamily: 'LobsterTwo',
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.black87,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: "Search by venue",
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.grey,
-                          ),
-                          suffixIcon: Icon(
-                            Icons.mic,
-                            color: Colors.grey,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.zero,
-                          filled: true,
-                          fillColor: Colors.transparent),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    leading: IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      onPressed: () => {
+                        controller.toggle(Direction.left),
+                        // OR
+                        // controller.open()
+                      },
                     ),
-                  ],
+                  ),
                 ),
-              ),
-              // card view for the events
-              Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
-                  child: getHomePageBody(context)),
-            ],
+                // Events & Search bar Starts
+                PreferredSize(
+                  preferredSize: Size.fromHeight(80),
+                  child: Column(
+                    children: <Widget>[
+                      // Distance from ywca
+                      // or else it will overlap
+                      SizedBox(height: 80),
+                      RichText(
+                        text: TextSpan(
+                          style: Theme.of(context).textTheme.bodyText2,
+                          children: [
+                            TextSpan(
+                              text: 'Events ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 2.0,
+                                ),
+                                child: Icon(Icons.notification_important),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      TextField(
+                        decoration: InputDecoration(
+                            hintText: "Search by venue",
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                            suffixIcon: Icon(
+                              Icons.mic,
+                              color: Colors.grey,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none,
+                            ),
+                            contentPadding: EdgeInsets.zero,
+                            filled: true,
+                            fillColor: Colors.transparent),
+                      ),
+                    ],
+                  ),
+                ),
+                // card view for the events
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                    child: getHomePageBody(context)),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 
   Widget getHomePageBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('events').orderBy('eventDate',descending: true).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('events')
+          .orderBy('eventDate', descending: true)
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
           return Text('Error: ${snapshot.error}' + 'something');

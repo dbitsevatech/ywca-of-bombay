@@ -115,38 +115,40 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                     builder: (BuildContext context) {
                       return Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Card(
-                              margin: EdgeInsets.only(
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              elevation: 6.0,
-                              shadowColor: Colors.blueGrey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                margin: EdgeInsets.only(
+                                  top: 10.0,
+                                  bottom: 10.0,
                                 ),
-                                child: GestureDetector(
-                                  child: Image(
-                                    image: AssetImage(pathOfImage),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: 200,
+                                elevation: 6.0,
+                                shadowColor: Colors.blueGrey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
                                   ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            ZoomImageAsset(pathOfImage),
-                                      ),
-                                    );
-                                  },
+                                  child: GestureDetector(
+                                    child: Image(
+                                      image: AssetImage(pathOfImage),
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: 200,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ZoomImageAsset(pathOfImage),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),

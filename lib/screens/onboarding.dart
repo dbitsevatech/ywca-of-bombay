@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +50,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               // circle design and Appbar
               Stack(
                 children: <Widget>[
-
                   DetailPageBlueBubbleDesign(),
                   Positioned(
                     child: AppBar(
@@ -71,12 +69,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ],
               ),
-              // TODO: Make the carousel responsive
-
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
-
                   aspectRatio: 1, // Redmi 8 and pixel 4xl
                   // aspectRatio: 1.1, // Nokia 7 plus
                   autoPlay: true,
@@ -142,11 +137,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     buttonText: "Let's Go!",
                     screenHeight: _height,
                     onPressedFunction: () async {
-
-                        Navigator.of(context).pop();
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
-
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
                     },
                   ),
                 ),

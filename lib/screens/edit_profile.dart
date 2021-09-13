@@ -111,7 +111,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-
   // Future<bool> _onBackPressed() {
   _onBackPressed() {
     return showDialog(
@@ -119,8 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Do you want to exit without saving changes?'),
-          content:
-              Text('Press the SAVE button if you wish to save changes'),
+          content: Text('Press the SAVE button if you wish to save changes'),
           actions: <Widget>[
             TextButton(
               child: Text('Cancel'),
@@ -283,7 +281,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
-                          // TODO: Add form field to upload user image
                           TextFormField(
                             initialValue: firstName,
                             keyboardType: TextInputType.text,
@@ -440,7 +437,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ),
                           SizedBox(height: _height * 0.015),
-
                           Text(
                             'Gender',
                             style: TextStyle(
@@ -879,19 +875,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           SizedBox(
                             height: _height * 0.020,
                           ),
-                        if (role != "Admin") ...[
-                          Center(
-                            child: Text(
-                              'Your details will be verified by the admin and then updated within a few days',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontFamily: 'Montserrat',
+                          if (role != "Admin") ...[
+                            Center(
+                              child: Text(
+                                'Your details will be verified by the admin and then updated within a few days',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontFamily: 'Montserrat',
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
-                        ],
+                          ],
                         ],
                       ),
                     ),

@@ -66,7 +66,9 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return Splash();
+    return AdminEvents();
+    // return Events();
+    // return Splash();
   }
 }
 
@@ -91,7 +93,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
             .where("uid", isEqualTo: currentUser.uid)
             .get();
         if (checkuser.docs.length == 1) {
-           userdata = checkuser.docs[0].data();
+          userdata = checkuser.docs[0].data();
           userInfo.updateAfterAuth(
               userdata['uid'],
               userdata['firstName'],
@@ -106,21 +108,17 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
               userdata['interestInMembership'],
               userdata['memberRole']);
         }
-        if(userdata['memberRole'] == "Admin"){
+        if (userdata['memberRole'] == "Admin") {
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (context) => new AdminEvents()));
-        }
-        else{
+        } else {
           Navigator.of(context).pushReplacement(
               new MaterialPageRoute(builder: (context) => new Events()));
         }
-
-      }
-      else{
+      } else {
         Navigator.of(context).pushReplacement(
             new MaterialPageRoute(builder: (context) => new LoginScreen()));
       }
-
     } else {
       await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(

@@ -105,7 +105,7 @@ class CustomClipPath extends CustomClipper<Path> {
     required this.screenHeight,
     required this.screenWidth,
   });
-  // TODO: make customclippath responsive
+
   @override
   // Path getClip(Size size) {
   //   Path path = Path();

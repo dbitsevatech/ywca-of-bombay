@@ -3,15 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../exit-popup.dart';
 import 'login.dart';
 import 'register_otp.dart';
 
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/exit_popup.dart';
 import '../../widgets/gradient_button.dart';
-
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
@@ -28,17 +27,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String gender = "Female";
   var userInfo;
 
-
-
   final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(); // form key for validation
+      GlobalKey<FormState>(); // form key for validation
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
-  GlobalKey<ScaffoldState>(); // scaffold key for snack bar
+      GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
-
 
   // female-0, male-1, decline to state-2
   int _genderRadioValue = 0;
@@ -66,14 +62,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // https://github.com/flutter/flutter/issues/67909
       // https://github.com/flutter/flutter/pull/67926
       //
-      // TODO: Check if above line UX issue is solved
+      // TOD: Check if above line UX issue is solved
       // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-
             primaryColor: const Color(0xFF49dee8),
             accentColor: const Color(0xFF49dee8),
             colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
@@ -109,11 +104,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (route) => false);
+              (route) => false);
         },
       ),
     );
-
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -164,7 +158,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     setState(() {
-
       gender = "Female";
     });
     super.initState();
@@ -177,475 +170,471 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final _width = MediaQuery.of(context).size.width;
 
     return WillPopScope(
-        onWillPop: () => showExitPopup(context),
-    child: Scaffold(
-      key: _scaffoldkey,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // circle design and Title
-                Stack(
-                  children: <Widget>[
-                    MainPageBlueBubbleDesign(),
-                    Positioned(
-                      child: AppBar(
-                        centerTitle: true,
-                        title: Text(
-                          "YWCA Of Bombay",
-                          style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                      ),
-                    ),
-                    Positioned(
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: _height * 0.095),
-                          child: Text(
-                            'REGISTER',
+      onWillPop: () => showExitPopup(context),
+      child: Scaffold(
+        key: _scaffoldkey,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  // circle design and Title
+                  Stack(
+                    children: <Widget>[
+                      MainPageBlueBubbleDesign(),
+                      Positioned(
+                        child: AppBar(
+                          centerTitle: true,
+                          title: Text(
+                            "YWCA Of Bombay",
                             style: TextStyle(
-                              fontSize: 35,
-                              color: primaryColor,
+                              fontFamily: 'LobsterTwo',
+                              fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'RacingSansOne',
-                              letterSpacing: 2.5,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(2.0, 3.0),
-                                  blurRadius: 3.0,
-                                  color: Color(0xff333333),
-                                ),
-                              ],
+                              fontSize: 18.0,
+                              color: Colors.black87,
                             ),
                           ),
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
                         ),
                       ),
-                    ),
-                    // Have an account, LOG IN
-                    Padding(
-                      padding: EdgeInsets.only(top: _height * 0.15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
+                      Positioned(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: _height * 0.095),
                             child: Text(
-                              'Already have an account? ',
+                              'REGISTER',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Montserrat',
+                                fontSize: 35,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'RacingSansOne',
+                                letterSpacing: 2.5,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(2.0, 3.0),
+                                    blurRadius: 3.0,
+                                    color: Color(0xff333333),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          Center(
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                        (route) => false);
-                              },
-                              child: Text(
-                                'Log In',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  color: primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                // Form
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.01,
-                    // horizontal: _height * 0.02,
-                    horizontal: _width * 0.04,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            userInfo.updateName(value);
-                            print(userInfo.getfirstName);
-                            setState(() {
-                              firstName = value!;
-                            });
-                          },
-                          validator: (String? value) {
-                            if (value!.isEmpty)
-                              return 'First name is required.';
-                            else
-                              return null;
-                          },
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.account_circle,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'First Name',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            setState(() {
-                              lastName = value!;
-                            });
-                          },
-                          validator: (String? value) {
-                            if (value!.isEmpty)
-                              return 'Last name is required.';
-                            else
-                              return null;
-                          },
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.account_circle,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Last Name',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          onChanged: (value) {
-
-                          },
-                          controller: dateController,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.date_range,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Date of Birth',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onTap: () async {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            await _selectDate();
-                            dateController.text =
-                            "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
-                                .split(' ')[0];
-                          },
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          onSaved: (value) {
-                            setState(() {
-                              emailId = value!;
-                            });
-                          },
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Email is required';
-                            }
-                            if (!RegExp(
-                                "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                                .hasMatch(value)) {
-                              return 'Enter a valid email address';
-                            }
-                            // return null coz validator has to return something
-                            return null;
-                          },
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: secondaryColor,
-                            ),
-                            labelText: 'Email Address',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        TextFormField(
-                          keyboardType: TextInputType.phone,
-                          maxLength: 10,
-                          validator: (String? value) {
-                            if (value!.isEmpty)
-                              return 'Mobile number is required';
-                            else if (!RegExp(r"^\d{10}$").hasMatch(value))
-                              return 'Please enter a valid mobile number';
-                            else
-                              return null;
-                          },
-                          onSaved: (String? value) {
-                            setState(() {
-                              phoneNumber = value!;
-                            });
-                          },
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.phone_android,
-                              color: secondaryColor,
-                            ),
-                            prefixText: '+91 | ',
-                            labelText: 'Mobile Number',
-                            filled: true,
-                            fillColor: formFieldFillColor,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: secondaryColor),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Gender',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Radio(
-                              value: 0,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 0;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
+                      // Have an account, LOG IN
+                      Padding(
+                        padding: EdgeInsets.only(top: _height * 0.15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
                               child: Text(
-                                'Female',
+                                'Already have an account? ',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontSize: 16,
+                                  fontFamily: 'Montserrat',
                                 ),
                               ),
                             ),
-                            Radio(
-                              value: 1,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 1;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Male',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Radio(
-                              value: 2,
-                              groupValue: _genderRadioValue,
-                              onChanged: _handleGenderRadioValueChange,
-                              focusColor: secondaryColor,
-                              hoverColor: secondaryColor,
-                              activeColor: secondaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _genderRadioValue = 2;
-                                  _handleGenderRadioValueChange(
-                                      _genderRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Decline to state',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
+                            Center(
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                      (route) => false);
+                                },
+                                child: Text(
+                                  'Log In',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor,
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: _height * 0.015),
-                        GradientButton(
-                          buttonText: 'Next',
-                          screenHeight: _height,
-                          onPressedFunction: () async {
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            _formKey.currentState!.save();
-                            print("hello");
-                            _onNextButtonPressed();
-                          },
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: _height * 0.015),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Already have an account? ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                        ),
+                  // Form
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: _height * 0.01,
+                      // horizontal: _height * 0.02,
+                      horizontal: _width * 0.04,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              userInfo.updateName(value);
+                              print(userInfo.getfirstName);
+                              setState(() {
+                                firstName = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value!.isEmpty)
+                                return 'First name is required.';
+                              else
+                                return null;
+                            },
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'First Name',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            keyboardType: TextInputType.text,
+                            onSaved: (value) {
+                              setState(() {
+                                lastName = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value!.isEmpty)
+                                return 'Last name is required.';
+                              else
+                                return null;
+                            },
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.account_circle,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Last Name',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            onChanged: (value) {},
+                            controller: dateController,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.date_range,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Date of Birth',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              await _selectDate();
+                              dateController.text =
+                                  "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
+                                      .split(' ')[0];
+                            },
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            onSaved: (value) {
+                              setState(() {
+                                emailId = value!;
+                              });
+                            },
+                            validator: (String? value) {
+                              if (value!.isEmpty) {
+                                return 'Email is required';
+                              }
+                              if (!RegExp(
+                                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                                  .hasMatch(value)) {
+                                return 'Enter a valid email address';
+                              }
+                              // return null coz validator has to return something
+                              return null;
+                            },
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.email,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Email Address',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          TextFormField(
+                            keyboardType: TextInputType.phone,
+                            maxLength: 10,
+                            validator: (String? value) {
+                              if (value!.isEmpty)
+                                return 'Mobile number is required';
+                              else if (!RegExp(r"^\d{10}$").hasMatch(value))
+                                return 'Please enter a valid mobile number';
+                              else
+                                return null;
+                            },
+                            onSaved: (String? value) {
+                              setState(() {
+                                phoneNumber = value!;
+                              });
+                            },
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.phone_android,
+                                color: secondaryColor,
+                              ),
+                              prefixText: '+91 | ',
+                              labelText: 'Mobile Number',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Gender',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Radio(
+                                value: 0,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 0;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Female',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                value: 1,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 1;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Male',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Radio(
+                                value: 2,
+                                groupValue: _genderRadioValue,
+                                onChanged: _handleGenderRadioValueChange,
+                                focusColor: secondaryColor,
+                                hoverColor: secondaryColor,
+                                activeColor: secondaryColor,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _genderRadioValue = 2;
+                                    _handleGenderRadioValueChange(
+                                        _genderRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Decline to state',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: _height * 0.015),
+                          GradientButton(
+                            buttonText: 'Next',
+                            screenHeight: _height,
+                            onPressedFunction: () async {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              }
+                              _formKey.currentState!.save();
+                              print("hello");
+                              _onNextButtonPressed();
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()),
-                                  (route) => false);
-                        },
+                  ),
+                  SizedBox(height: _height * 0.015),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
                         child: Text(
-                          'Log In',
+                          'Already have an account? ',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            color: primaryColor,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: _height * 0.015),
-              ],
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                                (route) => false);
+                          },
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: _height * 0.015),
+                ],
+              ),
+              // ),
             ),
-            // ),
           ),
         ),
       ),
-    ),
     );
   }
 }
 
-
 // ignore: must_be_immutable
 class RegisterScreen2 extends StatefulWidget {
-
   final String firstName;
   final String lastName;
   final String emailId;
@@ -662,17 +651,16 @@ class RegisterScreen2 extends StatefulWidget {
   });
   @override
   _RegisterScreen2State createState() => _RegisterScreen2State(
-    firstName,
-    lastName,
-    emailId,
-    phoneNumber,
-    gender,
-    dateOfBirth,
-  );
+        firstName,
+        lastName,
+        emailId,
+        phoneNumber,
+        gender,
+        dateOfBirth,
+      );
 }
 
 class _RegisterScreen2State extends State<RegisterScreen2> {
-
   String firstName;
   final String lastName;
   final String emailId;
@@ -686,16 +674,16 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   _RegisterScreen2State(
-      this.firstName,
-      this.lastName,
-      this.emailId,
-      this.phoneNumber,
-      this.gender,
-      this.dateOfBirth,
-      );
+    this.firstName,
+    this.lastName,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.dateOfBirth,
+  );
 
   final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(); // form key for validation
+      GlobalKey<FormState>(); // form key for validation
 
   void _onRegisterButtonPressed() async {
     print("register page: ");
@@ -954,7 +942,6 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                                 print(nearestCenter);
                               });
                             },
-
                             items: <String>[
                               'Andheri',
                               'Bandra',
@@ -999,7 +986,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 0,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                              _handleInterestInMembershipRadioValueChange,
+                                  _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
@@ -1027,7 +1014,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 1,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                              _handleInterestInMembershipRadioValueChange,
+                                  _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
@@ -1055,7 +1042,7 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               value: 2,
                               groupValue: _interestInMembershipRadioValue,
                               onChanged:
-                              _handleInterestInMembershipRadioValueChange,
+                                  _handleInterestInMembershipRadioValueChange,
                               focusColor: secondaryColor,
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
