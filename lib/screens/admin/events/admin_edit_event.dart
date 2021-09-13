@@ -730,7 +730,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                                   rootNavigator: true)
                                               .pop(true);
                                           // updating the event after changes if yes pressed
-                                          print("Updating record on firestore");
                                           FirebaseFirestore.instance
                                               .collection('events')
                                               .doc(id)
@@ -759,7 +758,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDeadline': eventDeadline,
                                             'eventType': eventType
                                           });
-                                          print("updated on firestore");
                                           Navigator.pop(context);
                                         },
                                         child: Text('Yes'),

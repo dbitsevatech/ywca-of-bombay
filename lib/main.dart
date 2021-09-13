@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return AdminEvents();
+    return Splash();
     // return Events();
     // return Splash();
   }

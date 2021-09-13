@@ -183,15 +183,19 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventTime': eventTime,
       'eventType': eventType
     }).then((value) =>
-        // print(value.id)
         FirebaseFirestore.instance
             .collection('eventsBackup')
             .doc(value.id)
             .set({
-          // 'eventID' : value.id,
           'eventName': eventName,
-          'eventImageUrl': url,
+          'eventDescription': eventDescription,
+          'eventVenue': eventVenue,
+          'eventAmount': eventAmount,
           'eventDate': eventDate,
+          'eventImageUrl': url,
+          'eventDeadline': eventDeadline,
+          'eventTime': eventTime,
+          'eventType': eventType
         }));
         goBackToPreviousScreen(context);
   }
