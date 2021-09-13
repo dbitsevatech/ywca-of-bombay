@@ -207,7 +207,7 @@ class _AdminEventsState extends State<AdminEvents> {
 
   Widget getHomePageBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('events').snapshots(),
+      stream: FirebaseFirestore.instance.collection('events').orderBy('eventDate',descending: true).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError)
           return Text('Error: ${snapshot.error}' + 'something');
