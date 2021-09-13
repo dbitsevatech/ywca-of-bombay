@@ -12,6 +12,7 @@ import '../../widgets/constants.dart';
 import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
 import '../../widgets/exit_popup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class Events extends StatefulWidget {
@@ -77,16 +78,31 @@ class _EventsState extends State<Events> {
     });
   }
 
+  Future checkMemberPopup() async {
+    var userdata;
+    userInfo = Provider.of<UserData>(context, listen: false);
+    // sharepreferences instance
+    SharedPreferences prefsMember = await SharedPreferences.getInstance();
+    // boolean variable getting the value of member_popup
+    bool _checkMember = (prefsMember.getBool('member_popup') ?? false);
+    if (userInfo.getmemberRole == "NonMember") {
+      if (_checkMember) {
+        // dont show the popup
+      } else {
+        // show the popup and set member_popup = true
+        await prefsMember.setBool('member_popup', true);
+        // _openPopup(context);
+        Timer(Duration(seconds: 3), () {
+          _openPopup(context);
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
-    userInfo = Provider.of<UserData>(context, listen: false);
-    if (userInfo.getmemberRole == "NonMember") {
-      Timer(Duration(seconds: 3), () {
-        _openPopup(context);
-      });
-    }
-
+    checkMemberPopup();
     super.initState();
   }
 
@@ -187,10 +203,6 @@ class _EventsState extends State<Events> {
                             hintText: "Search by venue",
                             prefixIcon: Icon(
                               Icons.search,
-                              color: Colors.grey,
-                            ),
-                            suffixIcon: Icon(
-                              Icons.mic,
                               color: Colors.grey,
                             ),
                             border: OutlineInputBorder(

@@ -142,7 +142,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               child: CircularProgressIndicator(),
             );
           default:
-            if(snapshot.data!.docs != [])
+            if(snapshot.data!.docs == [])
               {
                 return Center(
                   child: Text(
@@ -154,6 +154,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               return ListView(
                 padding: EdgeInsets.only(bottom: 80),
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
+
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                     child: Card(
@@ -197,7 +198,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             SizedBox(height: 5),
                             // address
                             Text(
-                              'Address: ' + (document['emailId']),
+                              'Address: ' + (document['address']),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14.0,
@@ -215,27 +216,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                 fontWeight: FontWeight.normal,
                               ),
                             ),
-                            SizedBox(height: 5),
-                            // place of work
-                            Text(
-                              'Institute/Organisation: ' +
-                                  (document['placeOfWork']),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            // profession
-                            Text(
-                              'Profession: ' + (document['profession']),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
+
                             // start of approve and disapprove button
                             Row(
                               children: [
@@ -273,6 +254,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                     .collection('users')
                                                     .doc(document.id)
                                                     .update({
+                                                  "address" : document['address'],
                                                   "firstName":
                                                   document["firstName"],
                                                   "lastName":

@@ -67,9 +67,6 @@ class _LoginOtpState extends State<LoginOtp>
       ),
     );
 
-    // _scaffoldkey.currentState.showSnackBar(registerSnackBar); // Deprecated
-    // https://flutter.dev/docs/release/breaking-changes/scaffold-messenger
-    // https://stackoverflow.com/questions/65906662/showsnackbar-is-deprecated-and-shouldnt-be-used
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -81,13 +78,8 @@ class _LoginOtpState extends State<LoginOtp>
           .then(
             (value) async {
           if (value.user != null) {
-            // userInfo.updatefirstName(firstName);
             if (userInfo.getmemberRole == 'Admin') {
-              // TODO: Add Admin events navigation
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
-              //     (route) => false);
+
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminEvents()),
@@ -296,11 +288,7 @@ class _LoginOtpState extends State<LoginOtp>
                   MaterialPageRoute(builder: (context) => Events()),
                       (route) => false);
             } else if (userInfo.getmemberRole == 'Admin') {
-              // TOD: Add Admin Events navigation
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => AdminMainWidget()),
-              //     (route) => false);
+
             }
           }
         });

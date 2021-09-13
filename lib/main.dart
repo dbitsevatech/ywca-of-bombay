@@ -19,7 +19,6 @@ import 'screens/initiatives/initiatives.dart';
 import 'screens/success_stories/success_stories.dart';
 import 'services/class_builder.dart';
 import 'models/User.dart';
-import 'package:intl/intl.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -67,9 +66,8 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    // return Splash();
-    return ContactUs();
-    // return Splash();
+    return Splash();
+
   }
 }
 
@@ -107,7 +105,8 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
               userdata['placeOfWork'],
               userdata['nearestCenter'],
               userdata['interestInMembership'],
-              userdata['memberRole']);
+              userdata['memberRole'],
+              userdata['address']);
         }
         if (userdata['memberRole'] == "Admin") {
           Navigator.of(context).pushReplacement(

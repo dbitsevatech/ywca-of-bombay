@@ -25,14 +25,16 @@ class UserData extends ChangeNotifier{
   String get getinterestInMembership => interestInMembership ;
   String memberRole = '';
   String get getmemberRole => memberRole;
+  String address = '';
+  String get getaddress => address;
 
+  //
+  // updateName(fName){
+  // firstName = fName;
+  // notifyListeners();
+  // }
 
-  updateName(fName){
-  firstName = fName;
-  notifyListeners();
-  }
-
-  updateAfterAuth(uuid,fName, lName, dob, email, phone, genderchoice, prof, pow, center, interest, role){
+  updateAfterAuth(uuid,fName, lName, dob, email, phone, genderchoice, prof, pow, center, interest, role, add){
     uid =uuid;
     firstName = fName;
     lastName = lName;
@@ -45,24 +47,8 @@ class UserData extends ChangeNotifier{
     nearestCenter = center;
     interestInMembership = interest;
     memberRole = role;
+    address = add;
     notifyListeners();
   }
 
-  // User(
-  //   this.firstName,
-  //   this.lastName,
-  //   this.dateOfBirth,
-  //   this.emailId,
-  //   this.phoneNumber,
-  //   this.gender,
-  //   this.profession,
-  //   this.placeOfWork,
-  //   this.nearestCenter,
-  //   this.interestInMembership,
-  // );
-
-
-  // save() {
-  //   print('saving user using a web service');
-  // }
 }

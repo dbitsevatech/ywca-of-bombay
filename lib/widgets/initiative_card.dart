@@ -11,8 +11,7 @@ Widget buildInitiativeCard(BuildContext context, int index) {
   final _height = MediaQuery.of(context).size.height;
   final _width = MediaQuery.of(context).size.width;
 
-  // print("$_height, $_width");
-  // print(_height * 0.11);
+
 
   return Container(
     padding: EdgeInsets.only(bottom: _height * 0.02, left: 50, right: 50),
@@ -122,8 +121,7 @@ class CustomClipPath extends CustomClipper<Path> {
     path.lineTo(0, size.height);
     path.lineTo(size.width - (size.width * 0.3), size.height);
     path.lineTo(size.width - (size.width * 0.075), 0);
-    print(size.width);
-    print(size.height);
+
     return path;
   }
 

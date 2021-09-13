@@ -31,6 +31,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String uid = '';
   String role = "";
   var userInfo;
+  String address = "";
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -150,7 +151,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             TextButton(
               child: Text('Continue'),
               onPressed: () {
-                Navigator.of(context).pop(false);
+                Navigator.of(context).pop(true);
+                Navigator.of(context).pop(true);
               },
             ),
           ],
@@ -174,6 +176,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     profession = userInfo.getprofession;
     interestInMembership = userInfo.getinterestInMembership;
     role = userInfo.getmemberRole;
+    address = userInfo.getaddress;
     if (gender == "Male") {
       _genderRadioValue = 1;
     } else if (gender == "Female") {
@@ -438,19 +441,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           SizedBox(height: _height * 0.015),
                           TextFormField(
-                            initialValue: lastName,
+                            initialValue: address,
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
-                                lastName = value!;
+                                address = value!;
                               });
                             },
-                            // validator: (value) {
-                            //   if (value!.isEmpty)
-                            //     return 'Last name is required.';
-                            //   else
-                            //     return null;
-                            // },
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.account_circle,
@@ -838,16 +835,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onPressedFunction: () async {
                               print(userInfo.getmemberRole);
                               // TODO: validate function not working, hence the code after it does not execute
-                              if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState!.validate() != true) {
                                 return;
                               }
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
+                              
+
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
                                     .doc(uid)
                                     .set({
+                                      "address" : address,
                                       "firstName": firstName,
                                       "lastName": lastName,
                                       "dateOfBirth": dateOfBirth,
@@ -875,6 +875,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     .collection("users")
                                     .doc(uid)
                                     .update({
+                                      "address" : address,
                                       "firstName": firstName,
                                       "lastName": lastName,
                                       "dateOfBirth": dateOfBirth,
@@ -889,7 +890,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "phoneNumber": userInfo.getphoneNumber,
                                       "memberRole": userInfo.getmemberRole,
                                     })
-                                    .then((value) => print("Request Sent"))
+                                    .then((value) => Navigator.pop(context)
+                                )
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
                                 await userInfo.updateAfterAuth(
@@ -904,7 +906,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     placeOfWork,
                                     nearestCenter,
                                     interestInMembership,
-                                    userInfo.getmemberRole);
+                                    userInfo.getmemberRole,
+                                    address);
                               }
 
                               // Navigator.pop(context);
