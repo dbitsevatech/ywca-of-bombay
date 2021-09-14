@@ -80,10 +80,8 @@ Future downloadData() async {
 }
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => showExitPopup(context),
-      child: DrawerScaffold(
-        // appBar: AppBar(), // green app bar
+    return DrawerScaffold(
+        //appBar: AppBar(), // green app bar
         drawers: [
           SideDrawer(
             percentage: 0.75, // main screen height proportion
@@ -155,7 +153,7 @@ Future downloadData() async {
                                 text: eventName,
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20.0,
+                                    fontSize: 26.0,
                                     fontWeight: FontWeight.bold)),
 
                           ],
@@ -183,7 +181,7 @@ Future downloadData() async {
                                 text: "Registrations",
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20.0,
+                                    fontSize: 23.0,
                                     fontWeight: FontWeight.bold)),
 
                           ],
@@ -201,7 +199,6 @@ Future downloadData() async {
             ),
           ),
         ),
-      ),
     );
   }
 
