@@ -111,28 +111,16 @@ class _AdminEventsState extends State<AdminEvents> {
                       // or else it will overlap
                       SizedBox(height: 80),
                       Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.bodyText2,
-                            children: [
-                              TextSpan(
-                                  text: 'Events ',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold)),
-                              WidgetSpan(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 2.0),
-                                  child: Icon(Icons.notification_important),
-                                ),
-                              ),
-                            ],
+                        child: Text(
+                          'Events',
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: Color(0xff333333),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
                           ),
                         ),
                       ),
-
                       SizedBox(height: 5),
                       // TextField(
                       //   decoration: InputDecoration(

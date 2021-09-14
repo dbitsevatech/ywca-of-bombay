@@ -94,24 +94,13 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                       // Distance from ywca
                       // or else it will overlap
                       SizedBox(height: 150),
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodyText2,
-                          children: [
-                            TextSpan(
-                                text: 'Approval ',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold)),
-                            WidgetSpan(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 2.0),
-                                child: Icon(Icons.notification_important),
-                              ),
-                            ),
-                          ],
+                      Text(
+                        'Approval',
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Color(0xff333333),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
                         ),
                       ),
                     ],
