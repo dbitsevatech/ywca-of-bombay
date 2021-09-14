@@ -11,7 +11,7 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -30,7 +30,8 @@ class _EventsState extends State<Events> {
   // conversion of event date for displaying
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
+    String formattedEventDate =
+        DateFormat('EEE, dd MMM, yyyy').format(newEventDate);
     return formattedEventDate;
   }
 
@@ -109,7 +110,7 @@ class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [
@@ -175,7 +176,7 @@ class _EventsState extends State<Events> {
                       // or else it will overlap
                       SizedBox(height: 80),
                       Center(
-                        child:  RichText(
+                        child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
                             children: [
@@ -187,8 +188,8 @@ class _EventsState extends State<Events> {
                                       fontWeight: FontWeight.bold)),
                               WidgetSpan(
                                 child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
                                   child: Icon(Icons.notification_important),
                                 ),
                               ),
@@ -352,108 +353,6 @@ class _EventsState extends State<Events> {
                 );
               }).toList(),
             );
-          // return ListView(
-          //   padding: EdgeInsets.only(bottom: 80),
-          //   children: snapshot.data!.docs.map(
-          //     (DocumentSnapshot document) {
-          //       return Padding(
-          //         padding: EdgeInsets.symmetric(
-          //           vertical: 3,
-          //           horizontal: 10,
-          //         ),
-          //         child: Card(
-          //           child: ListTile(
-          //             leading: ClipRRect(
-          //               borderRadius: BorderRadius.all(
-          //                   Radius.circular(10.0)), //add border radius here
-          //               child: Image.network(
-          //                 document['eventImageUrl'],
-          //                 fit: BoxFit.cover,
-          //                 width: 120,
-          //               ), //add image location here
-          //             ),
-          //             // Event date and time
-          //             title: Text(
-          //               'Date:' +
-          //                   (readEventDate(document['eventDate'])) +
-          //                   '| Time:' +
-          //                   (document['eventTime']),
-          //               style: TextStyle(
-          //                 color: Color(0xFF49DEE8),
-          //                 fontSize: 14.0,
-          //                 fontWeight: FontWeight.normal,
-          //               ),
-          //             ),
-          //             subtitle: Column(
-          //               mainAxisAlignment: MainAxisAlignment.start,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: <Widget>[
-          //                 SizedBox(height: 5),
-          //                 // Event name
-          //                 Text(
-          //                   document['eventName'],
-          //                   style: TextStyle(
-          //                     color: Colors.black,
-          //                     fontSize: 16.0,
-          //                     fontWeight: FontWeight.bold,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Resource Person
-          //                 Text(
-          //                   'Resource Person: Sharon Pies',
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Venue
-          //                 Text(
-          //                   'Venue: ' + document['eventVenue'],
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Amount
-          //                 Text(
-          //                   'Amount: ' + document['eventAmount'],
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //             onTap: () {
-          //               // when clicked on the event, the user id is saved
-          //               // and if the user clicks again it is checked with the db
-          //               // if it already exists it is not inserted again for the same event
-          //               insertIntoOnClick(document.id, document['eventName']);
-          //
-          //               // opening detail page for particular event
-          //               gotoDetailEvent(
-          //                 context,
-          //                 document.id,
-          //                 document['eventAmount'],
-          //                 document['eventDescription'],
-          //                 document['eventName'],
-          //                 document['eventImageUrl'],
-          //                 document['eventVenue'],
-          //                 document['eventType'],
-          //                 document['eventDate'],
-          //                 document['eventDeadline'],
-          //                 document['eventTime'],
-          //               );
-          //             },
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ).toList(),
-          // );
         }
       },
     );

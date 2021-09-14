@@ -9,7 +9,7 @@ import 'login_otp.dart';
 import 'register.dart';
 
 import '../../models/User.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../widgets/gradient_button.dart';
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: Scaffold(
         key: _scaffoldkey,
         body: SafeArea(

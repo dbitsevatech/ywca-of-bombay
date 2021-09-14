@@ -1,7 +1,7 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
 import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
@@ -37,7 +37,7 @@ class _InitiativesState extends State<Initiatives> {
         userInfo.getmemberRole; // to identify if user is admin or other role
     final _height = MediaQuery.of(context).size.height;
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [

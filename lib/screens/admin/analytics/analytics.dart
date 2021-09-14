@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:drawerbehavior/drawerbehavior.dart';
@@ -7,13 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../widgets/exit_popup.dart';
+
+import 'analytics_details.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
+import '../../../widgets/alert_dialogs.dart';
 import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
-import 'analyticsdetails.dart';
 
 // ignore: must_be_immutable
 class AnalyticsScreen extends StatefulWidget {
@@ -91,9 +90,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     eventRegister: post["registrations"],
                     eventName: post["eventName"],
                   ),
-
-                )
-            );
+                ));
           },
           child: Container(
             // height: 90,
@@ -122,7 +119,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -205,7 +203,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             ),
           ),
         ),
-
       );
     });
     if (!mounted) return;
@@ -237,7 +234,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     _width = size.width;
 
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         drawers: [
           SideDrawer(

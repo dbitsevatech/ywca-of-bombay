@@ -12,7 +12,7 @@ import '../../drawers_constants/admin_drawer.dart' as AdminDrawer;
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 import '../../widgets/gradient_button.dart';
 import '../../widgets/zoom_image.dart';
 
@@ -57,7 +57,7 @@ class _AboutUsState extends State<AboutUs> {
     var role = userInfo.getmemberRole;
     final _height = MediaQuery.of(context).size.height;
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [

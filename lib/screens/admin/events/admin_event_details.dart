@@ -121,11 +121,12 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String eventTime = widget.eventTime;
 
     // event date conversion to string for displaying
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
+    String formattedEventDate =
+        DateFormat('EEE, dd MMM, yyyy').format(eventDate);
 
     // event deadline conversion to string for displaying
     String formattedDeadlineDate =
-        DateFormat('dd-MM-yyyy').format(eventDeadline);
+        DateFormat('dd MMM, yyyy').format(eventDeadline);
 
     return Scaffold(
       appBar: AppBar(
@@ -191,107 +192,125 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                     vertical: _height * 0.01,
                     horizontal: _width * 0.04,
                   ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        // Event title
-                        Text(
-                          eventName,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Color(0xff000000),
-                            fontFamily: 'Montserrat',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Event title
+                      Text(
+                        eventName,
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Color(0xff000000),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Venue
+                          Text(
+                            'Venue: ' + eventVenue,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event description
-                        Text(
-                          eventDescription,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          SizedBox(height: 5),
+                          // Event time
+                          Text(
+                            // TODO: Time in 12 hr format (AM/PM)
+                            'Time: ' + eventTime,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event venue
-                        Text(
-                          'Venue -' + eventVenue,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Amount
+                          Text(
+                            'Amount: ' + eventAmount,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event amount
-                        Text(
-                          'Amount -' + eventAmount,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          // Event date
+                          Text(
+                            'Date: ' + formattedEventDate,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        //Date of Event
-                        Text(
-                          'Date of Event -' + formattedEventDate,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Type
+                          Text(
+                            'Event for: ' + eventType,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        // Time
-                        Text(
-                          'Event Time -' + eventTime,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          // Event registration deadline
+                          Text(
+                            'Deadline: ' + formattedDeadlineDate,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
+                        ],
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      // Event description
+                      Text(
+                        eventDescription,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 20,
                         ),
-                        SizedBox(height: _height * 0.015),
-                        // Type
-                        Text(
-                          'Event Type -' + eventType,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      // Event venue
+                      Text(
+                        'Clicks:  ' + clicks.toString(),
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
                         ),
-                        SizedBox(
-                          height: _height * 0.015,
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      // Event venue
+                      Text(
+                        'Registrations: ' + registrations.toString(),
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
                         ),
-                        // Event venue
-                        Text(
-                          'Clicks - ' + clicks.toString(),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event venue
-                        Text(
-                          'Registrations - ' + registrations.toString(),
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                        ),
-                        //Deadline of Event
-                        SizedBox(height: _height * 0.015),
-                      ],
-                    ),
+                      ),
+                      //Deadline of Event
+                      SizedBox(height: _height * 0.015),
+                    ],
                   ),
                 ),
               ],

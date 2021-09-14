@@ -13,6 +13,7 @@ import '../about_us/become_member.dart';
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
+import '../../widgets/alert_dialogs.dart';
 import '../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable
@@ -58,29 +59,6 @@ class _DetailPageState extends State<DetailPage> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
 
-  // onRegister for counting registration by the user
-  void insertIntoOnRegistration(String eventID, String eventName) async {
-    final User? user = auth.currentUser;
-    final userID = user?.uid;
-    FirebaseFirestore.instance
-        .collection('eventRegistration')
-        .where('eventID', isEqualTo: eventID)
-        .where('userID', isEqualTo: userID)
-        .get()
-        .then(
-      (checkSnapshot) {
-
-        if (checkSnapshot.size > 0) {
-        } else {
-          FirebaseFirestore.instance
-              .collection('eventRegistration')
-              .add({'eventID': eventID, 'userID': userID});
-        }
-      },
-    );
-  }
-
-
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
     if (eventImageUrl != "") {
@@ -95,19 +73,18 @@ class _DetailPageState extends State<DetailPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ZoomImageNetwork(eventImageUrl),
+                builder: (context) => ZoomImageNetwork(eventImageUrl),
               ),
             );
           },
         ),
       );
-    }
-    else {
-      return SizedBox(height: 10,);
+    } else {
+      return SizedBox(
+        height: 10,
+      );
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -127,10 +104,11 @@ class _DetailPageState extends State<DetailPage> {
     DateTime eventDeadline = widget.eventDeadline;
     String eventTime = widget.eventTime;
     // event date
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(eventDate);
+    String formattedEventDate =
+        DateFormat('EEE | dd MMM, yyyy').format(eventDate);
     // event deadline
     String formattedDeadlineDate =
-        DateFormat('dd-MM-yyyy').format(eventDeadline);
+        DateFormat('dd MMM, yyyy').format(eventDeadline);
 
     // carousel images
     // final List<String> imagesList = [
@@ -140,8 +118,6 @@ class _DetailPageState extends State<DetailPage> {
     //   'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
     //   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
     // ];
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -165,9 +141,14 @@ class _DetailPageState extends State<DetailPage> {
             tooltip: 'Comment Icon',
             onPressed: () {
               final RenderBox box = context.findRenderObject() as RenderBox;
-              Share.share( eventName +'\n' + eventDescription + "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n"
-                  + "Shoba balla \n+91 98333 93953",
-                  sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+              Share.share(
+                  eventName +
+                      '\n' +
+                      eventDescription +
+                      "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n" +
+                      "Shoba balla \n+91 98333 93953",
+                  sharePositionOrigin:
+                      box.localToGlobal(Offset.zero) & box.size);
             },
           ), //IconButton
         ],
@@ -222,85 +203,105 @@ class _DetailPageState extends State<DetailPage> {
                     vertical: _height * 0.01,
                     horizontal: _width * 0.04,
                   ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        // Event Name
-                        Text(
-                          eventName,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Color(0xff000000),
-                            fontFamily: 'Montserrat',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      // Event title
+                      Text(
+                        eventName,
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Color(0xff000000),
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Venue
+                          Text(
+                            'Venue: ' + eventVenue,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event description
-                        Text(
-                          eventDescription,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          SizedBox(height: 5),
+                          // Event time
+                          Text(
+                            // TODO: Time in 12 hr format (AM/PM)
+                            'Time: ' + eventTime,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event venue
-                        Text(
-                          'Venue: ' + eventVenue,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Amount
+                          Text(
+                            'Amount: ' + eventAmount,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        // Event amount
-                        Text(
-                          'Amount: ' + eventAmount,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          // Event date
+                          Text(
+                            'Date: ' + formattedEventDate,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: _height * 0.015,
-                        ),
-                        //Date of Event
-                        Text(
-                          'Date of Event: ' + formattedEventDate,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Event Type
+                          Text(
+                            'Event for: ' + eventType,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        // Time
-                        Text(
-                          'Event Time: ' + eventTime,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
+                          // Event registration deadline
+                          Text(
+                            'Deadline: ' + formattedDeadlineDate,
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
+                        ],
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      // Event description
+                      Text(
+                        eventDescription,
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 20,
                         ),
-                        SizedBox(height: _height * 0.015),
-                        // event type
-                        Text(
-                          'Event Type: ' + eventType,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 16,
-                          ),
-                        ),
-                        //Deadline of Event
-                        SizedBox(height: _height * 0.015),
-                        // Register button
-                      if ((role == 'Member' || role == 'Staff') && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      // Register button
+                      if ((role == 'Member' || role == 'Staff') &&
+                          eventType == 'Members only' &&
+                          eventDeadline.compareTo(now) > 0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -331,105 +332,108 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                insertIntoOnRegistration(id, eventName);
+                                showRegisterAlertDialog(
+                                    context, id, eventName, auth);
                               },
                             ),
                           ),
                         ),
                       ],
-                        if (role == 'NonMember' && eventType == 'Members only' && eventDeadline.compareTo(now)>0) ...[
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: _height * 0.015,
+                      if (role == 'NonMember' &&
+                          eventType == 'Members only' &&
+                          eventDeadline.compareTo(now) > 0) ...[
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: _height * 0.015,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                firstButtonGradientColor,
+                                firstButtonGradientColor,
+                                secondButtonGradientColor
+                              ],
+                              begin: FractionalOffset.centerLeft,
+                              end: FractionalOffset.centerRight,
                             ),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  firstButtonGradientColor,
-                                  firstButtonGradientColor,
-                                  secondButtonGradientColor
-                                ],
-                                begin: FractionalOffset.centerLeft,
-                                end: FractionalOffset.centerRight,
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                            ),
-                            child: FractionallySizedBox(
-                              widthFactor: 1,
-                              child: TextButton(
-                                child: Text(
-                                  'Become a Member',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: FractionallySizedBox(
+                            widthFactor: 1,
+                            child: TextButton(
+                              child: Text(
+                                'Become a Member',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                onPressed: () {
-                                  goToBecomeMember(context);
-                                },
                               ),
+                              onPressed: () {
+                                goToBecomeMember(context);
+                              },
                             ),
                           ),
-                        ],
-                        if (eventType == 'Everyone' && eventDeadline.compareTo(now)>0) ...[
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: _height * 0.015,
-                            ),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  firstButtonGradientColor,
-                                  firstButtonGradientColor,
-                                  secondButtonGradientColor
-                                ],
-                                begin: FractionalOffset.centerLeft,
-                                end: FractionalOffset.centerRight,
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                            ),
-                            child: FractionallySizedBox(
-                              widthFactor: 1,
-                              child: TextButton(
-                                child: Text(
-                                  'Register',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  insertIntoOnRegistration(id, eventName);
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                        SizedBox(height: _height * 0.015),
-                        if(eventDeadline.compareTo(now)<0) ...[
-                          Center(
-                            child: Text(
-                              'Event Date has passed\n'
-                                  'Contact 8828024246 for more details',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-
+                        ),
                       ],
-                    ),
+                      if (eventType == 'Everyone' &&
+                          eventDeadline.compareTo(now) > 0) ...[
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: _height * 0.015,
+                          ),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                firstButtonGradientColor,
+                                firstButtonGradientColor,
+                                secondButtonGradientColor
+                              ],
+                              begin: FractionalOffset.centerLeft,
+                              end: FractionalOffset.centerRight,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: FractionallySizedBox(
+                            widthFactor: 1,
+                            child: TextButton(
+                              child: Text(
+                                'Register',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () {
+                                showRegisterAlertDialog(
+                                    context, id, eventName, auth);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                      SizedBox(height: _height * 0.015),
+                      if (eventDeadline.compareTo(now) < 0) ...[
+                        Center(
+                          child: Text(
+                            'Event Date has passed\n'
+                            'Contact 8828024246 for more details',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
               ],
