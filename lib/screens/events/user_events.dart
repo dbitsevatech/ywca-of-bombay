@@ -30,7 +30,8 @@ class _EventsState extends State<Events> {
   // conversion of event date for displaying
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
-    String formattedEventDate = DateFormat('dd-MM-yyyy').format(newEventDate);
+    String formattedEventDate =
+        DateFormat('EEE | dd MMM, yyyy').format(newEventDate);
     return formattedEventDate;
   }
 
@@ -353,108 +354,6 @@ class _EventsState extends State<Events> {
                 );
               }).toList(),
             );
-          // return ListView(
-          //   padding: EdgeInsets.only(bottom: 80),
-          //   children: snapshot.data!.docs.map(
-          //     (DocumentSnapshot document) {
-          //       return Padding(
-          //         padding: EdgeInsets.symmetric(
-          //           vertical: 3,
-          //           horizontal: 10,
-          //         ),
-          //         child: Card(
-          //           child: ListTile(
-          //             leading: ClipRRect(
-          //               borderRadius: BorderRadius.all(
-          //                   Radius.circular(10.0)), //add border radius here
-          //               child: Image.network(
-          //                 document['eventImageUrl'],
-          //                 fit: BoxFit.cover,
-          //                 width: 120,
-          //               ), //add image location here
-          //             ),
-          //             // Event date and time
-          //             title: Text(
-          //               'Date:' +
-          //                   (readEventDate(document['eventDate'])) +
-          //                   '| Time:' +
-          //                   (document['eventTime']),
-          //               style: TextStyle(
-          //                 color: Color(0xFF49DEE8),
-          //                 fontSize: 14.0,
-          //                 fontWeight: FontWeight.normal,
-          //               ),
-          //             ),
-          //             subtitle: Column(
-          //               mainAxisAlignment: MainAxisAlignment.start,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: <Widget>[
-          //                 SizedBox(height: 5),
-          //                 // Event name
-          //                 Text(
-          //                   document['eventName'],
-          //                   style: TextStyle(
-          //                     color: Colors.black,
-          //                     fontSize: 16.0,
-          //                     fontWeight: FontWeight.bold,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Resource Person
-          //                 Text(
-          //                   'Resource Person: Sharon Pies',
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Venue
-          //                 Text(
-          //                   'Venue: ' + document['eventVenue'],
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //                 SizedBox(height: 5),
-          //                 // Event Amount
-          //                 Text(
-          //                   'Amount: ' + document['eventAmount'],
-          //                   style: TextStyle(
-          //                     fontSize: 11.0,
-          //                     fontWeight: FontWeight.normal,
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //             onTap: () {
-          //               // when clicked on the event, the user id is saved
-          //               // and if the user clicks again it is checked with the db
-          //               // if it already exists it is not inserted again for the same event
-          //               insertIntoOnClick(document.id, document['eventName']);
-          //
-          //               // opening detail page for particular event
-          //               gotoDetailEvent(
-          //                 context,
-          //                 document.id,
-          //                 document['eventAmount'],
-          //                 document['eventDescription'],
-          //                 document['eventName'],
-          //                 document['eventImageUrl'],
-          //                 document['eventVenue'],
-          //                 document['eventType'],
-          //                 document['eventDate'],
-          //                 document['eventDeadline'],
-          //                 document['eventTime'],
-          //               );
-          //             },
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ).toList(),
-          // );
         }
       },
     );
