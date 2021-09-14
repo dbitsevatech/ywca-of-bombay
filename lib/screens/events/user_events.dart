@@ -187,21 +187,6 @@ class _EventsState extends State<Events> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      // TextField(
-                      //   decoration: InputDecoration(
-                      //       hintText: "Search by venue",
-                      //       prefixIcon: Icon(
-                      //         Icons.search,
-                      //         color: Colors.grey,
-                      //       ),
-                      //       border: OutlineInputBorder(
-                      //         borderRadius: BorderRadius.circular(15),
-                      //         borderSide: BorderSide.none,
-                      //       ),
-                      //       contentPadding: EdgeInsets.zero,
-                      //       filled: true,
-                      //       fillColor: Colors.transparent),
-                      // ),
                     ],
                   ),
                 ),
@@ -324,6 +309,7 @@ class _EventsState extends State<Events> {
                         ],
                       ),
                       onTap: () {
+                        insertIntoOnClick(document.id, document['eventName']);
                         gotoDetailEvent(
                             context,
                             document.id,

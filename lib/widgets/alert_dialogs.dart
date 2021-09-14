@@ -59,7 +59,7 @@ Future<bool> showExitAlertDialog(context) async {
   );
 }
 
-Future<bool> showRegisterAlertDialog(
+Future<void> showRegisterAlertDialog(
   context,
   String eventID,
   String eventName,
@@ -133,7 +133,9 @@ void insertIntoOnRegistration(
       .then(
     (checkSnapshot) {
       if (checkSnapshot.size > 0) {
+        print("already added");
       } else {
+        print("adding");
         FirebaseFirestore.instance
             .collection('eventRegistration')
             .add({'eventID': eventID, 'userID': userID});
