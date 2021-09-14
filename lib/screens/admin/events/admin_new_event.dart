@@ -57,7 +57,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1940),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2040),
       helpText: 'Select Date of Event',
       fieldLabelText: 'Enter date of Event',
@@ -84,6 +84,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       });
     }
   }
+
   Future _selectDeadline(context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -119,8 +120,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       });
     }
   }
-
-
 
   // Image
   Future<void> captureImage(ImageSource imageSource) async {
@@ -161,7 +160,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       eventDeadline,
       eventTime,
       eventType) async {
-        goBackToPreviousScreen(context);
+    goBackToPreviousScreen(context);
     String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -183,8 +182,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventDeadline': eventDeadline,
       'eventTime': eventTime,
       'eventType': eventType
-    }).then((value) =>
-        FirebaseFirestore.instance
+    }).then((value) => FirebaseFirestore.instance
             .collection('eventsBackup')
             .doc(value.id)
             .set({
@@ -230,7 +228,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   @override
   Widget build(BuildContext context) {
-    bool _enabled=true;
+    bool _enabled = true;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -488,13 +486,12 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                         DateTimePicker(
                           type: DateTimePickerType.time,
                           timePickerEntryModeInput: true,
-                          initialValue: _controller4.text, 
+                          initialValue: _controller4.text,
                           icon: Icon(Icons.access_time),
                           timeLabelText: "Select Time",
                           use24HourFormat: true,
                           locale: Locale('pt', 'BR'),
-                          onChanged: (val) =>
-                              setState(() => _timeValue = val),
+                          onChanged: (val) => setState(() => _timeValue = val),
                           validator: (val) {
                             setState(() => _valueToValidate4 = val ?? '');
                             return null;

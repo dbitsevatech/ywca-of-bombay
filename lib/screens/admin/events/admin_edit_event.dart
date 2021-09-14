@@ -60,7 +60,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   DateTime selectedDateOfDeadline = DateTime.now();
   TextEditingController deadlineController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
@@ -92,14 +92,13 @@ class _EditEventScreenState extends State<EditEventScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDate,
-      firstDate: DateTime(1940),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-
             primaryColor: const Color(0xFF49dee8),
             accentColor: const Color(0xFF49dee8),
             colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
@@ -354,7 +353,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                           ),
                           onPressed: () async {
                             // Edit event image alertbox
-                             await showDialog(
+                            await showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
@@ -705,7 +704,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return;
                               }
                               _formKey.currentState!.save();
-                               await showDialog(
+                              await showDialog(
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
@@ -749,7 +748,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                               .update({
                                             'eventName': eventName,
                                             'eventDescription':
-                                            eventDescription,
+                                                eventDescription,
                                             'eventVenue': eventVenue,
                                             'eventAmount': eventAmount,
                                             'eventDate': eventDate,
