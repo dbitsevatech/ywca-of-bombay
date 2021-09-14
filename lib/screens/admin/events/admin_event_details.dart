@@ -153,11 +153,15 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
             onPressed: () {
               final RenderBox box = context.findRenderObject() as RenderBox;
               Share.share(
-                  eventName +
-                      '\n' +
-                      eventDescription +
-                      "\n\n Samara pires \n+91 8899696969 \nsamf@gmail.com\n\n" +
-                      "Shoba balla \n+91 98333 93953",
+                  "Event: $eventName" +
+                      "\nDescription: $eventDescription" +
+                      "\n\n Date: $formattedEventDate  Time: $eventTime" +
+                      "\nVenue: $eventVenue" +
+                      "\n\n Contact before $formattedDeadlineDate to register: " +
+                      "\nShoba Balla: +919833393953" +
+                      "\nMildin Nadar: +918828024246" +
+                      "\n\nDownload app from Google Play to register for the $eventName:" +
+                      "\nhttps://play.google.com/store/apps/details?id=com.sevatech.ywca",
                   sharePositionOrigin:
                       box.localToGlobal(Offset.zero) & box.size);
             },
