@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 import '../widgets/blue_bubble_design.dart';
 import '../widgets/constants.dart';
@@ -836,6 +837,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               print(userInfo.getmemberRole);
                               // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
+                                Vibration.vibrate(duration: 100);
                                 return;
                               }
                               _formKey.currentState!.save();
