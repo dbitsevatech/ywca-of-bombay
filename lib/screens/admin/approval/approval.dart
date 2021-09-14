@@ -8,7 +8,7 @@ import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
-import '../../../widgets/exit_popup.dart';
+import '../../../widgets/alert_dialogs.dart';
 
 // ignore: must_be_immutable
 class ApprovalScreen extends StatefulWidget {
@@ -31,7 +31,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [
@@ -114,7 +114,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -142,20 +141,17 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               child: CircularProgressIndicator(),
             );
           default:
-            if(snapshot.data!.docs.isEmpty)
-              {
-                return Center(
-                  child: Text(
-                    'No new requests yet!!!!',
-                  ),
-                );
-              }
-            else{
+            if (snapshot.data!.docs.isEmpty) {
+              return Center(
+                child: Text(
+                  'No new requests yet!!!!',
+                ),
+              );
+            } else {
               print(snapshot.data!.docs);
               return ListView(
                 padding: EdgeInsets.only(bottom: 80),
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
-
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                     child: Card(
@@ -209,8 +205,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                             SizedBox(height: 5),
                             // nearest ywca center
                             Text(
-                              'YWCA Center: ' +
-                                  (document['nearestCenter']),
+                              'YWCA Center: ' + (document['nearestCenter']),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14.0,
@@ -248,38 +243,40 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             TextButton(
                                               onPressed: () async {
                                                 Navigator.of(context,
-                                                    rootNavigator: true)
+                                                        rootNavigator: true)
                                                     .pop(true);
                                                 // update user table
                                                 await FirebaseFirestore.instance
                                                     .collection('users')
                                                     .doc(document.id)
                                                     .update({
-                                                  "address" : document['address'],
+                                                  "address":
+                                                      document['address'],
                                                   "firstName":
-                                                  document["firstName"],
+                                                      document["firstName"],
                                                   "lastName":
-                                                  document["lastName"],
+                                                      document["lastName"],
                                                   "dateOfBirth":
-                                                  document["dateOfBirth"],
-                                                  "emailId": document["emailId"],
+                                                      document["dateOfBirth"],
+                                                  "emailId":
+                                                      document["emailId"],
                                                   "gender": document["gender"],
                                                   "profession":
-                                                  document["profession"],
+                                                      document["profession"],
                                                   "placeOfWork":
-                                                  document["placeOfWork"],
+                                                      document["placeOfWork"],
                                                   "nearestCenter":
-                                                  document["nearestCenter"],
+                                                      document["nearestCenter"],
                                                   "interestInMembership":
-                                                  document[
-                                                  "interestInMembership"],
+                                                      document[
+                                                          "interestInMembership"],
                                                   "uid": document["uid"],
                                                   "phoneNumber":
-                                                  document["phoneNumber"],
+                                                      document["phoneNumber"],
                                                   "memberRole":
-                                                  document["memberRole"],
+                                                      document["memberRole"],
                                                 }).then((value) =>
-                                                    print("Approved"));
+                                                        print("Approved"));
                                                 // delete from approval
                                                 FirebaseFirestore.instance
                                                     .collection('approval')
@@ -295,7 +292,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
-                                    MaterialStateProperty.all(Colors.green),
+                                        MaterialStateProperty.all(Colors.green),
                                     padding: MaterialStateProperty.all(
                                         EdgeInsets.all(5)),
                                   ),
@@ -329,7 +326,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                             TextButton(
                                               onPressed: () async {
                                                 Navigator.of(context,
-                                                    rootNavigator: true)
+                                                        rootNavigator: true)
                                                     .pop(true);
                                                 // not approved
                                                 // change approvalStatus
@@ -337,7 +334,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                     .collection('approval')
                                                     .doc(document.id)
                                                     .update({
-                                                  'approvalStatus': 'notapproved'
+                                                  'approvalStatus':
+                                                      'notapproved'
                                                 });
                                                 setState(() {});
                                               },
@@ -350,7 +348,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                   },
                                   style: ButtonStyle(
                                     backgroundColor:
-                                    MaterialStateProperty.all(Colors.red),
+                                        MaterialStateProperty.all(Colors.red),
                                     padding: MaterialStateProperty.all(
                                         EdgeInsets.all(5)),
                                   ),
@@ -370,7 +368,6 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 }).toList(),
               );
             }
-
         }
       },
     );

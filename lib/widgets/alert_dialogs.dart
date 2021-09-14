@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'constants.dart';
 
-Future<bool> showExitPopup(context) async {
+Future<bool> showExitAlertDialog(context) async {
   return await showDialog(
     context: context,
     builder: (BuildContext context) {

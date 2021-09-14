@@ -2,7 +2,7 @@ import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 
 import 'constants.dart';
 import '../../drawers_constants/user_drawer.dart' as UserDrawer;
@@ -73,45 +73,45 @@ class _ContactUsState extends State<ContactUs> {
     _width = MediaQuery.of(context).size.width;
     print("item: $selectedMenuItemId");
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [
           (role == "Admin")
               ? // ADMIN DRAWER
-          SideDrawer(
-            percentage: 0.75, // main screen height proportion
-            headerView: AdminDrawer.header(context, userInfo),
-            footerView: AdminDrawer.footer(context, controller, userInfo),
-            color: successStoriesCardBgColor,
-            selectorColor: Colors.indigo[600],
-            menu: AdminDrawer.menuWithIcon,
-            animation: true,
-            selectedItemId: selectedMenuItemId,
-            onMenuItemSelected: (itemId) {
-              setState(() {
-                selectedMenuItemId = itemId;
-                AdminDrawer.selectedItem(context, itemId);
-              });
-            },
-          )
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: AdminDrawer.header(context, userInfo),
+                  footerView: AdminDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: AdminDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      AdminDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                )
               : // DRAWER FOR OTHER ROLES
-          SideDrawer(
-            percentage: 0.75, // main screen height proportion
-            headerView: UserDrawer.header(context, userInfo),
-            footerView: UserDrawer.footer(context, controller, userInfo),
-            color: successStoriesCardBgColor,
-            selectorColor: Colors.indigo[600],
-            menu: UserDrawer.menuWithIcon,
-            animation: true,
-            selectedItemId: selectedMenuItemId,
-            onMenuItemSelected: (itemId) {
-              setState(() {
-                selectedMenuItemId = itemId;
-                UserDrawer.selectedItem(context, itemId);
-              });
-            },
-          ),
+              SideDrawer(
+                  percentage: 0.75, // main screen height proportion
+                  headerView: UserDrawer.header(context, userInfo),
+                  footerView: UserDrawer.footer(context, controller, userInfo),
+                  color: successStoriesCardBgColor,
+                  selectorColor: Colors.indigo[600],
+                  menu: UserDrawer.menuWithIcon,
+                  animation: true,
+                  selectedItemId: selectedMenuItemId,
+                  onMenuItemSelected: (itemId) {
+                    setState(() {
+                      selectedMenuItemId = itemId;
+                      UserDrawer.selectedItem(context, itemId);
+                    });
+                  },
+                ),
         ],
         controller: controller,
         builder: (context, id) => SafeArea(
@@ -197,7 +197,7 @@ class _ContactUsState extends State<ContactUs> {
                           child: Container(
                             child: TabBar(
                               labelPadding:
-                              EdgeInsets.symmetric(horizontal: 10.0),
+                                  EdgeInsets.symmetric(horizontal: 10.0),
                               labelStyle: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Montserrat',
@@ -290,9 +290,9 @@ class _ContactUsState extends State<ContactUs> {
                     text: 'Email ID: ',
                     recognizer: new TapGestureRecognizer()
                       ..onTap = () => {
-                        print(emailId),
-                        sendEmail(context, emailId),
-                      },
+                            print(emailId),
+                            sendEmail(context, emailId),
+                          },
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.black87,
@@ -304,9 +304,9 @@ class _ContactUsState extends State<ContactUs> {
                     text: emailId,
                     recognizer: new TapGestureRecognizer()
                       ..onTap = () => {
-                        print(emailId),
-                        sendEmail(context, emailId),
-                      },
+                            print(emailId),
+                            sendEmail(context, emailId),
+                          },
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.blue,

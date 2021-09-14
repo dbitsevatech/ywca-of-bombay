@@ -13,7 +13,7 @@ import '../about_us/become_member.dart';
 import '../../models/User.dart';
 import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 import '../../widgets/zoom_image.dart';
 
 // ignore: must_be_immutable

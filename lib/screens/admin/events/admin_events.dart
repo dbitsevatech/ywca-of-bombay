@@ -4,7 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../widgets/exit_popup.dart';
+import '../../../widgets/alert_dialogs.dart';
 
 import 'admin_event_details.dart';
 import 'admin_edit_event.dart';
@@ -47,7 +47,7 @@ class _AdminEventsState extends State<AdminEvents> {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [
@@ -111,7 +111,7 @@ class _AdminEventsState extends State<AdminEvents> {
                       // or else it will overlap
                       SizedBox(height: 80),
                       Center(
-                        child:  RichText(
+                        child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
                             children: [
@@ -123,8 +123,8 @@ class _AdminEventsState extends State<AdminEvents> {
                                       fontWeight: FontWeight.bold)),
                               WidgetSpan(
                                 child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
                                   child: Icon(Icons.notification_important),
                                 ),
                               ),

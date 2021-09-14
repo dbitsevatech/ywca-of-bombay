@@ -10,7 +10,7 @@ import 'analytics_details.dart';
 
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
-import '../../../widgets/exit_popup.dart';
+import '../../../widgets/alert_dialogs.dart';
 import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 
@@ -234,7 +234,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     _width = size.width;
 
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         drawers: [
           SideDrawer(

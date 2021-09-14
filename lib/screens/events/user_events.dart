@@ -11,7 +11,7 @@ import '../../widgets/blue_bubble_design.dart';
 import '../../widgets/constants.dart';
 import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
-import '../../widgets/exit_popup.dart';
+import '../../widgets/alert_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -110,7 +110,7 @@ class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => showExitPopup(context),
+      onWillPop: () => showExitAlertDialog(context),
       child: DrawerScaffold(
         // appBar: AppBar(), // green app bar
         drawers: [
