@@ -142,7 +142,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
               child: CircularProgressIndicator(),
             );
           default:
-            if(snapshot.data!.docs == [])
+            if(snapshot.data!.docs.isEmpty)
               {
                 return Center(
                   child: Text(
@@ -151,6 +151,7 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                 );
               }
             else{
+              print(snapshot.data!.docs);
               return ListView(
                 padding: EdgeInsets.only(bottom: 80),
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {

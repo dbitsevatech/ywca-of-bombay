@@ -29,18 +29,7 @@ class _BecomeMemberScreenState extends State<BecomeMemberScreen> {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.share,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              //do something
-              // gotoSecondActivity(context);
-            },
-          ),
-        ],
+
       ),
       body: SingleChildScrollView(
         child: Container(
