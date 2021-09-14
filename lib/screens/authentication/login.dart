@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 import 'login_otp.dart';
 import 'register.dart';
@@ -86,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       FocusScope.of(context).unfocus();
       print("No user found");
+      Vibration.vibrate(duration: 100);
       _showNumberNotRegisteredSnackBar();
     }
   }
@@ -246,6 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             screenHeight: _height,
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
+                                Vibration.vibrate(duration: 100);
                                 return;
                               }
 
