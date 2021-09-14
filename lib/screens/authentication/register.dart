@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 
 import 'login.dart';
 import 'register_otp.dart';
@@ -150,6 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     } else {
       FocusScope.of(context).unfocus();
       print("PHONE NUMBER ALREADY REGISTERED! \n PROCEED TO LOG IN :)");
+      Vibration.vibrate(duration: 100);
       _showAlreadyRegisteredSnackBar();
     }
   }
@@ -574,6 +576,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             screenHeight: _height,
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
+                                Vibration.vibrate(duration: 100);
                                 return;
                               }
                               _formKey.currentState!.save();

@@ -197,7 +197,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       FocusScope.of(context).unfocus();
       print(e);
       print("Invalid OTP");
-
+      Vibration.vibrate(duration: 100);
       _showInvalidOTPSnackBar();
     }
   }

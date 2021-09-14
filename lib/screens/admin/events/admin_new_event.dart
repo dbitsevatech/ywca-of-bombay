@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:vibration/vibration.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
 import '../../../widgets/constants.dart';
@@ -632,6 +633,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             screenHeight: _height,
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
+                                Vibration.vibrate(duration: 100);
                                 return;
                               }
                               _formKey.currentState!.save();
