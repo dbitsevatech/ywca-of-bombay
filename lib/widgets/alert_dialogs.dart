@@ -85,6 +85,7 @@ Future<void> showRegisterAlertDialog(
                         // onRegister for counting registration by the user
                         insertIntoOnRegistration(eventID, eventName, auth);
                         Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       },
                       child: Text("Yes"),
                       style: ElevatedButton.styleFrom(
@@ -115,6 +116,31 @@ Future<void> showRegisterAlertDialog(
             ],
           ),
         ),
+      );
+    },
+  );
+}
+Future<void> showAlreadyRegisterAlertDialog(
+    context
+    ) async {
+  return await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('You are already registered to this event!'),
+
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'OK!',
+              ),
+            ),
+          ),
+        ],
       );
     },
   );

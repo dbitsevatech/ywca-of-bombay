@@ -42,7 +42,7 @@ class DetailPage extends StatefulWidget {
     required this.memberRole,
   });
   @override
-  _DetailPageState createState() => _DetailPageState(eventImageUrl);
+  _DetailPageState createState() => _DetailPageState(eventImageUrl,id);
 }
 
 class _DetailPageState extends State<DetailPage> {
@@ -52,11 +52,44 @@ class _DetailPageState extends State<DetailPage> {
   int _currentIndex = 0;
   String role = "";
   var now = new DateTime.now();
-  late String eventImageUrl;
-  _DetailPageState(this.eventImageUrl);
+  late String eventImageUrl, id, userID;
+  late bool registered;
+  _DetailPageState(this.eventImageUrl, this.id);
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validationGetText
+
+  @override
+  void initState() {
+    userInfo = Provider.of<UserData>(context, listen: false);
+    role = userInfo.getmemberRole;
+    userID =  userInfo.getuid;
+    checkIfRegistered();
+    super.initState();
+  }
+
+  void checkIfRegistered(){
+    FirebaseFirestore.instance
+        .collection('eventRegistration')
+        .where('eventID', isEqualTo: id)
+        .where('userID', isEqualTo: userID)
+        .get()
+        .then((value) {
+      if(value.size > 0){
+        setState(() {
+          registered =true;
+        });
+
+      }
+      else{
+        setState(() {
+          registered = false;
+        });
+      }
+
+    });
+  }
+
 
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
@@ -87,8 +120,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    userInfo = Provider.of<UserData>(context, listen: false);
-    role = userInfo.getmemberRole;
+
+
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
@@ -294,7 +327,7 @@ class _DetailPageState extends State<DetailPage> {
                       // Register button
                       if ((role == 'Member' || role == 'Staff') &&
                           eventType == 'Members only' &&
-                          eventDeadline.compareTo(now) >= -1) ...[
+                          eventDeadline.compareTo(now) >= 0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -315,7 +348,7 @@ class _DetailPageState extends State<DetailPage> {
                             widthFactor: 1,
                             child: TextButton(
                               child: Text(
-                                'Register',
+                                'Register!',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 20,
@@ -325,8 +358,14 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                showRegisterAlertDialog(
-                                    context, id, eventName, auth);
+                                if(registered){
+                                  showAlreadyRegisterAlertDialog(context);
+                                }
+                                else{
+                                  registered = true;
+                                  showRegisterAlertDialog(
+                                      context, id, eventName, auth);
+                                }
                               },
                             ),
                           ),
@@ -334,7 +373,7 @@ class _DetailPageState extends State<DetailPage> {
                       ],
                       if (role == 'NonMember' &&
                           eventType == 'Members only' &&
-                          eventDeadline.compareTo(now) >= -1) ...[
+                          eventDeadline.compareTo(now) >= 0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -372,7 +411,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ],
                       if (eventType == 'Everyone' &&
-                          eventDeadline.compareTo(now) >= -1) ...[
+                          eventDeadline.compareTo(now) >= 0) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -393,7 +432,7 @@ class _DetailPageState extends State<DetailPage> {
                             widthFactor: 1,
                             child: TextButton(
                               child: Text(
-                                'Register',
+                                'Register!',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 20,
@@ -403,15 +442,22 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                showRegisterAlertDialog(
-                                    context, id, eventName, auth);
+                                if(registered){
+                                  showAlreadyRegisterAlertDialog(context);
+                                }
+                                else{
+                                  registered = true;
+                                  showRegisterAlertDialog(
+                                      context, id, eventName, auth);
+                                }
+
                               },
                             ),
                           ),
                         ),
                       ],
                       SizedBox(height: _height * 0.015),
-                      if (eventDeadline.compareTo(now) < -1) ...[
+                      if (eventDeadline.compareTo(now) < 0) ...[
                         Center(
                           child: Text(
                             'Event Date has passed\n'
