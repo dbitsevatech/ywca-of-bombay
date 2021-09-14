@@ -90,7 +90,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1940),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',

@@ -126,7 +126,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: eventDeadline,
-      firstDate: DateTime(1940),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2040),
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',

@@ -108,7 +108,6 @@ class _DetailPageState extends State<DetailPage> {
     // event deadline
     String formattedDeadlineDate =
         DateFormat('dd MMM, yyyy').format(eventDeadline);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -295,7 +294,7 @@ class _DetailPageState extends State<DetailPage> {
                       // Register button
                       if ((role == 'Member' || role == 'Staff') &&
                           eventType == 'Members only' &&
-                          eventDeadline.compareTo(now) > 0) ...[
+                          eventDeadline.compareTo(now) >= -1) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -335,7 +334,7 @@ class _DetailPageState extends State<DetailPage> {
                       ],
                       if (role == 'NonMember' &&
                           eventType == 'Members only' &&
-                          eventDeadline.compareTo(now) > 0) ...[
+                          eventDeadline.compareTo(now) >= -1) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -373,7 +372,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ],
                       if (eventType == 'Everyone' &&
-                          eventDeadline.compareTo(now) > 0) ...[
+                          eventDeadline.compareTo(now) >= -1) ...[
                         Container(
                           padding: EdgeInsets.symmetric(
                             vertical: _height * 0.015,
@@ -412,7 +411,7 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ],
                       SizedBox(height: _height * 0.015),
-                      if (eventDeadline.compareTo(now) < 0) ...[
+                      if (eventDeadline.compareTo(now) < -1) ...[
                         Center(
                           child: Text(
                             'Event Date has passed\n'
