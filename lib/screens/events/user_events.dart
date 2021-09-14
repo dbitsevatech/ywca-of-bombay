@@ -31,7 +31,7 @@ class _EventsState extends State<Events> {
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
     String formattedEventDate =
-        DateFormat('EEE | dd MMM, yyyy').format(newEventDate);
+        DateFormat('EEE, dd MMM, yyyy').format(newEventDate);
     return formattedEventDate;
   }
 
@@ -176,7 +176,7 @@ class _EventsState extends State<Events> {
                       // or else it will overlap
                       SizedBox(height: 80),
                       Center(
-                        child:  RichText(
+                        child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyText2,
                             children: [
@@ -188,8 +188,8 @@ class _EventsState extends State<Events> {
                                       fontWeight: FontWeight.bold)),
                               WidgetSpan(
                                 child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 2.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 2.0),
                                   child: Icon(Icons.notification_important),
                                 ),
                               ),
