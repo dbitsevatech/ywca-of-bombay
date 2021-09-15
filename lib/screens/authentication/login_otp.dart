@@ -250,6 +250,7 @@ class _LoginOtpState extends State<LoginOtp>
       onTap: () {
         print("resend button pressed!");
         _hideResendButton = true;
+        Navigator.pop(context);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -278,20 +279,7 @@ class _LoginOtpState extends State<LoginOtp>
       phoneNumber: '+91$_phoneNumber',
       timeout: const Duration(seconds: 120),
       verificationCompleted: (PhoneAuthCredential credential) async {
-        await FirebaseAuth.instance
-            .signInWithCredential(credential)
-            .then((value) async {
-          if (value.user != null) {
-            if (userInfo.getmemberRole == 'none') {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Events()),
-                      (route) => false);
-            } else if (userInfo.getmemberRole == 'Admin') {
-
-            }
-          }
-        });
+        print("verification in progress");
       },
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);

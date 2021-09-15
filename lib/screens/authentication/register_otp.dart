@@ -130,20 +130,8 @@ class _RegisterOtpState extends State<RegisterOtp>
             .collection('users')
             .doc(value.user!.uid)
             .get();
-        print("register OTP page: ");
-        print(firstName);
-        print(lastName);
-        print(dateOfBirth);
-        print(emailId);
-        print(phoneNumber);
-        print(gender);
-        print(profession);
-        print(placeOfWork);
-        print(nearestCenter);
-        print(interestInMembership);
 
         if (!snapShot.exists) {
-
           Map<String, dynamic> data = {
             "uid": value.user!.uid,
             "firstName": firstName,
@@ -159,7 +147,6 @@ class _RegisterOtpState extends State<RegisterOtp>
             "memberRole": "NonMember",
             "address" : "",
           };
-          print("data map: " + data.toString());
           userInfo.updateAfterAuth(
               value.user!.uid,
               firstName,
@@ -178,13 +165,6 @@ class _RegisterOtpState extends State<RegisterOtp>
           FirebaseFirestore.instance.collection('users');
           users.doc(value.user!.uid).set(data);
 
-          FirebaseFirestore.instance.collection("users").get().then(
-                (querySnapshot) {
-              querySnapshot.docs.forEach((result) {
-                print(result.id);
-              });
-            },
-          );
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Events()),
@@ -352,17 +332,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       onTap: () {
         print("resend button pressed!");
         _hideResendButton = true;
-        print("register page: ");
-        print(firstName);
-        print(lastName);
-        print(dateOfBirth);
-        print(emailId);
-        print(phoneNumber);
-        print(gender);
-        print(profession);
-        print(placeOfWork);
-        print(nearestCenter);
-        print(interestInMembership);
+        Navigator.pop(context);
 
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -385,7 +355,6 @@ class _RegisterOtpState extends State<RegisterOtp>
   }
 
   // Register button
-  // TODO: Register button on OTP page not working
   get _registerButton {
     return FractionallySizedBox(
       widthFactor: 0.92, // button width wrt screen width
@@ -406,71 +375,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       phoneNumber: '+91$phoneNumber',
       timeout: const Duration(seconds: 120),
       verificationCompleted: (PhoneAuthCredential credential) async {
-        await FirebaseAuth.instance
-            .signInWithCredential(credential)
-            .then((value) async {
-          if (value.user != null) {
-            final snapShot = await FirebaseFirestore.instance
-                .collection('users')
-                .doc(value.user!.uid)
-                .get();
-            print("line 131");
-            print("register OTP page: ");
-            print(firstName);
-            print(lastName);
-            print(dateOfBirth);
-            print(emailId);
-            print(phoneNumber);
-            print(gender);
-            print(profession);
-            print(placeOfWork);
-            print(nearestCenter);
-            print(interestInMembership);
-
-            if (!snapShot.exists) {
-              // if (snapShot == null || !snapShot.exists) {
-              print(value.user);
-              print(value.user!.uid);
-              Map<String, dynamic> data = {
-                "uid": value.user!.uid,
-                "firstName": firstName,
-                "lastName": lastName,
-                "dateOfBirth": dateOfBirth,
-                "emailId": emailId,
-                "phoneNumber": phoneNumber,
-                "gender": gender,
-                "profession": profession,
-                "placeOfWork": placeOfWork,
-                "nearestCenter": nearestCenter,
-                "interestInMembership": interestInMembership,
-                "memberRole": "NonMember"
-              };
-              print("data map: " + data.toString());
-              userInfo.updateAfterAuth(
-                value.user!.uid,
-                firstName,
-                lastName,
-                dateOfBirth,
-                emailId,
-                phoneNumber,
-                gender,
-                profession,
-                placeOfWork,
-                nearestCenter,
-                interestInMembership,
-                "NonMember",
-              );
-              CollectionReference<Map<String, dynamic>> users =
-              FirebaseFirestore.instance.collection('users');
-              users.doc(value.user!.uid).set(data);
-
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Events()),
-                      (route) => false);
-            }
-          }
-        });
+      print("verification in process");
       },
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
