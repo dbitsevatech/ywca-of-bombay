@@ -25,7 +25,7 @@ class LoginOtp extends StatefulWidget {
 class _LoginOtpState extends State<LoginOtp>
     with SingleTickerProviderStateMixin {
   // Constants
-  final int time = 90;
+  final int time = 60;
   var userInfo;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
@@ -277,7 +277,7 @@ class _LoginOtpState extends State<LoginOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$_phoneNumber',
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 30),
       verificationCompleted: (PhoneAuthCredential credential) async {
         print("verification in progress");
       },
@@ -390,17 +390,17 @@ class _LoginOtpState extends State<LoginOtp>
                       onPressed: () {
                         Vibration.vibrate(duration: 40);
                         setState(() {
-                          if (_sixthDigit > 0) {
+                          if (_sixthDigit > -1) {
                             _sixthDigit = -1;
-                          } else if (_fifthDigit > 0) {
+                          } else if (_fifthDigit > -1) {
                             _fifthDigit = -1;
-                          } else if (_fourthDigit > 0) {
+                          } else if (_fourthDigit > -1) {
                             _fourthDigit = -1;
-                          } else if (_thirdDigit > 0) {
+                          } else if (_thirdDigit > -1) {
                             _thirdDigit = -1;
-                          } else if (_secondDigit > 0) {
+                          } else if (_secondDigit > -1) {
                             _secondDigit = -1;
-                          } else if (_firstDigit > 0) {
+                          } else if (_firstDigit > -1) {
                             _firstDigit = -1;
                           }
                         });

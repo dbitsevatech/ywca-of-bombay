@@ -243,8 +243,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onPressed: () {
                               _onBackPressed();
                             },
-                            // onPressed: () => Navigator.of(context).pop(true),
-                            // onPressed: () => Navigator.pop(context),
                           ),
                         ),
                       ),
@@ -892,24 +890,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "phoneNumber": userInfo.getphoneNumber,
                                       "memberRole": userInfo.getmemberRole,
                                     })
-                                    .then((value) => Navigator.pop(context)
+                                    .then((value)
+                                    async {
+                                      await userInfo.updateAfterAuth(
+                                          uid,
+                                          firstName,
+                                          lastName,
+                                          dateOfBirth,
+                                          email,
+                                          phoneNumber,
+                                          gender,
+                                          profession,
+                                          placeOfWork,
+                                          nearestCenter,
+                                          interestInMembership,
+                                          userInfo.getmemberRole,
+                                          address);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    }
                                 )
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
-                                await userInfo.updateAfterAuth(
-                                    uid,
-                                    firstName,
-                                    lastName,
-                                    dateOfBirth,
-                                    email,
-                                    phoneNumber,
-                                    gender,
-                                    profession,
-                                    placeOfWork,
-                                    nearestCenter,
-                                    interestInMembership,
-                                    userInfo.getmemberRole,
-                                    address);
+
                               }
 
                               // Navigator.pop(context);

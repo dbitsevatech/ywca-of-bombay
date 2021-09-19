@@ -56,7 +56,7 @@ class _RegisterOtpState extends State<RegisterOtp>
     with SingleTickerProviderStateMixin {
   // Constants
   var userInfo;
-  final int time = 59;
+  final int time = 60;
   final String firstName;
   final String lastName;
   final DateTime dateOfBirth;
@@ -333,7 +333,6 @@ class _RegisterOtpState extends State<RegisterOtp>
         print("resend button pressed!");
         _hideResendButton = true;
         Navigator.pop(context);
-
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => RegisterOtp(
@@ -373,7 +372,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$phoneNumber',
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 30),
       verificationCompleted: (PhoneAuthCredential credential) async {
       print("verification in process");
       },
