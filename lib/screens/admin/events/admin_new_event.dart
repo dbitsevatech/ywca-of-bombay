@@ -182,7 +182,9 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventImageUrl': url,
       'eventDeadline': eventDeadline,
       'eventTime': eventTime,
-      'eventType': eventType
+      'eventType': eventType,
+      'eventClickCount' : 0,
+      'eventRegisterCount' : 0
     }).then((value) => FirebaseFirestore.instance
             .collection('eventsBackup')
             .doc(value.id)

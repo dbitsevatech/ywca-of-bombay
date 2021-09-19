@@ -34,43 +34,43 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   List<Widget> itemsData = [];
 
-  Future downloadData() async {
+    Future downloadData() async {
     await FirebaseFirestore.instance
-        .collection("eventsBackup")
+        .collection("events")
         .orderBy('eventDate', descending: true)
         .get()
         .then((querySnapshot) async {
       querySnapshot.docs.forEach((result) {
         responseList.add({
           'eventName': result.data()["eventName"],
-          'clicks': 0,
-          'registrations': 0,
+          'clicks': result.data()["eventClickCount"],
+          'registrations': result.data()["eventRegisterCount"],
           'eventID': result.id,
           'date': DateFormat('dd MMM, yyyy EEE, hh:mm aaa')
               .format(result.data()["eventDate"].toDate()),
         });
       });
-      responseList.forEach((event) {
-        FirebaseFirestore.instance
-            .collection('eventRegistration')
-            .where('eventID', isEqualTo: event["eventID"])
-            .get()
-            .then((querySnapshot) {
-          event["registrations"] += querySnapshot.size;
-        });
-        FirebaseFirestore.instance
-            .collection('eventClick')
-            .where('eventID', isEqualTo: event["eventID"])
-            .get()
-            .then((querySnapshot) {
-          event["clicks"] += querySnapshot.size;
-        });
-      });
+      // responseList.forEach((event) {
+      //   FirebaseFirestore.instance
+      //       .collection('eventRegistration')
+      //       .where('eventID', isEqualTo: event["eventID"])
+      //       .get()
+      //       .then((querySnapshot) {
+      //     event["registrations"] += querySnapshot.size;
+      //   });
+      //   FirebaseFirestore.instance
+      //       .collection('eventClick')
+      //       .where('eventID', isEqualTo: event["eventID"])
+      //       .get()
+      //       .then((querySnapshot) {
+      //     event["clicks"] += querySnapshot.size;
+      //   });
+      // });
     });
 
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     getPostsData();
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     return responseList; // return your response
   }
 

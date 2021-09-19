@@ -162,6 +162,12 @@ void insertIntoOnRegistration(
         print("already added");
       } else {
         print("adding");
+        // incrementing eventRegisterClick in events
+        final DocumentReference docRef = FirebaseFirestore
+        .instance
+        .collection("events")
+        .doc(eventID);
+        docRef.update({"eventRegisterCount": FieldValue.increment(1)});
         FirebaseFirestore.instance
             .collection('eventRegistration')
             .add({'eventID': eventID, 'userID': userID});
