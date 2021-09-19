@@ -63,6 +63,7 @@ class _EventsState extends State<Events> {
   void insertIntoOnClick(String eventID, String eventName) async {
     final User? user = auth.currentUser;
     final userID = user?.uid;
+    // adding to eventClick
     FirebaseFirestore.instance
         .collection('eventClick')
         .where('eventID', isEqualTo: eventID)
@@ -71,6 +72,12 @@ class _EventsState extends State<Events> {
         .then((checkSnapshot) {
       if (checkSnapshot.size > 0) {
       } else {
+        // incrementing eventClickCount in events
+        final DocumentReference docRef = FirebaseFirestore
+        .instance
+        .collection("events")
+        .doc(eventID);
+        docRef.update({"eventClickCount": FieldValue.increment(1)});
         print("adding");
         FirebaseFirestore.instance
             .collection('eventClick')
