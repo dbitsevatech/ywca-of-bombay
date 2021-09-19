@@ -372,7 +372,7 @@ class _RegisterOtpState extends State<RegisterOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$phoneNumber',
-      timeout: const Duration(seconds: 30),
+      timeout: const Duration(seconds: 50),
       verificationCompleted: (PhoneAuthCredential credential) async {
       print("verification in process");
       },

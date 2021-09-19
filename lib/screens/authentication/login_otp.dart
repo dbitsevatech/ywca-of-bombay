@@ -277,7 +277,7 @@ class _LoginOtpState extends State<LoginOtp>
   _verifyPhoneNumber() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: '+91$_phoneNumber',
-      timeout: const Duration(seconds: 30),
+      timeout: const Duration(seconds: 50),
       verificationCompleted: (PhoneAuthCredential credential) async {
         print("verification in progress");
       },
