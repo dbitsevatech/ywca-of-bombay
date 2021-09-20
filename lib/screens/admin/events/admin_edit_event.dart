@@ -5,7 +5,6 @@ import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 import 'admin_edit_event_image.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
@@ -44,14 +43,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
   String eventVenue = "";
   String eventType = "Everyone";
   late DateTime eventDate, eventDeadline;
-  String eventTime = "";
-
-  // Variables for TimePicker
-  String _valueChanged4 = '';
-  String _valueToValidate4 = '';
-  String _valueSaved4 = '';
-  late TextEditingController _controller4;
-  TextEditingController timeController = TextEditingController();
+  // time
+  String? _selectedTime;
 
   // Variables for Date of event and Deadline
   DateTime selectedDateOfEvent = DateTime.now();
@@ -65,13 +58,14 @@ class _EditEventScreenState extends State<EditEventScreen> {
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
-  Future<void> _getValue() async {
-    await Future.delayed(const Duration(seconds: 3), () {
+  Future<void> _show(context) async {
+    final TimeOfDay? result =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (result != null) {
       setState(() {
-        //_initialValue = '2000-10-22 14:30';
-        _controller4.text = '17:01';
+        _selectedTime = result.format(context);
       });
-    });
+    }
   }
 
   // everyone-0, members only-1
@@ -215,8 +209,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
     eventVenue = widget.eventVenue;
     eventImageUrl = widget.eventImageUrl;
     eventDate = widget.eventDate;
-    eventTime = widget.eventTime;
     eventType = widget.eventType;
+    _selectedTime = widget.eventTime;
     eventDeadline = widget.eventDeadline;
     if (eventType == "Members only") {
       _eventTypeRadioValue = 1;
@@ -573,24 +567,57 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                   "${eventDate.toLocal()}".split(' ')[0];
                             },
                           ),
-                          DateTimePicker(
-                            type: DateTimePickerType.time,
-                            timePickerEntryModeInput: true,
-                            // controller: _controller4,
-                            initialValue: eventTime, //_initialValue,
-                            icon: Icon(Icons.access_time),
-                            timeLabelText: "Select Time",
-                            use24HourFormat: true,
-                            locale: Locale('pt', 'BR'),
-                            onChanged: (val) =>
-                                setState(() => _valueChanged4 = val),
-                            validator: (val) {
-                              setState(() => _valueToValidate4 = val ?? '');
-                              return null;
-                            },
-                            onSaved: (val) =>
-                                setState(() => _valueSaved4 = val ?? ''),
+                          // Event Time
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                0.0, 0.0, _width * 0.4, 0.0),
+                            child: Text(
+                              'Select Event Time',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: primaryColor,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Montserrat',
+                              ),
+                            ),
                           ),
+                          SizedBox(height: _height * 0.015),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                0.0, 0.0, _width * 0.3, 0.0),
+                            child: GestureDetector(
+                              onTap: () => {
+                                _show(context),
+                              },
+                              child: Text(
+                                _selectedTime != null
+                                    ? _selectedTime!
+                                    : 'Click here to select time!',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // DateTimePicker(
+                          //   type: DateTimePickerType.time,
+                          //   timePickerEntryModeInput: true,
+                          //   // controller: _controller4,
+                          //   initialValue: eventTime, //_initialValue,
+                          //   icon: Icon(Icons.access_time),
+                          //   timeLabelText: "Select Time",
+                          //   use24HourFormat: true,
+                          //   locale: Locale('pt', 'BR'),
+                          //   onChanged: (val) =>
+                          //       setState(() => _valueChanged4 = val),
+                          //   validator: (val) {
+                          //     setState(() => _valueToValidate4 = val ?? '');
+                          //     return null;
+                          //   },
+                          //   onSaved: (val) =>
+                          //       setState(() => _valueSaved4 = val ?? ''),
+                          // ),
 
                           SizedBox(height: _height * 0.015),
                           // Deadline to register
@@ -738,7 +765,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventVenue': eventVenue,
                                             'eventAmount': eventAmount,
                                             'eventDate': eventDate,
-                                            'eventTime': _valueChanged4,
+                                            'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
                                             'eventType': eventType
                                           });
@@ -752,7 +779,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventVenue': eventVenue,
                                             'eventAmount': eventAmount,
                                             'eventDate': eventDate,
-                                            'eventTime': _valueChanged4,
+                                            'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
                                             'eventType': eventType
                                           });

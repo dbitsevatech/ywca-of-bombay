@@ -42,54 +42,46 @@ class DetailPage extends StatefulWidget {
     required this.memberRole,
   });
   @override
-  _DetailPageState createState() => _DetailPageState(eventImageUrl,id);
+  _DetailPageState createState() => _DetailPageState(eventImageUrl, id);
 }
 
 class _DetailPageState extends State<DetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
   String memberRole = "";
-  int _currentIndex = 0;
   String role = "";
   var now = new DateTime.now();
   late String eventImageUrl, id, userID;
   late bool registered;
   _DetailPageState(this.eventImageUrl, this.id);
 
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationGetText
-
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     role = userInfo.getmemberRole;
-    userID =  userInfo.getuid;
+    userID = userInfo.getuid;
     checkIfRegistered();
     super.initState();
   }
 
-  void checkIfRegistered(){
+  void checkIfRegistered() {
     FirebaseFirestore.instance
         .collection('eventRegistration')
         .where('eventID', isEqualTo: id)
         .where('userID', isEqualTo: userID)
         .get()
         .then((value) {
-      if(value.size > 0){
+      if (value.size > 0) {
         setState(() {
-          registered =true;
+          registered = true;
         });
-
-      }
-      else{
+      } else {
         setState(() {
           registered = false;
         });
       }
-
     });
   }
-
 
   Widget _buildImage() {
     // ignore: unnecessary_null_comparison
@@ -120,8 +112,6 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // fetching the values
@@ -136,11 +126,10 @@ class _DetailPageState extends State<DetailPage> {
     DateTime eventDeadline = widget.eventDeadline;
     String eventTime = widget.eventTime;
     // event date
-    String formattedEventDate =
-        DateFormat('EEE | dd MMM, yyyy').format(eventDate);
+    String formattedEventDate = DateFormat('dd MMM, yyyy').format(eventDate);
     // event deadline
     String formattedDeadlineDate =
-        DateFormat('dd MMM, yyyy').format(eventDeadline);
+        DateFormat('dd MMM yyyy').format(eventDeadline);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -201,7 +190,7 @@ class _DetailPageState extends State<DetailPage> {
 
                 // show it when the event is for members and the user is not a member
                 // then become a member button is show
-                if (role == 'NonMember' && eventType == 'Everyone' ) ...[
+                if (role == 'NonMember' && eventType == 'Everyone') ...[
                   Padding(
                       padding: EdgeInsets.fromLTRB(_width * 0.35, 0, 0, 0),
                       child: ElevatedButton(
@@ -233,94 +222,118 @@ class _DetailPageState extends State<DetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       // Event title
-                      Text(
-                        eventName,
-                        style: TextStyle(
-                          fontSize: 26,
-                          color: Color(0xff000000),
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          eventName,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: _height * 0.015,
                       ),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Icon(Icons.calendar_today_outlined),
+                            ),
+                            TextSpan(
+                              text: " "+formattedEventDate + ", " + eventTime,
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " | ",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.location_on),
+                            ),
+                            TextSpan(
+                              text: eventVenue,
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ),
                       SizedBox(
                         height: _height * 0.015,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Venue
-                          Text(
-                            'Venue: ' + eventVenue,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          eventDescription,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.normal,
                           ),
-                          SizedBox(height: 5),
-                          // Event time
-                          Text(
-                            // TODO: Time in 12 hr format (AM/PM)
-                            'Time: ' + eventTime,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Amount
-                          Text(
-                            'Amount: ' + eventAmount,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          // Event date
-                          Text(
-                            'Date: ' + formattedEventDate,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Type
-                          Text(
-                            'Event for: ' + eventType,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          // Event registration deadline
-                          Text(
-                            'Deadline: ' + formattedDeadlineDate,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                       SizedBox(height: _height * 0.015),
-                      // Event description
-                      Text(
-                        eventDescription,
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          '₹ ' + eventAmount,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          'Event for: ' + eventType,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          '❌ Deadline: ' + formattedDeadlineDate,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       SizedBox(height: _height * 0.015),
@@ -358,10 +371,9 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                if(registered){
+                                if (registered) {
                                   showAlreadyRegisterAlertDialog(context);
-                                }
-                                else{
+                                } else {
                                   registered = true;
                                   showRegisterAlertDialog(
                                       context, id, eventName, auth);
@@ -442,15 +454,13 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               onPressed: () {
-                                if(registered){
+                                if (registered) {
                                   showAlreadyRegisterAlertDialog(context);
-                                }
-                                else{
+                                } else {
                                   registered = true;
                                   showRegisterAlertDialog(
                                       context, id, eventName, auth);
                                 }
-
                               },
                             ),
                           ),

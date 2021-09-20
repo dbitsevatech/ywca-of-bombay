@@ -10,9 +10,9 @@ import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import '../../../widgets/gradient_button.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class AdminNewEvent extends StatefulWidget {
@@ -24,33 +24,31 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   String eventTitle = "";
   String eventDescription = "";
   String eventVenue = "";
+  String eventTime = "";
   String eventAmount = "";
   String eventImageUrl = "";
   String eventType = "Everyone";
-  // Time picker variables
-  String _timeValue = '';
-  String _valueToValidate4 = '';
-  String _valueSaved4 = '';
   // image path variable
   File? _image;
   DateTime eventDate = DateTime.now();
   DateTime eventDeadline = DateTime.now();
+  // time
+  String? _selectedTime;
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
   TextEditingController deadlineController = TextEditingController();
-  TextEditingController timeController = TextEditingController();
-  late TextEditingController _controller4;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Future<void> _getValue() async {
-    await Future.delayed(const Duration(seconds: 3), () {
-      if (!mounted) return;
+  Future<void> _show(context) async {
+    final TimeOfDay? result =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (result != null) {
       setState(() {
-        _controller4.text = '17:01';
+        _selectedTime = result.format(context);
       });
-    });
+    }
   }
 
   Future _selectDate(context) async {
@@ -183,8 +181,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventDeadline': eventDeadline,
       'eventTime': eventTime,
       'eventType': eventType,
-      'eventClickCount' : 0,
-      'eventRegisterCount' : 0
+      'eventClickCount': 0,
+      'eventRegisterCount': 0
     }).then((value) => FirebaseFirestore.instance
             .collection('eventsBackup')
             .doc(value.id)
@@ -218,11 +216,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   @override
   void initState() {
     Intl.defaultLocale = 'pt_BR';
-    _controller4 = TextEditingController(text: DateTime.now().toString());
-    String lsHour = TimeOfDay.now().hour.toString().padLeft(2, '0');
-    String lsMinute = TimeOfDay.now().minute.toString().padLeft(2, '0');
-    _controller4 = TextEditingController(text: '$lsHour:$lsMinute');
-    _getValue();
     setState(() {
       eventType = "Everyone";
     });
@@ -486,22 +479,87 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           },
                         ),
                         SizedBox(height: _height * 0.015),
-                        DateTimePicker(
-                          type: DateTimePickerType.time,
-                          timePickerEntryModeInput: true,
-                          initialValue: _controller4.text,
-                          icon: Icon(Icons.access_time),
-                          timeLabelText: "Select Time",
-                          use24HourFormat: true,
-                          locale: Locale('pt', 'BR'),
-                          onChanged: (val) => setState(() => _timeValue = val),
-                          validator: (val) {
-                            setState(() => _valueToValidate4 = val ?? '');
-                            return null;
-                          },
-                          onSaved: (val) =>
-                              setState(() => _valueSaved4 = val ?? ''),
+                        // Event Time
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.4, 0.0),
+                        child: Text(
+                          'Select Event Time',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: primaryColor,
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Montserrat',
+                          ),
                         ),
+                        ),
+                        SizedBox(height: _height * 0.015),
+                        Padding(
+                          padding:
+                              EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.3, 0.0),
+                          child: GestureDetector(
+                            onTap: () => {
+                              _show(context),
+                            },
+                            child: 
+                            Text(
+                              _selectedTime != null
+                                  ? _selectedTime!
+                                  : 'Click here to select time!',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Event time
+                        // TextFormField(
+                        //   onTap: () => {
+                        //     _show(context),
+                        //   },
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       eventTime = value;
+                        //     });
+                        //   },
+                        //   validator: (value) {
+                        //     if (value!.isEmpty)
+                        //       return 'Event time is required';
+                        //     else
+                        //       return null;
+                        //   },
+                        //   decoration: InputDecoration(
+                        //     labelText: _selectedTime != null
+                        //         ? _selectedTime!
+                        //         : 'Select Time',
+                        //     filled: true,
+                        //     fillColor: formFieldFillColor,
+                        //     disabledBorder: InputBorder.none,
+                        //     focusedBorder: InputBorder.none,
+                        //     enabledBorder: InputBorder.none,
+                        //     errorBorder: InputBorder.none,
+                        //   ),
+                        //   style: TextStyle(
+                        //     fontFamily: 'Montserrat',
+                        //     fontSize: 16,
+                        //   ),
+                        // ),
+                        // DateTimePicker(
+                        //   type: DateTimePickerType.time,
+                        //   timePickerEntryModeInput: true,
+                        //   initialValue: _controller4.text,
+                        //   icon: Icon(Icons.access_time),
+                        //   timeLabelText: "Select Time",
+                        //   use24HourFormat: true,
+                        //   locale: Locale('pt', 'BR'),
+                        //   onChanged: (val) => setState(() => _timeValue = val),
+                        //   validator: (val) {
+                        //     setState(() => _valueToValidate4 = val ?? '');
+                        //     return null;
+                        //   },
+                        //   onSaved: (val) =>
+                        //       setState(() => _valueSaved4 = val ?? ''),
+                        // ),
                         SizedBox(height: _height * 0.015),
                         //Deadline of Event
                         TextFormField(
@@ -644,7 +702,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                   eventAmount,
                                   eventDate,
                                   eventDeadline,
-                                  _timeValue,
+                                  _selectedTime,
                                   eventType);
                             },
                           ),
