@@ -40,13 +40,10 @@ class AdminEventDetailPage extends StatefulWidget {
 
 class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  int _currentIndex = 0;
   late String id;
   late String eventImageUrl;
   int clicks = 0;
   int registrations = 0;
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>(); // form key for validationgetText
 
   _AdminEventDetailPageState(this.id, this.eventImageUrl);
 
@@ -121,12 +118,11 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String eventTime = widget.eventTime;
 
     // event date conversion to string for displaying
-    String formattedEventDate =
-        DateFormat('EEE, dd MMM, yyyy').format(eventDate);
+    String formattedEventDate = DateFormat('dd MMM, yyyy').format(eventDate);
 
     // event deadline conversion to string for displaying
     String formattedDeadlineDate =
-        DateFormat('dd MMM, yyyy').format(eventDeadline);
+        DateFormat('dd MMM yyyy').format(eventDeadline);
 
     return Scaffold(
       appBar: AppBar(
@@ -200,116 +196,145 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       // Event title
-                      Text(
-                        eventName,
-                        style: TextStyle(
-                          fontSize: 26,
-                          color: Color(0xff000000),
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          eventName,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: _height * 0.015,
-                      ),
-                      SizedBox(
-                        height: _height * 0.015,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Venue
-                          Text(
-                            'Venue: ' + eventVenue,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // Event time
-                          Text(
-                            // TODO: Time in 12 hr format (AM/PM)
-                            'Time: ' + eventTime,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Amount
-                          Text(
-                            'Amount: ' + eventAmount,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          // Event date
-                          Text(
-                            'Date: ' + formattedEventDate,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Event Type
-                          Text(
-                            'Event for: ' + eventType,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          // Event registration deadline
-                          Text(
-                            'Deadline: ' + formattedDeadlineDate,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                        ],
                       ),
                       SizedBox(height: _height * 0.015),
-                      // Event description
-                      Text(
-                        eventDescription,
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 20,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Icon(Icons.calendar_today_outlined),
+                            ),
+                            TextSpan(
+                              text: " "+formattedEventDate + ", " + eventTime,
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                            TextSpan(
+                              text: " | ",
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                            WidgetSpan(
+                              child: Icon(Icons.location_on),
+                            ),
+                            TextSpan(
+                              text: eventVenue,
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          eventDescription,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: _height * 0.015,
                       ),
-                      // Event venue
-                      Text(
-                        'Clicks:  ' + clicks.toString(),
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 16,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          '₹ ' + eventAmount,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          'Event for: ' + eventType,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: _height * 0.015),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          '❌ Deadline: ' + formattedDeadlineDate,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: _height * 0.015,
                       ),
-                      // Event venue
-                      Text(
-                        'Registrations: ' + registrations.toString(),
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 16,
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          'Clicks:  ' + clicks.toString(),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: _height * 0.015,
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
+                        child: Text(
+                          'Registrations: ' + registrations.toString(),
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       //Deadline of Event

@@ -50,6 +50,7 @@ dependencies:
   share: ^2.0.4
   open_mail_app: ^0.3.0
   flutter_phone_direct_caller: ^2.0.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
