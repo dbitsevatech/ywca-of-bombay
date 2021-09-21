@@ -328,12 +328,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 lastName = value!;
                               });
                             },
-                            validator: (value) {
-                              if (value!.isEmpty)
-                                return 'Last name is required.';
-                              else
-                                return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty)
+                            //     return 'Last name is required.';
+                            //   else
+                            //     return null;
+                            // },
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.account_circle,
@@ -358,6 +358,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           SizedBox(height: _height * 0.015),
                           TextFormField(
+                            readOnly: true,
                             // initialValue: DateFormat('yyyy-MM-dd').format(Provider.of<UserData>(context, listen:false).getdateOfBirth).toString(),
                             // keyboardType: TextInputType.datetime,
                             onChanged: (value) {
@@ -404,18 +405,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 email = value!;
                               });
                             },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Email is required';
-                              }
-                              if (!RegExp(
-                                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                                  .hasMatch(value)) {
-                                return 'Enter a valid email address';
-                              }
-                              // return null coz validator has to return something
-                              return null;
-                            },
+                            // validator: (value) {
+                            //   if (value!.isEmpty) {
+                            //     return 'Email is required';
+                            //   }
+                            //   if (!RegExp(
+                            //           "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                            //       .hasMatch(value)) {
+                            //     return 'Enter a valid email address';
+                            //   }
+                            //   // return null coz validator has to return something
+                            //   return null;
+                            // },
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.email,
@@ -729,6 +730,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ),
                           SizedBox(height: 10),
+                          if(role != "Member")
                           Text(
                             'Interested in being a member?',
                             style: TextStyle(
@@ -738,6 +740,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               fontFamily: 'Montserrat',
                             ),
                           ),
+                          if(role != "Member")
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[

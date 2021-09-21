@@ -59,6 +59,28 @@ Future<bool> showExitAlertDialog(context) async {
   );
 }
 
+    Future<dynamic> savePressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+              'You have been successfully registered for this event!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Continue'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                Navigator.of(context).pop(true);
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 Future<void> showRegisterAlertDialog(
   context,
   String eventID,
@@ -84,8 +106,9 @@ Future<void> showRegisterAlertDialog(
                         print('yes selected');
                         // onRegister for counting registration by the user
                         insertIntoOnRegistration(eventID, eventName, auth);
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
+                        savePressed(context);
+                        // Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                       },
                       child: Text("Yes"),
                       style: ElevatedButton.styleFrom(

@@ -325,12 +325,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 lastName = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value!.isEmpty)
-                                return 'Last name is required.';
-                              else
-                                return null;
-                            },
+                            // validator: (String? value) {
+                            //   if (value!.isEmpty)
+                            //     return 'Last name is required.';
+                            //   else
+                            //     return null;
+                            // },
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 16,
@@ -359,6 +359,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           SizedBox(height: _height * 0.015),
                           TextFormField(
+                            readOnly: true,
                             onChanged: (value) {},
                             controller: dateController,
                             style: TextStyle(
@@ -402,18 +403,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 emailId = value!;
                               });
                             },
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Email is required';
-                              }
-                              if (!RegExp(
-                                      "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                                  .hasMatch(value)) {
-                                return 'Enter a valid email address';
-                              }
-                              // return null coz validator has to return something
-                              return null;
-                            },
+                            // validator: (String? value) {
+                            //   if (value!.isEmpty) {
+                            //     return 'Email is required';
+                            //   }
+                            //   if (!RegExp(
+                            //           "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
+                            //       .hasMatch(value)) {
+                            //     return 'Enter a valid email address';
+                            //   }
+                            //   // return null coz validator has to return something
+                            //   return null;
+                            // },
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 16,
