@@ -328,12 +328,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 lastName = value!;
                               });
                             },
-                            // validator: (value) {
-                            //   if (value!.isEmpty)
-                            //     return 'Last name is required.';
-                            //   else
-                            //     return null;
-                            // },
+                            validator: (value) {
+                              if (value!.isEmpty)
+                                return 'Last name is required.';
+                              else
+                                return null;
+                            },
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.account_circle,

@@ -325,12 +325,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 lastName = value!;
                               });
                             },
-                            // validator: (String? value) {
-                            //   if (value!.isEmpty)
-                            //     return 'Last name is required.';
-                            //   else
-                            //     return null;
-                            // },
+                            validator: (String? value) {
+                              if (value!.isEmpty)
+                                return 'Last name is required.';
+                              else
+                                return null;
+                            },
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontSize: 16,
