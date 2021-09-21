@@ -438,9 +438,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                         SizedBox(
                           height: _height * 0.015,
                         ),
-
-                        //Date of Event
                         TextFormField(
+                          readOnly: true,
                           onChanged: (value) {
                             setState(() {});
                           },
@@ -512,57 +511,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             ),
                           ),
                         ),
-                        // Event time
-                        // TextFormField(
-                        //   onTap: () => {
-                        //     _show(context),
-                        //   },
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       eventTime = value;
-                        //     });
-                        //   },
-                        //   validator: (value) {
-                        //     if (value!.isEmpty)
-                        //       return 'Event time is required';
-                        //     else
-                        //       return null;
-                        //   },
-                        //   decoration: InputDecoration(
-                        //     labelText: _selectedTime != null
-                        //         ? _selectedTime!
-                        //         : 'Select Time',
-                        //     filled: true,
-                        //     fillColor: formFieldFillColor,
-                        //     disabledBorder: InputBorder.none,
-                        //     focusedBorder: InputBorder.none,
-                        //     enabledBorder: InputBorder.none,
-                        //     errorBorder: InputBorder.none,
-                        //   ),
-                        //   style: TextStyle(
-                        //     fontFamily: 'Montserrat',
-                        //     fontSize: 16,
-                        //   ),
-                        // ),
-                        // DateTimePicker(
-                        //   type: DateTimePickerType.time,
-                        //   timePickerEntryModeInput: true,
-                        //   initialValue: _controller4.text,
-                        //   icon: Icon(Icons.access_time),
-                        //   timeLabelText: "Select Time",
-                        //   use24HourFormat: true,
-                        //   locale: Locale('pt', 'BR'),
-                        //   onChanged: (val) => setState(() => _timeValue = val),
-                        //   validator: (val) {
-                        //     setState(() => _valueToValidate4 = val ?? '');
-                        //     return null;
-                        //   },
-                        //   onSaved: (val) =>
-                        //       setState(() => _valueSaved4 = val ?? ''),
-                        // ),
                         SizedBox(height: _height * 0.015),
                         //Deadline of Event
                         TextFormField(
+                          readOnly: true,
                           onChanged: (value) {
                             setState(() {});
                           },

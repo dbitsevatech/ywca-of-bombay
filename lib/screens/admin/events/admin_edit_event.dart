@@ -535,6 +535,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                           SizedBox(height: _height * 0.015),
                           // Date of event
                           TextFormField(
+                            readOnly: true,
                             onChanged: (value) {
                               setState(() {});
                             },
@@ -600,28 +601,10 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               ),
                             ),
                           ),
-                          // DateTimePicker(
-                          //   type: DateTimePickerType.time,
-                          //   timePickerEntryModeInput: true,
-                          //   // controller: _controller4,
-                          //   initialValue: eventTime, //_initialValue,
-                          //   icon: Icon(Icons.access_time),
-                          //   timeLabelText: "Select Time",
-                          //   use24HourFormat: true,
-                          //   locale: Locale('pt', 'BR'),
-                          //   onChanged: (val) =>
-                          //       setState(() => _valueChanged4 = val),
-                          //   validator: (val) {
-                          //     setState(() => _valueToValidate4 = val ?? '');
-                          //     return null;
-                          //   },
-                          //   onSaved: (val) =>
-                          //       setState(() => _valueSaved4 = val ?? ''),
-                          // ),
-
                           SizedBox(height: _height * 0.015),
                           // Deadline to register
                           TextFormField(
+                            readOnly: true,
                             onChanged: (value) {
                               setState(() {});
                             },
