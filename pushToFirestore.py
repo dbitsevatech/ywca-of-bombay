@@ -31,10 +31,16 @@ for index, row in df.iterrows():
     except:
         pass
     try:
-        if (" +91"+str(int(d["phoneNumber"]))+" " in uiddict):
+        d["phoneNumber"]=str(int(d["phoneNumber"]))
+    except:
+        pass
+    try:
+        if (" +91"+d["phoneNumber"]+" " in uiddict):
             d["uid"]=uiddict[" +91"+str(int(d["phoneNumber"]))+" "].replace(" ","")
             doc_ref.document(d["uid"]).set(d)
             c+=1
+        if c==5:
+            break
     except:
         pass
 
