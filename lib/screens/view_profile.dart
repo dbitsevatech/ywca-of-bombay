@@ -198,6 +198,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                             DetailText(text: 'Profession: $profession'),
                             SizedBox(height: 15),
                             // Interest in membership
+                            if(role != "Member")
                             DetailText(
                                 text:
                                     'Interested in being a member: $interestInMembership'),
