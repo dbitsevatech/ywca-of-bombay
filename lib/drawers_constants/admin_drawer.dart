@@ -41,6 +41,11 @@ List<MenuItem> items = [
     title: 'Approval',
     prefix: Icon(Icons.verified_user),
   ),
+  MenuItem<int>(
+    id: 7,
+    title: 'User Profiles',
+    prefix: Icon(Icons.verified_user),
+  ),
 ];
 final menu = Menu(
   items: items.map((e) => e.copyWith(prefix: null)).toList(),
@@ -76,6 +81,9 @@ void selectedItem(BuildContext context, int index) {
     case 6:
       Navigator.pushNamed(context, "/approval");
       break;
+    case 7:
+      Navigator.pushNamed(context, "/user_profiles");
+      break;
   }
 }
 
@@ -98,15 +106,6 @@ Widget header(BuildContext context, var userInfo) {
               color: Colors.black,
               fontFamily: 'LobsterTwo',
               fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 5),
-          Text(
-            'MENU',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -153,6 +152,8 @@ Widget header(BuildContext context, var userInfo) {
 
 Widget footer(
     BuildContext context, DrawerScaffoldController controller, var userInfo) {
+      final _height = MediaQuery.of(context).size.height;
+  final _width = MediaQuery.of(context).size.width;
   return Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,
@@ -187,9 +188,12 @@ Widget footer(
         SizedBox(
           height: 10,
         ),
-        Text(
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, _width*0.23, 0),
+        child: Text(
           'Developed by DBIT',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 12),
+        ),
         ),
       ],
     ),
