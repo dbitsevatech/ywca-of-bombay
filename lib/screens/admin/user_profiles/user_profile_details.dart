@@ -3,21 +3,21 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './admin/events/admin_events.dart';
-import './edit_profile.dart';
-import './events/user_events.dart';
+import './edit_user_profile.dart';
 
-import '../widgets/blue_bubble_design.dart';
-import '../widgets/constants.dart';
-import '../widgets/gradient_button.dart';
-import '../models/User.dart';
+import '../events/admin_events.dart';
+import '../../events/user_events.dart';
+import '../../../widgets/blue_bubble_design.dart';
+import '../../../widgets/constants.dart';
+import '../../../widgets/gradient_button.dart';
+import '../../../models/User.dart';
 
-class ViewProfileScreen extends StatefulWidget {
+class UserProfileDetails extends StatefulWidget {
   @override
-  _ViewProfileScreenState createState() => _ViewProfileScreenState();
+  _UserProfileDetailsState createState() => _UserProfileDetailsState();
 }
 
-class _ViewProfileScreenState extends State<ViewProfileScreen> {
+class _UserProfileDetailsState extends State<UserProfileDetails> {
   var userInfo;
   final DrawerScaffoldController controller = DrawerScaffoldController();
 
@@ -180,6 +180,9 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                             // Date of birth
                             DetailText(text: 'Date Of Birth: $dateOfBirth'),
                             SizedBox(height: 15),
+                            // User Role
+                            DetailText(text: 'User Role: $role'),
+                            SizedBox(height: 15),
                             // Gender
                             DetailText(text: 'Gender: $gender'),
                             SizedBox(height: 15),
@@ -236,9 +239,11 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                           screenHeight: _height,
                           onPressedFunction: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditProfileScreen()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditUserProfile(),
+                              ),
+                            );
                           },
                         )
                       ],

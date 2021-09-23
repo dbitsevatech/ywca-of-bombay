@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ywcaofbombay/screens/admin/user_profiles/edit_user_profile.dart';
+import 'package:ywcaofbombay/screens/admin/user_profiles/user_profile_details.dart';
+import 'package:ywcaofbombay/screens/edit_profile.dart';
 import 'screens/about_us/about_us.dart';
 import 'screens/admin/events/admin_events.dart';
 import 'screens/admin/analytics/analytics.dart';
@@ -66,7 +69,8 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return Splash();
+    // return Splash();
+    return EditUserProfile();
   }
 }
 
