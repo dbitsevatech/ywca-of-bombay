@@ -13,6 +13,35 @@ import '../../../widgets/gradient_button.dart';
 import '../../../models/User.dart';
 
 class UserProfileDetails extends StatefulWidget {
+  String uid,
+  firstName,
+  lastName,
+      phoneNumber,
+      emailId,
+      address,
+      memberRole,
+      gender,
+      nearestCenter,
+      placeOfWork,
+      profession,
+      interestInMembership;
+  DateTime dateOfBirth;
+
+  UserProfileDetails({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.emailId,
+    required this.address,
+    required this.dateOfBirth,
+    required this.memberRole,
+    required this.gender,
+    required this.nearestCenter,
+    required this.placeOfWork,
+    required this.profession,
+    required this.interestInMembership
+  });
   @override
   _UserProfileDetailsState createState() => _UserProfileDetailsState();
 }
@@ -33,18 +62,20 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
 
-    var firstName = userInfo.getfirstName;
-    var lastName = userInfo.getlastName;
-    var phoneNumber = userInfo.getphoneNumber;
-    var emailId = userInfo.getemailId;
-    var dateOfBirth = DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
-    var gender = userInfo.getgender;
-    var nearestCenter = userInfo.getnearestCenter;
-    var placeOfWork = userInfo.getplaceOfWork;
-    var profession = userInfo.getprofession;
-    var interestInMembership = userInfo.getinterestInMembership;
-    var address = userInfo.getaddress;
-    var role = userInfo.getmemberRole;
+    String firstName = widget.firstName,
+    lastName = widget.lastName,
+        phoneNumber = widget.phoneNumber,
+        emailId = widget.emailId,
+        address = widget.address,
+        memberRole = widget.memberRole,
+        gender = widget.gender,
+        nearestCenter = widget.nearestCenter,
+        placeOfWork = widget.placeOfWork,
+        profession = widget.profession,
+        interestInMembership = widget.interestInMembership;
+    DateTime dateOfBirth = widget.dateOfBirth;
+    String formattedDateOfBirth = DateFormat('dd MMM, yyyy').format(dateOfBirth);
+    // var dateOfBirth = DateFormat('dd-MM-yyyy').format(widget.dateOfBirth);
 
     return Scaffold(
       body: SafeArea(
@@ -76,7 +107,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         size: 30,
                       ),
                       onPressed: () {
-                        if (role == "Admin") {
+                        if (memberRole == "Admin") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -104,7 +135,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             style: Theme.of(context).textTheme.bodyText2,
                             children: [
                               TextSpan(
-                                text: 'YOUR PROFILE',
+                                text: 'USER PROFILE',
                                 style: TextStyle(
                                   fontSize: 32,
                                   color: primaryColor,
@@ -137,18 +168,8 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: _height * 0.03),
-                      //greetings
-                      Text(
-                        'Hello $firstName, thanks for submitting your info!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
                       SizedBox(height: _height * 0.02),
-                      if (role != "Staff") ...[
+                      if (memberRole != "Staff") ...[
                         Text(
                           'You can choose to edit this information by clicking the button at the bottom.',
                           textAlign: TextAlign.center,
@@ -178,10 +199,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             DetailText(text: 'Address: $address'),
                             SizedBox(height: 15),
                             // Date of birth
-                            DetailText(text: 'Date Of Birth: $dateOfBirth'),
+                            DetailText(text: 'Date Of Birth: $formattedDateOfBirth'),
                             SizedBox(height: 15),
                             // User Role
-                            DetailText(text: 'User Role: $role'),
+                            DetailText(text: 'User Role: $memberRole'),
                             SizedBox(height: 15),
                             // Gender
                             DetailText(text: 'Gender: $gender'),
@@ -198,7 +219,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             DetailText(text: 'Profession: $profession'),
                             SizedBox(height: 15),
                             // Interest in membership
-                            if (role != "Member")
+                            if (memberRole != "Member")
                               DetailText(
                                   text:
                                       'Interested in being a member: $interestInMembership'),
@@ -210,7 +231,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         ),
                       ),
                       SizedBox(height: _height * 0.02),
-                      if (role == "Staff") ...[
+                      if (memberRole == "Staff") ...[
                         Text(
                           'Kindly contact the admin if you wish to make changes to your profile',
                           textAlign: TextAlign.center,
@@ -221,7 +242,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           ),
                         ),
                       ],
-                      if (role == "Member") ...[
+                      if (memberRole == "Member") ...[
                         Text(
                           'Kindly contact the admin for approval AFTER you make changes to your profile',
                           textAlign: TextAlign.center,
@@ -233,7 +254,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         ),
                       ],
                       SizedBox(height: _height * 0.02),
-                      if (role != "Staff") ...[
+                      if (memberRole != "Staff") ...[
                         GradientButton(
                           buttonText: 'Edit Profile',
                           screenHeight: _height,
