@@ -85,14 +85,6 @@ Widget header(BuildContext context, var userInfo) {
             ),
           ),
           SizedBox(height: 5),
-          Text(
-            'MENU',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
           SizedBox(height: 5),
           CircleAvatar(
             radius: 50.0,
@@ -134,6 +126,8 @@ Widget header(BuildContext context, var userInfo) {
 
 Widget footer(
     BuildContext context, DrawerScaffoldController controller, var userInfo) {
+      final _height = MediaQuery.of(context).size.height;
+  final _width = MediaQuery.of(context).size.width;
   return Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,
@@ -168,9 +162,12 @@ Widget footer(
         SizedBox(
           height: 10,
         ),
-        Text(
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, _width*0.23, 0),
+        child: Text(
           'Developed by DBIT',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 12),
+        ),
         ),
       ],
     ),
