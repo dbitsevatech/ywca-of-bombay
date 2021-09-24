@@ -1,21 +1,17 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import './edit_user_profile.dart';
-
 import '../events/admin_events.dart';
 import '../../events/user_events.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
-import '../../../models/User.dart';
 
 class UserProfileDetails extends StatefulWidget {
   String uid,
-  firstName,
-  lastName,
+      firstName,
+      lastName,
       phoneNumber,
       emailId,
       address,
@@ -27,21 +23,20 @@ class UserProfileDetails extends StatefulWidget {
       interestInMembership;
   DateTime dateOfBirth;
 
-  UserProfileDetails({
-    required this.uid,
-    required this.firstName,
-    required this.lastName,
-    required this.phoneNumber,
-    required this.emailId,
-    required this.address,
-    required this.dateOfBirth,
-    required this.memberRole,
-    required this.gender,
-    required this.nearestCenter,
-    required this.placeOfWork,
-    required this.profession,
-    required this.interestInMembership
-  });
+  UserProfileDetails(
+      {required this.uid,
+      required this.firstName,
+      required this.lastName,
+      required this.phoneNumber,
+      required this.emailId,
+      required this.address,
+      required this.dateOfBirth,
+      required this.memberRole,
+      required this.gender,
+      required this.nearestCenter,
+      required this.placeOfWork,
+      required this.profession,
+      required this.interestInMembership});
   @override
   _UserProfileDetailsState createState() => _UserProfileDetailsState();
 }
@@ -52,8 +47,6 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen: false);
-
     super.initState();
   }
 
@@ -63,7 +56,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
     final _width = MediaQuery.of(context).size.width;
 
     String firstName = widget.firstName,
-    lastName = widget.lastName,
+        lastName = widget.lastName,
         phoneNumber = widget.phoneNumber,
         emailId = widget.emailId,
         address = widget.address,
@@ -72,10 +65,11 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
         nearestCenter = widget.nearestCenter,
         placeOfWork = widget.placeOfWork,
         profession = widget.profession,
-        interestInMembership = widget.interestInMembership;
+        interestInMembership = widget.interestInMembership,
+        uid = widget.uid;
     DateTime dateOfBirth = widget.dateOfBirth;
-    String formattedDateOfBirth = DateFormat('dd MMM, yyyy').format(dateOfBirth);
-    // var dateOfBirth = DateFormat('dd-MM-yyyy').format(widget.dateOfBirth);
+    String formattedDateOfBirth =
+        DateFormat('dd MMM, yyyy').format(dateOfBirth);
 
     return Scaffold(
       body: SafeArea(
@@ -199,7 +193,8 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             DetailText(text: 'Address: $address'),
                             SizedBox(height: 15),
                             // Date of birth
-                            DetailText(text: 'Date Of Birth: $formattedDateOfBirth'),
+                            DetailText(
+                                text: 'Date Of Birth: $formattedDateOfBirth'),
                             SizedBox(height: 15),
                             // User Role
                             DetailText(text: 'User Role: $memberRole'),
@@ -259,12 +254,27 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                           buttonText: 'Edit Profile',
                           screenHeight: _height,
                           onPressedFunction: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditUserProfile(),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => EditUserProfile(),
+                            //   ),
+                            // );
+                            goToEditUserProfile(
+                                context,
+                                uid,
+                                firstName,
+                                lastName,
+                                phoneNumber,
+                                emailId,
+                                address,
+                                dateOfBirth,
+                                memberRole,
+                                gender,
+                                nearestCenter,
+                                placeOfWork,
+                                profession,
+                                interestInMembership);
                           },
                         )
                       ],
@@ -275,6 +285,44 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  goToEditUserProfile(
+      BuildContext context,
+      String uid,
+      String firstName,
+      String lastName,
+      String phoneNumber,
+      String emailId,
+      String address,
+      DateTime dateOfBirth,
+      String memberRole,
+      String gender,
+      String nearestCenter,
+      String placeOfWork,
+      String profession,
+      String interestInMembership) {
+    // DateTime newdateOfBirth = dateOfBirth.toDate();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditUserProfile(
+          uid: uid,
+          firstName: firstName,
+          lastName: lastName,
+          phoneNumber: phoneNumber,
+          emailId: emailId,
+          address: address,
+          dateOfBirth: dateOfBirth,
+          memberRole: memberRole,
+          gender: gender,
+          nearestCenter: nearestCenter,
+          placeOfWork: placeOfWork,
+          profession: profession,
+          interestInMembership: interestInMembership,
         ),
       ),
     );
