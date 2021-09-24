@@ -1,76 +1,80 @@
-List<String> officeTitles = [
+List<String> titlesOffice = [
   'ANDHERI \n',
   'BELAPUR \n',
   'BYCULLA \n',
+  'FORT \n',
 ];
 
-List<String> hostelTitles = [
-  'DIPTI DAMAN HOSTEL \n',
-  'ANURAGHA HOSTEL \n',
-  'ACHAMMA BHAVAN HOSTEL \n',
+List<String> addressesOffice = [
+  ' Asha Kiran,\n 53, J.P. Road, Andheri (W)\n Mumbai - 400 058\n',
+  ' Anugraha Hostel \n Sector 8, CBD-Belapur \n Navi Mumbai - 400 614\n',
+  ' 75, Motlibai Street,\n Near Maratha Mandir, Byculla \n  Mumbai - 400 008\n',
+  ' 18, Madame Cama Road,\n Dr Ambedkar Statue Chowk Area,\n Fort, Mumbai - 400 001\n',
 ];
 
-List<String> guestHouseTitles = [
-  'ASHA KIRAN \n',
-  'INTERNATIONAL CENTRE \n',
+List<String> emailIdsOffice = [
+  'ak.secretary@ywcabombay.co.in \n',
+  'anugraha@ywcabombay.co.in \n',
+  'gs@ywcabombay.co.in \n',
+  'acc.manager@ywcabombay.co.in \n',
 ];
 
-List<String> officeAddresses = [
-  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
-  ' Sector 8,\n CBD-Belapur \n Navi Mumbai - 400 614\n',
-  ' 75, Motlibai Street,\n Near Maratha Mandir \n  Mumbai - 400 008\n',
-];
-
-List<String> emailIdOffice = [
-  'ywcaandheri@rediffmail.com\n',
-  'ywcabelapur@gmail.com\n',
-  'ybombaygs@gmail.com\n'
-];
-
-List<String> contactNoOffice = [
+List<String> contactNosOffice = [
   '022-26702831',
   '022-26702872',
   '022-27570786',
   '022-23096544',
   '022-23096555',
-  '022-23020469'
+  '+91-9867434315'
 ];
 
-List<String> hostelAddresses = [
-  ' Asha Kiran,\n 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
-  ' Anugraha Hostel,\n Sector 8,\n CBD-Belapur \n Navi Mumbai - 400 614\n',
+List<String> titlesHostel = [
+  'DIPTI DHAMAN HOSTEL \n',
+  'ANUGRAHA HOSTEL \n',
+  'ACHAMMA BHAVAN HOSTEL \n',
+  'LADY WILLINGTON HOSTEL \n',
+];
+
+List<String> addressesHostel = [
+  ' Asha Kiran,\n 53, J.P. Road, Andheri (W)\n Mumbai - 400 058\n',
+  ' Anugraha Hostel,\n Sector 8, CBD-Belapur \n Navi Mumbai - 400 614\n',
   ' 75, Motlibai Street,\n Near Maratha Mandir \n  Mumbai - 400 008\n',
+  ' 18, Madame Cama Road,\n Fort, Mumbai - 400 001\n',
 ];
 
-List<String> emailIdHostel = [
-  'ywcaandheri@rediffmail.com\n',
-  'ywcabelapur@gmail.com\n',
-  'ybombaygs@gmail.com\n'
+List<String> emailIdsHostel = [
+  'andheri.hostel@ywcabombay.co.in \n',
+  'belapur.hostel@ywcabombay.co.in \n',
+  'byculla.hostel@ywcabombay.co.in \n',
+  'fort.hostel@ywcabombay.co.in \n',
+  'hod.hostels@ywcabombay.co.in  \n',
 ];
 
-List<String> contactNoHostel = [
+List<String> contactNosHostel = [
   '022-26702831 ',
   '022-26702872',
   '022-27570786',
   '022-23096544',
   '022-23096555',
-  '022-23020469'
+  '+91-9867434315',
 ];
 
-List<String> guestHouseAddresses = [
+List<String> titlesGuestHouse = [
+  'ASHA KIRAN \n',
+  'INTERNATIONAL CENTRE \n',
+];
+
+List<String> addressesGuestHouse = [
   ' 53, J.P. Road,\nAndheri (W)\n Mumbai - 400 058\n',
-  ' 18, Madame Cama Road,\n Dr Ambedkar Statue Chowk Area,\n Fort, Mumbai - 400 018\n',
+  ' 18, Madame Cama Road,\n Dr Ambedkar Statue Chowk Area,\n Fort, Mumbai - 400 001\n',
 ];
 
-List<String> emailIdGuestHouse = [
-  'ywcaandheri@rediffmail.com\n',
-  'ywcabelapur@gmail.com\n'
+List<String> emailIdsGuestHouse = [
+  'ak.secretary@ywcabombay.co.in \n',
+  'ic.manager@ywcabombay.co.in \n'
 ];
 
-List<String> contactNoGuestHouse = [
+List<String> contactNosGuestHouse = [
   '022-26702831',
-  '022-26702872',
-  '022-22025053',
-  '022-66247222',
-  '022-2286814'
+  '66247222',
 ];

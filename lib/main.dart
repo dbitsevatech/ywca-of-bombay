@@ -69,7 +69,8 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return Splash();
+    return ContactUs();
+    // return Splash();
   }
 }
 

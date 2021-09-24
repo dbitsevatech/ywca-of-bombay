@@ -312,11 +312,36 @@ class _AboutUsState extends State<AboutUs> {
                                         color: Colors.blue,
                                         decoration: TextDecoration.underline,
                                       ),
-                                      text: "www.ywcaofbombay.co.in",
+                                      text: "www.ywcabombay.co.in\n",
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () async {
                                           var url =
-                                              "http://www.ywcaofbombay.co.in/";
+                                              "https://www.ywcabombay.co.in";
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                    ),
+                                    TextSpan(
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      text: "\nFacebook page:\n",
+                                    ),
+                                    TextSpan(
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.blue,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      text: "www.facebook.com/ywcabombay",
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          var url =
+                                              "https://www.facebook.com/ywcabombay";
                                           if (await canLaunch(url)) {
                                             await launch(url);
                                           } else {

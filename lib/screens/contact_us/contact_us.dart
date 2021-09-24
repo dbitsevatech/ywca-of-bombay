@@ -247,7 +247,13 @@ class _ContactUsState extends State<ContactUs> {
   }
 
   Widget centerCard(
-      String title, String address, String emailId, String phoneNo) {
+    String title,
+    String address,
+    String emailId,
+    String phoneNo, {
+    String? emailId2,
+    String? phoneNo2,
+  }) {
     return Center(
       child: Container(
         decoration: BoxDecoration(
@@ -297,7 +303,7 @@ class _ContactUsState extends State<ContactUs> {
                       fontFamily: 'Montserrat',
                       color: Colors.black87,
                       fontWeight: FontWeight.w400,
-                      fontSize: 12.5,
+                      fontSize: 11.5,
                     ),
                   ),
                   TextSpan(
@@ -314,20 +320,37 @@ class _ContactUsState extends State<ContactUs> {
                       fontSize: 12.5,
                     ),
                   ),
+                  if (emailId2 != null) ...[
+                    TextSpan(
+                      text: "              /$emailId2",
+                      recognizer: new TapGestureRecognizer()
+                        ..onTap = () => {
+                              print(emailId2),
+                              sendEmail(context, emailId2),
+                            },
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ],
                   TextSpan(
                     text: 'Phone No: ',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.black87,
                       fontWeight: FontWeight.w400,
-                      fontSize: 12.5,
+                      fontSize: 11.5,
                     ),
                   ),
                   TextSpan(
                     text: phoneNo,
                     recognizer: new TapGestureRecognizer()
-                      ..onTap =
-                          () => {FlutterPhoneDirectCaller.callNumber(phoneNo)},
+                      ..onTap = () => {
+                            FlutterPhoneDirectCaller.callNumber(phoneNo),
+                          },
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       color: Colors.blue,
@@ -335,6 +358,21 @@ class _ContactUsState extends State<ContactUs> {
                       fontSize: 12.5,
                     ),
                   ),
+                  if (phoneNo2 != null) ...[
+                    TextSpan(
+                      text: " / $phoneNo2",
+                      recognizer: new TapGestureRecognizer()
+                        ..onTap = () => {
+                              FlutterPhoneDirectCaller.callNumber(phoneNo2),
+                            },
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.5,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -384,20 +422,41 @@ class _ContactUsState extends State<ContactUs> {
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Montserrat',
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                     height: 1,
                   ),
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[0], officeAddresses[0], emailIdOffice[0],
-                  contactNoOffice[0]),
+              centerCard(
+                titlesOffice[0],
+                addressesOffice[0],
+                emailIdsOffice[0],
+                contactNosOffice[0],
+                phoneNo2: contactNosOffice[1],
+              ),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[1], officeAddresses[1], emailIdOffice[1],
-                  contactNoOffice[1]),
+              centerCard(
+                titlesOffice[1],
+                addressesOffice[1],
+                emailIdsOffice[1],
+                contactNosOffice[2],
+              ),
               SizedBox(height: _height * 0.015),
-              centerCard(officeTitles[2], officeAddresses[2], emailIdOffice[2],
-                  contactNoOffice[2]),
+              centerCard(
+                titlesOffice[2],
+                addressesOffice[2],
+                emailIdsOffice[2],
+                contactNosOffice[3],
+                phoneNo2: contactNosOffice[4],
+              ),
+              SizedBox(height: _height * 0.015),
+              centerCard(
+                titlesOffice[3],
+                addressesOffice[3],
+                emailIdsOffice[3],
+                contactNosOffice[5],
+              ),
             ],
           ),
         ),
@@ -445,20 +504,40 @@ class _ContactUsState extends State<ContactUs> {
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Montserrat',
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                     height: 1,
                   ),
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[0], hostelAddresses[0], emailIdHostel[0],
-                  contactNoHostel[0]),
+              centerCard(
+                titlesHostel[0],
+                addressesHostel[0],
+                emailIdsHostel[0],
+                contactNosHostel[0],
+              ),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[1], hostelAddresses[1], emailIdHostel[1],
-                  contactNoHostel[1]),
+              centerCard(
+                titlesHostel[1],
+                addressesHostel[1],
+                emailIdsHostel[1],
+                contactNosHostel[1],
+              ),
               SizedBox(height: _height * 0.015),
-              centerCard(hostelTitles[2], hostelAddresses[2], emailIdHostel[2],
-                  contactNoHostel[2]),
+              centerCard(
+                titlesHostel[2],
+                addressesHostel[2],
+                emailIdsHostel[2],
+                contactNosHostel[2],
+              ),
+              SizedBox(height: _height * 0.015),
+              centerCard(
+                titlesHostel[3],
+                addressesHostel[3],
+                emailIdsHostel[3],
+                contactNosHostel[2],
+                emailId2: emailIdsHostel[4],
+              ),
             ],
           ),
         ),
@@ -506,17 +585,25 @@ class _ContactUsState extends State<ContactUs> {
                     color: Colors.black,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Montserrat',
-                    fontSize: 18.0,
+                    fontSize: 15.0,
                     height: 1,
                   ),
                 ),
               ),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[0], guestHouseAddresses[0],
-                  emailIdGuestHouse[0], contactNoGuestHouse[0]),
+              centerCard(
+                titlesGuestHouse[0],
+                addressesGuestHouse[0],
+                emailIdsGuestHouse[0],
+                contactNosGuestHouse[0],
+              ),
               SizedBox(height: _height * 0.015),
-              centerCard(guestHouseTitles[1], guestHouseAddresses[1],
-                  emailIdGuestHouse[1], contactNoGuestHouse[1]),
+              centerCard(
+                titlesGuestHouse[1],
+                addressesGuestHouse[1],
+                emailIdsGuestHouse[1],
+                contactNosGuestHouse[1],
+              ),
             ],
           ),
         ),
