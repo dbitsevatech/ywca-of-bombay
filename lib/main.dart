@@ -6,23 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ywcaofbombay/screens/admin/user_profiles/edit_user_profile.dart';
-import 'package:ywcaofbombay/screens/admin/user_profiles/user_profile_details.dart';
-import 'package:ywcaofbombay/screens/admin/user_profiles/search_user.dart';
-import 'package:ywcaofbombay/screens/edit_profile.dart';
+
+import 'models/User.dart';
 import 'screens/about_us/about_us.dart';
-import 'screens/admin/events/admin_events.dart';
-import 'screens/admin/analytics/analytics.dart';
 import 'screens/admin/approval/approval.dart';
+import 'screens/admin/analytics/analytics.dart';
+import 'screens/admin/events/admin_events.dart';
+import 'screens/admin/user_profiles/search_user.dart';
 import 'screens/authentication/login.dart';
-import 'screens/onboarding.dart';
 import 'screens/authentication/register.dart';
 import 'screens/contact_us/contact_us.dart';
 import 'screens/events/user_events.dart';
 import 'screens/initiatives/initiatives.dart';
+import 'screens/onboarding.dart';
 import 'screens/success_stories/success_stories.dart';
 import 'services/class_builder.dart';
-import 'models/User.dart';
 
 void main() async {
   ClassBuilder.registerClasses();
@@ -71,8 +69,8 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
-    return Splash();
-    // return EditUserProfile();
+    return ContactUs();
+    // return Splash();
   }
 }
 
