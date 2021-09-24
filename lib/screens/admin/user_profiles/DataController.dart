@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 
 class DataController extends GetxController{
   Future queryData(String queryString) async {
+    String newQueryString = (queryString.replaceAll(' ','')).toUpperCase();
     return FirebaseFirestore.instance.collection('users')
-    .where('firstName', isGreaterThanOrEqualTo: queryString)
+    .where('firstName', isGreaterThanOrEqualTo: newQueryString)
     .get();
   }
 }
