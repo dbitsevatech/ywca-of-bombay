@@ -2,16 +2,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
-
 import '../../../../widgets/blue_bubble_design.dart';
 import '../../../../widgets/constants.dart';
 import '../../../../widgets/gradient_button.dart';
-import '../../../../models/User.dart';
 
 // ignore: must_be_immutable
 class EditUserProfile extends StatefulWidget {
+  String uid,
+      firstName,
+      lastName,
+      phoneNumber,
+      emailId,
+      address,
+      memberRole,
+      gender,
+      nearestCenter,
+      placeOfWork,
+      profession,
+      interestInMembership;
+  DateTime dateOfBirth;
+
+  EditUserProfile(
+      {required this.uid,
+      required this.firstName,
+      required this.lastName,
+      required this.phoneNumber,
+      required this.emailId,
+      required this.address,
+      required this.dateOfBirth,
+      required this.memberRole,
+      required this.gender,
+      required this.nearestCenter,
+      required this.placeOfWork,
+      required this.profession,
+      required this.interestInMembership});
   @override
   _EditUserProfileState createState() => _EditUserProfileState();
 }
@@ -32,6 +57,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String role = "";
   var userInfo;
   String address = "";
+  String newGender = "";
 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
@@ -48,13 +74,13 @@ class _EditUserProfileState extends State<EditUserProfile> {
     setState(() {
       _genderRadioValue = value!;
       if (_genderRadioValue == 0) {
-        gender = "Female";
+        newGender = "Female";
       } else if (_genderRadioValue == 1) {
-        gender = "Male";
+        newGender = "Male";
       } else {
-        gender = "Decline to state";
+        newGender = "Decline to state";
       }
-      print("gender selected: $gender");
+      print("gender selected: $newGender");
     });
   }
 
@@ -162,20 +188,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
 
   @override
   void initState() {
-    userInfo = Provider.of<UserData>(context, listen: false);
-    uid = userInfo.getuid;
-    firstName = userInfo.getfirstName;
-    lastName = userInfo.getlastName;
-    email = userInfo.getemailId;
-    phoneNumber = userInfo.getphoneNumber;
-    dateOfBirth = userInfo.getdateOfBirth;
-    gender = userInfo.getgender;
-    nearestCenter = userInfo.getnearestCenter;
-    placeOfWork = userInfo.getplaceOfWork;
-    profession = userInfo.getprofession;
-    interestInMembership = userInfo.getinterestInMembership;
-    role = userInfo.getmemberRole;
-    address = userInfo.getaddress;
+    String gender = widget.gender;
     if (gender == "Male") {
       _genderRadioValue = 1;
     } else if (gender == "Female") {
@@ -190,9 +203,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
     } else {
       _interestInMembershipRadioValue = 2;
     }
-    dateController.text =
-        DateFormat('dd-MM-yyyy').format(userInfo.getdateOfBirth);
-
     super.initState();
   }
 
@@ -201,6 +211,20 @@ class _EditUserProfileState extends State<EditUserProfile> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+    String firstName = widget.firstName,
+        lastName = widget.lastName,
+        phoneNumber = widget.phoneNumber,
+        emailId = widget.emailId,
+        address = widget.address,
+        memberRole = widget.memberRole,
+        gender = widget.gender,
+        nearestCenter = widget.nearestCenter,
+        placeOfWork = widget.placeOfWork,
+        profession = widget.profession,
+        interestInMembership = widget.interestInMembership,
+        uid = widget.uid;
+    DateTime dateOfBirth = widget.dateOfBirth;
+    dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
     return WillPopScope(
       onWillPop: () => _onBackPressed(),
       child: Scaffold(
@@ -396,7 +420,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           ),
                           SizedBox(height: _height * 0.015),
                           TextFormField(
-                            initialValue: userInfo.getemailId,
+                            initialValue: emailId,
                             keyboardType: TextInputType.emailAddress,
                             onSaved: (value) {
                               setState(() {
@@ -483,8 +507,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             padding: EdgeInsets.only(
                               // left: _width * 0.262,
                               // right: _width * 0.262,
-                              left: _width * 0.245,
-                              right: _width * 0.245,
+                              left: _width * 0.24,
+                              right: _width * 0.24,
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -492,7 +516,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               // border: Border.all(),
                             ),
                             child: DropdownButton<String>(
-                              value: userRole,
+                              value: memberRole,
                               icon: Icon(Icons.arrow_drop_down_rounded),
                               elevation: 16,
                               underline: Container(),
@@ -500,8 +524,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 setState(() {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
-                                  userRole = value!;
-                                  print(userRole);
+                                  memberRole = value!;
+                                  print(memberRole);
                                 });
                               },
                               items: <String>[
@@ -615,7 +639,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             ],
                           ),
                           TextFormField(
-                            initialValue: userInfo.getprofession,
+                            initialValue: profession,
                             keyboardType: TextInputType.text,
                             onSaved: (String? value) {
                               setState(() {
@@ -669,7 +693,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             height: 10,
                           ),
                           TextFormField(
-                            initialValue: userInfo.getplaceOfWork,
+                            initialValue: placeOfWork,
                             keyboardType: TextInputType.text,
                             onSaved: (value) {
                               setState(() {
@@ -787,7 +811,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          if (role != "Member")
+                          if (memberRole != "Member")
                             Text(
                               'Interested in being a member?',
                               style: TextStyle(
@@ -797,7 +821,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 fontFamily: 'Montserrat',
                               ),
                             ),
-                          if (role != "Member")
+                          if (memberRole != "Member")
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -892,7 +916,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              print(userInfo.getmemberRole);
+                              print(memberRole);
                               // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
                                 Vibration.vibrate(duration: 100);
@@ -901,7 +925,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
 
-                              if (userInfo.getmemberRole == "Member") {
+                              if (memberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
                                     .doc(uid)
@@ -911,15 +935,15 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                       "lastName": lastName,
                                       "dateOfBirth": dateOfBirth,
                                       "emailId": email,
-                                      "gender": gender,
+                                      "gender": newGender,
                                       "profession": profession,
                                       "placeOfWork": placeOfWork,
                                       "nearestCenter": nearestCenter,
                                       "interestInMembership":
                                           interestInMembership,
                                       "uid": uid,
-                                      "phoneNumber": userInfo.getphoneNumber,
-                                      "memberRole": userInfo.getmemberRole,
+                                      "phoneNumber": phoneNumber,
+                                      "memberRole": userRole,
                                       "approvalStatus": "pending"
                                     })
                                     .then((value) =>
@@ -938,29 +962,14 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                   "lastName": lastName,
                                   "dateOfBirth": dateOfBirth,
                                   "emailId": email,
-                                  "gender": gender,
+                                  "gender": newGender,
                                   "profession": profession,
                                   "placeOfWork": placeOfWork,
                                   "nearestCenter": nearestCenter,
                                   "interestInMembership": interestInMembership,
                                   "uid": uid,
-                                  "phoneNumber": userInfo.getphoneNumber,
-                                  "memberRole": userInfo.getmemberRole,
+                                  "memberRole": userRole,
                                 }).then((value) async {
-                                  await userInfo.updateAfterAuth(
-                                      uid,
-                                      firstName,
-                                      lastName,
-                                      dateOfBirth,
-                                      email,
-                                      phoneNumber,
-                                      gender,
-                                      profession,
-                                      placeOfWork,
-                                      nearestCenter,
-                                      interestInMembership,
-                                      userInfo.getmemberRole,
-                                      address);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                 }).catchError((error) =>
