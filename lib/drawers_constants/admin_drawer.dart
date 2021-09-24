@@ -44,7 +44,7 @@ List<MenuItem> items = [
   MenuItem<int>(
     id: 7,
     title: 'User Profiles',
-    prefix: Icon(Icons.verified_user),
+    prefix: Icon(Icons.person),
   ),
 ];
 final menu = Menu(
