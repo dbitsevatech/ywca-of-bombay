@@ -971,7 +971,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                   "memberRole": userRole,
                                 }).then((value) async {
                                   Navigator.pop(context);
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
                                 }).catchError((error) =>
                                         print("Failed to update user: $error"));
                               }

@@ -101,17 +101,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         size: 30,
                       ),
                       onPressed: () {
-                        if (memberRole == "Admin") {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AdminEvents()));
-                        } else {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Events()));
-                        }
                       },
                     ),
                   ),
@@ -214,7 +207,6 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             DetailText(text: 'Profession: $profession'),
                             SizedBox(height: 15),
                             // Interest in membership
-                            if (memberRole != "Member")
                               DetailText(
                                   text:
                                       'Interested in being a member: $interestInMembership'),
@@ -226,40 +218,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         ),
                       ),
                       SizedBox(height: _height * 0.02),
-                      if (memberRole == "Staff") ...[
-                        Text(
-                          'Kindly contact the admin if you wish to make changes to your profile',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ],
-                      if (memberRole == "Member") ...[
-                        Text(
-                          'Kindly contact the admin for approval AFTER you make changes to your profile',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ],
-                      SizedBox(height: _height * 0.02),
-                      if (memberRole != "Staff") ...[
                         GradientButton(
-                          buttonText: 'Edit Profile',
+                          buttonText: 'Edit User Profile',
                           screenHeight: _height,
                           onPressedFunction: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => EditUserProfile(),
-                            //   ),
-                            // );
                             goToEditUserProfile(
                                 context,
                                 uid,
@@ -276,8 +238,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                                 profession,
                                 interestInMembership);
                           },
-                        )
-                      ],
+                        ),
                       SizedBox(height: _height * 0.02),
                     ],
                   ),
