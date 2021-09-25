@@ -269,7 +269,7 @@ class _ContactUsState extends State<ContactUs> {
             horizontal: 10,
           ),
           child: FittedBox(
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fitWidth,
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
