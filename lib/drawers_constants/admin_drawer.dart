@@ -1,4 +1,5 @@
 import 'package:drawerbehavior/drawerbehavior.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/view_profile.dart';
@@ -98,23 +99,32 @@ Widget header(BuildContext context, var userInfo) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            'YWCA Of Bombay',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.black,
-              fontFamily: 'LobsterTwo',
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.bold,
+          // Text(
+          //   'YWCA Of Bombay',
+          //   textAlign: TextAlign.left,
+          //   style: TextStyle(
+          //     fontSize: 22,
+          //     color: Colors.black,
+          //     fontFamily: 'LobsterTwo',
+          //     fontStyle: FontStyle.italic,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // SizedBox(height: 5),
+          // CircleAvatar(
+          //   radius: 50.0,
+          //   backgroundImage: AssetImage("assets/images/logo.png"),
+          // ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Image(
+                image: AssetImage("assets/images/logo-with-text.png"),
+              ),
             ),
           ),
-          SizedBox(height: 5),
-          CircleAvatar(
-            radius: 50.0,
-            backgroundImage: AssetImage("assets/images/logo.png"),
-          ),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Text(
             'Welcome ' + userInfo.getfirstName,
             style: TextStyle(
@@ -152,7 +162,7 @@ Widget header(BuildContext context, var userInfo) {
 
 Widget footer(
     BuildContext context, DrawerScaffoldController controller, var userInfo) {
-      final _height = MediaQuery.of(context).size.height;
+  final _height = MediaQuery.of(context).size.height;
   final _width = MediaQuery.of(context).size.width;
   return Padding(
     padding: EdgeInsets.only(
@@ -188,12 +198,14 @@ Widget footer(
         SizedBox(
           height: 10,
         ),
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, _width*0.23, 0),
-        child: Text(
-          'Developed by DBIT',
-          style: TextStyle(fontSize: 12),
-        ),
+        Text(
+          'Developed by DBIT SevaTech',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            // color: Colors.red,
+            color: Color(0xff0056B4),
+          ),
         ),
       ],
     ),
