@@ -101,10 +101,10 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         size: 30,
                       ),
                       onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdminEvents()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AdminEvents()));
                       },
                     ),
                   ),
@@ -207,9 +207,9 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                             DetailText(text: 'Profession: $profession'),
                             SizedBox(height: 15),
                             // Interest in membership
-                              DetailText(
-                                  text:
-                                      'Interested in being a member: $interestInMembership'),
+                            DetailText(
+                                text:
+                                    'Interested in being a member: $interestInMembership'),
                           ],
                         ),
                         decoration: const BoxDecoration(
@@ -218,27 +218,27 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
                         ),
                       ),
                       SizedBox(height: _height * 0.02),
-                        GradientButton(
-                          buttonText: 'Edit User Profile',
-                          screenHeight: _height,
-                          onPressedFunction: () {
-                            goToEditUserProfile(
-                                context,
-                                uid,
-                                firstName,
-                                lastName,
-                                phoneNumber,
-                                emailId,
-                                address,
-                                dateOfBirth,
-                                memberRole,
-                                gender,
-                                nearestCenter,
-                                placeOfWork,
-                                profession,
-                                interestInMembership);
-                          },
-                        ),
+                      GradientButton(
+                        buttonText: 'Edit User Profile',
+                        screenHeight: _height,
+                        onPressedFunction: () {
+                          goToEditUserProfile(
+                              context,
+                              uid,
+                              firstName,
+                              lastName,
+                              phoneNumber,
+                              emailId,
+                              address,
+                              dateOfBirth,
+                              memberRole,
+                              gender,
+                              nearestCenter,
+                              placeOfWork,
+                              profession,
+                              interestInMembership);
+                        },
+                      ),
                       SizedBox(height: _height * 0.02),
                     ],
                   ),
@@ -278,7 +278,7 @@ class _UserProfileDetailsState extends State<UserProfileDetails> {
           emailId: emailId,
           address: address,
           dateOfBirth: dateOfBirth,
-          memberRole: memberRole,
+          userRole: memberRole,
           gender: gender,
           nearestCenter: nearestCenter,
           placeOfWork: placeOfWork,

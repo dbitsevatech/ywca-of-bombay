@@ -15,7 +15,7 @@ class EditUserProfile extends StatefulWidget {
       phoneNumber,
       emailId,
       address,
-      memberRole,
+      userRole,
       gender,
       nearestCenter,
       placeOfWork,
@@ -23,22 +23,37 @@ class EditUserProfile extends StatefulWidget {
       interestInMembership;
   DateTime dateOfBirth;
 
-  EditUserProfile(
-      {required this.uid,
-      required this.firstName,
-      required this.lastName,
-      required this.phoneNumber,
-      required this.emailId,
-      required this.address,
-      required this.dateOfBirth,
-      required this.memberRole,
-      required this.gender,
-      required this.nearestCenter,
-      required this.placeOfWork,
-      required this.profession,
-      required this.interestInMembership});
+  EditUserProfile({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.emailId,
+    required this.address,
+    required this.dateOfBirth,
+    required this.userRole,
+    required this.gender,
+    required this.nearestCenter,
+    required this.placeOfWork,
+    required this.profession,
+    required this.interestInMembership,
+  });
   @override
-  _EditUserProfileState createState() => _EditUserProfileState();
+  _EditUserProfileState createState() => _EditUserProfileState(
+        uid,
+        firstName,
+        lastName,
+        phoneNumber,
+        emailId,
+        address,
+        userRole,
+        gender,
+        nearestCenter,
+        placeOfWork,
+        profession,
+        interestInMembership,
+        dateOfBirth,
+      );
 }
 
 class _EditUserProfileState extends State<EditUserProfile> {
@@ -46,7 +61,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String lastName = '';
   String email = '';
   String phoneNumber = '';
-  String userRole = 'Member';
+  String userRole = '';
   String gender = "Female";
   late DateTime dateOfBirth;
   String profession = '';
@@ -54,15 +69,30 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String nearestCenter = "Chembur";
   String interestInMembership = "Yes";
   String uid = '';
-  String role = "";
   var userInfo;
   String address = "";
   String newGender = "";
 
+  _EditUserProfileState(
+    this.uid,
+    this.firstName,
+    this.lastName,
+    this.phoneNumber,
+    this.email,
+    this.address,
+    this.userRole,
+    this.gender,
+    this.nearestCenter,
+    this.placeOfWork,
+    this.profession,
+    this.interestInMembership,
+    this.dateOfBirth,
+  );
+
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(); // form key for validation
 
-  final GlobalKey<ScaffoldState> _scaffoldkey =
+  final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
   // MemberChoices _selectedMembershipInterest = MemberChoices.yes;
@@ -211,24 +241,24 @@ class _EditUserProfileState extends State<EditUserProfile> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    String firstName = widget.firstName,
-        lastName = widget.lastName,
-        phoneNumber = widget.phoneNumber,
-        emailId = widget.emailId,
-        address = widget.address,
-        memberRole = widget.memberRole,
-        gender = widget.gender,
-        nearestCenter = widget.nearestCenter,
-        placeOfWork = widget.placeOfWork,
-        profession = widget.profession,
-        interestInMembership = widget.interestInMembership,
-        uid = widget.uid;
+    // String firstName = widget.firstName,
+    //     lastName = widget.lastName,
+    //     phoneNumber = widget.phoneNumber,
+    //     emailId = widget.emailId,
+    //     address = widget.address,
+    //     memberRole = widget.memberRole,
+    //     gender = widget.gender,
+    //     nearestCenter = widget.nearestCenter,
+    //     placeOfWork = widget.placeOfWork,
+    //     profession = widget.profession,
+    //     interestInMembership = widget.interestInMembership,
+    //     uid = widget.uid;
     DateTime dateOfBirth = widget.dateOfBirth;
     dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
     return WillPopScope(
       onWillPop: () => _onBackPressed(),
       child: Scaffold(
-        key: _scaffoldkey,
+        key: _scaffoldKey,
         // body:WillPopScope(
         //   onWillPop: _onBackPressed,
         body: SafeArea(
@@ -420,7 +450,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                           ),
                           SizedBox(height: _height * 0.015),
                           TextFormField(
-                            initialValue: emailId,
+                            // initialValue: emailId,
+                            initialValue: email,
                             keyboardType: TextInputType.emailAddress,
                             onSaved: (value) {
                               setState(() {
@@ -516,7 +547,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               // border: Border.all(),
                             ),
                             child: DropdownButton<String>(
-                              value: memberRole,
+                              value: userRole,
                               icon: Icon(Icons.arrow_drop_down_rounded),
                               elevation: 16,
                               underline: Container(),
@@ -524,8 +555,8 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 setState(() {
                                   FocusScope.of(context)
                                       .requestFocus(FocusNode());
-                                  memberRole = value!;
-                                  print(memberRole);
+                                  userRole = value!;
+                                  print(userRole);
                                 });
                               },
                               items: <String>[
@@ -811,7 +842,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          if (memberRole != "Member")
+                          if (userRole != "Member")
                             Text(
                               'Interested in being a member?',
                               style: TextStyle(
@@ -821,7 +852,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 fontFamily: 'Montserrat',
                               ),
                             ),
-                          if (memberRole != "Member")
+                          if (userRole != "Member")
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -916,7 +947,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              print(memberRole);
+                              print(userRole);
                               // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
                                 Vibration.vibrate(duration: 100);
@@ -925,7 +956,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
 
-                              if (memberRole == "Member") {
+                              if (userRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
                                     .doc(uid)
@@ -948,8 +979,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                     })
                                     .then((value) =>
                                         {print("Request Sent"), savePressed()})
-                                    .catchError((error) =>
-                                        print("Failed to update user: $error"));
+                                    .catchError(
+                                      (error) => print(
+                                          "Failed to update user: $error"),
+                                    );
                                 // await savePressed();
                               } else {
                                 print("updating as it is non-member");
@@ -972,8 +1005,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 }).then((value) async {
                                   Navigator.pop(context);
                                   // Navigator.pop(context);
-                                }).catchError((error) =>
-                                        print("Failed to update user: $error"));
+                                }).catchError(
+                                  (error) =>
+                                      print("Failed to update user: $error"),
+                                );
                               }
 
                               // Navigator.pop(context);
