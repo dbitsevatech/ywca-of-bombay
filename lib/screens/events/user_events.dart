@@ -87,7 +87,6 @@ class _EventsState extends State<Events> {
   }
 
   Future checkMemberPopup() async {
-    var userdata;
     userInfo = Provider.of<UserData>(context, listen: false);
     // sharepreferences instance
     SharedPreferences prefsMember = await SharedPreferences.getInstance();

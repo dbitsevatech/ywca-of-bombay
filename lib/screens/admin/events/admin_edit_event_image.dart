@@ -31,7 +31,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(
+      final pickedFile = await picker.pickImage(
           source: ImageSource.gallery, maxHeight: 2000, maxWidth: 2000);
       setState(() {
         if (pickedFile != null) {

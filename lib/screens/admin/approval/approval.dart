@@ -322,11 +322,8 @@ class _ApprovalScreenState extends State<ApprovalScreen> {
                                                 FirebaseFirestore.instance
                                                     .collection('approval')
                                                     .doc(document.id)
-                                                    .update({
-                                                  'approvalStatus':
-                                                      'notapproved'
-                                                });
-                                                setState(() {});
+                                                    .delete();
+                                                // setState(() {});
                                               },
                                               child: Text('Yes'),
                                             ),

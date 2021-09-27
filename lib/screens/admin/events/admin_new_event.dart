@@ -12,7 +12,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:intl/date_symbol_data_local.dart';
 import '../../../widgets/gradient_button.dart';
-import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class AdminNewEvent extends StatefulWidget {
@@ -124,7 +123,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   Future<void> captureImage(ImageSource imageSource) async {
     try {
       final picker = ImagePicker();
-      final pickedFile = await picker.getImage(
+      final pickedFile = await picker.pickImage(
           source: ImageSource.gallery, maxHeight: 2000, maxWidth: 2000);
       setState(() {
         if (pickedFile != null) {
@@ -224,7 +223,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
 
   @override
   Widget build(BuildContext context) {
-    bool _enabled = true;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(

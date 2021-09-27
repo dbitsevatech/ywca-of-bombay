@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
+import 'package:ywcaofbombay/screens/admin/user_profiles/search_user.dart';
 import '../../../../widgets/blue_bubble_design.dart';
 import '../../../../widgets/constants.dart';
 import '../../../../widgets/gradient_button.dart';
@@ -62,7 +63,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String email = '';
   String phoneNumber = '';
   String userRole = '';
-  String gender = "Female";
+  String gender = "";
   late DateTime dateOfBirth;
   String profession = '';
   String placeOfWork = '';
@@ -71,7 +72,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
   String uid = '';
   var userInfo;
   String address = "";
-  String newGender = "";
 
   _EditUserProfileState(
     this.uid,
@@ -104,31 +104,17 @@ class _EditUserProfileState extends State<EditUserProfile> {
     setState(() {
       _genderRadioValue = value!;
       if (_genderRadioValue == 0) {
-        newGender = "Female";
+        gender = "Female";
       } else if (_genderRadioValue == 1) {
-        newGender = "Male";
+        gender = "Male";
       } else {
-        newGender = "Decline to state";
+        gender = "Decline to state";
       }
-      print("gender selected: $newGender");
+      print("gender selected: $gender");
     });
   }
 
-  // yes-0, no-1, maybe-2
-  late int _interestInMembershipRadioValue;
-  void _handleInterestInMembershipRadioValueChange(int? value) {
-    setState(() {
-      _interestInMembershipRadioValue = value!;
-      if (_interestInMembershipRadioValue == 0) {
-        interestInMembership = "Yes";
-      } else if (_interestInMembershipRadioValue == 1) {
-        interestInMembership = "No";
-      } else {
-        interestInMembership = "Maybe";
-      }
-      print("Membership interest selected: $interestInMembership");
-    });
-  }
+
 
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
@@ -226,13 +212,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
     } else {
       _genderRadioValue = 2;
     }
-    if (interestInMembership == "No") {
-      _interestInMembershipRadioValue = 1;
-    } else if (interestInMembership == "Yes") {
-      _interestInMembershipRadioValue = 0;
-    } else {
-      _interestInMembershipRadioValue = 2;
-    }
+
     super.initState();
   }
 
@@ -241,19 +221,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    // String firstName = widget.firstName,
-    //     lastName = widget.lastName,
-    //     phoneNumber = widget.phoneNumber,
-    //     emailId = widget.emailId,
-    //     address = widget.address,
-    //     memberRole = widget.memberRole,
-    //     gender = widget.gender,
-    //     nearestCenter = widget.nearestCenter,
-    //     placeOfWork = widget.placeOfWork,
-    //     profession = widget.profession,
-    //     interestInMembership = widget.interestInMembership,
-    //     uid = widget.uid;
-    DateTime dateOfBirth = widget.dateOfBirth;
     dateController.text = DateFormat('dd-MM-yyyy').format(dateOfBirth);
     return WillPopScope(
       onWillPop: () => _onBackPressed(),
@@ -842,112 +809,11 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          if (userRole != "Member")
-                            Text(
-                              'Interested in being a member?',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          if (userRole != "Member")
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Radio(
-                                  value: 0,
-                                  groupValue: _interestInMembershipRadioValue,
-                                  onChanged:
-                                      _handleInterestInMembershipRadioValueChange,
-                                  focusColor: secondaryColor,
-                                  hoverColor: secondaryColor,
-                                  activeColor: secondaryColor,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _interestInMembershipRadioValue = 0;
-                                      _handleInterestInMembershipRadioValueChange(
-                                          _interestInMembershipRadioValue);
-                                    });
-                                  },
-                                  child: Text(
-                                    'Yes',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Radio(
-                                  value: 1,
-                                  groupValue: _interestInMembershipRadioValue,
-                                  onChanged:
-                                      _handleInterestInMembershipRadioValueChange,
-                                  focusColor: secondaryColor,
-                                  hoverColor: secondaryColor,
-                                  activeColor: secondaryColor,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _interestInMembershipRadioValue = 1;
-                                      _handleInterestInMembershipRadioValueChange(
-                                          _interestInMembershipRadioValue);
-                                    });
-                                  },
-                                  child: Text(
-                                    'No',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Radio(
-                                  value: 2,
-                                  groupValue: _interestInMembershipRadioValue,
-                                  onChanged:
-                                      _handleInterestInMembershipRadioValueChange,
-                                  focusColor: secondaryColor,
-                                  hoverColor: secondaryColor,
-                                  activeColor: secondaryColor,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _interestInMembershipRadioValue = 2;
-                                      _handleInterestInMembershipRadioValueChange(
-                                          _interestInMembershipRadioValue);
-                                    });
-                                  },
-                                  child: Text(
-                                    'Maybe',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                              ],
-                            ),
                           SizedBox(height: _height * 0.005),
                           GradientButton(
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              print(userRole);
                               // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
                                 Vibration.vibrate(duration: 100);
@@ -956,36 +822,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
 
-                              if (userRole == "Member") {
-                                await FirebaseFirestore.instance
-                                    .collection("approval")
-                                    .doc(uid)
-                                    .set({
-                                      "address": address,
-                                      "firstName": firstName,
-                                      "lastName": lastName,
-                                      "dateOfBirth": dateOfBirth,
-                                      "emailId": email,
-                                      "gender": newGender,
-                                      "profession": profession,
-                                      "placeOfWork": placeOfWork,
-                                      "nearestCenter": nearestCenter,
-                                      "interestInMembership":
-                                          interestInMembership,
-                                      "uid": uid,
-                                      "phoneNumber": phoneNumber,
-                                      "memberRole": userRole,
-                                      "approvalStatus": "pending"
-                                    })
-                                    .then((value) =>
-                                        {print("Request Sent"), savePressed()})
-                                    .catchError(
-                                      (error) => print(
-                                          "Failed to update user: $error"),
-                                    );
-                                // await savePressed();
-                              } else {
-                                print("updating as it is non-member");
+
                                 await FirebaseFirestore.instance
                                     .collection("users")
                                     .doc(uid)
@@ -995,7 +832,7 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                   "lastName": lastName,
                                   "dateOfBirth": dateOfBirth,
                                   "emailId": email,
-                                  "gender": newGender,
+                                  "gender": gender,
                                   "profession": profession,
                                   "placeOfWork": placeOfWork,
                                   "nearestCenter": nearestCenter,
@@ -1003,13 +840,15 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                   "uid": uid,
                                   "memberRole": userRole,
                                 }).then((value) async {
-                                  Navigator.pop(context);
-                                  // Navigator.pop(context);
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SearchUser()),
+                                          (route) => false);
                                 }).catchError(
                                   (error) =>
                                       print("Failed to update user: $error"),
                                 );
-                              }
+
 
                               // Navigator.pop(context);
                               // Navigator.pop(context);

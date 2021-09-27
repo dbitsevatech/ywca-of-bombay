@@ -110,7 +110,6 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String eventAmount = widget.eventAmount,
         eventDescription = widget.eventDescription,
         eventName = widget.eventName,
-        eventImageUrl = widget.eventImageUrl,
         eventVenue = widget.eventVenue,
         eventType = widget.eventType;
     DateTime eventDate = widget.eventDate;

@@ -305,7 +305,7 @@ class _AdminEventsState extends State<AdminEvents> {
                               Spacer(flex: 12),
                               ElevatedButton(
                                 onPressed: () async {
-                                  bool result = await showDialog(
+                                  await showDialog(
                                     context: context,
                                     builder: (context) {
                                       // Alert box for edit event
@@ -364,7 +364,7 @@ class _AdminEventsState extends State<AdminEvents> {
                               ElevatedButton(
                                 onPressed: () async {
                                   // Alert box for delete event
-                                  bool result = await showDialog(
+                                  await showDialog(
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(

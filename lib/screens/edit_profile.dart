@@ -925,7 +925,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           SizedBox(
                             height: _height * 0.020,
                           ),
-                          if (role != "Admin") ...[
+                          if (role == "Member") ...[
                             Center(
                               child: Text(
                                 'Your details will be verified by the admin and then updated within a few days',

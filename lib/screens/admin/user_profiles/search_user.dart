@@ -29,7 +29,6 @@ class _SearchUserState extends State<SearchUser> {
 
   Widget build(BuildContext context) {
     Widget searchData() {
-      print('started');
       return ListView.builder(
         itemCount: snapshotData.docs.length,
         itemBuilder: (BuildContext context, int index) {
@@ -106,7 +105,7 @@ class _SearchUserState extends State<SearchUser> {
           : Container(
               child: Center(
                 child: Text(
-                  'Search any user by name',
+                  'Press Search Button to Load Users',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey,

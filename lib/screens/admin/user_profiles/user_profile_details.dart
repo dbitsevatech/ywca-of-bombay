@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import './edit_user_profile.dart';
 import '../events/admin_events.dart';
-import '../../events/user_events.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
