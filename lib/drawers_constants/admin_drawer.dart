@@ -120,7 +120,7 @@ Widget header(BuildContext context, var userInfo) {
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: Image(
-                image: AssetImage("assets/images/logo-with-text.png"),
+                image: AssetImage("assets/images/logo-with-text-round.png"),
               ),
             ),
           ),
