@@ -27,7 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   firebase_core: ^1.6.0
   firebase_auth: ^3.1.1
-  cloud_firestore: ^2.5.2
+  cloud_firestore: ^2.5.3
   #  cloud_firestore: ^1.0.7
   #  firebase_core: ^0.7.0
   #  firebase_auth: ^0.20.1
@@ -84,9 +84,13 @@ flutter:
     - assets/images/circles-encoded.svg
     - assets/images/circle-design.png
     - assets/images/logo.png
+    - assets/images/logo-with-text.png
+    - assets/images/logo-with-text-border.png
+    - assets/images/logo-with-text-border-round.png
+    - assets/images/logo-with-text.png
+    - assets/images/logo-with-text-round.png
     - assets/images/contact_us/hostel.png
     - assets/images/contact_us/office.png
-    - assets/images/events/christmas.jpg
     - assets/images/about_us/membership.png
     - assets/images/about_us/Ywca_spotlight_1.jpg
     - assets/images/about_us/Ywca_spotlight_2.jpg
