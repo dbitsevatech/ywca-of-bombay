@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>6317206040-svcccrgc16h689s69pe9qsk5r1vaao8s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.6317206040-svcccrgc16h689s69pe9qsk5r1vaao8s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>6317206040-j2qgdgbh3024654158pcq4lhbu5mun2p.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDAqLRcKUsiSwBamMy81PraCXzAI8jT_PY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>6317206040</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.ywcaofbombay</string>
+	<key>PROJECT_ID</key>
+	<string>ywca-of-bombay-68fb3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ywca-of-bombay-68fb3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:6317206040:ios:aaeab0ec08ffa030e9b16d</string>
+	<key>DATABASE_URL</key>
+	<string>https://ywca-of-bombay-68fb3-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>
