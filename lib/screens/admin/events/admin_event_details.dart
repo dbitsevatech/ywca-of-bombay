@@ -118,11 +118,12 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
     String eventTime = widget.eventTime;
 
     // event date conversion to string for displaying
-    String formattedEventDate = DateFormat('dd MMM, yyyy').format(eventDate);
+    String formattedEventDate =
+        DateFormat('dd MMM, yyyy', 'en').format(eventDate);
 
     // event deadline conversion to string for displaying
     String formattedDeadlineDate =
-        DateFormat('dd MMM yyyy').format(eventDeadline);
+        DateFormat('dd MMM yyyy', 'en').format(eventDeadline);
 
     return Scaffold(
       appBar: AppBar(
@@ -212,45 +213,46 @@ class _AdminEventDetailPageState extends State<AdminEventDetailPage> {
                       Padding(
                         padding:
                             EdgeInsets.fromLTRB(_width * 0.08, 0.0, 0, 0.0),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.calendar_today_outlined),
-                            ),
-                            TextSpan(
-                              text: " "+formattedEventDate + ", " + eventTime,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              WidgetSpan(
+                                child: Icon(Icons.calendar_today_outlined),
                               ),
-                            ),
-                            TextSpan(
-                              text: " | ",
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
+                              TextSpan(
+                                text:
+                                    " " + formattedEventDate + ", " + eventTime,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            WidgetSpan(
-                              child: Icon(Icons.location_on),
-                            ),
-                            TextSpan(
-                              text: eventVenue,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black,
+                              TextSpan(
+                                text: " | ",
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                          ],
+                              WidgetSpan(
+                                child: Icon(Icons.location_on),
+                              ),
+                              TextSpan(
+                                text: eventVenue,
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       ),
                       SizedBox(
                         height: _height * 0.015,

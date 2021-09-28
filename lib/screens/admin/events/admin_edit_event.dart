@@ -224,10 +224,11 @@ class _EditEventScreenState extends State<EditEventScreen> {
     } else if (eventType == "Everyone") {
       _eventTypeRadioValue = 0;
     }
-    dateController.text = DateFormat('dd-MM-yyyy').format(widget.eventDate);
+    dateController.text =
+        DateFormat('dd-MM-yyyy', 'en').format(widget.eventDate);
 
     deadlineController.text =
-        DateFormat('dd-MM-yyyy').format(widget.eventDeadline);
+        DateFormat('dd-MM-yyyy', 'en').format(widget.eventDeadline);
     eventTimeController.text = widget.eventTime;
 
     super.initState();

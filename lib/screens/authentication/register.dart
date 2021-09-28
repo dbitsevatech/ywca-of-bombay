@@ -391,7 +391,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               FocusScope.of(context).requestFocus(FocusNode());
                               await _selectDate();
                               dateController.text =
-                                  "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
+                                  "${DateFormat('dd-MM-yyyy', 'en').format(dateOfBirth.toLocal())}"
                                       .split(' ')[0];
                             },
                           ),

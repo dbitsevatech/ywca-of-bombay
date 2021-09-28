@@ -479,7 +479,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDate(context);
                             dateController.text =
-                                "${DateFormat('dd-MM-yyyy').format(eventDate.toLocal())}"
+                                "${DateFormat('dd-MM-yyyy', 'en').format(eventDate.toLocal())}"
                                     .split(' ')[0];
                           },
                         ),
@@ -563,7 +563,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDeadline(context);
                             deadlineController.text =
-                                "${DateFormat('dd-MM-yyyy').format(eventDeadline.toLocal())}"
+                                "${DateFormat('dd-MM-yyyy', 'en').format(eventDeadline.toLocal())}"
                                     .split(' ')[0];
                           },
                         ),
