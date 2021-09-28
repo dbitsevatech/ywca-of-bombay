@@ -167,6 +167,10 @@ flutter:
     - assets/images/success_stories/9-aasra.png
 
   fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Black.ttf
+        - asset: assets/fonts/Lato-Bold.ttf
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Black.ttf
@@ -175,9 +179,19 @@ flutter:
     - family: RacingSansOne
       fonts:
         - asset: assets/fonts/RacingSansOne-Regular.ttf
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Bold.ttf
+        - asset: assets/fonts/Raleway-ExtraBold.ttf
     - family: LobsterTwo
       fonts:
         - asset: assets/fonts/LobsterTwo-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans-Black.ttf
+        - asset: assets/fonts/WorkSans-ExtraBold.ttf
+        - asset: assets/fonts/WorkSans-Bold.ttf
+        - asset: assets/fonts/WorkSans-SemiBold.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
