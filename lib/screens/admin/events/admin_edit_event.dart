@@ -316,70 +316,48 @@ class _EditEventScreenState extends State<EditEventScreen> {
                   ),
                   SizedBox(height: 20),
                   // choose image
-                  Container(
+                  Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: _height * 0.015,
+                      vertical: _height * 0.01,
+                      horizontal: _width * 0.04,
                     ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          firstButtonGradientColor,
-                          firstButtonGradientColor,
-                          secondButtonGradientColor
-                        ],
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                    ),
-                    child: FractionallySizedBox(
-                      widthFactor: 1,
-                      child: TextButton(
-                          child: Text(
-                            'Edit Image',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Montserrat',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () async {
-                            // Edit event image alertbox
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text('Confirmation'),
-                                  content: Text(
-                                      'Are you sure you want to edit this image?'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop(
-                                            false); // dismisses only the dialog and returns false
-                                      },
-                                      child: Text('No'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop(true);
-                                        goToEditEventImage(
-                                            context, id, eventImageUrl);
-                                      },
-                                      child: Text('Yes'),
-                                    ),
-                                  ],
-                                );
-                              },
+                    child: GradientButton(
+                      buttonText: 'Edit image',
+                      screenHeight: _height,
+                      onPressedFunction: () async {
+                        // Edit event image alertbox
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Confirmation'),
+                              content: Text(
+                                  'Are you sure you want to edit this image?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(
+                                      context,
+                                      rootNavigator: true,
+                                    ).pop(
+                                        false); // dismisses only the dialog and returns false
+                                  },
+                                  child: Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(true);
+                                    goToEditEventImage(
+                                        context, id, eventImageUrl);
+                                  },
+                                  child: Text('Yes'),
+                                ),
+                              ],
                             );
-                          }),
+                          },
+                        );
+                      },
                     ),
                   ),
                   // Form
@@ -750,7 +728,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDate': eventDate,
                                             'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
-                                            'eventType': eventType
+                                            'eventType': eventType,
                                           });
                                           FirebaseFirestore.instance
                                               .collection('eventsBackup')
@@ -764,7 +742,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDate': eventDate,
                                             'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
-                                            'eventType': eventType
+                                            'eventType': eventType,
                                           });
                                           Navigator.pop(context);
                                         },
@@ -794,9 +772,10 @@ goToEditEventImage(BuildContext context, String id, String eventImageUrl) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => AdminEditEventImage(
-              id: id,
-              eventImageUrl: eventImageUrl,
-            )),
+      builder: (context) => AdminEditEventImage(
+        id: id,
+        eventImageUrl: eventImageUrl,
+      ),
+    ),
   );
 }

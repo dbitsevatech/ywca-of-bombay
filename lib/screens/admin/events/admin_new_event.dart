@@ -268,37 +268,15 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                   height: _height * 0.025,
                 ),
                 // choose image
-                Container(
+                Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.015,
+                    vertical: _height * 0.01,
+                    horizontal: _width * 0.04,
                   ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        firstButtonGradientColor,
-                        firstButtonGradientColor,
-                        secondButtonGradientColor
-                      ],
-                      begin: FractionalOffset.centerLeft,
-                      end: FractionalOffset.centerRight,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    child: TextButton(
-                      child: Text(
-                        'Choose File',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () => captureImage(ImageSource.gallery),
-                    ),
+                  child: GradientButton(
+                    buttonText: 'Choose file',
+                    screenHeight: _height,
+                    onPressedFunction: () => captureImage(ImageSource.gallery),
                   ),
                 ),
                 SizedBox(
@@ -480,16 +458,17 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                         SizedBox(height: _height * 0.015),
                         // Event Time
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.4, 0.0),
-                        child: Text(
-                          'Select Event Time',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Montserrat',
+                          padding:
+                              EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.4, 0.0),
+                          child: Text(
+                            'Select Event Time',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: primaryColor,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Montserrat',
+                            ),
                           ),
-                        ),
                         ),
                         SizedBox(height: _height * 0.015),
                         Padding(
@@ -499,8 +478,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             onTap: () => {
                               _show(context),
                             },
-                            child: 
-                            Text(
+                            child: Text(
                               _selectedTime != null
                                   ? _selectedTime!
                                   : 'Click here to select time!',
@@ -639,7 +617,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           ),
                           child: GradientButton(
                             buttonText: 'Submit',
-                            screenHeight: _height,
+                            screenHeight: _height * 0.4,
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
                                 Vibration.vibrate(duration: 100);
@@ -647,15 +625,16 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               }
                               _formKey.currentState!.save();
                               uploadData(
-                                  context,
-                                  eventTitle,
-                                  eventDescription,
-                                  eventVenue,
-                                  eventAmount,
-                                  eventDate,
-                                  eventDeadline,
-                                  _selectedTime,
-                                  eventType);
+                                context,
+                                eventTitle,
+                                eventDescription,
+                                eventVenue,
+                                eventAmount,
+                                eventDate,
+                                eventDeadline,
+                                _selectedTime,
+                                eventType,
+                              );
                             },
                           ),
                         ),
