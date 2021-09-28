@@ -1,16 +1,18 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:vibration/vibration.dart';
-import '../../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
-import '../../../widgets/constants.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:vibration/vibration.dart';
+
+import '../../../widgets/blue_bubble_design.dart';
+import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 
 // ignore: must_be_immutable
@@ -37,16 +39,21 @@ class _AdminNewEventState extends State<AdminNewEvent> {
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
   TextEditingController deadlineController = TextEditingController();
+  TextEditingController eventTimeController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Future<void> _show(context) async {
-    final TimeOfDay? result =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+  Future<void> _showPickerTime(context) async {
+    final TimeOfDay? result = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      helpText: 'SELECT TIME OF EVENT',
+    );
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
       });
+      eventTimeController.text = result.format(context);
     }
   }
 
@@ -57,7 +64,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       initialDate: DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime(2040),
-      helpText: 'Select Date of Event',
+      helpText: 'SELECT DATE OF EVENT',
       fieldLabelText: 'Enter date of Event',
       builder: (context, child) {
         return Theme(
@@ -266,37 +273,15 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                   height: _height * 0.025,
                 ),
                 // choose image
-                Container(
+                Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: _height * 0.015,
+                    vertical: _height * 0.01,
+                    horizontal: _width * 0.04,
                   ),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        firstButtonGradientColor,
-                        firstButtonGradientColor,
-                        secondButtonGradientColor
-                      ],
-                      begin: FractionalOffset.centerLeft,
-                      end: FractionalOffset.centerRight,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    child: TextButton(
-                      child: Text(
-                        'Choose File',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () => captureImage(ImageSource.gallery),
-                    ),
+                  child: GradientButton(
+                    buttonText: 'Choose file',
+                    screenHeight: _height,
+                    onPressedFunction: () => captureImage(ImageSource.gallery),
                   ),
                 ),
                 SizedBox(
@@ -330,6 +315,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               return null;
                           },
                           decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.star_border,
+                              color: secondaryColor,
+                            ),
                             labelText: 'Event title',
                             filled: true,
                             fillColor: formFieldFillColor,
@@ -360,6 +349,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               return null;
                           },
                           decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.description_outlined,
+                              color: secondaryColor,
+                            ),
                             labelText: 'Description',
                             filled: true,
                             fillColor: formFieldFillColor,
@@ -390,6 +383,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               return null;
                           },
                           decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.pin_drop_outlined,
+                              color: secondaryColor,
+                            ),
                             labelText: 'Venue',
                             filled: true,
                             fillColor: formFieldFillColor,
@@ -420,6 +417,10 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               return null;
                           },
                           decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.payments_outlined,
+                              color: secondaryColor,
+                            ),
                             labelText: 'Amount',
                             filled: true,
                             fillColor: formFieldFillColor,
@@ -442,6 +443,12 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             setState(() {});
                           },
                           controller: dateController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Event date is required';
+                            }
+                            return null;
+                          },
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,
@@ -451,7 +458,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               Icons.date_range,
                               color: secondaryColor,
                             ),
-                            labelText: 'Date of Event',
+                            labelText: 'Event Date',
                             filled: true,
                             fillColor: formFieldFillColor,
                             border: OutlineInputBorder(
@@ -471,43 +478,52 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDate(context);
                             dateController.text =
-                                "${DateFormat('dd-MM-yyyy').format(eventDate.toLocal())}"
+                                "${DateFormat('dd-MM-yyyy', 'en').format(eventDate.toLocal())}"
                                     .split(' ')[0];
                           },
                         ),
                         SizedBox(height: _height * 0.015),
                         // Event Time
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.4, 0.0),
-                        child: Text(
-                          'Select Event Time',
+                        TextFormField(
+                          readOnly: true,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
+                          controller: eventTimeController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Event time is required';
+                            }
+                            return null;
+                          },
                           style: TextStyle(
-                            fontSize: 16,
-                            color: primaryColor,
-                            fontWeight: FontWeight.w800,
                             fontFamily: 'Montserrat',
+                            fontSize: 16,
                           ),
-                        ),
-                        ),
-                        SizedBox(height: _height * 0.015),
-                        Padding(
-                          padding:
-                              EdgeInsets.fromLTRB(0.0, 0.0, _width * 0.3, 0.0),
-                          child: GestureDetector(
-                            onTap: () => {
-                              _show(context),
-                            },
-                            child: 
-                            Text(
-                              _selectedTime != null
-                                  ? _selectedTime!
-                                  : 'Click here to select time!',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontSize: 16,
-                              ),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.alarm,
+                              color: secondaryColor,
+                            ),
+                            labelText: 'Event Time',
+                            filled: true,
+                            fillColor: formFieldFillColor,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: secondaryColor),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
+                          onTap: () async {
+                            _showPickerTime(context);
+                          },
                         ),
                         SizedBox(height: _height * 0.015),
                         //Deadline of Event
@@ -546,7 +562,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             FocusScope.of(context).requestFocus(FocusNode());
                             await _selectDeadline(context);
                             deadlineController.text =
-                                "${DateFormat('dd-MM-yyyy').format(eventDeadline.toLocal())}"
+                                "${DateFormat('dd-MM-yyyy', 'en').format(eventDeadline.toLocal())}"
                                     .split(' ')[0];
                           },
                         ),
@@ -637,7 +653,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                           ),
                           child: GradientButton(
                             buttonText: 'Submit',
-                            screenHeight: _height,
+                            screenHeight: _height * 0.4,
                             onPressedFunction: () async {
                               if (!_formKey.currentState!.validate()) {
                                 Vibration.vibrate(duration: 100);
@@ -645,15 +661,16 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                               }
                               _formKey.currentState!.save();
                               uploadData(
-                                  context,
-                                  eventTitle,
-                                  eventDescription,
-                                  eventVenue,
-                                  eventAmount,
-                                  eventDate,
-                                  eventDeadline,
-                                  _selectedTime,
-                                  eventType);
+                                context,
+                                eventTitle,
+                                eventDescription,
+                                eventVenue,
+                                eventAmount,
+                                eventDate,
+                                eventDeadline,
+                                _selectedTime,
+                                eventType,
+                              );
                             },
                           ),
                         ),

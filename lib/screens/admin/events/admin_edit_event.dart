@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+
+import 'admin_edit_event_image.dart';
+
 import '../../../widgets/blue_bubble_design.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
-import 'admin_edit_event_image.dart';
 
 // ignore: must_be_immutable
 class EditEventScreen extends StatefulWidget {
@@ -52,19 +54,24 @@ class _EditEventScreenState extends State<EditEventScreen> {
 
   DateTime selectedDateOfDeadline = DateTime.now();
   TextEditingController deadlineController = TextEditingController();
+  TextEditingController eventTimeController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final GlobalKey<ScaffoldState> _scaffoldkey =
       GlobalKey<ScaffoldState>(); // scaffold key for snack bar
 
-  Future<void> _show(context) async {
-    final TimeOfDay? result =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+  Future<void> _showPickerTime(context) async {
+    final TimeOfDay? result = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      helpText: 'SELECT TIME OF EVENT',
+    );
     if (result != null) {
       setState(() {
         _selectedTime = result.format(context);
       });
+      eventTimeController.text = result.format(context);
     }
   }
 
@@ -88,8 +95,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
       initialDate: eventDate,
       firstDate: DateTime.now(),
       lastDate: DateTime(2040),
-      helpText: 'Select Date of Birth',
-      fieldLabelText: 'Enter date of birth',
+      helpText: 'SSELECT DATE OF EVENT',
+      fieldLabelText: 'Enter date of event',
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -122,8 +129,8 @@ class _EditEventScreenState extends State<EditEventScreen> {
       initialDate: eventDeadline,
       firstDate: DateTime.now(),
       lastDate: DateTime(2040),
-      helpText: 'Select Date of Birth',
-      fieldLabelText: 'Enter date of birth',
+      helpText: 'SELECT DATE FOR DEADLINE',
+      fieldLabelText: 'Enter date for deadline',
       builder: (context, child) {
         return Theme(
           data: ThemeData.dark().copyWith(
@@ -217,10 +224,12 @@ class _EditEventScreenState extends State<EditEventScreen> {
     } else if (eventType == "Everyone") {
       _eventTypeRadioValue = 0;
     }
-    dateController.text = DateFormat('dd-MM-yyyy').format(widget.eventDate);
+    dateController.text =
+        DateFormat('dd-MM-yyyy', 'en').format(widget.eventDate);
 
     deadlineController.text =
-        DateFormat('dd-MM-yyyy').format(widget.eventDeadline);
+        DateFormat('dd-MM-yyyy', 'en').format(widget.eventDeadline);
+    eventTimeController.text = widget.eventTime;
 
     super.initState();
   }
@@ -316,70 +325,48 @@ class _EditEventScreenState extends State<EditEventScreen> {
                   ),
                   SizedBox(height: 20),
                   // choose image
-                  Container(
+                  Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: _height * 0.015,
+                      vertical: _height * 0.01,
+                      horizontal: _width * 0.04,
                     ),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          firstButtonGradientColor,
-                          firstButtonGradientColor,
-                          secondButtonGradientColor
-                        ],
-                        begin: FractionalOffset.centerLeft,
-                        end: FractionalOffset.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                    ),
-                    child: FractionallySizedBox(
-                      widthFactor: 1,
-                      child: TextButton(
-                          child: Text(
-                            'Edit Image',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'Montserrat',
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          onPressed: () async {
-                            // Edit event image alertbox
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text('Confirmation'),
-                                  content: Text(
-                                      'Are you sure you want to edit this image?'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(
-                                          context,
-                                          rootNavigator: true,
-                                        ).pop(
-                                            false); // dismisses only the dialog and returns false
-                                      },
-                                      child: Text('No'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context,
-                                                rootNavigator: true)
-                                            .pop(true);
-                                        goToEditEventImage(
-                                            context, id, eventImageUrl);
-                                      },
-                                      child: Text('Yes'),
-                                    ),
-                                  ],
-                                );
-                              },
+                    child: GradientButton(
+                      buttonText: 'Edit image',
+                      screenHeight: _height,
+                      onPressedFunction: () async {
+                        // Edit event image alertbox
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Confirmation'),
+                              content: Text(
+                                  'Are you sure you want to edit this image?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(
+                                      context,
+                                      rootNavigator: true,
+                                    ).pop(
+                                        false); // dismisses only the dialog and returns false
+                                  },
+                                  child: Text('No'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(true);
+                                    goToEditEventImage(
+                                        context, id, eventImageUrl);
+                                  },
+                                  child: Text('Yes'),
+                                ),
+                              ],
                             );
-                          }),
+                          },
+                        );
+                      },
                     ),
                   ),
                   // Form
@@ -409,10 +396,10 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return null;
                             },
                             decoration: InputDecoration(
-                              // prefixIcon: Icon(
-                              //   Icons.account_circle,
-                              //   color: secondaryColor,
-                              // ),
+                              prefixIcon: Icon(
+                                Icons.star_border,
+                                color: secondaryColor,
+                              ),
                               labelText: 'Event Name',
                               filled: true,
                               fillColor: formFieldFillColor,
@@ -447,6 +434,10 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return null;
                             },
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.description,
+                                color: secondaryColor,
+                              ),
                               labelText: 'Event Description',
                               filled: true,
                               fillColor: formFieldFillColor,
@@ -481,6 +472,10 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return null;
                             },
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.pin_drop_outlined,
+                                color: secondaryColor,
+                              ),
                               labelText: 'Event Venue',
                               filled: true,
                               fillColor: formFieldFillColor,
@@ -515,6 +510,10 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                 return null;
                             },
                             decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.payments_outlined,
+                                color: secondaryColor,
+                              ),
                               labelText: 'Event Amount',
                               filled: true,
                               fillColor: formFieldFillColor,
@@ -540,6 +539,12 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               setState(() {});
                             },
                             controller: dateController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Event date is required';
+                              }
+                              return null;
+                            },
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.date_range,
@@ -568,38 +573,48 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                   "${eventDate.toLocal()}".split(' ')[0];
                             },
                           ),
-                          // Event Time
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0.0, 0.0, _width * 0.4, 0.0),
-                            child: Text(
-                              'Select Event Time',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: primaryColor,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'Montserrat',
-                              ),
-                            ),
-                          ),
                           SizedBox(height: _height * 0.015),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0.0, 0.0, _width * 0.3, 0.0),
-                            child: GestureDetector(
-                              onTap: () => {
-                                _show(context),
-                              },
-                              child: Text(
-                                _selectedTime != null
-                                    ? _selectedTime!
-                                    : 'Click here to select time!',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
+                          // Event Time
+                          TextFormField(
+                            readOnly: true,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            controller: eventTimeController,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Event time is required';
+                              }
+                              return null;
+                            },
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 16,
+                            ),
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.alarm,
+                                color: secondaryColor,
+                              ),
+                              labelText: 'Event Time',
+                              filled: true,
+                              fillColor: formFieldFillColor,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: secondaryColor),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
+                            onTap: () async {
+                              _showPickerTime(context);
+                            },
                           ),
                           SizedBox(height: _height * 0.015),
                           // Deadline to register
@@ -750,7 +765,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDate': eventDate,
                                             'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
-                                            'eventType': eventType
+                                            'eventType': eventType,
                                           });
                                           FirebaseFirestore.instance
                                               .collection('eventsBackup')
@@ -764,7 +779,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                                             'eventDate': eventDate,
                                             'eventTime': _selectedTime,
                                             'eventDeadline': eventDeadline,
-                                            'eventType': eventType
+                                            'eventType': eventType,
                                           });
                                           Navigator.pop(context);
                                         },
@@ -794,9 +809,10 @@ goToEditEventImage(BuildContext context, String id, String eventImageUrl) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => AdminEditEventImage(
-              id: id,
-              eventImageUrl: eventImageUrl,
-            )),
+      builder: (context) => AdminEditEventImage(
+        id: id,
+        eventImageUrl: eventImageUrl,
+      ),
+    ),
   );
 }

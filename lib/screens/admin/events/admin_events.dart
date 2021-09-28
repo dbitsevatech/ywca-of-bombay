@@ -32,7 +32,7 @@ class _AdminEventsState extends State<AdminEvents> {
   String readEventDate(Timestamp eventDate) {
     DateTime newEventDate = eventDate.toDate();
     String formattedEventDate =
-        DateFormat('EEE | dd MMM, yyyy').format(newEventDate);
+        DateFormat('EEE | dd MMM, yyyy', 'en').format(newEventDate);
     return formattedEventDate;
   }
 
