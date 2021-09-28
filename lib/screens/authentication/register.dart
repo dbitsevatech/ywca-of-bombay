@@ -59,12 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       initialDate: dateOfBirth,
       firstDate: DateTime(1940),
       lastDate: DateTime.now().subtract(Duration(days: 4380)),
-      // initialDatePickerMode: DatePickerMode.year,
-      // https://github.com/flutter/flutter/issues/67909
-      // https://github.com/flutter/flutter/pull/67926
-      //
-      // TOD: Check if above line UX issue is solved
-      // Try this picker if issue does not solve: https://pub.dev/packages/flutter_rounded_date_picker
+      initialDatePickerMode: DatePickerMode.year,
       helpText: 'Select Date of Birth',
       fieldLabelText: 'Enter date of birth',
       builder: (context, child) {
@@ -391,7 +386,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               FocusScope.of(context).requestFocus(FocusNode());
                               await _selectDate();
                               dateController.text =
-                                  "${DateFormat('dd-MM-yyyy', 'en').format(dateOfBirth.toLocal())}"
+                                  "${DateFormat('dd-MM-yyyy').format(dateOfBirth.toLocal())}"
                                       .split(' ')[0];
                             },
                           ),
@@ -505,19 +500,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 0;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Female',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 0;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Female',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -529,19 +526,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 1;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Male',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 1;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Male',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -553,19 +552,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 2;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Decline to state',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 2;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Decline to state',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -994,24 +995,23 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 0;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Yes',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 0;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
                             ),
                             Radio(
                               value: 1,
@@ -1022,24 +1022,23 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 1;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'No',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 1;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
                             ),
                             Radio(
                               value: 2,
@@ -1050,19 +1049,21 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                               hoverColor: secondaryColor,
                               activeColor: secondaryColor,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _interestInMembershipRadioValue = 2;
-                                  _handleInterestInMembershipRadioValueChange(
-                                      _interestInMembershipRadioValue);
-                                });
-                              },
-                              child: Text(
-                                'Maybe',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _interestInMembershipRadioValue = 2;
+                                    _handleInterestInMembershipRadioValueChange(
+                                        _interestInMembershipRadioValue);
+                                  });
+                                },
+                                child: Text(
+                                  'Maybe',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ),
                             ),

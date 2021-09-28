@@ -15,7 +15,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   var userInfo;
-  final List<String> images = [
+  final List<String> imagesNetwork = [
     'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
     'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
     'https://images.unsplash.com/photo-1586901533048-0e856dff2c0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
@@ -24,12 +24,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'https://images.unsplash.com/photo-1586951144438-26d4e072b891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
     'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
   ];
+  final List<String> images = [
+    'assets/images/about_us/Ywca_spotlight_1.jpg',
+    'assets/images/initiatives/piya/1-walk-for-freedom.jpeg',
+    'assets/images/initiatives/wdu/3-bakery-certificate-competition.jpeg',
+    'assets/images/initiatives/asha_kiran/5-cartoon-making-workshop.png',
+    'assets/images/extras/image20.jpeg',
+  ];
   @override
   void initState() {
     userInfo = Provider.of<UserData>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      images.forEach((imageUrl) {
-        precacheImage(NetworkImage(imageUrl), context);
+      images.forEach((imagePath) {
+        precacheImage(AssetImage(imagePath), context);
       });
     });
     super.initState();
@@ -57,11 +64,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       title: Text(
                         "YWCA Of Bombay",
                         style: TextStyle(
-                            fontFamily: 'LobsterTwo',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24.0,
-                            color: Colors.black87),
+                          fontFamily: 'LobsterTwo',
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0,
+                          color: Colors.black87,
+                        ),
                       ),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
@@ -72,20 +80,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               CarouselSlider.builder(
                 itemCount: images.length,
                 options: CarouselOptions(
-                  aspectRatio: 1, // Redmi 8 and pixel 4xl
-                  // aspectRatio: 1.1, // Nokia 7 plus
+                  aspectRatio: 1,
                   autoPlay: true,
                   autoPlayCurve: Curves.fastOutSlowIn,
                   autoPlayAnimationDuration: Duration(milliseconds: 700),
                   viewportFraction: 0.8,
                   enlargeCenterPage: true,
-                  // height: _height * 0.45, //distorta everything
                 ),
                 itemBuilder: (context, index, realIdx) {
                   return Container(
                     height: 100,
                     child: Center(
-                      child: Image.network(
+                      child: Image.asset(
                         images[index],
                         fit: BoxFit.cover,
                         width: 1000, // No effect on changing value
@@ -99,8 +105,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Center(
-                    //   child:
                     Text(
                       '\"BY LOVE, SERVE ONE ANOTHER\"',
                       textAlign: TextAlign.center,
@@ -110,7 +114,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    // ),
                     SizedBox(
                       height: 20,
                     ),
