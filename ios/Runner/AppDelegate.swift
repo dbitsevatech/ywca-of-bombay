@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 
+
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
@@ -8,6 +9,8 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+    // Use Firebase library to configure APIs
+   
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
