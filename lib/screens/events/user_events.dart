@@ -73,10 +73,8 @@ class _EventsState extends State<Events> {
       if (checkSnapshot.size > 0) {
       } else {
         // incrementing eventClickCount in events
-        final DocumentReference docRef = FirebaseFirestore
-        .instance
-        .collection("events")
-        .doc(eventID);
+        final DocumentReference docRef =
+            FirebaseFirestore.instance.collection("events").doc(eventID);
         docRef.update({"eventClickCount": FieldValue.increment(1)});
         print("adding");
         FirebaseFirestore.instance
@@ -148,11 +146,10 @@ class _EventsState extends State<Events> {
                   child: AppBar(
                     centerTitle: true,
                     title: Text(
-                      "YWCA Of Bombay",
+                      "YWCA OF BOMBAY",
                       style: TextStyle(
-                        fontFamily: 'LobsterTwo',
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Raleway',
+                        fontWeight: FontWeight.w800,
                         fontSize: 18.0,
                         color: Colors.black87,
                       ),

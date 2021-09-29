@@ -90,7 +90,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData.light().copyWith(
-
             primaryColor: const Color(0xFF49dee8),
             accentColor: const Color(0xFF49dee8),
             colorScheme: ColorScheme.light(primary: const Color(0xFF49dee8)),
@@ -223,11 +222,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: AppBar(
                           centerTitle: true,
                           title: Text(
-                            "YWCA Of Bombay",
+                            "YWCA OF BOMBAY",
                             style: TextStyle(
-                              fontFamily: 'LobsterTwo',
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w800,
                               fontSize: 18.0,
                               color: Colors.black87,
                             ),
@@ -491,19 +489,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 0;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Female',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 0;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Female',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -515,19 +515,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 1;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Male',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 1;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Male',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -539,19 +541,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 2;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Decline to state',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 2;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Decline to state',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -730,106 +734,103 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ),
                           SizedBox(height: 10),
-                          if(role != "Member")
-                          Text(
-                            'Interested in being a member?',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
+                          if (role == "NonMember")
+                            Text(
+                              'Interested in being a member?',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Montserrat',
+                              ),
                             ),
-                          ),
-                          if(role != "Member")
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Radio(
-                                value: 0,
-                                groupValue: _interestInMembershipRadioValue,
-                                onChanged:
-                                    _handleInterestInMembershipRadioValueChange,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _interestInMembershipRadioValue = 0;
-                                    _handleInterestInMembershipRadioValueChange(
-                                        _interestInMembershipRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                          if (role == "NonMember")
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Radio(
+                                  value: 0,
+                                  groupValue: _interestInMembershipRadioValue,
+                                  onChanged:
+                                      _handleInterestInMembershipRadioValueChange,
+                                  focusColor: secondaryColor,
+                                  hoverColor: secondaryColor,
+                                  activeColor: secondaryColor,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _interestInMembershipRadioValue = 0;
+                                        _handleInterestInMembershipRadioValueChange(
+                                            _interestInMembershipRadioValue);
+                                      });
+                                    },
+                                    child: Text(
+                                      'Yes',
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Radio(
-                                value: 1,
-                                groupValue: _interestInMembershipRadioValue,
-                                onChanged:
-                                    _handleInterestInMembershipRadioValueChange,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _interestInMembershipRadioValue = 1;
-                                    _handleInterestInMembershipRadioValueChange(
-                                        _interestInMembershipRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'No',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                                Radio(
+                                  value: 1,
+                                  groupValue: _interestInMembershipRadioValue,
+                                  onChanged:
+                                      _handleInterestInMembershipRadioValueChange,
+                                  focusColor: secondaryColor,
+                                  hoverColor: secondaryColor,
+                                  activeColor: secondaryColor,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _interestInMembershipRadioValue = 1;
+                                        _handleInterestInMembershipRadioValueChange(
+                                            _interestInMembershipRadioValue);
+                                      });
+                                    },
+                                    child: Text(
+                                      'No',
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Radio(
-                                value: 2,
-                                groupValue: _interestInMembershipRadioValue,
-                                onChanged:
-                                    _handleInterestInMembershipRadioValueChange,
-                                focusColor: secondaryColor,
-                                hoverColor: secondaryColor,
-                                activeColor: secondaryColor,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _interestInMembershipRadioValue = 2;
-                                    _handleInterestInMembershipRadioValueChange(
-                                        _interestInMembershipRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Maybe',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                                Radio(
+                                  value: 2,
+                                  groupValue: _interestInMembershipRadioValue,
+                                  onChanged:
+                                      _handleInterestInMembershipRadioValueChange,
+                                  focusColor: secondaryColor,
+                                  hoverColor: secondaryColor,
+                                  activeColor: secondaryColor,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _interestInMembershipRadioValue = 2;
+                                        _handleInterestInMembershipRadioValueChange(
+                                            _interestInMembershipRadioValue);
+                                      });
+                                    },
+                                    child: Text(
+                                      'Maybe',
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 16,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
                           SizedBox(height: _height * 0.005),
                           GradientButton(
                             buttonText: 'Update Profile',
@@ -843,14 +844,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               }
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
-                              
 
                               if (userInfo.getmemberRole == "Member") {
                                 await FirebaseFirestore.instance
                                     .collection("approval")
                                     .doc(uid)
                                     .set({
-                                      "address" : address,
+                                      "address": address,
                                       "firstName": firstName,
                                       "lastName": lastName,
                                       "dateOfBirth": dateOfBirth,
@@ -866,9 +866,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "memberRole": userInfo.getmemberRole,
                                       "approvalStatus": "pending"
                                     })
-                                    .then((value) => {
-                                      print("Request Sent"),
-                                      savePressed()})
+                                    .then((value) =>
+                                        {print("Request Sent"), savePressed()})
                                     .catchError((error) =>
                                         print("Failed to update user: $error"));
                                 // await savePressed();
@@ -878,44 +877,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     .collection("users")
                                     .doc(uid)
                                     .update({
-                                      "address" : address,
-                                      "firstName": firstName,
-                                      "lastName": lastName,
-                                      "dateOfBirth": dateOfBirth,
-                                      "emailId": email,
-                                      "gender": gender,
-                                      "profession": profession,
-                                      "placeOfWork": placeOfWork,
-                                      "nearestCenter": nearestCenter,
-                                      "interestInMembership":
-                                          interestInMembership,
-                                      "uid": uid,
-                                      "phoneNumber": userInfo.getphoneNumber,
-                                      "memberRole": userInfo.getmemberRole,
-                                    })
-                                    .then((value)
-                                    async {
-                                      await userInfo.updateAfterAuth(
-                                          uid,
-                                          firstName,
-                                          lastName,
-                                          dateOfBirth,
-                                          email,
-                                          phoneNumber,
-                                          gender,
-                                          profession,
-                                          placeOfWork,
-                                          nearestCenter,
-                                          interestInMembership,
-                                          userInfo.getmemberRole,
-                                          address);
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    }
-                                )
-                                    .catchError((error) =>
+                                  "address": address,
+                                  "firstName": firstName,
+                                  "lastName": lastName,
+                                  "dateOfBirth": dateOfBirth,
+                                  "emailId": email,
+                                  "gender": gender,
+                                  "profession": profession,
+                                  "placeOfWork": placeOfWork,
+                                  "nearestCenter": nearestCenter,
+                                  "interestInMembership": interestInMembership,
+                                  "uid": uid,
+                                  "phoneNumber": userInfo.getphoneNumber,
+                                  "memberRole": userInfo.getmemberRole,
+                                }).then((value) async {
+                                  await userInfo.updateAfterAuth(
+                                      uid,
+                                      firstName,
+                                      lastName,
+                                      dateOfBirth,
+                                      email,
+                                      phoneNumber,
+                                      gender,
+                                      profession,
+                                      placeOfWork,
+                                      nearestCenter,
+                                      interestInMembership,
+                                      userInfo.getmemberRole,
+                                      address);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                }).catchError((error) =>
                                         print("Failed to update user: $error"));
-
                               }
 
                               // Navigator.pop(context);

@@ -114,8 +114,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
     });
   }
 
-
-
   DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
 
@@ -242,11 +240,10 @@ class _EditUserProfileState extends State<EditUserProfile> {
                         child: AppBar(
                           centerTitle: true,
                           title: Text(
-                            "YWCA Of Bombay",
+                            "YWCA OF BOMBAY",
                             style: TextStyle(
-                              fontFamily: 'LobsterTwo',
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w800,
                               fontSize: 18.0,
                               color: Colors.black87,
                             ),
@@ -570,19 +567,21 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 0;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Female',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 0;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Female',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -594,19 +593,21 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 1;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Male',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 1;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Male',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -618,19 +619,21 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                 hoverColor: secondaryColor,
                                 activeColor: secondaryColor,
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _genderRadioValue = 2;
-                                    _handleGenderRadioValueChange(
-                                        _genderRadioValue);
-                                  });
-                                },
-                                child: Text(
-                                  'Decline to state',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 16,
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _genderRadioValue = 2;
+                                      _handleGenderRadioValueChange(
+                                          _genderRadioValue);
+                                    });
+                                  },
+                                  child: Text(
+                                    'Decline to state',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -822,33 +825,32 @@ class _EditUserProfileState extends State<EditUserProfile> {
                               _formKey.currentState!.save();
                               // _formKey.currentState?.save();
 
-
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(uid)
-                                    .update({
-                                  "address": address,
-                                  "firstName": firstName,
-                                  "lastName": lastName,
-                                  "dateOfBirth": dateOfBirth,
-                                  "emailId": email,
-                                  "gender": gender,
-                                  "profession": profession,
-                                  "placeOfWork": placeOfWork,
-                                  "nearestCenter": nearestCenter,
-                                  "interestInMembership": interestInMembership,
-                                  "uid": uid,
-                                  "memberRole": userRole,
-                                }).then((value) async {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => SearchUser()),
-                                          (route) => false);
-                                }).catchError(
-                                  (error) =>
-                                      print("Failed to update user: $error"),
-                                );
-
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(uid)
+                                  .update({
+                                "address": address,
+                                "firstName": firstName,
+                                "lastName": lastName,
+                                "dateOfBirth": dateOfBirth,
+                                "emailId": email,
+                                "gender": gender,
+                                "profession": profession,
+                                "placeOfWork": placeOfWork,
+                                "nearestCenter": nearestCenter,
+                                "interestInMembership": interestInMembership,
+                                "uid": uid,
+                                "memberRole": userRole,
+                              }).then((value) async {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => SearchUser()),
+                                    (route) => false);
+                              }).catchError(
+                                (error) =>
+                                    print("Failed to update user: $error"),
+                              );
 
                               // Navigator.pop(context);
                               // Navigator.pop(context);

@@ -74,21 +74,20 @@ class _LoginOtpState extends State<LoginOtp>
     try {
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
-          verificationId: _verificationCode, smsCode: otp))
+              verificationId: _verificationCode, smsCode: otp))
           .then(
-            (value) async {
+        (value) async {
           if (value.user != null) {
             if (userInfo.getmemberRole == 'Admin') {
-
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => AdminEvents()),
-                      (route) => false);
+                  (route) => false);
             } else {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => Events()),
-                      (route) => false);
+                  (route) => false);
             }
           }
         },
@@ -100,7 +99,6 @@ class _LoginOtpState extends State<LoginOtp>
       Vibration.vibrate(duration: 100);
       _showInvalidOTPSnackBar();
     }
-
   }
 
   // Return "Verification Code" label
@@ -150,7 +148,7 @@ class _LoginOtpState extends State<LoginOtp>
 
   // Returns "OTP" input part
   get _getInputPart {
-    if(_controller!.value == 0.00){
+    if (_controller!.value == 0.00) {
       _hideResendButton = false;
     }
 
@@ -166,11 +164,10 @@ class _LoginOtpState extends State<LoginOtp>
               child: AppBar(
                 centerTitle: true,
                 title: Text(
-                  "YWCA Of Bombay",
+                  "YWCA OF BOMBAY",
                   style: TextStyle(
-                    fontFamily: 'LobsterTwo',
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w800,
                     fontSize: 18.0,
                     color: Colors.black87,
                   ),
@@ -184,9 +181,8 @@ class _LoginOtpState extends State<LoginOtp>
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()),
-                            (route) => false);
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                        (route) => false);
                   },
                 ),
                 backgroundColor: Colors.transparent,
@@ -421,14 +417,14 @@ class _LoginOtpState extends State<LoginOtp>
     totalTimeInSeconds = time;
     super.initState();
     _controller =
-    AnimationController(vsync: this, duration: Duration(seconds: time))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.dismissed) {
-          setState(() {
-            _hideResendButton = _hideResendButton;
+        AnimationController(vsync: this, duration: Duration(seconds: time))
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.dismissed) {
+              setState(() {
+                _hideResendButton = _hideResendButton;
+              });
+            }
           });
-        }
-      });
     _controller!
         .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
@@ -476,9 +472,9 @@ class _LoginOtpState extends State<LoginOtp>
 //            color: Colors.grey.withOpacity(0.4),
           border: Border(
               bottom: BorderSide(
-                width: 2.0,
-                color: Colors.black,
-              ))),
+        width: 2.0,
+        color: Colors.black,
+      ))),
     );
   }
 

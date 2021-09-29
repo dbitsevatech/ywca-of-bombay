@@ -39,17 +39,17 @@ class RegisterOtp extends StatefulWidget {
 
   @override
   _RegisterOtpState createState() => _RegisterOtpState(
-    firstName,
-    lastName,
-    dateOfBirth,
-    emailId,
-    phoneNumber,
-    gender,
-    profession,
-    placeOfWork,
-    nearestCenter,
-    interestInMembership,
-  );
+        firstName,
+        lastName,
+        dateOfBirth,
+        emailId,
+        phoneNumber,
+        gender,
+        profession,
+        placeOfWork,
+        nearestCenter,
+        interestInMembership,
+      );
 }
 
 class _RegisterOtpState extends State<RegisterOtp>
@@ -70,17 +70,17 @@ class _RegisterOtpState extends State<RegisterOtp>
   final GlobalKey<ScaffoldState> _scaffoldkey = GlobalKey<ScaffoldState>();
   String _verificationCode = "";
   _RegisterOtpState(
-      this.firstName,
-      this.lastName,
-      this.dateOfBirth,
-      this.emailId,
-      this.phoneNumber,
-      this.gender,
-      this.profession,
-      this.placeOfWork,
-      this.nearestCenter,
-      this.interestInMembership,
-      );
+    this.firstName,
+    this.lastName,
+    this.dateOfBirth,
+    this.emailId,
+    this.phoneNumber,
+    this.gender,
+    this.profession,
+    this.placeOfWork,
+    this.nearestCenter,
+    this.interestInMembership,
+  );
   AnimationController? _controller;
   var otp;
   // Variables
@@ -95,7 +95,7 @@ class _RegisterOtpState extends State<RegisterOtp>
 
   Timer? timer;
   int totalTimeInSeconds = 60;
-  bool _hideResendButton =false;
+  bool _hideResendButton = false;
 
   String userName = "";
   bool didReadNotifications = false;
@@ -115,7 +115,6 @@ class _RegisterOtpState extends State<RegisterOtp>
       ),
     );
 
-
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -124,7 +123,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       print("register button pressed");
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
-          verificationId: _verificationCode, smsCode: otp))
+              verificationId: _verificationCode, smsCode: otp))
           .then((value) async {
         final snapShot = await FirebaseFirestore.instance
             .collection('users')
@@ -145,7 +144,7 @@ class _RegisterOtpState extends State<RegisterOtp>
             "nearestCenter": nearestCenter,
             "interestInMembership": interestInMembership,
             "memberRole": "NonMember",
-            "address" : "",
+            "address": "",
           };
           userInfo.updateAfterAuth(
               value.user!.uid,
@@ -162,13 +161,13 @@ class _RegisterOtpState extends State<RegisterOtp>
               "NonMember",
               "");
           CollectionReference<Map<String, dynamic>> users =
-          FirebaseFirestore.instance.collection('users');
+              FirebaseFirestore.instance.collection('users');
           users.doc(value.user!.uid).set(data);
 
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Events()),
-                  (route) => false);
+              (route) => false);
         } else {
           print("user already registered with this number");
         }
@@ -241,11 +240,10 @@ class _RegisterOtpState extends State<RegisterOtp>
               child: AppBar(
                 centerTitle: true,
                 title: Text(
-                  "YWCA Of Bombay",
+                  "YWCA OF BOMBAY",
                   style: TextStyle(
-                    fontFamily: 'LobsterTwo',
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.w800,
                     fontSize: 18.0,
                     color: Colors.black87,
                   ),
@@ -256,20 +254,22 @@ class _RegisterOtpState extends State<RegisterOtp>
                     color: Colors.black,
                     size: 30,
                   ),
-                  onPressed: (){  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegisterScreen2(
-                        // userData: _user,
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        emailId: this.emailId,
-                        phoneNumber: this.phoneNumber,
-                        gender: this.gender,
-                        dateOfBirth: this.dateOfBirth,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterScreen2(
+                          // userData: _user,
+                          firstName: this.firstName,
+                          lastName: this.lastName,
+                          emailId: this.emailId,
+                          phoneNumber: this.phoneNumber,
+                          gender: this.gender,
+                          dateOfBirth: this.dateOfBirth,
+                        ),
                       ),
-                    ),
-                  );},
+                    );
+                  },
                 ),
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -319,7 +319,7 @@ class _RegisterOtpState extends State<RegisterOtp>
         height: 32,
         width: 120,
         decoration: BoxDecoration(
-          // color: Colors.black,
+            // color: Colors.black,
             color: secondaryColor,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(32)),
@@ -374,7 +374,7 @@ class _RegisterOtpState extends State<RegisterOtp>
       phoneNumber: '+91$phoneNumber',
       timeout: const Duration(seconds: 50),
       verificationCompleted: (PhoneAuthCredential credential) async {
-      print("verification in process");
+        print("verification in process");
       },
       verificationFailed: (FirebaseAuthException e) {
         print(e.message);
@@ -530,14 +530,14 @@ class _RegisterOtpState extends State<RegisterOtp>
     totalTimeInSeconds = time;
     super.initState();
     _controller =
-    AnimationController(vsync: this, duration: Duration(seconds: time))
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.dismissed) {
-          setState(() {
-            _hideResendButton = false;
+        AnimationController(vsync: this, duration: Duration(seconds: time))
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.dismissed) {
+              setState(() {
+                _hideResendButton = false;
+              });
+            }
           });
-        }
-      });
     _controller!
         .reverse(from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
@@ -585,9 +585,9 @@ class _RegisterOtpState extends State<RegisterOtp>
 //            color: Colors.grey.withOpacity(0.4),
           border: Border(
               bottom: BorderSide(
-                width: 2.0,
-                color: Colors.black,
-              ))),
+        width: 2.0,
+        color: Colors.black,
+      ))),
     );
   }
 
