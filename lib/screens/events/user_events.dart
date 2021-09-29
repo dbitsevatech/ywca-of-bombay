@@ -13,6 +13,8 @@ import '../../models/User.dart';
 import '../../drawers_constants/user_drawer.dart';
 import '../../widgets/alert_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class Events extends StatefulWidget {
@@ -108,6 +110,7 @@ class _EventsState extends State<Events> {
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     checkMemberPopup();
+    initializeDateFormatting('en', null);
     super.initState();
   }
 

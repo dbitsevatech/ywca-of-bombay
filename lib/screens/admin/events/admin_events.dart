@@ -14,6 +14,8 @@ import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // ignore: must_be_immutable
 class AdminEvents extends StatefulWidget {
@@ -40,6 +42,7 @@ class _AdminEventsState extends State<AdminEvents> {
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     userInfo = Provider.of<UserData>(context, listen: false);
+    initializeDateFormatting('en', null);
     super.initState();
   }
 
