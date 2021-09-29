@@ -34,7 +34,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   List<Widget> itemsData = [];
 
-    Future downloadData() async {
+  Future downloadData() async {
     await FirebaseFirestore.instance
         .collection("events")
         .orderBy('eventDate', descending: true)
@@ -269,11 +269,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         child: AppBar(
                           centerTitle: true,
                           title: Text(
-                            "YWCA Of Bombay",
+                            "YWCA OF BOMBAY",
                             style: TextStyle(
-                              fontFamily: 'LobsterTwo',
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w800,
                               fontSize: 18.0,
                               color: Colors.black87,
                             ),

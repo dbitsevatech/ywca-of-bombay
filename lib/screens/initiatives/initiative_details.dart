@@ -41,7 +41,6 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
 
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -55,11 +54,10 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
         ),
         centerTitle: true,
         title: Text(
-          "YWCA Of Bombay",
+          "YWCA OF BOMBAY",
           style: TextStyle(
-            fontFamily: 'LobsterTwo',
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.bold,
+            fontFamily: 'Raleway',
+            fontWeight: FontWeight.w800,
             fontSize: 18.0,
             color: Colors.black87,
           ),
