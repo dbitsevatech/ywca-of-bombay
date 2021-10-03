@@ -16,6 +16,8 @@ import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // ignore: must_be_immutable
 class AdminEvents extends StatefulWidget {
@@ -27,8 +29,8 @@ class _AdminEventsState extends State<AdminEvents> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
   var userInfo;
-
   var screenSize;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   // conversion of event date to string for displaying
   String readEventDate(Timestamp eventDate) {
@@ -38,11 +40,38 @@ class _AdminEventsState extends State<AdminEvents> {
     return formattedEventDate;
   }
 
+  // insert token into the database
+  _getToken() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final userID = user?.uid;
+    _firebaseMessaging.getToken().then((deviceToken) {
+      print("device token: $deviceToken");
+      // adding to mobile token
+      FirebaseFirestore.instance
+          .collection('mobileToken')
+          .where('userID', isEqualTo: userID)
+          .get()
+          .then((checkSnapshot) {
+        if (checkSnapshot.size > 0) {
+          print("already exists");
+        } else {
+          // saving the value if it doesn't exists
+          print("adding");
+          FirebaseFirestore.instance
+              .collection('mobileToken')
+              .add({'token': deviceToken, 'userID': userID});
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     userInfo = Provider.of<UserData>(context, listen: false);
     initializeDateFormatting('en', null);
+    _getToken();
     super.initState();
   }
 

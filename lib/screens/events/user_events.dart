@@ -15,6 +15,7 @@ import '../../widgets/alert_dialogs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 // ignore: must_be_immutable
 class Events extends StatefulWidget {
@@ -28,6 +29,7 @@ class _EventsState extends State<Events> {
   // Firebase auth for couting the onClick and Onregister count of event
   final FirebaseAuth auth = FirebaseAuth.instance;
   var userInfo;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   // conversion of event date for displaying
   String readEventDate(Timestamp eventDate) {
@@ -106,11 +108,38 @@ class _EventsState extends State<Events> {
     }
   }
 
+  // insert token into the database
+  _getToken() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final userID = user?.uid;
+    _firebaseMessaging.getToken().then((deviceToken) {
+      print("device token: $deviceToken");
+      // adding to mobile token
+      FirebaseFirestore.instance
+          .collection('mobileToken')
+          .where('userID', isEqualTo: userID)
+          .get()
+          .then((checkSnapshot) {
+        if (checkSnapshot.size > 0) {
+          print("already exists");
+        } else {
+          // saving the value if it doesn't exists
+          print("adding");
+          FirebaseFirestore.instance
+              .collection('mobileToken')
+              .add({'token': deviceToken, 'userID': userID});
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     selectedMenuItemId = menuWithIcon.items[1].id;
     checkMemberPopup();
     initializeDateFormatting('en', null);
+    _getToken();
     super.initState();
   }
 
