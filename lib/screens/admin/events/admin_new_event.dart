@@ -201,7 +201,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventType': eventType,
       'eventClickCount': 0,
       'eventRegisterCount': 0
-    }).then((value) => FirebaseFirestore.instance
+    }).then((value) => {FirebaseFirestore.instance
             .collection('eventsBackup')
             .doc(value.id)
             .set({
@@ -214,7 +214,14 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventDeadline': eventDeadline,
           'eventTime': eventTime,
           'eventType': eventType
-        }));
+        }),
+    SendNotification( eventTitle, eventDescription)
+    }
+
+
+    );
+
+
   }
 
   // everyone-0, members-1
@@ -687,7 +694,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 _selectedTime,
                                 eventType,
                               );
-                              SendNotification( eventTitle, eventDescription);
 
                             },
                           ),
