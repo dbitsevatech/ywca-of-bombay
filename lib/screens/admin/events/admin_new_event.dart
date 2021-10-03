@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -20,7 +22,17 @@ class AdminNewEvent extends StatefulWidget {
   @override
   _AdminNewEventState createState() => _AdminNewEventState();
 }
+Future<http.Response> SendNotification(String eventTitle,String eventDescription) {
+  return http.post(
+    Uri.parse('https://ywca-temp.herokuapp.com/post/'),
+    body: (<String, String>{
+      'title': eventTitle,
+      'body':eventDescription,
+      'password':"12345678"
 
+    }),
+  );
+}
 class _AdminNewEventState extends State<AdminNewEvent> {
   String eventTitle = "";
   String eventDescription = "";
@@ -655,10 +667,14 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             buttonText: 'Submit',
                             screenHeight: _height * 0.4,
                             onPressedFunction: () async {
+
+
+
                               if (!_formKey.currentState!.validate()) {
                                 Vibration.vibrate(duration: 100);
                                 return;
                               }
+
                               _formKey.currentState!.save();
                               uploadData(
                                 context,
@@ -671,6 +687,8 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 _selectedTime,
                                 eventType,
                               );
+                              SendNotification( eventTitle, eventDescription);
+
                             },
                           ),
                         ),
