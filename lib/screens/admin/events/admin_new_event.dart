@@ -22,12 +22,12 @@ class AdminNewEvent extends StatefulWidget {
   @override
   _AdminNewEventState createState() => _AdminNewEventState();
 }
-Future<http.Response> SendNotification(String eventTitle,String eventDescription) {
+Future<http.Response> SendNotification(String eventTitle,String eventDate) {
   return http.post(
     Uri.parse('https://ywca-temp.herokuapp.com/post/'),
     body: (<String, String>{
       'title': eventTitle,
-      'body':eventDescription,
+      'body': eventDate,
       'password':"12345678"
 
     }),
@@ -215,7 +215,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventTime': eventTime,
           'eventType': eventType
         }),
-    SendNotification( eventTitle, eventDescription)
+    SendNotification( eventTitle, eventDate)
     }
 
 

@@ -55,6 +55,13 @@ class _AdminEventsState extends State<AdminEvents> {
           .then((checkSnapshot) {
         if (checkSnapshot.size > 0) {
           print("already exists");
+          print("updating token");
+          FirebaseFirestore.instance
+              .collection('mobileToken')
+              .doc(userID)
+              .update({'token': deviceToken})
+              .then((_) => print('Updated'))
+              .catchError((error) => print('Update failed: $error'));
         } else {
           // saving the value if it doesn't exists
           print("adding");
