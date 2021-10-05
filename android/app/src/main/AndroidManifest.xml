@@ -9,6 +9,16 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="YWCA of Bombay"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_stat_ywca_logo"
+            />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primaryColor"
+            />
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -20,6 +30,10 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
+            <meta-data
+              android:name="com.google.firebase.messaging.default_notification_color"
+              android:resource="@android:color/black" 
+              />
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
@@ -33,10 +47,7 @@
               android:name="io.flutter.embedding.android.SplashScreenDrawable"
               android:resource="@drawable/launch_background"
               />
-            <meta-data
-              android:name="com.google.firebase.messaging.default_notification_icon"
-              android:resource="@drawable/ywca_logo" 
-              />
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

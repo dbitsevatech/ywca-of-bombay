@@ -8,14 +8,15 @@ class PushNotificationsManager extends StatefulWidget {
   final String title = 'Firebase Messaging Demo';
 
   @override
-  _PushNotificationsManagerState createState() => _PushNotificationsManagerState();
+  _PushNotificationsManagerState createState() =>
+      _PushNotificationsManagerState();
 }
 
 class _PushNotificationsManagerState extends State<PushNotificationsManager> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   // getToken
-  _getToken(){
-    _firebaseMessaging.getToken().then((deviceToken){
+  _getToken() {
+    _firebaseMessaging.getToken().then((deviceToken) {
       print("device token: $deviceToken");
     });
   }
@@ -52,22 +53,19 @@ class _PushNotificationsManagerState extends State<PushNotificationsManager> {
 // });
 
 // foreground notifications
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+    _firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   print('Message data: $message');
+    // });
 
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print("onMessageOpenedApp: $message");
     });
 
-FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("onMessageOpenedApp: $message");
-});
-
-FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {
       print("onBackgroundMessage: $message");
-});
+    });
   }
 
   @override
@@ -76,6 +74,7 @@ FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {
     _configureFirebaseListerners();
     _getToken();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
