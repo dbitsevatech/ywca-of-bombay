@@ -837,7 +837,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             screenHeight: _height,
                             onPressedFunction: () async {
                               print(userInfo.getmemberRole);
-                              // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
                                 Vibration.vibrate(duration: 100);
                                 return;
@@ -867,9 +866,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       "approvalStatus": "pending"
                                     })
                                     .then((value) =>
-                                        {print("Request Sent"), savePressed()})
-                                    .catchError((error) =>
-                                        print("Failed to update user: $error"));
+                                        {print("Request Sent"), savePressed()});
+                                    // .catchError((error) =>
+                                    //     print("Failed to update user: $error"));
                                 // await savePressed();
                               } else {
                                 print("updating as it is non-member");
@@ -907,8 +906,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       address);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
-                                }).catchError((error) =>
-                                        print("Failed to update user: $error"));
+                                });
+                                    // .catchError((error) =>
+                                    //     print("Failed to update user: $error"));
                               }
 
                               // Navigator.pop(context);

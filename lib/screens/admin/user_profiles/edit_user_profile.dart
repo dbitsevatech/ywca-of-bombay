@@ -817,7 +817,6 @@ class _EditUserProfileState extends State<EditUserProfile> {
                             buttonText: 'Update Profile',
                             screenHeight: _height,
                             onPressedFunction: () async {
-                              // TODO: validate function not working, hence the code after it does not execute
                               if (_formKey.currentState!.validate() != true) {
                                 Vibration.vibrate(duration: 100);
                                 return;
@@ -847,10 +846,11 @@ class _EditUserProfileState extends State<EditUserProfile> {
                                     MaterialPageRoute(
                                         builder: (context) => SearchUser()),
                                     (route) => false);
-                              }).catchError(
-                                (error) =>
-                                    print("Failed to update user: $error"),
-                              );
+                              });
+                              //     .catchError(
+                              //   (error) =>
+                              //       print("Failed to update user: $error"),
+                              // );
 
                               // Navigator.pop(context);
                               // Navigator.pop(context);

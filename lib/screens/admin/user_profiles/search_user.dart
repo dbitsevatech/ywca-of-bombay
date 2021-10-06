@@ -20,7 +20,7 @@ class _SearchUserState extends State<SearchUser> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   late QuerySnapshot snapshotData;
   bool isExecuted = false;
-  final _navigatorKey = GlobalKey<NavigatorState>(); //define a navigation key.
+  // final _navigatorKey = GlobalKey<NavigatorState>(); //define a navigation key.
 
   @override
   void initState() {

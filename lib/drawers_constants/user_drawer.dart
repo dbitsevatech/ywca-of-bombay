@@ -135,8 +135,8 @@ Widget header(BuildContext context, var userInfo) {
 
 Widget footer(
     BuildContext context, DrawerScaffoldController controller, var userInfo) {
-  final _height = MediaQuery.of(context).size.height;
-  final _width = MediaQuery.of(context).size.width;
+  // final _height = MediaQuery.of(context).size.height;
+  // final _width = MediaQuery.of(context).size.width;
   return Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).size.height * 0.04,

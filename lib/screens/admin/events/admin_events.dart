@@ -14,7 +14,6 @@ import '../../../drawers_constants/admin_drawer.dart';
 import '../../../models/User.dart';
 import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -285,7 +284,6 @@ class _AdminEventsState extends State<AdminEvents> {
                           SizedBox(height: 5),
                           // Resource person
                           Text(
-                            // TODO: Resource person in DB
                             'Resource Person: Sharon Pires',
                             style: TextStyle(
                               fontSize: 12.0,
@@ -307,7 +305,6 @@ class _AdminEventsState extends State<AdminEvents> {
                               SizedBox(height: 5),
                               // Event time
                               Text(
-                                // TODO: Time in 12 hr format (AM/PM)
                                 'Time: ' + (document['eventTime']),
                                 style: TextStyle(
                                   fontSize: 14.0,

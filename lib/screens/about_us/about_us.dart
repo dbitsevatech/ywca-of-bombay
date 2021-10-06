@@ -41,7 +41,7 @@ class _AboutUsState extends State<AboutUs> {
   final DrawerScaffoldController controller = DrawerScaffoldController();
   late int selectedMenuItemId;
 
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
 
   var userInfo;
 
@@ -166,7 +166,7 @@ class _AboutUsState extends State<AboutUs> {
                                   autoPlay: true,
                                   onPageChanged: (index, reason) {
                                     setState(() {
-                                      _currentIndex = index;
+                                      // _currentIndex = index;
                                     });
                                   },
                                 ),

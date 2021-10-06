@@ -8,7 +8,7 @@ import '../../../widgets/constants.dart';
 import '../../../widgets/gradient_button.dart';
 
 class UserProfileDetails extends StatefulWidget {
-  String uid,
+  final String uid,
       firstName,
       lastName,
       phoneNumber,
@@ -20,7 +20,7 @@ class UserProfileDetails extends StatefulWidget {
       placeOfWork,
       profession,
       interestInMembership;
-  DateTime dateOfBirth;
+  final DateTime dateOfBirth;
 
   UserProfileDetails(
       {required this.uid,

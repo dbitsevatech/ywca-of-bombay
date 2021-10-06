@@ -206,8 +206,11 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (!_formKey.currentState!.validate()) {
-                                  return;
+                                // if (!_formKey.currentState!.validate()) {
+                                //   return;
+                                // }
+                                if(_image == null){
+                                    return;
                                 }
                                 // alertbox for saving the new/changed image
                                 await showDialog(
@@ -230,6 +233,7 @@ class _AdminEditEventImageState extends State<AdminEditEventImage> {
                                         ),
                                         TextButton(
                                           onPressed: () {
+
                                             Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pop(true);

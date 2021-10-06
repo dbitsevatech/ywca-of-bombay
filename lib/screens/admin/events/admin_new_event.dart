@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
@@ -22,17 +21,18 @@ class AdminNewEvent extends StatefulWidget {
   @override
   _AdminNewEventState createState() => _AdminNewEventState();
 }
-Future<http.Response> SendNotification(String eventTitle,String eventDate) {
+Future<http.Response> SendNotification(String eventTitle,String eventDesc) {
   return http.post(
     Uri.parse('https://ywca-temp.herokuapp.com/post/'),
     body: (<String, String>{
       'title': eventTitle,
-      'body': eventDate,
+      'body': eventDesc,
       'password':"12345678"
 
     }),
   );
 }
+
 class _AdminNewEventState extends State<AdminNewEvent> {
   String eventTitle = "";
   String eventDescription = "";
@@ -215,7 +215,7 @@ class _AdminNewEventState extends State<AdminNewEvent> {
           'eventTime': eventTime,
           'eventType': eventType
         }),
-    SendNotification( eventTitle, eventDate)
+    SendNotification( eventTitle, eventDescription)
     }
 
 
@@ -552,6 +552,12 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             setState(() {});
                           },
                           controller: deadlineController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Event time is required';
+                            }
+                            return null;
+                          },
                           style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontSize: 16,

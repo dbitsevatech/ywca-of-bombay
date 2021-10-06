@@ -10,8 +10,8 @@ import '../../../widgets/constants.dart';
 import '../../../widgets/blue_bubble_design.dart';
 
 class AnalyticsDetail extends StatefulWidget {
-  String eventId, eventName, eventDate;
-  int eventClicks, eventRegister;
+  final String eventId, eventName, eventDate;
+  final int eventClicks, eventRegister;
   AnalyticsDetail({
     required this.eventId,
     required this.eventDate,
