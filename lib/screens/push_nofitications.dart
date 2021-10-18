@@ -63,7 +63,7 @@ class _PushNotificationsManagerState extends State<PushNotificationsManager> {
       print("onMessageOpenedApp: $message");
     });
 
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) {
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
       print("onBackgroundMessage: $message");
     });
   }
