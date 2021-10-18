@@ -21,14 +21,14 @@ class AdminNewEvent extends StatefulWidget {
   @override
   _AdminNewEventState createState() => _AdminNewEventState();
 }
-Future<http.Response> SendNotification(String eventTitle,String eventDesc) {
+
+Future<http.Response> sendNotification(String eventTitle, String eventDesc) {
   return http.post(
     Uri.parse('https://ywcabombay.herokuapp.com/post/'),
     body: (<String, String>{
       'title': eventTitle,
       'body': eventDesc,
-      'password':"12345678"
-
+      'password': "12345678"
     }),
   );
 }
@@ -201,27 +201,23 @@ class _AdminNewEventState extends State<AdminNewEvent> {
       'eventType': eventType,
       'eventClickCount': 0,
       'eventRegisterCount': 0
-    }).then((value) => {FirebaseFirestore.instance
-            .collection('eventsBackup')
-            .doc(value.id)
-            .set({
-          'eventName': eventName,
-          'eventDescription': eventDescription,
-          'eventVenue': eventVenue,
-          'eventAmount': eventAmount,
-          'eventDate': eventDate,
-          'eventImageUrl': url,
-          'eventDeadline': eventDeadline,
-          'eventTime': eventTime,
-          'eventType': eventType
-        }),
-    SendNotification( eventTitle, eventDescription)
-    }
-
-
-    );
-
-
+    }).then((value) => {
+          FirebaseFirestore.instance
+              .collection('eventsBackup')
+              .doc(value.id)
+              .set({
+            'eventName': eventName,
+            'eventDescription': eventDescription,
+            'eventVenue': eventVenue,
+            'eventAmount': eventAmount,
+            'eventDate': eventDate,
+            'eventImageUrl': url,
+            'eventDeadline': eventDeadline,
+            'eventTime': eventTime,
+            'eventType': eventType
+          }),
+          sendNotification(eventTitle, eventDescription)
+        });
   }
 
   // everyone-0, members-1
@@ -680,9 +676,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                             buttonText: 'Submit',
                             screenHeight: _height * 0.4,
                             onPressedFunction: () async {
-
-
-
                               if (!_formKey.currentState!.validate()) {
                                 Vibration.vibrate(duration: 100);
                                 return;
@@ -700,7 +693,6 @@ class _AdminNewEventState extends State<AdminNewEvent> {
                                 _selectedTime,
                                 eventType,
                               );
-
                             },
                           ),
                         ),

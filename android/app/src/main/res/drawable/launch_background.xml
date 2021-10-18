@@ -4,14 +4,18 @@
     <item android:drawable="@android:color/white" />
 
     <!-- You can insert your own image assets here -->
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/ywca" />
-    </item>
-    <item  android:top="500dp">
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/ywcaofbombay" />
-    </item>
+<!--    <item>-->
+<!--        <bitmap-->
+<!--            android:gravity="center"-->
+<!--            android:src="@mipmap/ywca" />-->
+<!--    </item>-->
+<!--    <item  android:top="500dp">-->
+<!--        <bitmap-->
+<!--            android:gravity="center"-->
+<!--            android:src="@mipmap/ywcaofbombay" />-->
+<!--    </item>-->
+    <item android:drawable="@mipmap/ywca_of_bombay" android:gravity="center" android:width="250dp" android:top="-500dp"/>
+    <item android:drawable="@mipmap/logo" android:gravity="center" />
+    <item android:drawable="@mipmap/empowering_women" android:gravity="center" android:width="200dp" android:top="400dp"/>
+    <item android:drawable="@mipmap/developed_by_dbit_sevatech" android:gravity="center" android:top="700dp"/>
 </layer-list>
