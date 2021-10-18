@@ -23,7 +23,7 @@ class AdminNewEvent extends StatefulWidget {
 }
 Future<http.Response> SendNotification(String eventTitle,String eventDesc) {
   return http.post(
-    Uri.parse('https://ywca-temp.herokuapp.com/post/'),
+    Uri.parse('https://ywcabombay.herokuapp.com/post/'),
     body: (<String, String>{
       'title': eventTitle,
       'body': eventDesc,
