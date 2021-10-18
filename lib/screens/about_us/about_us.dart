@@ -32,7 +32,7 @@ class _AboutUsState extends State<AboutUs> {
   ];
   final imageTitleList = [
     'Empowering Women',
-    'Empowering through Vocations',
+    'Empowering through Vocation',
     'Empowering through Education',
     'Empowering the Underprivileged',
     'Empowering the Forgotten',

@@ -50,7 +50,7 @@ Widget buildInitiativeCard(BuildContext context, int index) {
                   maxLines: 3,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
