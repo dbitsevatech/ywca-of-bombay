@@ -250,7 +250,7 @@ class Initiative {
         color: Colors.blue[700]!,
         title: "IC - International Centre",
         description:
-            "International Centre (IC): provides for a temporary residence to people from various parts of the world.",
+            "The YWCA International Centre, a medium sized guest house situated in the heart of the Commercial Capital of Mumbai City. Our centre is a home away from home for you and your family, with clean well furnished self contained accommodation of whether you opt for a single, double, triple, family or dormitory rooms, they are all of a high quality. and available at unbelievably attractive rates",
         imagePathList: [
           'assets/images/initiatives/international_centre/1-ic-review.jpg',
           'assets/images/initiatives/international_centre/2-family-room.png',
