@@ -28,7 +28,7 @@ Future<http.Response> sendNotification(String eventTitle, String eventDesc) {
     body: (<String, String>{
       'title': eventTitle,
       'body': eventDesc,
-      'password': "12345678"
+      'password': "Ywcaofbombay@1234!"
     }),
   );
 }
