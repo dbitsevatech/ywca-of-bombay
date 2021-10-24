@@ -188,20 +188,26 @@ class _InitiativeDetailsState extends State<InitiativeDetails> {
                     SizedBox(
                       height: _height * 0.01,
                     ),
-                    Text(
-                      this._description,
-                      // "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
-                      //overflow: TextOverflow.fade,
-                      maxLines: 8,
-                      style: TextStyle(
-                        fontSize: 16,
-                        height: 1.5,
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Montserrat',
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+
+                    Container(
+
+                            child: SingleChildScrollView(child: Text(
+                              this._description,
+                              // "Participation and Involvement of Youth in Action (PIYA) is committed to advocate for women’s rights, through the active participation and involvement of a diverse group of young women between the age of 18 to 30 years, who are potential leaders and are committed to social action and transformation of society.",
+                              //overflow: TextOverflow.fade,
+
+
+                              style: TextStyle(
+
+                                fontSize: 16,
+                                height: 1.5,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal,
+                                fontFamily: 'Montserrat',
+                              ),
+                              textAlign: TextAlign.center,
+                            ),)),
+
                   ],
                 ),
               ),
