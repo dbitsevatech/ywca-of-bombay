@@ -317,13 +317,13 @@ class _AdminEventsState extends State<AdminEvents> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Event Amount
-                              Text(
-                                'Amount: ' + document['eventAmount'],
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
+                              // Text(
+                              //   'Amount: ' + document['eventAmount'],
+                              //   style: TextStyle(
+                              //     fontSize: 14.0,
+                              //     fontWeight: FontWeight.normal,
+                              //   ),
+                              // ),
                               // Event date
                               Text(
                                 'Date: ' +
